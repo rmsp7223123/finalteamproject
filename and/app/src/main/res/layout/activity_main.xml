@@ -27,15 +27,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#FFFFFFFF"
+            app:itemIconTint="@drawable/btm_menu_back"
+            app:itemTextColor="@drawable/btm_menu_back"
             app:menu="@menu/bottom_menu" />
     </com.google.android.material.bottomappbar.BottomAppBar>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:src="@drawable/bottomnav_home"
         android:id="@+id/fltbtn_home"
+        android:backgroundTint="#FFC81E"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_anchor="@id/bottomAppBar" />
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
