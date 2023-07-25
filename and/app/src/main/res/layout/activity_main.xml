@@ -8,10 +8,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     >
     <FrameLayout
+        android:id="@+id/container_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="55dp"
         >
+
+
+
     </FrameLayout>
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomAppBar"
@@ -35,10 +39,11 @@
     </com.google.android.material.bottomappbar.BottomAppBar>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:src="@drawable/bottomnav_home"
+        app:useCompatPadding="true"
+        android:src="@drawable/logo"
+        app:tint="@null"
+        app:backgroundTint="#000"
         android:id="@+id/fltbtn_home"
-        android:backgroundTint="#FFC81E"
-
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_anchor="@id/bottomAppBar" />
