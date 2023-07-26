@@ -11,7 +11,8 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -19,11 +20,11 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:background="@drawable/box_search"
+                android:background="@drawable/box_radius"
                 android:hint="경로당 찾기"
+                android:textColorHint="#A9A9AB"
                 android:textSize="15sp"
-                android:textColor="#A9A9AB"
-                android:drawableLeft="@drawable/search_resize"
+                android:drawableLeft="@drawable/resize_search"
                 android:drawablePadding="10dp"
                 android:drawableTint="#A9A9AB"
                 android:paddingLeft="10dp"/>
@@ -34,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:text="자주가는 경로당"
                 android:textSize="20sp"
-                android:textFontWeight="700"/>
+                android:textStyle="bold"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -59,27 +60,35 @@
                         android:text="..."/>
                 </LinearLayout>
                 <TextView
+                    android:id="@+id/tv_more"
                     android:layout_alignParentRight="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="더보기"
-                    android:textFontWeight="700"/>
+                    android:textStyle="bold"/>
             </RelativeLayout>
             <ImageView
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="320dp"
-                android:src="@drawable/img_map"/>
+                android:layout_height="220dp"
+                android:src="@drawable/img_map"
+                android:scaleType="centerCrop"/>
             <TextView
+                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="내 주변 경로당"
-                android:textSize="20sp"/>
+                android:textSize="20sp"
+                android:textStyle="bold"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recv_gps"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"/>
 
 
         </LinearLayout>
