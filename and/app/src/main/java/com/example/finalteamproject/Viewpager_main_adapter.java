@@ -1,0 +1,58 @@
+package com.example.finalteamproject;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.example.finalteamproject.databinding.ViewpagerMainSliderBinding;
+
+public class Viewpager_main_adapter extends RecyclerView.Adapter<Viewpager_main_adapter.ViewHolder> {
+
+    ViewpagerMainSliderBinding binding;
+
+    Context context;
+    private int[] sliderImage;
+
+    public Viewpager_main_adapter(Context context, int[] sliderImage) {
+        this.context = context;
+        this.sliderImage = sliderImage;
+    }
+
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+         binding = ViewpagerMainSliderBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new ViewHolder(binding);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.binding.imageSlider.setImageResource(sliderImage[position]);
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return sliderImage.length;
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
+        ViewpagerMainSliderBinding binding;
+
+        public ViewHolder(@NonNull ViewpagerMainSliderBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+        }
+
+        public void bindSliderImage(int images) {
+            Glide.with(context).load(images).into(binding.imageSlider);
+        }
+
+    }
+}
