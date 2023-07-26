@@ -1,5 +1,6 @@
 package com.example.finalteamproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -29,6 +30,12 @@ public class MainFragment extends Fragment {
         binding = FragmentMainBinding.inflate(inflater, container,false);
         Viewpager_main_adapter adapter = new Viewpager_main_adapter(getContext(), images);
         binding.imgViewpager.setAdapter(adapter);
+
+        binding.imgvAlarmHistory.setOnClickListener(v -> {
+            Intent intent = new Intent();
+        });
+
+
         return binding.getRoot();
     }
 }

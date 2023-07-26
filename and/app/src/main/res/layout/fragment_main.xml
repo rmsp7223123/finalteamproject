@@ -14,6 +14,7 @@
         android:layout_height="40dp">
 
         <ImageView
+            android:id="@+id/imgv_alarm_history"
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:src="@drawable/main_alarm_history"
@@ -25,6 +26,7 @@
             app:cardElevation="0dp"
             app:cardCornerRadius="20dp">
             <ImageView
+                android:id="@+id/imgv_small_profile"
                 android:scaleType="centerCrop"
                 android:layout_width="40dp"
                 android:layout_height="match_parent"
