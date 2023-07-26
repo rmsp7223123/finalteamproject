@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
 
 
-    <style name="Project02.LastProject" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Project02.LastProject" parent="Theme.MaterialComponents.Light">
 
     </style>
 
