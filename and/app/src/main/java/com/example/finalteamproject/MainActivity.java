@@ -32,20 +32,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        int[] images = new int[]{
-                R.drawable.haerin2,
-                R.drawable.minji10,
-                R.drawable.minji12,
-                R.drawable.danielle11,
-                R.drawable.hanni9,
-                R.drawable.hyein11
-        };
-
-        Viewpager_main_adapter adapter = new Viewpager_main_adapter(this, images);
-        binding.imgViewpager.setAdapter(adapter);
-
-
         actionBar = getSupportActionBar();
         manager = getSupportFragmentManager();
         binding.bottomNavigationView.setSelectedItemId(R.id.fab);
@@ -57,7 +43,9 @@ public class MainActivity extends AppCompatActivity {
             }
             transaction.commit();
             binding.bottomNavigationView.setVisibility(View.VISIBLE);
+            manager.beginTransaction().replace(R.id.container_frame, new MainFragment()).commit();
         });
+        manager.beginTransaction().replace(R.id.container_frame, new MainFragment()).commit();
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             Fragment fragment = null;
             if (item.getItemId() == R.id.chat) {
@@ -71,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 return false;
             }
+            manager.beginTransaction().remove(fragment);
             manager.beginTransaction().replace(R.id.container_frame, fragment).commit();
             return true;
         });
