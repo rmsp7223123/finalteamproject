@@ -1,20 +1,15 @@
-package com.example.finalteamproject;
+package com.example.finalteamproject.main;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
+import com.example.finalteamproject.R;
 import com.example.finalteamproject.chat.ChatFragment;
 import com.example.finalteamproject.databinding.ActivityMainBinding;
 import com.example.finalteamproject.game.GameFragment;

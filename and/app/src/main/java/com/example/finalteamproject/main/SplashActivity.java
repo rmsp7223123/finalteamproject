@@ -1,10 +1,13 @@
-package com.example.finalteamproject;
+package com.example.finalteamproject.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+
+import com.example.finalteamproject.R;
+import com.example.finalteamproject.main.MainActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
