@@ -62,6 +62,21 @@
             android:exported="false" />
         <activity
             android:name=".Login.LoginActivity"
+             android:exported="false" />
+        <activity
+            android:name=".gps.SuccessActivity"
+            android:exported="false" />
+        <activity
+            android:name=".gps.GpsAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".gps.GpsDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".gps.GpsLikeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainAlarmHistoryActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
