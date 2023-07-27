@@ -32,7 +32,7 @@ public class GpsDetailActivity extends AppCompatActivity {
             binding.like.setVisibility(View.GONE);
             binding.unlike.setVisibility(View.VISIBLE);
         });
-        binding.tvCall.setOnClickListener(v -> {
+        binding.phoneNumber.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_DIAL,
                     Uri.parse("tel:/"+binding.phoneNumber.getText().toString()));
             startActivity(intent);
