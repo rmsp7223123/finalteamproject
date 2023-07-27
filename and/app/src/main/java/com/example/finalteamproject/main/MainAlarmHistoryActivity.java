@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.example.finalteamproject.HideActionBar;
 import com.example.finalteamproject.databinding.ActivityMainAlarmHistoryBinding;
 
 public class MainAlarmHistoryActivity extends AppCompatActivity {
@@ -14,6 +15,7 @@ public class MainAlarmHistoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainAlarmHistoryBinding.inflate(getLayoutInflater());
+        new HideActionBar().hideActionBar(this);
         setContentView(binding.getRoot());
     }
 }
