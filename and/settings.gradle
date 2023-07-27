@@ -10,6 +10,8 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        //네이버 지도 api
+//        maven("https://naver.jfrog.io/artifactory/maven/")
     }
 }
 rootProject.name = "finalteamproject"
