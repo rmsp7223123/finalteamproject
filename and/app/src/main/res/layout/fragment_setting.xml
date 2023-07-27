@@ -8,6 +8,7 @@
     android:orientation="vertical">
 
    <RelativeLayout
+       android:layout_marginBottom="30dp"
        android:layout_marginTop="30dp"
        android:layout_width="match_parent"
        android:layout_height="wrap_content">
@@ -25,7 +26,7 @@
 
    <LinearLayout
        android:id="@+id/container_linear_change_profile"
-       android:layout_marginVertical="20dp"
+       android:layout_marginVertical="10dp"
        android:layout_marginHorizontal="20dp"
        android:layout_width="match_parent"
        android:layout_height="70dp">
@@ -54,7 +55,7 @@
           android:orientation="vertical">
 
          <TextView
-             android:textSize="20dp"
+             android:textSize="22dp"
              android:id="@+id/tv_name"
              android:textColor="@color/black"
              android:layout_width="wrap_content"
@@ -62,6 +63,7 @@
              android:text="이름"/>
 
          <TextView
+             android:textSize="18dp"
              android:id="@+id/tv_nickname"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
@@ -74,6 +76,211 @@
           android:layout_height="30dp"
          android:src="@drawable/forward"
          android:layout_gravity="center"/>
+
+   </LinearLayout>
+
+
+   <LinearLayout
+       android:id="@+id/container_linear_change_font"
+       android:layout_marginVertical="10dp"
+       android:layout_marginHorizontal="20dp"
+       android:layout_width="match_parent"
+       android:layout_height="70dp">
+
+
+         <ImageView
+             android:layout_gravity="center"
+             android:id="@+id/imgv_change_font"
+             android:layout_width="60dp"
+             android:layout_height="60dp"
+             android:src="@drawable/change_font"/>
+
+
+      <LinearLayout
+          android:layout_marginLeft="20dp"
+          android:gravity="center|left"
+          android:layout_width="250dp"
+          android:layout_height="match_parent"
+          android:orientation="vertical">
+
+         <TextView
+             android:textSize="25dp"
+             android:id="@+id/tv_font"
+             android:textColor="@color/black"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="글꼴" />
+
+      </LinearLayout>
+
+      <ImageView
+          android:layout_width="30dp"
+          android:layout_height="30dp"
+          android:src="@drawable/forward"
+          android:layout_gravity="center"/>
+
+   </LinearLayout>
+
+
+   <LinearLayout
+       android:id="@+id/container_linear_change_alarm"
+       android:layout_marginVertical="10dp"
+       android:layout_marginHorizontal="20dp"
+       android:layout_width="match_parent"
+       android:layout_height="70dp">
+
+
+
+         <ImageView
+             android:layout_gravity="center"
+             android:id="@+id/imgv_change_alarm"
+             android:layout_width="60dp"
+             android:layout_height="60dp"
+             android:src="@drawable/change_alarm"/>
+
+
+      <LinearLayout
+          android:layout_marginLeft="20dp"
+          android:gravity="center|left"
+          android:layout_width="250dp"
+          android:layout_height="match_parent"
+          android:orientation="vertical">
+
+         <TextView
+             android:textSize="25dp"
+             android:id="@+id/tv_alarm"
+             android:textColor="@color/black"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="알림 설정" />
+
+      </LinearLayout>
+
+      <ImageView
+          android:layout_width="30dp"
+          android:layout_height="30dp"
+          android:src="@drawable/forward"
+          android:layout_gravity="center"/>
+
+   </LinearLayout>
+
+
+   <LinearLayout
+       android:id="@+id/container_linear_change_pw"
+       android:layout_marginVertical="10dp"
+       android:layout_marginHorizontal="20dp"
+       android:layout_width="match_parent"
+       android:layout_height="70dp">
+
+         <ImageView
+             android:layout_gravity="center"
+             android:id="@+id/imgv_change_pw"
+             android:layout_width="60dp"
+             android:layout_height="60dp"
+             android:src="@drawable/change_pw"/>
+
+      <LinearLayout
+          android:layout_marginLeft="20dp"
+          android:gravity="center|left"
+          android:layout_width="250dp"
+          android:layout_height="match_parent"
+          android:orientation="vertical">
+
+         <TextView
+             android:textSize="25dp"
+             android:id="@+id/tv_pw"
+             android:textColor="@color/black"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="비밀번호 설정" />
+
+      </LinearLayout>
+
+      <ImageView
+          android:layout_width="30dp"
+          android:layout_height="30dp"
+          android:src="@drawable/forward"
+          android:layout_gravity="center"/>
+
+   </LinearLayout>
+
+
+   <LinearLayout
+       android:id="@+id/container_linear_logout"
+       android:layout_marginVertical="10dp"
+       android:layout_marginHorizontal="20dp"
+       android:layout_width="match_parent"
+       android:layout_height="70dp">
+
+         <ImageView
+             android:id="@+id/imgv_logout"
+             android:layout_width="60dp"
+             android:layout_height="60dp"
+             android:layout_gravity="center"
+             android:src="@drawable/logout"/>
+
+      <LinearLayout
+          android:layout_marginLeft="20dp"
+          android:gravity="center|left"
+          android:layout_width="250dp"
+          android:layout_height="match_parent"
+          android:orientation="vertical">
+
+         <TextView
+             android:textSize="25dp"
+             android:id="@+id/tv_logout"
+             android:textColor="@color/black"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="로그아웃" />
+
+      </LinearLayout>
+
+      <ImageView
+          android:layout_width="30dp"
+          android:layout_height="30dp"
+          android:src="@drawable/forward"
+          android:layout_gravity="center"/>
+
+   </LinearLayout>
+
+
+   <LinearLayout
+       android:id="@+id/container_linear_delete_account"
+       android:layout_marginVertical="10dp"
+       android:layout_marginHorizontal="20dp"
+       android:layout_width="match_parent"
+       android:layout_height="70dp">
+
+
+         <ImageView
+             android:layout_gravity="center"
+             android:id="@+id/imgv_delete_account"
+             android:layout_width="60dp"
+             android:layout_height="60dp"
+             android:src="@drawable/account"/>
+      <LinearLayout
+          android:layout_marginLeft="20dp"
+          android:gravity="center|left"
+          android:layout_width="250dp"
+          android:layout_height="match_parent"
+          android:orientation="vertical">
+
+         <TextView
+             android:textSize="25dp"
+             android:id="@+id/tv_delete_account"
+             android:textColor="@color/black"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="회원탈퇴" />
+
+      </LinearLayout>
+
+      <ImageView
+          android:layout_width="30dp"
+          android:layout_height="30dp"
+          android:src="@drawable/forward"
+          android:layout_gravity="center"/>
 
    </LinearLayout>
 

@@ -23,6 +23,10 @@ public class SettingFragment extends Fragment {
             Intent intent = new Intent(getContext(), ChangeProfileActivity.class);
             startActivity(intent);
         });
+        binding.containerLinearChangeFont.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), ChangeFontActivity.class);
+            startActivity(intent);
+        });
         return binding.getRoot();
     }
 }

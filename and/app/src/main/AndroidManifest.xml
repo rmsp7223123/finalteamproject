@@ -5,25 +5,30 @@
     <uses-feature
         android:name="android.hardware.telephony"
         android:required="true" />
-    <uses-permission android:name="android.permission.SEND_SMS" />
 
-    <!-- 카메라 접근 권한 -->
+    <uses-permission android:name="android.permission.SEND_SMS" /> <!-- 카메라 접근 권한 -->
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
     <uses-feature
         android:name="android.hardware.camera2"
         android:required="true" />
+
     <queries>
         <intent>
             <action android:name="android.intent.action.VIEW" />
+
             <category android:name="android.intent.category.BROWSABLE" />
+
             <data android:scheme="http" />
         </intent>
         <intent>
             <action android:name="android.intent.action.VIEW" />
+
             <category android:name="android.intent.category.BROWSABLE" />
+
             <data android:scheme="https" />
         </intent>
         <!-- Camera -->
@@ -52,6 +57,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".setting.ChangeFontActivity"
+            android:exported="false" />
+        <activity
             android:name=".setting.ChangeProfileActivity"
             android:exported="false" />
         <activity
@@ -62,7 +70,7 @@
             android:exported="false" />
         <activity
             android:name=".Login.LoginActivity"
-             android:exported="false" />
+            android:exported="false" />
         <activity
             android:name=".gps.SuccessActivity"
             android:exported="false" />
