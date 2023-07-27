@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         actionBar = getSupportActionBar();
         manager = getSupportFragmentManager();
-        
         binding.bottomNavigationView.setSelectedItemId(R.id.fab);
         binding.fltbtnHome.setOnClickListener(v -> {
             binding.bottomNavigationView.setSelectedItemId(R.id.fab);
