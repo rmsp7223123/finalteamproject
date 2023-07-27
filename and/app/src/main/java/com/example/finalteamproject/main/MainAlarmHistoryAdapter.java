@@ -26,7 +26,7 @@ public class MainAlarmHistoryAdapter extends RecyclerView.Adapter<MainAlarmHisto
 
     @Override
     public int getItemCount() {
-        return 10;
+        return 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
