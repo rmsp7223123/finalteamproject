@@ -27,6 +27,7 @@ import com.example.finalteamproject.databinding.ActivityPhoneBinding;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.regex.Pattern;
 
 public class PhoneActivity extends AppCompatActivity {
 
@@ -61,7 +62,7 @@ public class PhoneActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!binding.edtPhone.getText().toString().contains("0")||binding.edtPhone.getText().toString().length()<9||binding.edtPhone.getText().toString().length()>11){
+                if(!Pattern.matches("^01(?:0|1|[6-9])(?:\\d{3}|\\d{4})\\d{4}$", binding.edtPhone.getText().toString())){
                     binding.tvWrong.setVisibility(View.VISIBLE);
                 }else {
                     binding.tvWrong.setVisibility(GONE);
@@ -70,7 +71,7 @@ public class PhoneActivity extends AppCompatActivity {
         });
 
         binding.cvSubmit.setOnClickListener(v -> {
-            if(binding.edtPhone.getText().toString().contains("0")&&binding.edtPhone.getText().toString().length()>=9&&binding.edtPhone.getText().toString().length()<=11) {
+            if(Pattern.matches("^01(?:0|1|[6-9])+(?:\\d{3}|\\d{4})+\\d{4}$", binding.edtPhone.getText().toString())){
                 SmsSend("01096024788", "ㅎㅇ");
                 binding.cvSubmit.setVisibility(GONE);
                 binding.cvDone.setVisibility(View.VISIBLE);
@@ -115,7 +116,7 @@ public class PhoneActivity extends AppCompatActivity {
                         public void run() {
                             if((nCnt%60)>9) {
                                 binding.tvTimer.setText("0" + (nCnt / 60) + ":" + (nCnt % 60));
-                            }else if(10>(nCnt%60)&&(nCnt%60)>0){
+                            }else if((10>(nCnt%60)&&(nCnt%60)>0)||nCnt==180||nCnt==120){
                                 binding.tvTimer.setText("0" + (nCnt / 60) + ":0" + (nCnt % 60));
                             }else {
                                 binding.tvTimer.setVisibility(GONE);

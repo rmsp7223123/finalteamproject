@@ -3,6 +3,8 @@ pluginManagement {
         google()
         mavenCentral()
         gradlePluginPortal()
+        //회원가입 완료 꽃가루
+        jcenter()
     }
 }
 dependencyResolutionManagement {
@@ -10,6 +12,8 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        //회원가입 완료 꽃가루
+        jcenter()
     }
 }
 rootProject.name = "finalteamproject"

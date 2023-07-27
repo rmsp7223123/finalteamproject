@@ -30,6 +30,10 @@ android {
     viewBinding {
         enabled = true
     }
+
+    packagingOptions{
+        exclude 'META-INF/DEPENDENCIES'
+    }
 }
 
 dependencies {
@@ -56,5 +60,20 @@ dependencies {
 
     // String json 단일 데이터 타입용 컨버터
     implementation group: 'com.squareup.retrofit2', name: 'converter-scalars', version: '2.9.0'
+
+    // Import the BoM for the Firebase platform
+    implementation(platform("com.google.firebase:firebase-bom:32.2.0"))
+
+    // Add the dependency for the Firebase Authentication library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation("com.google.firebase:firebase-auth")
+
+    //사진 글씨 읽어주기 기능
+    implementation 'com.google.api-client:google-api-client:1.32.1'       exclude module: 'httpclient'
+    implementation 'com.google.http-client:google-http-client-gson:1.43.3'     exclude module: 'httpclient'
+    implementation 'com.google.apis:google-api-services-vision:v1-rev369-1.23.0'
+
+    //회원가입 완료 꽃가루
+    implementation 'nl.dionsegijn:konfetti:1.1.2'
 
 }
