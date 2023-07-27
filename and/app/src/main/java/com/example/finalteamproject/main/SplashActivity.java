@@ -30,11 +30,11 @@ public class SplashActivity extends AppCompatActivity {
             finish();
         }, 2000);
 
-        /*new Handler().postDelayed(() -> {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-            finish();
-        }, 2000);*/
+//        new Handler().postDelayed(() -> {
+//            Intent intent = new Intent(this, LoginActivity.class);
+//            startActivity(intent);
+//            finish();
+//        }, 2000);
 
     }
 };
