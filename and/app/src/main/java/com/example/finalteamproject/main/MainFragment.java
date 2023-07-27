@@ -74,6 +74,14 @@ public class MainFragment extends Fragment {
             startActivity(intent);
         });
 
+        binding.imgvRight.setOnClickListener(v -> {
+            binding.imgViewpager.setCurrentItem(binding.imgViewpager.getCurrentItem()+1);
+        });
+
+        binding.imgvLeft.setOnClickListener(v -> {
+            binding.imgViewpager.setCurrentItem(binding.imgViewpager.getCurrentItem()-1);
+        });
+
 
         return binding.getRoot();
     }

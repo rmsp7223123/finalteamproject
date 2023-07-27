@@ -44,6 +44,7 @@
     </com.google.android.material.bottomappbar.BottomAppBar>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        app:elevation="0dp"
         app:useCompatPadding="true"
         android:src="@drawable/logo"
         app:tint="@null"

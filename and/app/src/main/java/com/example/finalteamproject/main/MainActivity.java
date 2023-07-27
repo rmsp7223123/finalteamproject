@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
         actionBar = getSupportActionBar();
         manager = getSupportFragmentManager();
       //  //new HideActionBar().hideActionBar(this);
-
         binding.bottomNavigationView.setSelectedItemId(R.id.fab);
         binding.fltbtnHome.setOnClickListener(v -> {
             binding.bottomNavigationView.setSelectedItemId(R.id.fab);
