@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".setting.ChangeFontActivity"
+    tools:context=".setting.ChangeAlarmActivity"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="글꼴"
+            android:text="알람 설정"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="27sp" />
@@ -43,15 +43,15 @@
             android:textColor="@color/black"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:text="글씨 크기 조절"
+            android:text="고독사 알람"
             android:textSize="35dp"/>
 
         <TextView
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:text="작게"
-            android:textSize="25dp"
+            android:text="끄기"
+            android:textSize="35dp"
             android:textColor="@color/black"
             android:gravity="right|center"/>
 
@@ -68,14 +68,14 @@
             android:textColor="@color/black"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:text="글씨 색깔"
+            android:text="전화, 문자 알람"
             android:textSize="35dp"/>
 
         <TextView
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:text="검은색"
+            android:text="끄기"
             android:textSize="35dp"
             android:textColor="@color/black"
             android:gravity="right|center"/>

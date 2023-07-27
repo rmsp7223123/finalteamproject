@@ -27,6 +27,10 @@ public class SettingFragment extends Fragment {
             Intent intent = new Intent(getContext(), ChangeFontActivity.class);
             startActivity(intent);
         });
+        binding.containerLinearChangeAlarm.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), ChangeAlarmActivity.class);
+            startActivity(intent);
+        });
         return binding.getRoot();
     }
 }
