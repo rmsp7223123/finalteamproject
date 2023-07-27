@@ -50,9 +50,6 @@ public class Viewpager_main_adapter extends RecyclerView.Adapter<Viewpager_main_
             this.binding = binding;
         }
 
-        public void bindSliderImage(int images) {
-            Glide.with(context).load(images).into(binding.imageSlider);
-        }
 
     }
 }

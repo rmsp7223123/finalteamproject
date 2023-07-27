@@ -18,5 +18,8 @@ public class ChangeProfileActivity extends AppCompatActivity {
         binding = ActivityChangeProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         //new HideActionBar().hideActionBar(this);
+        binding.imgvBack.setOnClickListener(v -> {
+            finish();
+        });
     }
 }
