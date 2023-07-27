@@ -31,13 +31,14 @@ public class Viewpager_main_adapter extends RecyclerView.Adapter<Viewpager_main_
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.binding.imageSlider.setImageResource(sliderImage[position]);
+        int actualPosition = position % sliderImage.length;
+        holder.binding.imageSlider.setImageResource(sliderImage[actualPosition]);
 
     }
 
     @Override
     public int getItemCount() {
-        return sliderImage.length;
+        return sliderImage.length * 100;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

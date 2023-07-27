@@ -32,7 +32,9 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentMainBinding.inflate(inflater, container,false);
         Viewpager_main_adapter adapter = new Viewpager_main_adapter(getContext(), images);
+        int initialPosition = adapter.getItemCount() / 2;
         binding.imgViewpager.setAdapter(adapter);
+        binding.imgViewpager.setCurrentItem(initialPosition, false);
         binding.imgViewpager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             int currentState = 0;
             int currentPos = 0;
