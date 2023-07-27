@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- 네이버 지도 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <!-- sms 보내기 권한 -->
     <uses-feature
         android:name="android.hardware.telephony"
@@ -56,6 +62,15 @@
         android:theme="@style/Project02.LastProject"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
+        <!-- 네이버지도 클라이언트 -->
+        <meta-data
+            android:name="com.naver.maps.map.80ghgk6580"
+            android:value="80ghgk6580" />
+
+        <activity
+            android:name=".gps.MapActivity"
+            android:exported="false" />
         <activity
             android:name=".setting.ChangePasswordActivity"
             android:exported="false" />
