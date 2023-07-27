@@ -31,6 +31,16 @@ public class SettingFragment extends Fragment {
             Intent intent = new Intent(getContext(), ChangeAlarmActivity.class);
             startActivity(intent);
         });
+        binding.containerLinearChangePw.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), ChangePasswordActivity.class);
+            startActivity(intent);
+        });
+        binding.containerLinearLogout.setOnClickListener(v -> {
+            // dialog로 로그아웃 할 것인지 확인 시키고 확인 했을 때 로그아웃 후 로그인 화면으로 전환
+        });
+        binding.containerLinearDeleteAccount.setOnClickListener(v -> {
+            // 본인 회원가입 했을 때 주민등록번호나 핸드폰 번호를 활용해 검증 시키고 맞을 시 회원 탈퇴
+        });
         return binding.getRoot();
     }
 }
