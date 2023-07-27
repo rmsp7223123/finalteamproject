@@ -22,7 +22,7 @@ public class SplashActivity extends AppCompatActivity {
         binding = ActivitySplashBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        new HideActionBar().hideActionBar(this);
+        //new HideActionBar().hideActionBar(this);
 
         new Handler().postDelayed(() -> {
             Intent intent = new Intent(this, MainActivity.class);

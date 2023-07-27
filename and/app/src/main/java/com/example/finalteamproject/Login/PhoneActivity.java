@@ -40,7 +40,7 @@ public class PhoneActivity extends AppCompatActivity {
         binding = ActivityPhoneBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        new HideActionBar().hideActionBar(this);
+        //new HideActionBar().hideActionBar(this);
 
 
 

@@ -8,7 +8,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 
+import com.example.finalteamproject.HideActionBar;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.chat.ChatFragment;
 import com.example.finalteamproject.databinding.ActivityMainBinding;
@@ -25,11 +27,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
+
         setContentView(binding.getRoot());
         actionBar = getSupportActionBar();
         manager = getSupportFragmentManager();
-        
+      //  //new HideActionBar().hideActionBar(this);
+
         binding.bottomNavigationView.setSelectedItemId(R.id.fab);
         binding.fltbtnHome.setOnClickListener(v -> {
             binding.bottomNavigationView.setSelectedItemId(R.id.fab);

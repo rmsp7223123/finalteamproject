@@ -15,7 +15,7 @@ public class MainAlarmHistoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainAlarmHistoryBinding.inflate(getLayoutInflater());
-        new HideActionBar().hideActionBar(this);
+        //new HideActionBar().hideActionBar(this);
         setContentView(binding.getRoot());
     }
 }

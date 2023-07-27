@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        new HideActionBar().hideActionBar(this);
+        //new HideActionBar().hideActionBar(this);
 
         pref = getPreferences(MODE_PRIVATE);
         editor = pref.edit();
