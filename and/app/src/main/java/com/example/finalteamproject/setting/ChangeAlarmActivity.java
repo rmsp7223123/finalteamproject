@@ -18,7 +18,7 @@ public class ChangeAlarmActivity extends AppCompatActivity {
 
     int godokcnt= 0;
     int call_message_cnt=0;
-    
+
     private static final String PREF_NAME = "AlarmSettings";
 
     private static final String GODOK_ALARM_KEY = "godok_alarm";
