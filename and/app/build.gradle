@@ -40,7 +40,8 @@ dependencies {
 
     //naver maps api
 //    implementation("com.google.android.gms:play-services-location:21.0.1") //현재 위치 표시
-    implementation("com.naver.maps:map-sdk:3.17.0")
+//    implementation("com.naver.maps:map-sdk:3.17.0")
+//    implementation 'com.naver.maps:map-sdk:3.17.0'
 //    implementation("androidx.appcompat:appcompat:1.6.0")
 //    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
