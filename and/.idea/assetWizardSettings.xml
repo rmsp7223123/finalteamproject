@@ -19,6 +19,7 @@
                                   <option name="values">
                                     <map>
                                       <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/supervisor_account/baseline_supervisor_account_24.xml" />
+                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/videogame_asset/baseline_videogame_asset_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -29,6 +30,8 @@
                         <option name="values">
                           <map>
                             <entry key="outputName" value="friend_list" />
+                            <entry key="color" value="f5dc6d" />
+                            <entry key="outputName" value="game_select" />
                             <entry key="sourceFile" value="D:\finalteamproject\and" />
                           </map>
                         </option>

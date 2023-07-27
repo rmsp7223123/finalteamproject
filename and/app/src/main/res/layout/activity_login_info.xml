@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Login.LoginInfoActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imgv_back"
+                android:layout_marginStart="20dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/back"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="내 정보 입력"
+                android:textColor="@color/black"
+                android:textSize="27sp" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="만나서 반가워요!"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="28sp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="회원가입에 필요한 정보를 입력해주세요"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="이름"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="50dp"
+            android:textColor="@color/black"
+            android:textSize="20sp"/>
+
+        <EditText
+            android:id="@+id/edt_name"
+            android:textColor="#AEAEAE"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_radius0"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="10dp"
+            android:textSize="21sp"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginTop="10dp"/>
+
+        <RelativeLayout
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_IdCheck"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/tv_id"
+                android:textSize="13sp"
+                android:gravity="center"
+                android:layout_marginStart="10dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:background="#F6DD6D"
+                android:layout_gravity="center"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="중복확인" />
+
+        <TextView
+            android:id="@+id/tv_id"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="아이디"
+            android:textColor="@color/black"
+            android:textSize="20sp"/>
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <EditText
+            android:id="@+id/edt_id"
+            android:textColor="#AEAEAE"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_radius0"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="10dp"
+            android:textSize="21sp"/>
+    </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="비밀번호"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/black"
+            android:textSize="20sp"/>
+
+        <EditText
+            android:id="@+id/edt_pw"
+            android:textColor="#AEAEAE"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_radius0"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="10dp"
+            android:textSize="21sp"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginTop="10dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="거주지"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/black"
+            android:textSize="20sp"/>
+
+        <EditText
+            android:id="@+id/edt_address"
+            android:textColor="#AEAEAE"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_radius0"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="10dp"
+            android:textSize="21sp"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginTop="10dp"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="사진"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/black"
+            android:textSize="20sp"/>
+
+        <LinearLayout
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/imgv_image"
+                android:background="@drawable/border_radius0"
+                android:paddingVertical="12dp"
+                android:paddingHorizontal="13dp"
+                android:src="@drawable/camera"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:id="@+id/edt_image"
+                android:layout_marginStart="10dp"
+                android:textColor="#AEAEAE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_radius0"
+                android:paddingHorizontal="15dp"
+                android:paddingVertical="10dp"
+                android:textSize="21sp"/>
+        </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_next"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="63dp"
+                app:cardCornerRadius="10dp"
+                android:backgroundTint="#F6DD6D"
+                android:layout_marginHorizontal="40dp"
+                android:layout_marginBottom="60dp"
+                android:layout_marginTop="60dp">
+
+                <TextView
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="다음"
+                    android:textSize="23sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
+
+            </androidx.cardview.widget.CardView>
+
+
+    </LinearLayout>
+
+</ScrollView>

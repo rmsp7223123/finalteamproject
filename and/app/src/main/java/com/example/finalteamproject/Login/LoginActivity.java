@@ -68,7 +68,8 @@ public class LoginActivity extends AppCompatActivity {
                                 Manifest.permission.CAMERA,
                                 Manifest.permission.ACCESS_MEDIA_LOCATION,
                                 Manifest.permission.READ_EXTERNAL_STORAGE,
-                                Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                Manifest.permission.MANAGE_EXTERNAL_STORAGE};
 
         for(int i=0; i<permissions.length; i++){
             //내가 모든 권한이 필요하다면 전체 권한을 하나씩 체크해서 허용 안됨이 있는 경우 다시 요청을 하게 만든다.
