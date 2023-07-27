@@ -1,13 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".setting.SettingFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".setting.SettingFragment"
+    android:orientation="vertical">
 
-   <ImageView
+   <RelativeLayout
+       android:layout_marginTop="30dp"
        android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:src="@drawable/hanni9"/>
+       android:layout_height="wrap_content">
 
-</FrameLayout>
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerInParent="true"
+          android:text="설정"
+          android:textColor="@color/black"
+          android:textSize="27sp" />
+
+   </RelativeLayout>
+
+   <LinearLayout
+       android:id="@+id/container_linear_change_profile"
+       android:layout_marginVertical="20dp"
+       android:layout_marginHorizontal="20dp"
+       android:layout_width="match_parent"
+       android:layout_height="70dp">
+
+      <androidx.cardview.widget.CardView
+          android:layout_gravity="center"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+         app:cardElevation="0dp"
+         app:cardCornerRadius="30dp">
+
+         <ImageView
+             android:id="@+id/imgv_profile_img"
+            android:scaleType="centerCrop"
+             android:layout_width="60dp"
+             android:layout_height="60dp"
+            android:src="@drawable/hanni9"/>
+
+      </androidx.cardview.widget.CardView>
+
+      <LinearLayout
+          android:layout_marginLeft="20dp"
+          android:gravity="center|left"
+          android:layout_width="250dp"
+          android:layout_height="match_parent"
+          android:orientation="vertical">
+
+         <TextView
+             android:textSize="20dp"
+             android:id="@+id/tv_name"
+             android:textColor="@color/black"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="이름"/>
+
+         <TextView
+             android:id="@+id/tv_nickname"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+            android:text="닉네임"/>
+
+      </LinearLayout>
+
+      <ImageView
+          android:layout_width="30dp"
+          android:layout_height="30dp"
+         android:src="@drawable/forward"
+         android:layout_gravity="center"/>
+
+   </LinearLayout>
+
+</LinearLayout>

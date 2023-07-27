@@ -1,5 +1,6 @@
 package com.example.finalteamproject.setting;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -18,6 +19,10 @@ public class SettingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentSettingBinding.inflate(inflater,container,false);
+        binding.containerLinearChangeProfile.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), ChangeProfileActivity.class);
+            startActivity(intent);
+        });
         return binding.getRoot();
     }
 }
