@@ -23,6 +23,9 @@ public class ChatFragment extends Fragment {
             }
             return true;
         });
+        binding.containerLinearOpen.setOnClickListener(view -> {
+            binding.navigationRail.setVisibility(View.VISIBLE);
+        });
         return binding.getRoot();
 
     }
