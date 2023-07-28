@@ -25,7 +25,9 @@ public class ChatFragment extends Fragment {
         });
         binding.containerLinearOpen.setOnClickListener(view -> {
             binding.navigationRail.setVisibility(View.VISIBLE);
+            binding.navigationRail.setSelectedItemId(R.id.friend_list);
         });
+        binding.navigationRail.setSelectedItemId(R.id.friend_list);
         return binding.getRoot();
 
     }
