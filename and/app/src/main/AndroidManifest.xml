@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
     <!-- sms 보내기 권한 -->
     <uses-feature
@@ -57,7 +58,9 @@
         </intent>
     </queries>
 
+    <!-- 네이버 지도 움직이면 어플 종료되는 증상 : 하드웨어 가속 끔 -->
     <application
+        android:hardwareAccelerated="false"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -71,12 +74,9 @@
 
         <!-- 네이버지도 클라이언트 -->
         <meta-data
-            android:name="com.naver.maps.map.80ghgk6580"
+            android:name="com.naver.maps.map.CLIENT_ID"
             android:value="80ghgk6580" />
 
-        <activity
-            android:name=".gps.MapActivity"
-            android:exported="false" />
         <activity
             android:name=".setting.ChangePasswordActivity"
             android:exported="false" />
