@@ -26,7 +26,7 @@ public class LoginDoneActivity extends AppCompatActivity {
         binding = ActivityLoginDoneBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        new HideActionBar().hideActionBar(this);
+//        new HideActionBar().hideActionBar(this);
         binding.viewKonfetti.bringToFront();
 
         binding.imgvLogo.setOnClickListener(v->{

@@ -33,7 +33,7 @@ public class LoginGodokActivity extends AppCompatActivity {
         binding = ActivityLoginGodokBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        new HideActionBar().hideActionBar(this);
+//        new HideActionBar().hideActionBar(this);
 
         binding.imgvBack.setOnClickListener(v -> {
             finish();

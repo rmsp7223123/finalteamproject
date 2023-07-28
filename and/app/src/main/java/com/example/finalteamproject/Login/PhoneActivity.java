@@ -3,37 +3,30 @@ package com.example.finalteamproject.Login;
 import static android.view.View.GONE;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import android.Manifest;
-import android.app.PendingIntent;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
-import android.telephony.SmsManager;
+import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.finalteamproject.HideActionBar;
+import com.example.finalteamproject.common.CommonConn;
+import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.databinding.ActivityPhoneBinding;
+import com.example.finalteamproject.common.MemberVO;
+import com.example.finalteamproject.main.MainActivity;
+import com.google.gson.Gson;
 
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.regex.Pattern;
 
 public class PhoneActivity extends AppCompatActivity {
 
     ActivityPhoneBinding binding;
-    Timer timer;
-    int nCnt;
+    String result = null;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,97 +64,104 @@ public class PhoneActivity extends AppCompatActivity {
         });
 
         binding.cvSubmit.setOnClickListener(v -> {
+            binding.rlMessage.setVisibility(View.VISIBLE);
+            binding.tvMessage.setVisibility(View.VISIBLE);
+            binding.tvTimer.setVisibility(View.VISIBLE);
+            binding.cvDone.setVisibility(View.VISIBLE);
+            binding.cvSubmit.setVisibility(GONE);
             if(Pattern.matches("^01(?:0|1|[6-9])+(?:\\d{3}|\\d{4})+\\d{4}$", binding.edtPhone.getText().toString())){
-                SmsSend("01096024788", "ㅎㅇ");
-                binding.cvSubmit.setVisibility(GONE);
-                binding.cvDone.setVisibility(View.VISIBLE);
-                binding.tvMessage.setVisibility(View.VISIBLE);
-                binding.rlMessage.setVisibility(View.VISIBLE);
-                TimerTask timerTask = new TimerTask() {
-                    @Override
-                    public void run() {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if(nCnt>9) {
-                                    binding.tvTimer.setText("0" + (nCnt / 60) + ":" + (nCnt % 60));
-                                }else if(10>nCnt&&nCnt>0){
-                                    binding.tvTimer.setText("0" + (nCnt / 60) + ":0" + (nCnt % 60));
-                                }else {
-                                    binding.tvTimer.setVisibility(GONE);
-                                    binding.tvReissue.setVisibility(View.VISIBLE);
-                                }
-                            }
-                        });
-                        someWork();
+                CommonConn conn = new CommonConn(this, "login/sendSms");
+                conn.addParamMap("phoneNumber", binding.edtPhone.getText().toString());
+                conn.onExcute((isResult, data) -> {
+                    if(data.equals("실패")){
+                        Toast.makeText(this, "sms 문자 전송에 실패하였습니다\n다시 시도해주세요", Toast.LENGTH_SHORT).show();
+                    }else if(data==null){
+                        Toast.makeText(this, "sms 문자 전송에 실패하였습니다\n다시 시도해주세요", Toast.LENGTH_SHORT).show();
+                    }else {
+                        result = data;
+                        binding.edtNumber.setText(data);
+                        binding.tvMessage.setVisibility(View.VISIBLE);
+                        binding.rlMessage.setVisibility(View.VISIBLE);
+                        setTimer();
                     }
-                };
-                nCnt = 180;
-                timer = new Timer();
-                timer.schedule(timerTask, 1000, 1000);
+
+                });
             }else {
                 Toast.makeText(this, "전화번호를 정확히 입력해주세요", Toast.LENGTH_SHORT).show();
             }
         });
 
         binding.tvReissue.setOnClickListener(v -> {
-            binding.tvTimer.setText("");
-            binding.tvReissue.setVisibility(GONE);
             binding.tvTimer.setVisibility(View.VISIBLE);
-            TimerTask timerTask = new TimerTask() {
-                @Override
-                public void run() {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if((nCnt%60)>9) {
-                                binding.tvTimer.setText("0" + (nCnt / 60) + ":" + (nCnt % 60));
-                            }else if((10>(nCnt%60)&&(nCnt%60)>0)||nCnt==180||nCnt==120){
-                                binding.tvTimer.setText("0" + (nCnt / 60) + ":0" + (nCnt % 60));
-                            }else {
-                                binding.tvTimer.setVisibility(GONE);
-                                binding.tvReissue.setVisibility(View.VISIBLE);
-                            }
-                        }
-                    });
-                    someWork();
-                }
-            };
-            nCnt = 180;
-            timer = new Timer();
-            timer.schedule(timerTask, 1000, 1000);
+            binding.tvReissue.setVisibility(GONE);
+            if(Pattern.matches("^01(?:0|1|[6-9])+(?:\\d{3}|\\d{4})+\\d{4}$", binding.edtPhone.getText().toString())){
+                CommonConn conn = new CommonConn(this, "login/sendSms");
+                conn.addParamMap("phoneNumber", binding.edtPhone.getText().toString());
+                conn.onExcute((isResult, data) -> {
+                    if(data.equals("실패")){
+                        Toast.makeText(this, "sms 문자 전송에 실패하였습니다\n다시 시도해주세요", Toast.LENGTH_SHORT).show();
+                    }else if(data==null){
+                        Toast.makeText(this, "sms 문자 전송에 실패하였습니다\n다시 시도해주세요", Toast.LENGTH_SHORT).show();
+                    }else {
+                        result = data;
+                        binding.edtNumber.setText(data);
+                        binding.tvMessage.setVisibility(View.VISIBLE);
+                        binding.rlMessage.setVisibility(View.VISIBLE);
+                        setTimer();
+                    }
+
+                });
+            }else {
+                Toast.makeText(this, "전화번호를 정확히 입력해주세요", Toast.LENGTH_SHORT).show();
+            }
         });
+
 
         binding.cvDone.setOnClickListener(v -> {
-            Intent intent = new Intent(this, IDCardActivity.class);
-            startActivity(intent);
+            if(binding.tvReissue.getVisibility()==View.VISIBLE){
+                Toast.makeText(this, "제한시간이 초과되었습니다\n 인증번호를 재발급해주세요", Toast.LENGTH_SHORT).show();
+            }else if(!binding.edtNumber.getText().toString().equals(result)){
+                Toast.makeText(this, "인증번호와 일치하지 않습니다", Toast.LENGTH_SHORT).show();
+            }else {
+                CommonConn conn = new CommonConn(this, "login/checkPhone");
+                conn.addParamMap("phoneNumber", binding.edtPhone.getText().toString());
+                conn.onExcute((isResult, data) -> {
+                    CommonVar.logininfo  = new Gson().fromJson(data, MemberVO.class);
+                    if(CommonVar.logininfo ==null){
+                        Intent intent = new Intent(this, IDCardActivity.class);
+                        intent.putExtra("phoneNumber", binding.edtPhone.getText().toString());
+                        startActivity(intent);
+                    }else {
+                        Intent intent = new Intent(this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                });
+            }
         });
 
     }
 
-
-    public void SmsSend(String strPhoneNumber, String strMsg){
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {//권한이 없다면
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, 2323);
-        }else { //권한이 있다면 SMS를 보낸다.
-            PendingIntent sendIntent = PendingIntent.getBroadcast(this, 0, new Intent("SMS_SENT"), PendingIntent.FLAG_IMMUTABLE);
-            PendingIntent deliveredIntent = PendingIntent.getBroadcast(this, 0, new Intent("SMS_DELIVERED"), PendingIntent.FLAG_IMMUTABLE);
-            SmsManager smsManager = SmsManager.getDefault();
-            try {
-                smsManager.sendTextMessage(strPhoneNumber, null, strMsg, sendIntent, deliveredIntent);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                Toast.makeText(getBaseContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+    private void setTimer(){
+        CountDownTimer timer = new CountDownTimer(10000, 1000) {
+            int time = 10;
+            @Override
+            public void onTick(long millisUntilFinished) {
+                binding.tvTimer.setVisibility(View.VISIBLE);
+                binding.tvReissue.setVisibility(View.INVISIBLE);
+                if(time%60<10){
+                    binding.tvTimer.setText("0"+(time/60)+":0"+(time%60));
+                }else {
+                    binding.tvTimer.setText("0"+(time/60)+":"+(time%60));
+                }
+                time--;
             }
-        }
-    }
-
-    private void someWork(){
-        if(nCnt==1){
-            timer.cancel();
-        }
-        nCnt--;
+            @Override
+            public void onFinish() {
+                binding.tvTimer.setVisibility(View.INVISIBLE);
+                binding.tvReissue.setVisibility(View.VISIBLE);
+            }
+        };
+        timer.start();
     }
     
 }
