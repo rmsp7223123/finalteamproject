@@ -24,17 +24,17 @@ public class SplashActivity extends AppCompatActivity {
 
         //new HideActionBar().hideActionBar(this);
 
-//        new Handler().postDelayed(() -> {
-//            Intent intent = new Intent(this, MainActivity.class);
-//            startActivity(intent);
-//            finish();
-//        }, 2000);
-
         new Handler().postDelayed(() -> {
-            Intent intent = new Intent(this, LoginActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
         }, 2000);
+
+//        new Handler().postDelayed(() -> {
+//            Intent intent = new Intent(this, LoginActivity.class);
+//            startActivity(intent);
+//            finish();
+//        }, 2000);
 
     }
 };
