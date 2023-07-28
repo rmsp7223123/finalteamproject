@@ -17,6 +17,13 @@ public class ChatFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentChatBinding.inflate(inflater, container, false);
+        binding.navigationRail.setOnItemSelectedListener(item -> {
+            if(item.getItemId()==R.id.close) {
+                binding.navigationRail.setVisibility(View.GONE);
+            }
+            return true;
+        });
         return binding.getRoot();
+
     }
 }
