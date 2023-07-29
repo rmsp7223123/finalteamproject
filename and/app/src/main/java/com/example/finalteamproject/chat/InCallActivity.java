@@ -16,5 +16,8 @@ public class InCallActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityInCallBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        binding.imgvCalloff.setOnClickListener(view -> {
+            finish();
+        });
     }
 }

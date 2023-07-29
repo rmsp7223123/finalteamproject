@@ -15,6 +15,7 @@
         app:cardElevation="0dp">
 
         <ImageView
+            android:id="@+id/imgv_profile_img"
             android:scaleType="centerCrop"
             android:layout_width="200dp"
             android:layout_height="200dp"
@@ -23,6 +24,7 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
+        android:id="@+id/tv_calltime"
         android:layout_marginBottom="30dp"
         android:layout_gravity="center"
         android:gravity="center"
@@ -46,6 +48,7 @@
             android:background="#F60000">
 
             <ImageView
+                android:id="@+id/imgv_calloff"
                 android:layout_gravity="center"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
