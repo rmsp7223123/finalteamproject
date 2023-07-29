@@ -2,9 +2,12 @@ package com.example.finalteamproject.chat;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -12,20 +15,36 @@ import android.view.animation.AnimationUtils;
 
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.databinding.FragmentChatBinding;
+import com.google.android.material.navigation.NavigationBarView;
 
 public class ChatMainFragment extends Fragment {
     FragmentChatBinding binding;
     private boolean isRailVisible = true;
+    FragmentManager manager;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentChatBinding.inflate(inflater, container, false);
+        manager = getActivity().getSupportFragmentManager();
         setupNavigationRail();
         binding.navigationRail.setSelectedItemId(R.id.friend_list);
         binding.containerLinearOpen.setOnClickListener(view -> {
             binding.containerLinearOpen.setVisibility(View.INVISIBLE);
             showNavigationRail();
         });
+//        binding.navigationRail.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                Fragment fragment = null;
+//                if(item.getItemId() == R.id.friend_list) {
+//                    fragment = new FriendListFragment();
+//                } else {
+//                    return false;
+//                }
+//                manager.beginTransaction().replace(R.id.container_frame_call_msg, fragment).commit();
+//                return true;
+//            }
+//        });
         return binding.getRoot();
 
     }
