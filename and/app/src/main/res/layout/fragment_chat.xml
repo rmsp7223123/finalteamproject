@@ -11,6 +11,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
+        <LinearLayout
+            android:id="@+id/container_linear_open"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/forward"/>
+
+            <TextView
+                android:textSize="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="열기"/>
+
+        </LinearLayout>
     <com.google.android.material.navigationrail.NavigationRailView
         android:id="@+id/navigation_rail"
         android:layout_width="wrap_content"

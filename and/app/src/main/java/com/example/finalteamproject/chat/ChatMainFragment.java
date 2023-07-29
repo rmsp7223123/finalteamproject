@@ -22,6 +22,10 @@ public class ChatMainFragment extends Fragment {
         binding = FragmentChatBinding.inflate(inflater, container, false);
         setupNavigationRail();
         binding.navigationRail.setSelectedItemId(R.id.friend_list);
+        binding.containerLinearOpen.setOnClickListener(view -> {
+            binding.containerLinearOpen.setVisibility(View.INVISIBLE);
+            showNavigationRail();
+        });
         return binding.getRoot();
 
     }
@@ -29,6 +33,7 @@ public class ChatMainFragment extends Fragment {
     private void setupNavigationRail() {
         binding.navigationRail.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.close) {
+                binding.containerLinearOpen.setVisibility(View.VISIBLE);
                 hideNavigationRail();
             } else {
                 showNavigationRail();
