@@ -23,10 +23,6 @@ public class ChatMainFragment extends Fragment {
             }
             return true;
         });
-        binding.containerLinearOpen.setOnClickListener(view -> {
-            binding.navigationRail.setVisibility(View.VISIBLE);
-            binding.navigationRail.setSelectedItemId(R.id.friend_list);
-        });
         binding.navigationRail.setSelectedItemId(R.id.friend_list);
         return binding.getRoot();
 
