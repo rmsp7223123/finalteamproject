@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.databinding.FragmentChatBinding;
 
-public class ChatFragment extends Fragment {
+public class ChatMainFragment extends Fragment {
     FragmentChatBinding binding;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

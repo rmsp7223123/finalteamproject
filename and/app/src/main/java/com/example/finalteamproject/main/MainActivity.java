@@ -10,9 +10,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 
-import com.example.finalteamproject.HideActionBar;
 import com.example.finalteamproject.R;
-import com.example.finalteamproject.chat.ChatFragment;
+import com.example.finalteamproject.chat.ChatMainFragment;
 import com.example.finalteamproject.databinding.ActivityMainBinding;
 import com.example.finalteamproject.game.GameFragment;
 import com.example.finalteamproject.gps.GpsFragment;
@@ -49,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             Fragment fragment = null;
             if (item.getItemId() == R.id.chat) {
-                fragment = new ChatFragment();
+                fragment = new ChatMainFragment();
             } else if (item.getItemId() == R.id.gps) {
                 fragment = new GpsFragment();
             } else if (item.getItemId() == R.id.game) {

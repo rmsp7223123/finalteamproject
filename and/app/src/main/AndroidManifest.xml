@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
     <!-- 네이버 지도 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-
-    <!-- sms 보내기 권한 -->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" /> <!-- sms 보내기 권한 -->
     <uses-feature
         android:name="android.hardware.telephony"
         android:required="true" />
@@ -58,12 +55,11 @@
         </intent>
     </queries>
 
-    <!-- 네이버 지도 움직이면 어플 종료되는 증상 : 하드웨어 가속 끔 -->
     <application
-        android:hardwareAccelerated="false"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -71,7 +67,9 @@
         android:theme="@style/Project02.LastProject"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
+        <activity
+            android:name=".chat.InCallActivity"
+            android:exported="false" />
         <!-- 네이버지도 클라이언트 -->
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
