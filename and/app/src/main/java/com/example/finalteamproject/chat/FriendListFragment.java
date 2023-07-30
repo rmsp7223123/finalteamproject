@@ -13,10 +13,13 @@ import com.example.finalteamproject.databinding.FragmentFriendListBinding;
 
 public class FriendListFragment extends Fragment {
     FragmentFriendListBinding binding;
+    FriendListAdapter adapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentFriendListBinding.inflate(inflater,container,false);
+        adapter = new FriendListAdapter();
+        binding.recvFriendList.setAdapter(adapter);
         return binding.getRoot();
     }
 }
