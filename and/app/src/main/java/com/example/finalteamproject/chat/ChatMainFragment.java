@@ -33,6 +33,7 @@ public class ChatMainFragment extends Fragment {
         binding.containerLinearOpen.setOnClickListener(view -> {
             binding.containerLinearOpen.setVisibility(View.INVISIBLE);
             showNavigationRail();
+            binding.navigationRail.bringToFront();
         });
 //        binding.navigationRail.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
 //            @Override
@@ -62,6 +63,7 @@ public class ChatMainFragment extends Fragment {
                 showNavigationRail();
             }
             manager.beginTransaction().replace(R.id.container_frame_call_msg,fragment).commit();
+            binding.navigationRail.bringToFront();
             return true;
         });
     }
