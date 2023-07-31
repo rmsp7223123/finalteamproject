@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".chat.MessageFragment">
+    tools:context=".chat.MessageFragment"
+    android:orientation="vertical"
+    android:layout_marginHorizontal="20dp">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ImageView
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/haerin2"
+        android:layout_gravity="right"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/recv_message"/>
 
-</FrameLayout>
+</LinearLayout>

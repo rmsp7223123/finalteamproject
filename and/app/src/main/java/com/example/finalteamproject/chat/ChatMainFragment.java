@@ -59,6 +59,8 @@ public class ChatMainFragment extends Fragment {
                 hideNavigationRail();
             } else if(item.getItemId() == R.id.friend_list){
                 fragment = new FriendListFragment();
+            } else if (item.getItemId() == R.id.message) {
+                fragment = new MessageFragment();
             }else {
                 showNavigationRail();
             }
