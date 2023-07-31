@@ -21,6 +21,8 @@ public class ChatMainFragment extends Fragment {
     FragmentChatBinding binding;
     private boolean isRailVisible = true;
     FragmentManager manager;
+
+    Fragment fragment = null;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,9 +56,12 @@ public class ChatMainFragment extends Fragment {
             if (item.getItemId() == R.id.close) {
                 binding.containerLinearOpen.setVisibility(View.VISIBLE);
                 hideNavigationRail();
-            } else {
+            } else if(item.getItemId() == R.id.friend_list){
+                fragment = new FriendListFragment();
+            }else {
                 showNavigationRail();
             }
+            manager.beginTransaction().replace(R.id.container_frame_call_msg,fragment).commit();
             return true;
         });
     }
