@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.finalteamproject.databinding.ItemFriendListBinding;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.ViewHolder> {
     ItemFriendListBinding binding;
