@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.finalteamproject.databinding.ViewpagerMainSliderBinding;
 
 public class Viewpager_main_adapter extends RecyclerView.Adapter<Viewpager_main_adapter.ViewHolder> {
@@ -33,6 +34,7 @@ public class Viewpager_main_adapter extends RecyclerView.Adapter<Viewpager_main_
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         int actualPosition = position % sliderImage.length;
         holder.binding.imageSlider.setImageResource(sliderImage[actualPosition]);
+        Glide.with(context).load(sliderImage[actualPosition]).apply(new RequestOptions().circleCrop()).into(holder.binding.imageSlider);
 
     }
 
