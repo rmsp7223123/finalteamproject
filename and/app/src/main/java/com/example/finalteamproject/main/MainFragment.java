@@ -1,5 +1,7 @@
 package com.example.finalteamproject.main;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -82,6 +84,27 @@ public class MainFragment extends Fragment {
 
         binding.imgvLeft.setOnClickListener(v -> {
             binding.imgViewpager.setCurrentItem(binding.imgViewpager.getCurrentItem()-1);
+        });
+
+        binding.imgvAdd.setOnClickListener(view -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+            builder.setTitle("닉네임")
+                    .setMessage("친구 추가하기");
+            builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
         });
 
 
