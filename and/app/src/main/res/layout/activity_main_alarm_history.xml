@@ -32,13 +32,13 @@
 
         <ImageView
             android:layout_marginEnd="20dp"
-            android:id="@+id/imgv_alarm"
+            android:id="@+id/imgv_alarm_clean"
             android:layout_marginStart="20dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/change_alarm"/>
+            android:src="@drawable/baseline_cancel_24"/>
 
     </RelativeLayout>
 
@@ -80,6 +80,7 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
+            android:id="@+id/tv_alarm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="알람이 없습니다."

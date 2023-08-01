@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.finalteamproject.HideActionBar;
 import com.example.finalteamproject.databinding.ActivityMainAlarmHistoryBinding;
@@ -13,6 +14,7 @@ import com.example.finalteamproject.setting.ChangeAlarmActivity;
 public class MainAlarmHistoryActivity extends AppCompatActivity {
 
     ActivityMainAlarmHistoryBinding binding;
+    int itemCnt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,10 +28,12 @@ public class MainAlarmHistoryActivity extends AppCompatActivity {
         binding.imgvBack.setOnClickListener(v -> {
             finish();
         });
-        binding.imgvAlarm.setOnClickListener(v -> {
-            Intent intent = new Intent(this, ChangeAlarmActivity.class);
-            startActivity(intent);
+        binding.imgvAlarmClean.setOnClickListener(view -> {
         });
+        itemCnt = adapter.getItemCount();
+        if (itemCnt > 0) {
+            binding.containerLinearAlarm.setVisibility(View.INVISIBLE);
+        }
         // 알람 기록이 있을때 -- > 어댑터 리턴 사이즈가 0이 아닐 때 프레임 레이아웃안에 linear 안보이게 추가하기
     }
 }
