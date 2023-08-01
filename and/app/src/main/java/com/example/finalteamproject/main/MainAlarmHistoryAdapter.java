@@ -9,9 +9,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.finalteamproject.databinding.ItemAlarmHistoryBinding;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainAlarmHistoryAdapter extends RecyclerView.Adapter<MainAlarmHistoryAdapter.ViewHolder> {
 
     ItemAlarmHistoryBinding binding;
+    private ArrayList<String> dataList;
+
+    public ArrayList<String> getDataList() {
+        return dataList;
+    }
+
+    public MainAlarmHistoryAdapter(ArrayList<String> dataList) {
+        this.dataList = dataList;
+    }
 
     @NonNull
     @Override
@@ -26,7 +38,7 @@ public class MainAlarmHistoryAdapter extends RecyclerView.Adapter<MainAlarmHisto
 
     @Override
     public int getItemCount() {
-        return 0;
+        return dataList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
