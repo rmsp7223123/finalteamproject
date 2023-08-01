@@ -9,8 +9,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.finalteamproject.databinding.ItemFriendListBinding;
 
+import java.util.ArrayList;
+
 public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.ViewHolder> {
     ItemFriendListBinding binding;
+    ArrayList<FriendListDTO> list;
+
+    public FriendListAdapter(ArrayList<FriendListDTO> list) {
+        this.list = list;
+    }
 
     @NonNull
     @Override
@@ -21,11 +28,13 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.binding.imgvProfileImg.setImageResource(list.get(position).getImgRes());
+        holder.binding.tvNickname.setText(list.get(position).getNickname());
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return list.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
