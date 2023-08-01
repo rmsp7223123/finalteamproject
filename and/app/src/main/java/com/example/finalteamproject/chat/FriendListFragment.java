@@ -54,12 +54,13 @@ public class FriendListFragment extends Fragment {
         list.add(new FriendListDTO(R.drawable.minji10, "닉네임2"));
         list.add(new FriendListDTO(R.drawable.hanni9, "닉네임3"));
         list.add(new FriendListDTO(R.drawable.danielle11, "닉네임4"));
-        list.add(new FriendListDTO(R.drawable.hyein11, "닉네임5"));
+        list.add(new FriendListDTO(R.drawable.hyein11, "5닉네임"));
         return list;
     }
     private void filterList(String query) {
         filteredList.clear();
-        for (FriendListDTO friend : originalList) {
+        for (int i = 0; i < originalList.size(); i++) {
+            FriendListDTO friend = originalList.get(i);
             if (friend.getNickname().toLowerCase().contains(query.toLowerCase())) {
                 filteredList.add(friend);
             }
