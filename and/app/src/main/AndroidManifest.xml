@@ -68,9 +68,11 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".chat.InCallActivity"
+            android:name=".setting.SetPasswordActivity"
             android:exported="false" />
-        <!-- 네이버지도 클라이언트 -->
+        <activity
+            android:name=".chat.InCallActivity"
+            android:exported="false" /> <!-- 네이버지도 클라이언트 -->
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="80ghgk6580" />
