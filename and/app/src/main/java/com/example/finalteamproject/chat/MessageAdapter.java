@@ -9,8 +9,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.finalteamproject.databinding.ItemMessageBinding;
 
+import java.util.ArrayList;
+
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder>{
     ItemMessageBinding binding;
+
+    ArrayList<MessageDTO> list;
+
+    public MessageAdapter(ArrayList<MessageDTO> list) {
+        this.list = list;
+    }
 
     @NonNull
     @Override
@@ -21,12 +29,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+        holder.binding.imgvProfileImg.setImageResource(list.get(position).getImgRes());
+        holder.binding.tvNickname.setText(list.get(position).getNickname());
+        holder.binding.tvContent.setText(list.get(position).getContent());
+        holder.binding.tvTime.setText(list.get(position).getTime());
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return list.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

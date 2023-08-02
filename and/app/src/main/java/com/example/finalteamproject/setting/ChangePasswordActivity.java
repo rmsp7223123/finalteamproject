@@ -19,6 +19,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         binding.imgvBack.setOnClickListener(v -> {
             finish();
         });
+        // 비밀번호나 패턴이 있을때 어떻게 할지 추가 및 수정하기
         binding.btnPassword.setOnClickListener(view -> {
             intent = new Intent(this, SetPasswordActivity.class);
             startActivity(intent);
