@@ -25,7 +25,7 @@ public class LoginFavorActivity extends AppCompatActivity {
         binding = ActivityLoginFavorBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        new HideActionBar().hideActionBar(this);
+//        new HideActionBar().hideActionBar(this);
 
         binding.imgvBack.setOnClickListener(v -> {
             finish();

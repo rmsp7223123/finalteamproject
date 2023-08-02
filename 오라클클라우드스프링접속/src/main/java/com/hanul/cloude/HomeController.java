@@ -34,15 +34,11 @@ public class HomeController {
 	
 	@RequestMapping("test")
 	public String test() {
-		sql.selectOne("customer.mapper.test");
+		int test = sql.selectOne("customer.mapper.test");
+		System.out.println(test);
 		return "a";
 	}
 	
-	
-	@RequestMapping("/")
-	public String tesaat() {
-		return "a";
-	}
 	
 	
 }
