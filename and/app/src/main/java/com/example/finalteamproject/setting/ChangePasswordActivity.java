@@ -23,5 +23,9 @@ public class ChangePasswordActivity extends AppCompatActivity {
             intent = new Intent(this, SetPasswordActivity.class);
             startActivity(intent);
         });
+        binding.btnPattern.setOnClickListener(view -> {
+            intent = new Intent(this, SetPatternActivity.class);
+            startActivity(intent);
+        });
     }
 }
