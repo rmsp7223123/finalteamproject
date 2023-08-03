@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 
+import cloud.member.EphoneVO;
 import cloud.member.MemberVO;
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
@@ -60,8 +61,28 @@ public class LoginController {
 	
 	@RequestMapping(value="/checkPhone", produces = "text/html;charset=utf-8")
 	public String checkPhone(String phoneNumber) {
-		MemberVO info = sql.selectOne("login.checkPhone", phoneNumber);
-		return info!=null ? new Gson().toJson(info) : "없음";
+		return new Gson().toJson(sql.selectOne("login.checkPhone", phoneNumber));
+	}
+	
+
+	@RequestMapping(value="/checkId", produces = "text/html;charset=utf-8")
+	public String checkId(String id) {
+		return new Gson().toJson(sql.selectOne("login.checkId", id));
+	}
+	
+	@RequestMapping(value="/checkNickname", produces = "text/html;charset=utf-8")
+	public String checkNickname(String nickname) {
+		return new Gson().toJson(sql.selectOne("login.checkNickname", nickname));
+	}
+	
+	@RequestMapping(value="/join", produces = "text/html;charset=utf-8")
+	public String join(MemberVO vo) {
+		return sql.insert("login.join", vo)==1 ? "성공" : "실패";
+	}
+	
+	@RequestMapping(value="/godok", produces = "text/html;charset=utf-8")
+	public String godok(EphoneVO vo) {
+		return sql.insert("login.godok", vo)==1 ? "성공" : "실패";
 	}
 	
 	

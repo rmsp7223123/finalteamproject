@@ -5,6 +5,28 @@
 	<select id="checkPhone" resultType="cloud.member.MemberVO">
 		select * from member where member_phone = #{phoneNumber}
 	</select>
+	
+	<select id="checkId" resultType="cloud.member.MemberVO">
+		select * from member where member_id = #{id}
+	</select>
+	
+	<select id="checkNickname" resultType="cloud.member.MemberVO">
+		select * from member where member_id = #{nickname}
+	</select>
+	
+	<insert id="join">
+		insert into member (MEMBER_ID, MEMBER_PW, MEMBER_NAME, MEMBER_NICKNAME, 
+							MEMBER_BIRTH, MEMBER_GENDER, MEMBER_PHONE, MEMBER_PROFILEIMG, 
+							MEMBER_PHONE_ID)
+		values (#{member_id}, #{member_pw}, #{member_name}, #{member_nickname},
+				to_date('19'||substr(#{member_birth}, 1, 2)||'-'||substr(#{member_birth}, 3, 2)||'-'||substr(#{member_birth}, -2), 'yyyy-mm-dd'), 
+				#{member_gender}, #{member_phone}, #{member_profileimg}, #{member_phone_id})
+	</insert>
+	
+	<insert id="godok">
+		insert into ephone (MEMBER_ID, EPHONE_NAME, EPHONE_PHONE, EPHONE_RELATION, EPHONE_PHONE_ID)
+		values (#{member_id}, #{ephone_name}, #{ephone_phone}, #{ephone_relation}, #{ephone_phone_id})
+	</insert>
 
 
 </mapper>

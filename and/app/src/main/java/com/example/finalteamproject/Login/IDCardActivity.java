@@ -9,7 +9,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,6 +23,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,7 +53,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -65,7 +73,7 @@ public class IDCardActivity extends AppCompatActivity {
     ActivityIdcardBinding binding;
     ActivityResultLauncher<Intent> launcher;
     private final int REQ_GALLERY = 1000;
-    private static final String CLOUD_VISION_API_KEY = "AIzaSyBs9Dsdkv3uXzbwRvNEtBW9kcvj8hvQDSk";
+    private static final String CLOUD_VISION_API_KEY = "AIzaSyDnbv8mUCDz4JLZ6M2Q7Xsn7v20gK9bU84";
     private static final String ANDROID_CERT_HEADER = "X-Android-Cert";
     private static final String ANDROID_PACKAGE_HEADER = "X-Android-Package";
     private static final int MAX_LABEL_RESULTS = 10;
@@ -112,18 +120,18 @@ public class IDCardActivity extends AppCompatActivity {
 
         binding.cvNext.setOnClickListener(v -> {
             Log.d("edtRgNumber", "onCreate: "+binding.edtRgNumber.getText().toString());
-            if(binding.edtRgNumber.getText().toString().length()>0){
+//            if(binding.edtRgNumber.getText().toString().length()>0){
                 Intent intent = new Intent(this, LoginInfoActivity.class);
-                intent.putExtra("name", name);
-                intent.putExtra("gender", gender);
-                intent.putExtra("birth", birth);
+                LoginVar.name = "홍길동";
+                LoginVar.birth = "000101";
+                LoginVar.gender = "남";
                 Log.d("result name", "onCreate: "+name);
                 Log.d("result gender", "onCreate: "+gender);
                 Log.d("result birth", "onCreate: "+birth);
                 startActivity(intent);
-            }else {
-                Toast.makeText(this, "주민등록증 인증을 완료해주세요", Toast.LENGTH_SHORT).show();
-            }
+//            }else {
+//                Toast.makeText(this, "주민등록증 인증을 완료해주세요", Toast.LENGTH_SHORT).show();
+//            }
         });
 
     }
@@ -160,7 +168,7 @@ public class IDCardActivity extends AppCompatActivity {
                 try {
                     name = result.substring(result.indexOf("증")+2, result.indexOf("("));
                     birth = result.substring(result.indexOf("-")-6, result.indexOf("-"));
-                    gender = result.substring(result.indexOf("-")+1, result.indexOf("-")+2) == "1" ? "남" : "여";
+                    gender = Integer.parseInt(result.substring(result.indexOf("-")+1, result.indexOf("-")+2))%2==1 ? "남" : "여";
                     tv_result.setText(result.substring(result.indexOf("-")-6, result.indexOf("-")+2));
                 }catch (Exception e) {
                     Toast.makeText(activity, "신분증을 선택해주세요", Toast.LENGTH_SHORT).show();
