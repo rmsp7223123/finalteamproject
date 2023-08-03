@@ -21,7 +21,7 @@ public class FriendListFragment extends Fragment {
     FriendListAdapter adapter;
 
     private List<FriendListDTO> originalList; // 전체 친구 목록
-    private List<FriendListDTO> filteredList; // 필터링된 친구 목록
+    private ArrayList<FriendListDTO> filteredList; // 필터링된 친구 목록
 
 
     @Override
@@ -65,6 +65,7 @@ public class FriendListFragment extends Fragment {
                 filteredList.add(friend);
             }
         }
+        adapter.list =  filteredList;
         adapter.notifyDataSetChanged();
     }
 }
