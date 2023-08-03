@@ -37,6 +37,9 @@ android {
 }
 
 dependencies {
+    // circleImageView
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
     // 비밀번호 패턴
     implementation 'io.github.itsxtt:pattern-lock:0.2.0'
     implementation 'com.andrognito.patternlockview:patternlockview:1.0.0'

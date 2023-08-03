@@ -39,7 +39,6 @@ public class MainFragment extends Fragment {
         int initialPosition = adapter.getItemCount() / 2;
         binding.imgViewpager.setAdapter(adapter);
         binding.imgViewpager.setCurrentItem(initialPosition, false);
-        Glide.with(getContext()).load(R.drawable.haerin2).apply(new RequestOptions().circleCrop()).into(binding.imgvSmallProfile);
         binding.imgViewpager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             int currentState = 0;
             int currentPos = 0;
