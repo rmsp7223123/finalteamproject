@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,40 +6,7 @@
     tools:context=".chat.ChatMainFragment"
     android:orientation="horizontal">
 
-    <!-- 네비게이션 레일을 먼저 추가 -->
-    <com.google.android.material.navigationrail.NavigationRailView
-        android:id="@+id/navigation_rail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:labelVisibilityMode="labeled"
-        app:menu="@menu/navigation_rail_menu"/>
 
-    <!-- 프레임 레이아웃 이미지를 그 다음에 추가 -->
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:id="@+id/container_linear_open"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/forward"/>
-
-            <TextView
-                android:textSize="12dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="열기"/>
-
-        </LinearLayout>
-    </FrameLayout>
 
     <FrameLayout
         android:id="@+id/container_frame_call_msg"
@@ -47,15 +14,93 @@
         android:layout_height="match_parent"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_gravity="bottom|right"
-        app:elevation="0dp"
-        app:useCompatPadding="true"
-        android:src="@drawable/baseline_format_list_bulleted_24_white"
-        app:tint="@null"
-        app:backgroundTint="#FFC81E"
-        android:id="@+id/fltbtn_home"
+        android:id="@+id/fltbtn_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_anchor="@id/bottomAppBar" />
+        android:layout_gravity="end"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="#FFC81E"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/baseline_add_24"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-</FrameLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fltbtn_friendList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        app:fabSize="normal"
+        android:backgroundTint="#FFC81E"
+        app:layout_constraintBottom_toTopOf="@+id/fltbtn_menu"
+        app:layout_constraintEnd_toEndOf="@+id/fltbtn_menu"
+        app:layout_constraintStart_toStartOf="@+id/fltbtn_menu"
+        app:srcCompat="@drawable/friend_list" />
+
+    <TextView
+        android:textSize="20dp"
+        android:textColor="@color/black"
+        android:id="@+id/tv_friendList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="친구목록"
+        app:layout_constraintBottom_toBottomOf="@+id/fltbtn_friendList"
+        app:layout_constraintEnd_toStartOf="@+id/fltbtn_friendList"
+        app:layout_constraintTop_toTopOf="@+id/fltbtn_friendList" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:backgroundTint="#FFC81E"
+        android:id="@+id/fltbtn_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toTopOf="@+id/fltbtn_friendList"
+        app:layout_constraintEnd_toEndOf="@+id/fltbtn_friendList"
+        app:layout_constraintStart_toStartOf="@+id/fltbtn_friendList"
+        app:srcCompat="@drawable/baseline_chat_24" />
+
+    <TextView
+        android:textSize="20dp"
+        android:textColor="@color/black"
+        android:id="@+id/tv_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="문자"
+        app:layout_constraintBottom_toBottomOf="@+id/fltbtn_message"
+        app:layout_constraintEnd_toStartOf="@+id/fltbtn_message"
+        app:layout_constraintTop_toTopOf="@+id/fltbtn_message" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:backgroundTint="#FFC81E"
+        android:id="@+id/fltbtn_call"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toTopOf="@+id/fltbtn_message"
+        app:layout_constraintEnd_toEndOf="@+id/fltbtn_message"
+        app:layout_constraintStart_toStartOf="@+id/fltbtn_message"
+        app:srcCompat="@drawable/baseline_call_24" />
+
+    <TextView
+        android:textSize="20dp"
+        android:textColor="@color/black"
+        android:id="@+id/tv_call"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="전화"
+        app:layout_constraintBottom_toBottomOf="@+id/fltbtn_call"
+        app:layout_constraintEnd_toStartOf="@+id/fltbtn_call"
+        app:layout_constraintTop_toTopOf="@+id/fltbtn_call" />
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
