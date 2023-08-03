@@ -57,6 +57,18 @@ public class ChatMainFragment extends Fragment {
                 isAllFabVisible = false;
             }
         });
+        binding.fltbtnFriendList.setOnClickListener(v -> {
+            fragment = new FriendListFragment();
+            manager.beginTransaction().replace(R.id.container_frame_call_msg, fragment).commit();
+        });
+        binding.fltbtnCall.setOnClickListener(v -> {
+            fragment = new CallFragment();
+            manager.beginTransaction().replace(R.id.container_frame_call_msg, fragment).commit();
+        });
+        binding.fltbtnMessage.setOnClickListener(v -> {
+            fragment = new MessageFragment();
+            manager.beginTransaction().replace(R.id.container_frame_call_msg, fragment).commit();
+        });
         return binding.getRoot();
     }
 
