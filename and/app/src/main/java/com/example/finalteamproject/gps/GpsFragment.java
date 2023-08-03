@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -30,8 +31,11 @@ import com.naver.maps.map.MapFragment;
 import com.naver.maps.map.MapView;
 import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.OnMapReadyCallback;
+import com.naver.maps.map.UiSettings;
+import com.naver.maps.map.overlay.LocationOverlay;
 import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.util.FusedLocationSource;
+import com.naver.maps.map.util.MarkerIcons;
 
 //지도 나오는 첫 페이지
 public class GpsFragment extends Fragment implements OnMapReadyCallback {
@@ -56,6 +60,8 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
             fm.beginTransaction().add(R.id.map, mapFragment).commit();
         }
         mapFragment.getMapAsync(this);
+
+        //현재 위치 생성, naverMap에 지정
         locationSource =
                 new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
 
@@ -91,7 +97,7 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
         naverMap.setLocationSource(locationSource); //내 위치
         naverMap.setLocationTrackingMode(LocationTrackingMode.Follow); //위치 추적 모드
 
-        //내 위치 위도, 경도 로그
+        //내 위치 위도, 경도 이동
         naverMap.addOnLocationChangeListener(new NaverMap.OnLocationChangeListener() {
             @Override
             public void onLocationChange(@NonNull Location location) {
@@ -101,10 +107,24 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                 Marker marker = new Marker();
                 marker.setPosition(new LatLng(lat, lon));
                 marker.setMap(naverMap);
+                //마커 디자인
+                marker.setIcon(MarkerIcons.BLACK); //색상
+                marker.setIconTintColor(Color.RED);
+                marker.setWidth(70); //마커사이즈
+                marker.setHeight(100);
+
+                //현재 위치 오버레이 생성
+//                LocationOverlay locationOverlay = naverMap.getLocationOverlay();
+//                locationOverlay.setVisible(true);
+//                locationOverlay.setPosition(new LatLng(lat, lon));
+//                locationOverlay.setCircleRadius(100);
 
                 Log.d("위치", "위도, 경도: "+lat+", "+lon);
             }
         });
     }
+
+
+
 }
 
