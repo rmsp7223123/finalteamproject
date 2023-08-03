@@ -51,6 +51,8 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+
+
     }
 
     private final int REQ_PERMISSION = 1000;
@@ -134,5 +136,7 @@ public class LoginActivity extends AppCompatActivity {
         intent.setData(Uri.parse("package:"+getApplicationContext().getPackageName()));
         startActivity(intent);
     }
+
+
 
 }

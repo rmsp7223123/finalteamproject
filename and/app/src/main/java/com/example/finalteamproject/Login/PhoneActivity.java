@@ -64,12 +64,12 @@ public class PhoneActivity extends AppCompatActivity {
         });
 
         binding.cvSubmit.setOnClickListener(v -> {
-            binding.rlMessage.setVisibility(View.VISIBLE);
-            binding.tvMessage.setVisibility(View.VISIBLE);
-            binding.tvTimer.setVisibility(View.VISIBLE);
-            binding.cvDone.setVisibility(View.VISIBLE);
-            binding.cvSubmit.setVisibility(GONE);
             if(Pattern.matches("^01(?:0|1|[6-9])+(?:\\d{3}|\\d{4})+\\d{4}$", binding.edtPhone.getText().toString())){
+                binding.rlMessage.setVisibility(View.VISIBLE);
+                binding.tvMessage.setVisibility(View.VISIBLE);
+                binding.tvTimer.setVisibility(View.VISIBLE);
+                binding.cvDone.setVisibility(View.VISIBLE);
+                binding.cvSubmit.setVisibility(GONE);
                 CommonConn conn = new CommonConn(this, "login/sendSms");
                 conn.addParamMap("phoneNumber", binding.edtPhone.getText().toString());
                 conn.onExcute((isResult, data) -> {
@@ -128,8 +128,8 @@ public class PhoneActivity extends AppCompatActivity {
                 conn.onExcute((isResult, data) -> {
                     CommonVar.logininfo  = new Gson().fromJson(data, MemberVO.class);
                     if(CommonVar.logininfo ==null){
+                        LoginVar.phone = binding.edtPhone.getText().toString();
                         Intent intent = new Intent(this, IDCardActivity.class);
-                        intent.putExtra("phoneNumber", binding.edtPhone.getText().toString());
                         startActivity(intent);
                     }else {
                         Intent intent = new Intent(this, MainActivity.class);

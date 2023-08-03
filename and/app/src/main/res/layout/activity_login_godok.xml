@@ -119,7 +119,7 @@
     <Spinner
         android:id="@+id/spn_relation"
         android:textColor="#AEAEAE"
-        android:layout_width="95dp"
+        android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:background="@drawable/border_radius0"
         android:paddingHorizontal="15dp"
