@@ -14,7 +14,7 @@
     <item
         android:id="@+id/fab"
         android:title=""
-        android:enabled="false"/>
+        app:showAsAction="always"/>
     <item
         android:id="@+id/game"
         android:title="게임"

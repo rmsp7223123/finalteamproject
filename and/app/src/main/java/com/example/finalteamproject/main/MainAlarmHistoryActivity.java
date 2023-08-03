@@ -34,6 +34,7 @@ public class MainAlarmHistoryActivity extends AppCompatActivity {
         binding.imgvAlarmClean.setOnClickListener(view -> {
             ArrayList<String> dataList = adapter.getDataList();
             dataList.clear();
+            binding.containerLinearAlarm.setVisibility(View.VISIBLE);
             adapter.notifyDataSetChanged();
         });
         itemCnt = adapter.getItemCount();

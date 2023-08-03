@@ -27,6 +27,9 @@ public class MessageFragment extends Fragment {
         binding.recvMessage.setAdapter(adapter);
         binding.recvMessage.setLayoutManager(new LinearLayoutManager(getContext()));
         Glide.with(getContext()).load(R.drawable.baseline_add_circle_24_white).apply(new RequestOptions().circleCrop()).into(binding.imgvAdd);
+        binding.imgvAdd.setOnClickListener(v -> {
+            // 친구목록을 프로필 이미지, 닉네임이 보이게 다이얼로그로 보여주고 클릭시 이미있는 채팅방 연결 혹은 새로운 채팅방 만들기 
+        });
         return binding.getRoot();
     }
 

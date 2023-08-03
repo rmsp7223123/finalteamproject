@@ -38,7 +38,7 @@
          app:cardElevation="0dp"
          app:cardCornerRadius="30dp">
 
-         <ImageView
+         <de.hdodenhof.circleimageview.CircleImageView
              android:id="@+id/imgv_profile_img"
             android:scaleType="centerCrop"
              android:layout_width="60dp"
