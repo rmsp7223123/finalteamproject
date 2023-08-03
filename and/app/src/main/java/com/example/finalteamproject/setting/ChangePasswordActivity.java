@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.databinding.ActivityChangePasswordBinding;
@@ -11,6 +12,8 @@ import com.example.finalteamproject.databinding.ActivityChangePasswordBinding;
 public class ChangePasswordActivity extends AppCompatActivity {
     ActivityChangePasswordBinding binding;
     Intent intent;
+
+    public static String password = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,7 +22,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
         binding.imgvBack.setOnClickListener(v -> {
             finish();
         });
-        // 비밀번호나 패턴이 있을때 어떻게 할지 추가 및 수정하기
         binding.btnPassword.setOnClickListener(view -> {
             intent = new Intent(this, SetPasswordActivity.class);
             startActivity(intent);
@@ -28,5 +30,15 @@ public class ChangePasswordActivity extends AppCompatActivity {
             intent = new Intent(this, SetPatternActivity.class);
             startActivity(intent);
         });
+        binding.btnDeletePassword.setOnClickListener(v -> {
+            if(password.length() > 4) {
+                // 패턴
+            } else if (!password.equals("") && password.length()<5){
+                // 비밀번호
+            } else {
+                Toast.makeText(this, "비밀번호가 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
+        // 비밀번호가 있는경우 비밀번호 재입력, 패턴이 있는경우 패턴 재입력 후 비밀번호 삭제되게 추가하기
     }
 }

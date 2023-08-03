@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.andrognito.patternlockview.listener.PatternLockViewListener;
 import com.andrognito.patternlockview.utils.PatternLockUtils;
@@ -44,8 +45,9 @@ public class SetPatternActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("password", PatternLockUtils.patternToString(binding.patternLockView, pattern));
                 editor.apply();
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+//                startActivity(intent);
+                Toast.makeText(SetPatternActivity.this, sharedPreferences.getString("password","0") + " 확인용 ", Toast.LENGTH_SHORT).show();
                 finish();
             }
 

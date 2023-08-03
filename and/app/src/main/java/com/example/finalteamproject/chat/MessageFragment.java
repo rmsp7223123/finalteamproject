@@ -1,5 +1,7 @@
 package com.example.finalteamproject.chat;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -28,7 +31,27 @@ public class MessageFragment extends Fragment {
         binding.recvMessage.setLayoutManager(new LinearLayoutManager(getContext()));
         Glide.with(getContext()).load(R.drawable.baseline_add_circle_24_white).apply(new RequestOptions().circleCrop()).into(binding.imgvAdd);
         binding.imgvAdd.setOnClickListener(v -> {
-            // 친구목록을 프로필 이미지, 닉네임이 보이게 다이얼로그로 보여주고 클릭시 이미있는 채팅방 연결 혹은 새로운 채팅방 만들기 
+            Bundle bundle = new Bundle();
+            // 친구목록을 프로필 이미지, 닉네임이 보이게 다이얼로그로 보여주고 클릭시 이미있는 채팅방 연결 혹은 새로운 채팅방 만들기
+            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+            builder.setTitle("친구목록");
+            builder.setMessage(bundle.getString("nickname"));
+            builder.setPositiveButton("취소", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
         });
         return binding.getRoot();
     }

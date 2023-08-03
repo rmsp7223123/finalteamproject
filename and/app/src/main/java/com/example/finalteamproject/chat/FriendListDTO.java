@@ -1,6 +1,8 @@
 package com.example.finalteamproject.chat;
 
-public class FriendListDTO {
+import java.io.Serializable;
+
+public class FriendListDTO implements Serializable {
     private int imgRes;
     private String nickname;
 

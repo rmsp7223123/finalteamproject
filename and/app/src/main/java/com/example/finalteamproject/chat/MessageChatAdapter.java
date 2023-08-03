@@ -1,6 +1,7 @@
 package com.example.finalteamproject.chat;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,11 @@ public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.binding.containerLinearMessageChat.setOnClickListener(v -> {
+            Intent intent = new Intent(context, MessageChatActivity.class);
+            context.startActivity(intent);
+        });
+
         
 
     }

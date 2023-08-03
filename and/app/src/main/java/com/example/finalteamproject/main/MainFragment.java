@@ -90,13 +90,13 @@ public class MainFragment extends Fragment {
             AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
             builder.setTitle("닉네임")
                     .setMessage("친구 추가하기");
-            builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            builder.setPositiveButton("취소", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
                 }
             });
-            builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            builder.setNegativeButton("확인", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();

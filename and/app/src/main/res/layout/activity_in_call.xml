@@ -37,15 +37,14 @@
     <androidx.cardview.widget.CardView
         android:layout_marginTop="100dp"
         android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="#F60000"
+        android:backgroundTint="#F60000"
         app:cardElevation="0dp"
         app:cardCornerRadius="40dp">
 
-        <FrameLayout
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:background="#F60000">
+
 
             <ImageView
                 android:id="@+id/imgv_calloff"
@@ -54,7 +53,6 @@
                 android:layout_height="50dp"
                 android:src="@drawable/baseline_call_end_24"/>
 
-        </FrameLayout>
 
     </androidx.cardview.widget.CardView>
 
