@@ -46,4 +46,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_gravity="bottom|right"
+        app:elevation="0dp"
+        app:useCompatPadding="true"
+        android:src="@drawable/baseline_format_list_bulleted_24_white"
+        app:tint="@null"
+        app:backgroundTint="#FFC81E"
+        android:id="@+id/fltbtn_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/bottomAppBar" />
+
 </FrameLayout>
