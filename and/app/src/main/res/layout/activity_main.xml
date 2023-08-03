@@ -43,17 +43,25 @@
             app:menu="@menu/bottom_menu" />
     </com.google.android.material.bottomappbar.BottomAppBar>
 
+        <LinearLayout
+            android:layout_gravity="bottom|center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+
         app:elevation="0dp"
         app:useCompatPadding="true"
         android:src="@drawable/logo"
         app:tint="@null"
-        app:backgroundTint="#fff"
+        app:backgroundTint="#000"
         android:layout_gravity="bottom|center"
         android:id="@+id/fltbtn_home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_anchor="@id/bottomAppBar" />
+        </LinearLayout>
 
 
 
