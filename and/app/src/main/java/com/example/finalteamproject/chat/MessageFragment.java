@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.databinding.FragmentMessageBinding;
 
@@ -21,9 +23,10 @@ public class MessageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentMessageBinding.inflate(inflater,container,false);
-        adapter = new MessageAdapter(getList());
+        adapter = new MessageAdapter(getList(),getContext());
         binding.recvMessage.setAdapter(adapter);
         binding.recvMessage.setLayoutManager(new LinearLayoutManager(getContext()));
+        Glide.with(getContext()).load(R.drawable.baseline_add_circle_24_white).apply(new RequestOptions().circleCrop()).into(binding.imgvAdd);
         return binding.getRoot();
     }
 

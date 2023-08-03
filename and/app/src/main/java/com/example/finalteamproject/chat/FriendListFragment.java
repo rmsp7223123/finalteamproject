@@ -28,7 +28,7 @@ public class FriendListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentFriendListBinding.inflate(inflater,container,false);
-        adapter = new FriendListAdapter(getList());
+        adapter = new FriendListAdapter(getList(),getContext());
         binding.recvFriendList.setAdapter(adapter);
         binding.recvFriendList.setLayoutManager(new LinearLayoutManager(getContext()));
         originalList = getList();

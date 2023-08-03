@@ -1,5 +1,6 @@
 package com.example.finalteamproject.chat;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.finalteamproject.databinding.ItemMessageBinding;
 
 import java.util.ArrayList;
@@ -15,9 +18,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     ItemMessageBinding binding;
 
     ArrayList<MessageDTO> list;
+    Context context;
 
-    public MessageAdapter(ArrayList<MessageDTO> list) {
+    public MessageAdapter(ArrayList<MessageDTO> list, Context context) {
         this.list = list;
+        this.context = context;
     }
 
     @NonNull
@@ -33,6 +38,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         holder.binding.tvNickname.setText(list.get(position).getNickname());
         holder.binding.tvContent.setText(list.get(position).getContent());
         holder.binding.tvTime.setText(list.get(position).getTime());
+        Glide.with(context).load(list.get(position).getImgRes()).apply(new RequestOptions().circleCrop()).into(holder.binding.imgvProfileImg);
     }
 
     @Override

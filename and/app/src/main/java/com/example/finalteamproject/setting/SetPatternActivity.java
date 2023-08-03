@@ -3,13 +3,19 @@ package com.example.finalteamproject.setting;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import com.andrognito.patternlockview.listener.PatternLockViewListener;
+import com.andrognito.patternlockview.utils.PatternLockUtils;
+import com.example.finalteamproject.Login.LoginActivity;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.databinding.ActivitySetPatternBinding;
 import com.itsxtt.patternlock.PatternLockView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SetPatternActivity extends AppCompatActivity {
     ActivitySetPatternBinding binding;
@@ -21,20 +27,31 @@ public class SetPatternActivity extends AppCompatActivity {
         binding.imgvBack.setOnClickListener(v -> {
             finish();
         });
-        binding.patternLockView.setOnPatternListener(new PatternLockView.OnPatternListener() {
+        binding.patternLockView.addPatternLockListener(new PatternLockViewListener() {
             @Override
             public void onStarted() {
 
             }
 
             @Override
-            public void onProgress(@NonNull ArrayList<Integer> arrayList) {
+            public void onProgress(List<com.andrognito.patternlockview.PatternLockView.Dot> progressPattern) {
 
             }
 
             @Override
-            public boolean onComplete(@NonNull ArrayList<Integer> arrayList) {
-                return false;
+            public void onComplete(List<com.andrognito.patternlockview.PatternLockView.Dot> pattern) {
+                SharedPreferences sharedPreferences = getSharedPreferences("PREFS", 0);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("password", PatternLockUtils.patternToString(binding.patternLockView, pattern));
+                editor.apply();
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+
+            @Override
+            public void onCleared() {
+
             }
         });
     }
