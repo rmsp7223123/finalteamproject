@@ -37,6 +37,8 @@ android {
 }
 
 dependencies {
+    // 비밀번호 패턴
+    implementation 'io.github.itsxtt:pattern-lock:0.2.0'
 
     //naver maps api
     implementation 'androidx.appcompat:appcompat:1.6.0'

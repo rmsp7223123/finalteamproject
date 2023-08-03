@@ -11,20 +11,32 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="#123">
+        android:background="#FFC81E">
+
+        <ImageView
+            android:id="@+id/imgv_back"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/back"/>
 
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/baseline_lock_24_white"
             android:layout_gravity="center"
-            android:layout_marginBottom="50dp"/>
+
+            android:src="@drawable/baseline_lock_24_white" />
+
+
 
     </FrameLayout>
 
-    <LinearLayout
+    <com.itsxtt.patternlock.PatternLockView
+        android:id="@+id/patternLockView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"></LinearLayout>
+        android:layout_weight="1"/>
+
 
 </LinearLayout>

@@ -16,5 +16,11 @@ public class SetPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivitySetPasswordBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        binding.containerLinearPassword.setOnClickListener(v -> {
+            binding.imgvPw1.setImageResource(R.drawable.baseline_circle_24);
+        });
+        binding.imgvBack.setOnClickListener(v -> {
+            finish();
+        });
     }
 }
