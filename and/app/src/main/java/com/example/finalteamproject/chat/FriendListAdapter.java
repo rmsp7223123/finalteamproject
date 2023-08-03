@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.finalteamproject.R;
 import com.example.finalteamproject.databinding.ItemFriendListBinding;
 
 import java.util.ArrayList;
