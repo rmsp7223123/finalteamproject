@@ -1,6 +1,7 @@
 package com.example.finalteamproject.chat;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,10 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
         holder.binding.imgvProfileImg.setImageResource(list.get(position).getImgRes());
         holder.binding.tvNickname.setText(list.get(position).getNickname());
         Glide.with(context).load(list.get(position).getImgRes()).apply(new RequestOptions().circleCrop()).into(holder.binding.imgvProfileImg);
+        holder.binding.containerFrameCall.setOnClickListener(v -> {
+            Intent intent = new Intent(context, InCallActivity.class);
+            context.startActivity(intent);
+        });
     }
 
     @Override
