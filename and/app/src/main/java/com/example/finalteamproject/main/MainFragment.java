@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
@@ -39,6 +40,9 @@ public class MainFragment extends Fragment {
         int initialPosition = adapter.getItemCount() / 2;
         binding.imgViewpager.setAdapter(adapter);
         binding.imgViewpager.setCurrentItem(initialPosition, false);
+        MainBoardAdapter adapter1 = new MainBoardAdapter();
+        binding.recvBoard.setAdapter(adapter1);
+        binding.recvBoard.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.imgViewpager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             int currentState = 0;
             int currentPos = 0;

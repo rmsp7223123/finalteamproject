@@ -1,349 +1,368 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".main.MainFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".main.MainFragment">
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="10dp"
-        android:gravity="right"
-        android:layout_width="match_parent"
-        android:layout_height="40dp">
+        android:gravity="right">
 
         <ImageView
             android:id="@+id/imgv_alarm_history"
             android:layout_width="40dp"
             android:layout_height="match_parent"
-            android:src="@drawable/main_alarm_history"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginRight="20dp"
+            android:src="@drawable/main_alarm_history" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:cardElevation="0dp"
-            app:cardCornerRadius="20dp">
+            app:cardCornerRadius="20dp"
+            app:cardElevation="0dp">
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imgv_small_profile"
-                android:scaleType="centerCrop"
                 android:layout_width="40dp"
                 android:layout_height="match_parent"
-                android:src="@drawable/haerin2"/>
+                android:scaleType="centerCrop"
+                android:src="@drawable/haerin2" />
         </androidx.cardview.widget.CardView>
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp"
-        android:layout_gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-
-        <ImageView
-            android:id="@+id/imgv_left"
-            android:layout_marginLeft="15dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/arrow_left"
-            android:layout_gravity="center"
-            android:layout_marginRight="40dp"/>
-
-
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            app:cardElevation="0dp"
-            app:cardCornerRadius="100dp">
-
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/imgViewpager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
-
-        </androidx.cardview.widget.CardView>
-
-        <ImageView
-            android:id="@+id/imgv_right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/arrow_right"
-            android:layout_gravity="center"
-            android:layout_marginLeft="40dp"
-            />
-    </LinearLayout>
-
-    <RelativeLayout
-        android:gravity="center"
-        android:layout_marginBottom="20dp"
-        android:layout_gravity="center"
-        android:layout_width="match_parent"
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/imgv_add"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:src="@drawable/main_add"/>
-
-        <ImageView
-            android:id="@+id/imgv_message"
-            android:layout_marginLeft="50dp"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:src="@drawable/main_message_send"/>
-
-    </RelativeLayout>
-
     <LinearLayout
-        android:layout_gravity="bottom"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginBottom="20dp"
-        android:layout_marginHorizontal="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_marginBottom="10dp"
-
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="게시판"
-            android:textSize="26dp"
-            android:textColor="@color/black"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#000"/>
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp">
 
-        <LinearLayout
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:id="@+id/container_linear_tv"
-                android:gravity="center"
+            <ImageView
+                android:id="@+id/imgv_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_gravity="center"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="40dp"
+                android:src="@drawable/arrow_left" />
 
-                <ImageView
-                    android:id="@+id/imgv_tv"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/tv"/>
 
-                <TextView
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="TV"/>
+            <androidx.cardview.widget.CardView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                app:cardCornerRadius="100dp"
+                app:cardElevation="0dp">
 
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/container_linear_music"
-                android:layout_marginStart="25dp"
-                android:gravity="center"
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/imgViewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </androidx.cardview.widget.CardView>
+
+            <ImageView
+                android:id="@+id/imgv_right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/imgv_music"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/music"/>
-
-                <TextView
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="음악"/>
-
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/container_linear_movie"
-                android:layout_marginStart="25dp"
-                android:gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/imgv_movie"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/movie"/>
-
-                <TextView
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="영화"/>
-
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/container_linear_fashion"
-                android:layout_marginStart="25dp"
-                android:gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/imgv_fashion"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/fashion"/>
-
-                <TextView
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="패션"/>
-
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/container_linear_animal"
-                android:layout_marginStart="25dp"
-                android:gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/imgv_animal"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/animal"/>
-
-                <TextView
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="동물"/>
-
-            </LinearLayout>
-
+                android:layout_gravity="center"
+                android:layout_marginLeft="40dp"
+                android:src="@drawable/arrow_right" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_marginTop="20dp"
-            android:gravity="center"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:gravity="center">
 
-            <LinearLayout
-                android:id="@+id/container_linear_news"
-                android:gravity="center"
+            <ImageView
+                android:id="@+id/imgv_add"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="40dp"
+                android:src="@drawable/main_add" />
 
-                <ImageView
-                    android:id="@+id/imgv_news"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/news"/>
-
-                <TextView
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="뉴스"/>
-
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/container_linear_car"
-                android:layout_marginStart="25dp"
-                android:gravity="center"
+            <ImageView
+                android:id="@+id/imgv_message"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="40dp"
+                android:layout_marginLeft="50dp"
+                android:src="@drawable/main_message_send" />
 
-                <ImageView
-                    android:id="@+id/imgv_car"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/car"/>
+        </RelativeLayout>
 
-                <TextView
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="자동차"/>
-
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/container_linear_sports"
-                android:layout_marginStart="25dp"
-                android:gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/imgv_sports"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/sports"/>
-
-                <TextView
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="운동"/>
-
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/container_linear_game"
-                android:layout_marginStart="25dp"
-                android:gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/imgv_game"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/game"/>
-
-                <TextView
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="게임"/>
-
-            </LinearLayout>
-        </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginTop="20dp"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_gravity="bottom"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="20dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
+            <TextView
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="게시판"
+                android:textColor="@color/black"
+                android:textSize="26dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#000" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:id="@+id/container_linear_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgv_tv"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/tv" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="TV"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/container_linear_music"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgv_music"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/music" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="음악"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/container_linear_movie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgv_movie"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/movie" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="영화"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/container_linear_fashion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgv_fashion"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/fashion" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="패션"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/container_linear_animal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgv_animal"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/animal" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="동물"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:id="@+id/container_linear_news"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgv_news"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/news" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="뉴스"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/container_linear_car"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgv_car"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/car" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="자동차"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/container_linear_sports"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgv_sports"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/sports" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="운동"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/container_linear_game"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgv_game"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/game" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="게임"
+                        android:textSize="20dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recv_board"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1" />
+
+
+        </LinearLayout>
 
     </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 
 </LinearLayout>
