@@ -30,7 +30,8 @@ public class GpsAdapter extends RecyclerView.Adapter<GpsAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder h, int i) {
 
-        binding.itemSenior.setOnClickListener(v -> {
+
+        h.binding.itemSenior.setOnClickListener(v -> {
             Intent intent = new Intent(context, GpsDetailActivity.class);
             context.startActivity(intent);
         });

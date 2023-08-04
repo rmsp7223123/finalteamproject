@@ -1,17 +1,11 @@
 package com.example.finalteamproject.gps;
 
-import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,22 +14,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.finalteamproject.R;
+import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.databinding.FragmentGpsBinding;
 import com.naver.maps.geometry.LatLng;
-import com.naver.maps.map.CameraUpdate;
 import com.naver.maps.map.LocationTrackingMode;
 import com.naver.maps.map.MapFragment;
-import com.naver.maps.map.MapView;
 import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.OnMapReadyCallback;
-import com.naver.maps.map.UiSettings;
-import com.naver.maps.map.overlay.LocationOverlay;
 import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.util.FusedLocationSource;
 import com.naver.maps.map.util.MarkerIcons;
+
+import java.util.ArrayList;
 
 //지도 나오는 첫 페이지
 public class GpsFragment extends Fragment implements OnMapReadyCallback {
@@ -65,10 +57,11 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
         locationSource =
                 new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
 
-        //지도 외 메뉴
+        //경로당 리스트(리사이클러뷰)
         binding.recvGps.setAdapter(new GpsAdapter(getContext()));
         binding.recvGps.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        //(자주가는 경로당)더보기 메뉴
         binding.tvMore.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), GpsLikeActivity.class);
             startActivity(intent);
@@ -124,6 +117,12 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
         });
     }
 
+    public void seniorList(){
+        CommonConn conn = new CommonConn(getContext(), "gps/senior");
+        conn.onExcute((isResult, data) -> {
+            ArrayList<GpsVO> list = new ArrayList<>();
+        });
+    }
 
 
 }
