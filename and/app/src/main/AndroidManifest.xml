@@ -68,6 +68,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".game.RankActivity"
+            android:exported="false" />
+        <activity
             android:name=".game.GameActivity"
             android:exported="false" />
         <activity

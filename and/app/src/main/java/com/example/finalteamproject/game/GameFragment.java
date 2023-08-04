@@ -20,8 +20,15 @@ public class GameFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentGameBinding.inflate(inflater, container, false);
 
+        //게임시작 버튼
         binding.btnGameStart.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), GameActivity.class);
+            startActivity(intent);
+        });
+
+        //랭킹보기 버튼
+        binding.btnGameRank.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), RankActivity.class);
             startActivity(intent);
         });
 
