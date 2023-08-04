@@ -43,6 +43,9 @@ public class MainFragment extends Fragment {
         MainBoardAdapter adapter1 = new MainBoardAdapter();
         binding.recvBoard.setAdapter(adapter1);
         binding.recvBoard.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.containerLinearTv.setOnClickListener(v -> {
+            binding.imgvTv.setImageResource(R.drawable.tv_select);
+        });
         binding.imgViewpager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             int currentState = 0;
             int currentPos = 0;
