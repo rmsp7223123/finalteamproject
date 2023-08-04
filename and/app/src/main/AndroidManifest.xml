@@ -68,6 +68,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".game.GameActivity"
+            android:exported="false" />
+        <activity
+            android:name=".game.GameActivity00"
+            android:exported="false" />
+        <activity
             android:name=".chat.MessageChatActivity"
             android:exported="false" />
         <activity
