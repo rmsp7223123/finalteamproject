@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.Toast;
 
 import com.example.finalteamproject.HideActionBar;
 import com.example.finalteamproject.R;
+import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.main.MainActivity;
 import com.example.finalteamproject.Login.LoginActivity;
 import com.example.finalteamproject.databinding.ActivitySplashBinding;
@@ -21,20 +23,19 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivitySplashBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         //new HideActionBar().hideActionBar(this);
 
-        new Handler().postDelayed(() -> {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            finish();
-        }, 2000);
-
 //        new Handler().postDelayed(() -> {
-//            Intent intent = new Intent(this, LoginActivity.class);
+//            Intent intent = new Intent(this, MainActivity.class);
 //            startActivity(intent);
 //            finish();
 //        }, 2000);
+
+        new Handler().postDelayed(() -> {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }, 2000);
 
     }
 };

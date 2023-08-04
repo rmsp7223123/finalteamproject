@@ -73,9 +73,7 @@ public class PhoneActivity extends AppCompatActivity {
                 CommonConn conn = new CommonConn(this, "login/sendSms");
                 conn.addParamMap("phoneNumber", binding.edtPhone.getText().toString());
                 conn.onExcute((isResult, data) -> {
-                    if(data.equals("실패")){
-                        Toast.makeText(this, "sms 문자 전송에 실패하였습니다\n다시 시도해주세요", Toast.LENGTH_SHORT).show();
-                    }else if(data==null){
+                    if(data.equals("실패")||data==null){
                         Toast.makeText(this, "sms 문자 전송에 실패하였습니다\n다시 시도해주세요", Toast.LENGTH_SHORT).show();
                     }else {
                         result = data;
@@ -104,7 +102,7 @@ public class PhoneActivity extends AppCompatActivity {
                         Toast.makeText(this, "sms 문자 전송에 실패하였습니다\n다시 시도해주세요", Toast.LENGTH_SHORT).show();
                     }else {
                         result = data;
-                        binding.edtNumber.setText(data);
+//                        binding.edtNumber.setText(data);
                         binding.tvMessage.setVisibility(View.VISIBLE);
                         binding.rlMessage.setVisibility(View.VISIBLE);
                         setTimer();
@@ -142,8 +140,8 @@ public class PhoneActivity extends AppCompatActivity {
     }
 
     private void setTimer(){
-        CountDownTimer timer = new CountDownTimer(10000, 1000) {
-            int time = 10;
+        CountDownTimer timer = new CountDownTimer(180000, 1000) {
+            int time = 180;
             @Override
             public void onTick(long millisUntilFinished) {
                 binding.tvTimer.setVisibility(View.VISIBLE);
