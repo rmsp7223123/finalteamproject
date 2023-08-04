@@ -68,6 +68,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".Login.LockScreenPatternActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Login.LockScreenPasswordActivity"
+            android:exported="false" />
+        <activity
             android:name=".chat.MessageChatActivity"
             android:exported="false" />
         <activity
