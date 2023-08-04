@@ -10,9 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.finalteamproject.databinding.ItemGpsBinding;
 
+import java.util.ArrayList;
+
 //내 주변 경로당 아이템
 public class GpsAdapter extends RecyclerView.Adapter<GpsAdapter.ViewHolder> {
     ItemGpsBinding binding;
+    ArrayList<GpsVO> list;
     Context context;
 
     public GpsAdapter(Context context) {
@@ -29,8 +32,10 @@ public class GpsAdapter extends RecyclerView.Adapter<GpsAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder h, int i) {
+//        h.binding.seniorName.setText(list.get(i).getSenior_name()+"");
+//        h.binding.seniorRoadaddress.setText(list.get(i).getSenior_roadaddress()+"");
 
-        binding.itemSenior.setOnClickListener(v -> {
+        h.binding.itemSenior.setOnClickListener(v -> {
             Intent intent = new Intent(context, GpsDetailActivity.class);
             context.startActivity(intent);
         });
