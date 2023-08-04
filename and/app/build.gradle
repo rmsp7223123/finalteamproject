@@ -92,5 +92,8 @@ dependencies {
     //회원가입 완료 꽃가루
     implementation 'nl.dionsegijn:konfetti:1.1.2'
 
+    // GLIDE
+    implementation group: 'com.github.bumptech.glide', name: 'glide', version: '4.11.0'
+
 
 }

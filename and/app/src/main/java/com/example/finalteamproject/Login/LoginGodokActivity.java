@@ -16,7 +16,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.finalteamproject.HideActionBar;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.databinding.ActivityLoginGodokBinding;
@@ -100,45 +99,24 @@ public class LoginGodokActivity extends AppCompatActivity {
                 binding.edtRelation.requestFocus();
                 manager.showSoftInput(binding.edtRelation, InputMethodManager.SHOW_IMPLICIT);
             }else {
-                CommonConn conn = new CommonConn(this, "login/join");
+                CommonConn conn = new CommonConn(this, "login/godok");
                 conn.addParamMap("member_id", LoginVar.id);
-                conn.addParamMap("member_pw", LoginVar.pw);
-                conn.addParamMap("member_name", LoginVar.name);
-                conn.addParamMap("member_nickname", LoginVar.nickname);
-                conn.addParamMap("member_birth", LoginVar.birth);
-                conn.addParamMap("member_gender", LoginVar.gender);
-                conn.addParamMap("member_phone", LoginVar.phone);
-                conn.addParamMap("member_phone_id", Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID));
-                if(LoginVar.profileimg!=null){
-                    conn.addParamMap("member_profileimg", LoginVar.profileimg);
+                conn.addParamMap("ephone_name", binding.edtName.getText().toString());
+                conn.addParamMap("ephone_phone", binding.edtPhone.getText().toString());
+                if(binding.edtRelation.getText().toString().length()>0){
+                    conn.addParamMap("ephone_relation", binding.edtRelation.getText().toString());
                 }else {
-                    conn.addParamMap("member_profileimg", "없음");
+                    conn.addParamMap("ephone_relation", binding.spnRelation.getSelectedItem().toString());
                 }
+                conn.addParamMap("ephone_phone_id", Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID));
                 conn.onExcute((isResult, data) -> {
                     if(data.equals("성공")){
-//                        CommonConn conn1 = new CommonConn(this, "login/godok");
-//                        conn1.addParamMap("member_id", LoginVar.id);
-//                        conn1.addParamMap("ephone_name", binding.edtName.getText().toString());
-//                        conn1.addParamMap("ephone_phone", binding.edtPhone.getText().toString());
-//                        if(binding.edtRelation.getText().toString().length()>0){
-//                            conn1.addParamMap("ephone_relation", binding.edtRelation.getText().toString());
-//                        }else {
-//                            conn1.addParamMap("ephone_relation", binding.spnRelation.getSelectedItem().toString());
-//                        }
-//                        conn1.addParamMap("ephone_phone_id", Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID));
-//                        conn1.onExcute((isResult1, data1) -> {
-//                            if(data1.equals("성공")){
-//                                Toast.makeText(this, "회원가입, 비상연락망 성공", Toast.LENGTH_SHORT).show();
-//                            }else {
-//                                Toast.makeText(this, "회원가입에는 성공했으나 비상연락망 정보 입력 실패", Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
+                        Intent intent = new Intent(this, LoginDoneActivity.class);
+                        startActivity(intent);
                     }else {
-                        Toast.makeText(this, "회원가입 실패", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "비상연락망 정보 입력 실패", Toast.LENGTH_SHORT).show();
                     }
                 });
-                Intent intent = new Intent(this, LoginDoneActivity.class);
-                startActivity(intent);
             }
 
         });

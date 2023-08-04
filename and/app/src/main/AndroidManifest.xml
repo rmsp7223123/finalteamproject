@@ -74,7 +74,7 @@
         <activity
             android:name=".Login.LockScreenPasswordActivity"
             android:exported="false" />
-=======<activity
+        <activity
             android:name=".game.RankActivity"
             android:exported="false" />
         <activity
@@ -82,6 +82,10 @@
             android:exported="false" />
         <activity
             android:name=".game.GameActivity00"
+            android:exported="false" />
+        <activity
+            android:name=".Login.LoginProfileActivity"
+
             android:exported="false" />
         <activity
             android:name=".chat.MessageChatActivity"

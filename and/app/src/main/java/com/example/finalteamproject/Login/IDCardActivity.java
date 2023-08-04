@@ -29,7 +29,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.finalteamproject.HideActionBar;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.databinding.ActivityIdcardBinding;
 import com.example.finalteamproject.main.MainActivity;
@@ -120,18 +119,32 @@ public class IDCardActivity extends AppCompatActivity {
 
         binding.cvNext.setOnClickListener(v -> {
             Log.d("edtRgNumber", "onCreate: "+binding.edtRgNumber.getText().toString());
-//            if(binding.edtRgNumber.getText().toString().length()>0){
+            int month, date;
+            if(birth.charAt(2) == '0'){
+                month = Integer.parseInt(birth.substring(2,4));
+            }else {
+                month = Integer.parseInt(birth.substring(2,4));
+            }
+            if(birth.charAt(4) == '0'){
+                date = Integer.parseInt(birth.substring(4,6));
+            }else {
+                date = Integer.parseInt(birth.substring(4,6));
+            }
+
+            if(binding.edtRgNumber.getText().toString().length()<1){
+                Toast.makeText(this, "주민등록증 인증을 완료해주세요", Toast.LENGTH_SHORT).show();
+            }else  if(month<1||month>12||date<1||date>31){
+                Toast.makeText(this, "잘못된 형식입니다 \n신분증을 다시 촬영해주세요", Toast.LENGTH_SHORT).show();
+            }else {
                 Intent intent = new Intent(this, LoginInfoActivity.class);
-                LoginVar.name = "홍길동";
-                LoginVar.birth = "000101";
-                LoginVar.gender = "남";
+                LoginVar.name = name;
+                LoginVar.birth = birth;
+                LoginVar.gender = gender;
                 Log.d("result name", "onCreate: "+name);
                 Log.d("result gender", "onCreate: "+gender);
                 Log.d("result birth", "onCreate: "+birth);
                 startActivity(intent);
-//            }else {
-//                Toast.makeText(this, "주민등록증 인증을 완료해주세요", Toast.LENGTH_SHORT).show();
-//            }
+            }
         });
 
     }

@@ -6,12 +6,20 @@ import android.widget.LinearLayout;
 
 public class LoginFavorVO {
 
+    int num;
     String name;
     boolean bl;
     LinearLayout ln;
     ImageView imgv;
-
     int drawable, drawableSelect;
+
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
+    }
 
     public String getName() {
         return name;
@@ -61,7 +69,8 @@ public class LoginFavorVO {
         this.drawableSelect = drawableSelect;
     }
 
-    public LoginFavorVO(String name, boolean bl, LinearLayout ln, ImageView imgv, int drawable, int drawableSelect) {
+    public LoginFavorVO(int num, String name, boolean bl, LinearLayout ln, ImageView imgv, int drawable, int drawableSelect) {
+        this.num = num;
         this.name = name;
         this.bl = bl;
         this.ln = ln;

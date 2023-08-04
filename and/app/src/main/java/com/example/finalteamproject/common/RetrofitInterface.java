@@ -24,7 +24,7 @@ public interface RetrofitInterface {
     @GET("{url}")
     Call<String> getLogin(@Url String url, @QueryMap HashMap<String, Object> paramMap);
 
-    @Multipart
+    @Multipart // <=파일이 전송될때에 어노테이션(Multipart)
     @POST
     Call<String> clientSendFile(@Url String url, @PartMap HashMap<String, RequestBody> maps, @Part MultipartBody.Part file);
 }
