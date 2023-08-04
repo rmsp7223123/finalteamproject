@@ -9,11 +9,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class GpsDAO {
-	@Autowired @Qualifier("project") SqlSession sql;
+	@Autowired @Qualifier("project") private SqlSession sql;
 	
 	public List<GpsVO> senior_list() {
-		List<GpsVO> list = sql.selectList("gps.list");
-		return list;
+		return sql.selectList("gps.list");
 	}
 	
 

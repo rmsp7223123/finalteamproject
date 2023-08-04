@@ -121,6 +121,9 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
         CommonConn conn = new CommonConn(getContext(), "gps/senior");
         conn.onExcute((isResult, data) -> {
             ArrayList<GpsVO> list = new ArrayList<>();
+
+
+
         });
     }
 

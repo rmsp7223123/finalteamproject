@@ -1,8 +1,8 @@
 package cloud.gps;
 
 public class GpsVO {
-	int key;
-	String senior_name, senior_roadaddress, senior_numaddress
+	private int key;
+	private String senior_name, senior_roadaddress, senior_numaddress
 	, senior_call, senior_latitude, senior_longitude, sido, sigungu;
 	
 	public int getKey() {
@@ -59,6 +59,8 @@ public class GpsVO {
 	public void setSigungu(String sigungu) {
 		this.sigungu = sigungu;
 	}
+	
+	
 
 	
 }
