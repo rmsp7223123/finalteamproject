@@ -9,6 +9,8 @@ import com.example.finalteamproject.databinding.ActivityMessageChatBinding;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+
 public class MessageChatActivity extends AppCompatActivity {
     ActivityMessageChatBinding binding;
 
@@ -20,5 +22,8 @@ public class MessageChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMessageChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        binding.imgvBack.setOnClickListener(v -> {
+            finish();
+        });
     }
 }

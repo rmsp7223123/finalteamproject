@@ -1,6 +1,7 @@
 package com.example.finalteamproject.chat;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         holder.binding.tvContent.setText(list.get(position).getContent());
         holder.binding.tvTime.setText(list.get(position).getTime());
         Glide.with(context).load(list.get(position).getImgRes()).apply(new RequestOptions().circleCrop()).into(holder.binding.imgvProfileImg);
+        holder.binding.containerLinearMessageChat.setOnClickListener(v -> {
+            Intent intent = new Intent(context, MessageChatActivity.class);
+            context.startActivity(intent);
+        });
     }
 
     @Override

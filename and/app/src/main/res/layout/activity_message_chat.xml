@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".chat.MessageChatActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
     <RelativeLayout
         android:layout_marginTop="30dp"
@@ -45,8 +46,51 @@
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_margin="10dp"
         android:id="@+id/recv_message_chat"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFC81E">
+
+        <androidx.cardview.widget.CardView
+            app:cardUseCompatPadding="true"
+            android:layout_marginHorizontal="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="26dp"
+            android:elevation="0dp">
+
+
+                <EditText
+                    android:paddingVertical="10dp"
+                    android:id="@+id/edt_message"
+                    android:layout_gravity="center"
+                    android:textSize="20dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="50dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="메시지를 입력해 주세요"
+                    android:textColorHint="#757575"
+                    android:background="@android:color/transparent"/>
+
+                <ImageView
+                    android:id="@+id/imgv_send"
+                    android:layout_marginRight="10dp"
+                    android:layout_gravity="right|center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/forward"/>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+    </FrameLayout>
 
 </LinearLayout>

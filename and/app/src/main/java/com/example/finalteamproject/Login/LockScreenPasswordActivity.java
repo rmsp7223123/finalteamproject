@@ -5,8 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.finalteamproject.databinding.ActivityLockScreenPasswordBinding;
-import com.example.finalteamproject.databinding.ActivityLockScreenPatternBinding;
-import com.example.finalteamproject.databinding.ActivityLoginPasswordBinding;
 
 public class LockScreenPasswordActivity extends AppCompatActivity {
 

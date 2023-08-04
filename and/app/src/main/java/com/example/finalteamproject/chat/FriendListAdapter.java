@@ -45,6 +45,10 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
             Intent intent = new Intent(context, InCallActivity.class);
             context.startActivity(intent);
         });
+        holder.binding.containerFrameMessage.setOnClickListener(v -> {
+            Intent intent = new Intent(context, MessageChatActivity.class);
+            context.startActivity(intent);
+        });
     }
 
     @Override
