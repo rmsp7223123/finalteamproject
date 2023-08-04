@@ -54,9 +54,9 @@ public class MessageChatActivity extends AppCompatActivity {
                // String name = getIntent().getStringExtra("nickname");
                 //int imgRes = getIntent().getIntExtra("img",0);
                 messageId = databaseReference.child("chat").child(itemName).push().getKey();
-                new MessageDTO(messageDTO.getImgRes(),messageDTO.getNickname(),messageText,currentTime,true);
+                MessageDTO temp = new MessageDTO(messageDTO.getImgRes(),messageDTO.getNickname(),messageText,currentTime,true);
                 // 파이어베이스 경로를 닉네임이 아닌 id로 바꾸기
-                databaseReference.child("chat").child(messageDTO.getNickname()).child(messageId).setValue(messageDTO);
+                databaseReference.child("chat").child(messageDTO.getNickname()).child(messageId).setValue(temp);
                 adapter.notifyDataSetChanged();
                 binding.edtMessage.setText("");
             }
