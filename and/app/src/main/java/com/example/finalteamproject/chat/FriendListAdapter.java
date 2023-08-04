@@ -20,11 +20,11 @@ import java.util.ArrayList;
 
 public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.ViewHolder> {
     ItemFriendListBinding binding;
-    ArrayList<FriendListDTO> list;
+    ArrayList<MessageDTO> list;
 
     Context context;
 
-    public FriendListAdapter(ArrayList<FriendListDTO> list, Context context) {
+    public FriendListAdapter(ArrayList<MessageDTO> list, Context context) {
         this.list = list;
         this.context = context;
     }
@@ -47,6 +47,9 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
         });
         holder.binding.containerFrameMessage.setOnClickListener(v -> {
             Intent intent = new Intent(context, MessageChatActivity.class);
+            intent.putExtra("dto",list.get(position));
+            intent.putExtra("nickname",list.get(position).getNickname());
+            intent.putExtra("img",list.get(position).getImgRes());
             context.startActivity(intent);
         });
     }

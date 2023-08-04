@@ -1,14 +1,22 @@
 package com.example.finalteamproject.chat;
 
-public class MessageDTO {
+import java.io.Serializable;
+
+public class MessageDTO implements Serializable {
     private int imgRes;
     private String nickname, content, time;
 
-    public MessageDTO(int imgRes, String nickname, String content, String time) {
+    private boolean isCheck;
+
+    public MessageDTO( ) {
+    }
+
+    public MessageDTO(int imgRes, String nickname, String content, String time, boolean isCheck) {
         this.imgRes = imgRes;
         this.nickname = nickname;
         this.content = content;
         this.time = time;
+        this.isCheck = isCheck;
     }
 
     public int getImgRes() {
@@ -41,5 +49,13 @@ public class MessageDTO {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public boolean isCheck() {
+        return isCheck;
+    }
+
+    public void setCheck(boolean check) {
+        isCheck = check;
     }
 }

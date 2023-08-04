@@ -58,11 +58,11 @@ public class MessageFragment extends Fragment {
 
     public ArrayList<MessageDTO> getList() {
         ArrayList<MessageDTO> list = new ArrayList<>();
-        list.add(new MessageDTO(R.drawable.haerin2,"해린","내용1","12:34"));
-        list.add(new MessageDTO(R.drawable.hanni9,"하니","내용2","11:34"));
-        list.add(new MessageDTO(R.drawable.minji10,"민지","내용3","10:34"));
-        list.add(new MessageDTO(R.drawable.hyein11,"혜인","내용4","14:34"));
-        list.add(new MessageDTO(R.drawable.danielle11,"다니엘","내용5","15:34"));
+        list.add(new MessageDTO(R.drawable.haerin2,"해린","내용1","12:34",false));
+        list.add(new MessageDTO(R.drawable.hanni9,"하니","내용2","11:34",false));
+        list.add(new MessageDTO(R.drawable.minji10,"민지","내용3","10:34",false));
+        list.add(new MessageDTO(R.drawable.hyein11,"혜인","내용4","14:34",false));
+        list.add(new MessageDTO(R.drawable.danielle11,"다니엘","내용5","15:34",false));
         return list;
     }
 }

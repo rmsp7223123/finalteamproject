@@ -20,8 +20,8 @@ public class FriendListFragment extends Fragment {
     FragmentFriendListBinding binding;
     FriendListAdapter adapter;
 
-    private List<FriendListDTO> originalList; // 전체 친구 목록
-    private ArrayList<FriendListDTO> filteredList; // 필터링된 친구 목록
+    private List<MessageDTO> originalList; // 전체 친구 목록
+    private ArrayList<MessageDTO> filteredList; // 필터링된 친구 목록
 
 
     @Override
@@ -48,19 +48,19 @@ public class FriendListFragment extends Fragment {
         return binding.getRoot();
     }
 
-    public ArrayList<FriendListDTO> getList() {
-        ArrayList<FriendListDTO> list = new ArrayList<>();
-        list.add(new FriendListDTO(R.drawable.haerin2, "닉네임1"));
-        list.add(new FriendListDTO(R.drawable.minji10, "닉네임2"));
-        list.add(new FriendListDTO(R.drawable.hanni9, "닉네임3"));
-        list.add(new FriendListDTO(R.drawable.danielle11, "닉네임4"));
-        list.add(new FriendListDTO(R.drawable.hyein11, "5닉네임"));
+    public ArrayList<MessageDTO> getList() {
+        ArrayList<MessageDTO> list = new ArrayList<>();
+        list.add(new MessageDTO(R.drawable.haerin2,"해린","내용1","12:34",false));
+        list.add(new MessageDTO(R.drawable.hanni9,"하니","내용2","11:34",false));
+        list.add(new MessageDTO(R.drawable.minji10,"민지","내용3","10:34",false));
+        list.add(new MessageDTO(R.drawable.hyein11,"혜인","내용4","14:34",false));
+        list.add(new MessageDTO(R.drawable.danielle11,"다니엘","내용5","15:34",false));
         return list;
     }
     private void filterList(String query) {
         filteredList.clear();
         for (int i = 0; i < originalList.size(); i++) {
-            FriendListDTO friend = originalList.get(i);
+            MessageDTO friend = originalList.get(i);
             if (friend.getNickname().toLowerCase().contains(query.toLowerCase())) {
                 filteredList.add(friend);
             }
