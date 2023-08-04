@@ -150,6 +150,8 @@
                         android:src="@drawable/tv" />
 
                     <TextView
+                        android:textColor="@color/black"
+                        android:id="@+id/tv_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="TV"
@@ -173,6 +175,8 @@
                         android:src="@drawable/music" />
 
                     <TextView
+                        android:textColor="@color/black"
+                        android:id="@+id/tv_music"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="음악"
@@ -196,6 +200,8 @@
                         android:src="@drawable/movie" />
 
                     <TextView
+                        android:textColor="@color/black"
+                        android:id="@+id/tv_movie"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="영화"
@@ -219,6 +225,8 @@
                         android:src="@drawable/fashion" />
 
                     <TextView
+                        android:textColor="@color/black"
+                        android:id="@+id/tv_fashion"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="패션"
@@ -242,6 +250,8 @@
                         android:src="@drawable/animal" />
 
                     <TextView
+                        android:textColor="@color/black"
+                        android:id="@+id/tv_animal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="동물"
@@ -272,6 +282,8 @@
                         android:src="@drawable/news" />
 
                     <TextView
+                        android:textColor="@color/black"
+                        android:id="@+id/tv_news"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="뉴스"
@@ -295,6 +307,8 @@
                         android:src="@drawable/car" />
 
                     <TextView
+                        android:textColor="@color/black"
+                        android:id="@+id/tv_car"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="자동차"
@@ -318,6 +332,8 @@
                         android:src="@drawable/sports" />
 
                     <TextView
+                        android:textColor="@color/black"
+                        android:id="@+id/tv_sports"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="운동"
@@ -341,6 +357,8 @@
                         android:src="@drawable/game" />
 
                     <TextView
+                        android:textColor="@color/black"
+                        android:id="@+id/tv_game"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="게임"
