@@ -1,7 +1,12 @@
 package com.example.finalteamproject.chat;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.example.finalteamproject.R;
@@ -19,5 +24,6 @@ public class InCallActivity extends AppCompatActivity {
         binding.imgvCalloff.setOnClickListener(view -> {
             finish();
         });
+
     }
 }
