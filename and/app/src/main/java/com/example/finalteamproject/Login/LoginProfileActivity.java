@@ -69,14 +69,16 @@ public class LoginProfileActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
                         if(response.body().equals("성공")){
-                            Toast.makeText(LoginProfileActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginProfileActivity.this, "프로필 이미지 업로드 성공", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(LoginProfileActivity.this, LoginGodokActivity.class);
+                            startActivity(intent);
                         }else {
-                            Toast.makeText(LoginProfileActivity.this, "회원가입에 성공했으나 프로필 이미지 업로드에 실패했습니다", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginProfileActivity.this, "프로필 이미지 업로드 실패", Toast.LENGTH_SHORT).show();
                         }
                     }
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
-                        Toast.makeText(LoginProfileActivity.this, "회원가입에 성공했으나 프로필 이미지 업로드에 실패했습니다", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginProfileActivity.this, "프로필 이미지 업로드 실패", Toast.LENGTH_SHORT).show();
                     }
                 });
             }else if(num==2){

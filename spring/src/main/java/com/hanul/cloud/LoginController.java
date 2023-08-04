@@ -2,6 +2,7 @@ package com.hanul.cloud;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -96,11 +97,17 @@ public class LoginController {
 		if(file!=null) {
 //			ClassPathResource resource = new ClassPathResource("profileImage");
 			System.out.println(id);
-			file.transferTo(new File("/src/main/resources/profileImage", id+".jpg"));
-			HashMap<Object, Object> map = new HashMap<Object, Object>();
-			map.put("member_profileimg", id+".jpg");
+			String path = "/src/main/resources/profileImage";
+			file.transferTo(new File(path, id+".jpg"));
+			File file1 = new File(path+"/"+id+".jpg");
+			if(file1.exists()) {
+				HashMap<Object, Object> map = new HashMap<Object, Object>();
+			map.put("member_profileimg", path+"/"+id+".jpg");
 			map.put("member_id", id);
 			return sql.update("login.file", map)==1 ? "성공" : "실패";
+			}else {
+				return "실패";
+			}
 		}else {
 			return "실패";
 		}
@@ -109,6 +116,25 @@ public class LoginController {
 		//실제 파일은 D\Android\폴더\...
 //		return new Gson().toJson("");
 	}
+	@RequestMapping(value="/file.test", produces = "text/html;charset=utf-8")
+	public String f(HttpServletRequest req) {
+		System.out.println(Paths.get("").toAbsolutePath().toString());
+		System.out.println(System.getProperty("user.dir"));
+		System.out.println(LoginController.class.getResource(".").getPath());
+		File f = new File("/src/main/resources/profileImage");
+		if(f.exists()) {
+			System.out.println("경로있음");
+			
+		}else {
+			System.out.println("경로 없음");
+			f.mkdir();
+		}
+		
+		System.out.println(f.getAbsolutePath());
+		
+		return  "aa";
+	}
+	
 	
 	@RequestMapping(value="/join", produces = "text/html;charset=utf-8")
 	public String join(MemberVO vo) {

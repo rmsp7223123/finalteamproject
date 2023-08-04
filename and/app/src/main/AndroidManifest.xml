@@ -68,7 +68,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".main.SplashActivity"
+            android:name=".Login.LoginProfileActivity"
             android:exported="false" />
         <activity
             android:name=".chat.MessageChatActivity"
@@ -147,7 +147,7 @@
             android:name=".main.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".Login.LoginProfileActivity"
+            android:name=".main.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
