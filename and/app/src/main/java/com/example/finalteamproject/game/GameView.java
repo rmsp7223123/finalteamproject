@@ -180,6 +180,7 @@ public class GameView extends View {
 
     }
 
+    int score=0;
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if(event.getAction() == MotionEvent.ACTION_DOWN){
@@ -195,6 +196,7 @@ public class GameView extends View {
 
             //완료가 되면 다음스테이지로 넘기겠다.
             if(sel == arShape.size() -1){
+                score ++;
                 status = BLANK;
                 invalidate();
                 handler.sendEmptyMessageDelayed(0,DELAY);
@@ -202,13 +204,14 @@ public class GameView extends View {
                 //게임 종료시 alertDialog 생성
             }else{
                 AlertDialog.Builder builder = new AlertDialog.Builder(mParent);
-                builder.setTitle("앗! 틀렸다.");
+                builder.setTitle(score+"점 달성!");
                 builder.setMessage("다시 도전 하시겠어요?");
                 builder.setNegativeButton("다시도전", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
                         //게임 초기화
+                        score = 0;
                         arShape.clear();
                         status = BLANK;
                         invalidate();
