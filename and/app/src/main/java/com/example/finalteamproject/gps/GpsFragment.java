@@ -65,7 +65,7 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
         locationSource =
                 new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
 
-        //화면
+        //지도 외 메뉴
         binding.recvGps.setAdapter(new GpsAdapter(getContext()));
         binding.recvGps.setLayoutManager(new LinearLayoutManager(getContext()));
 

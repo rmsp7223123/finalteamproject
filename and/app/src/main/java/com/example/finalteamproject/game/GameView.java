@@ -202,9 +202,9 @@ public class GameView extends View {
                 //게임 종료시 alertDialog 생성
             }else{
                 AlertDialog.Builder builder = new AlertDialog.Builder(mParent);
-                builder.setMessage("restart Game~?");
-                builder.setTitle("Game Over~");
-                builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                builder.setTitle("앗! 틀렸다.");
+                builder.setMessage("다시 도전 하시겠어요?");
+                builder.setNegativeButton("다시도전", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -217,7 +217,7 @@ public class GameView extends View {
                     }
                 });
 
-                builder.setPositiveButton("exit", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("그만할래요", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         mParent.finish(); // 종료
