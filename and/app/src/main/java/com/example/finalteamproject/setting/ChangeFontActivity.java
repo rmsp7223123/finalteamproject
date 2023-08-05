@@ -31,6 +31,7 @@ public class ChangeFontActivity extends AppCompatActivity {
             FontColorArrayAdapter adapter = new FontColorArrayAdapter(this,dialog_item, colors);
             builder.setSingleChoiceItems(adapter, 3, (dialog, i) -> {
                 binding.tvFontColor.setText(dialog_item[i]);
+                binding.tvFontColor.setTextColor(colors[i]);
             });
             builder.setPositiveButton("취소", new DialogInterface.OnClickListener() {
                 @Override
