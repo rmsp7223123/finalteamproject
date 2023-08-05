@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.finalteamproject.Login.LoginActivity;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.databinding.FragmentSettingBinding;
 
@@ -49,6 +50,8 @@ public class SettingFragment extends Fragment {
             builder.setNegativeButton("확인", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    Intent intent = new Intent(getContext(), LoginActivity.class);
+                    startActivity(intent);
                     dialog.dismiss();
                 }
             });
