@@ -50,6 +50,31 @@ public class ChangeFontActivity extends AppCompatActivity {
             AlertDialog dialog = builder.create();
             dialog.show();
         });
+        binding.tvFontSize.setOnClickListener(view -> {
+            String[] dialog_item = {"작게", "중간", "크게"};
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("글씨 크기 변경");
+            builder.setSingleChoiceItems(dialog_item, -1, (dialog, i) -> {
+                binding.tvFontSize.setText(dialog_item[i]);
+                // 글씨 크기 변경 추가하기
+//                binding.tvFontSize.setTextSize();
+            });
+            builder.setPositiveButton("취소", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        });
         // 글씨 크기 조절, 글씨 색깔 변경 dialog로 띄워서 처리 하기
     }
 }
