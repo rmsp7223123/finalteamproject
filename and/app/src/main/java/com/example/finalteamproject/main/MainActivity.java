@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
       //  //new HideActionBar().hideActionBar(this);
         binding.bottomNavigationView.setSelectedItemId(R.id.fab);
         binding.fltbtnHome.setOnClickListener(v -> {
+            // 홈버튼 눌렀을 때 네비게이션 뷰 아이템 올라오는처리 삭제하기
             binding.bottomNavigationView.setSelectedItemId(R.id.fab);
             FragmentTransaction transaction = manager.beginTransaction();
             for (Fragment fragment : manager.getFragments()) {

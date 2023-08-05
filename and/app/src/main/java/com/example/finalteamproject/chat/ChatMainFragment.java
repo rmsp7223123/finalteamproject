@@ -33,6 +33,7 @@ public class ChatMainFragment extends Fragment {
         binding.fltbtnFriendList.setVisibility(View.GONE);
         binding.fltbtnMessage.setVisibility(View.GONE);
         isAllFabVisible = false;
+        manager.beginTransaction().replace(R.id.container_frame_call_msg, new FriendListFragment()).commit();
         binding.fltbtnMenu.setOnClickListener(v -> {
             if(!isAllFabVisible) {
                 binding.fltbtnMessage.show();
