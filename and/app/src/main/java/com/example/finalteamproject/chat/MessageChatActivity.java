@@ -91,6 +91,10 @@ public class MessageChatActivity extends AppCompatActivity {
 
             }
         });
+
+        binding.imgvSendFile.setOnClickListener(view -> {
+            // 다이얼로그? 프래그먼트?
+        });
     }
 
     public ArrayList<MessageDTO> getlist() {
