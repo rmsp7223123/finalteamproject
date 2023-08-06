@@ -186,6 +186,10 @@ public class MainFragment extends Fragment {
             AlertDialog dialog = builder.create();
             dialog.show();
         });
+        binding.tvBoard.setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), BoardActivity.class);
+            startActivity(intent);
+        });
 
         return binding.getRoot();
     }
