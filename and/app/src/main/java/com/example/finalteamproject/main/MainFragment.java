@@ -93,8 +93,7 @@ public class MainFragment extends Fragment {
 
         binding.imgvAdd.setOnClickListener(view -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-            builder.setTitle("닉네임")
-                    .setMessage("친구 추가하기");
+            builder.setTitle("친구추가 보내기");
             builder.setPositiveButton("취소", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -168,6 +167,25 @@ public class MainFragment extends Fragment {
             binding.tvGame.setTextColor(Color.parseColor("#F5DC6D"));
         });
 
+        binding.imgvMessage.setOnClickListener(view -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+            builder.setTitle("메시지 보내기");
+            builder.setPositiveButton("취소", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        });
 
         return binding.getRoot();
     }
