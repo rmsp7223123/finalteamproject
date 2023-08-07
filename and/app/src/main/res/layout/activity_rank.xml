@@ -24,17 +24,13 @@
                 android:layout_gravity="center"
                 android:src="@drawable/btn_back" />
         </LinearLayout>
-        <TextView
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="기억력 순위"
-            android:textSize="30sp"
-            android:textStyle="bold"
+            android:layout_height="60dp"
             android:background="@drawable/box_fill"
-            android:paddingLeft="30dp"
-            android:paddingRight="10dp"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"/>
+            android:src="@drawable/memory_title"
+            android:scaleType="fitStart"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -73,6 +69,7 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recv_rank"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
