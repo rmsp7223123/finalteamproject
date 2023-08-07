@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
 //    ActionBar actionBar;
     FragmentManager manager;
 
-    ActionBar actionBar;
 
 
     @Override
@@ -55,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("TAG", token);
                     }
                 });
-        actionBar = getSupportActionBar();
 //        actionBar = getSupportActionBar();
         manager = getSupportFragmentManager();
 //        new HideActionBar().hideActionBar(this);
