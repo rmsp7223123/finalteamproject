@@ -12,7 +12,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 
+import com.example.finalteamproject.HideActionBar;
 import com.example.finalteamproject.R;
+import com.example.finalteamproject.board.BoardFragment;
 import com.example.finalteamproject.chat.ChatMainFragment;
 import com.example.finalteamproject.databinding.ActivityMainBinding;
 import com.example.finalteamproject.game.GameFragment;
@@ -24,7 +26,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
-    ActionBar actionBar;
+//    ActionBar actionBar;
     FragmentManager manager;
 
 
@@ -52,8 +54,9 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
         actionBar = getSupportActionBar();
+//        actionBar = getSupportActionBar();
         manager = getSupportFragmentManager();
-      //  //new HideActionBar().hideActionBar(this);
+//        new HideActionBar().hideActionBar(this);
         binding.bottomNavigationView.setSelectedItemId(R.id.fab);
         binding.fltbtnHome.setOnClickListener(v -> {
             // 홈버튼 눌렀을 때 네비게이션 뷰 아이템 올라오는처리 삭제하기
@@ -86,6 +89,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+    }
+
+
+    public void changeFragment(String board_name){
+        manager.beginTransaction().replace(R.id.container_frame, new BoardFragment(board_name)).commit();
     }
 
 }

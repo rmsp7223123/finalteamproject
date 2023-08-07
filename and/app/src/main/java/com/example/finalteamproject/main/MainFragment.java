@@ -20,6 +20,8 @@ import com.example.finalteamproject.R;
 import com.example.finalteamproject.databinding.FragmentMainBinding;
 import com.example.finalteamproject.setting.ChangeProfileActivity;
 
+import java.util.ArrayList;
+
 public class MainFragment extends Fragment {
 
     FragmentMainBinding binding;
@@ -109,6 +111,18 @@ public class MainFragment extends Fragment {
 
             AlertDialog dialog = builder.create();
             dialog.show();
+        });
+
+        BoardMainAdapter adapter1 = new BoardMainAdapter(getList(),getActivity());
+        binding.recvBoard.setAdapter(adapter1);
+        binding.recvBoard.setLayoutManager(new LinearLayoutManager(this.getContext()));
+
+        binding.imgvMenu.setOnClickListener(v -> {
+            binding.lnBoard.setVisibility(View.VISIBLE);
+        });
+
+        binding.imgvClose.setOnClickListener(v -> {
+            binding.lnBoard.setVisibility(View.INVISIBLE);
         });
 
 
@@ -216,5 +230,18 @@ public class MainFragment extends Fragment {
         binding.tvCar.setTextColor(Color.parseColor("#000000"));
         binding.tvSports.setTextColor(Color.parseColor("#000000"));
         binding.tvGame.setTextColor(Color.parseColor("#000000"));
+    }
+    private ArrayList<BoardMainDTO> getList() {
+        ArrayList<BoardMainDTO> list = new ArrayList<>();
+        list.add(new BoardMainDTO(R.drawable.tv_select, R.drawable.mini_arrow, "tv"));
+        list.add(new BoardMainDTO(R.drawable.music_select, R.drawable.mini_arrow, "음악"));
+        list.add(new BoardMainDTO(R.drawable.movie_select, R.drawable.mini_arrow, "영화"));
+        list.add(new BoardMainDTO(R.drawable.fashion_select, R.drawable.mini_arrow, "패션"));
+        list.add(new BoardMainDTO(R.drawable.animal_select, R.drawable.mini_arrow, "동물"));
+        list.add(new BoardMainDTO(R.drawable.news_select, R.drawable.mini_arrow, "뉴스"));
+        list.add(new BoardMainDTO(R.drawable.car_select, R.drawable.mini_arrow, "자동차"));
+        list.add(new BoardMainDTO(R.drawable.sports_select, R.drawable.mini_arrow, "운동"));
+        list.add(new BoardMainDTO(R.drawable.game_select, R.drawable.mini_arrow, "게임"));
+        return list;
     }
 }

@@ -19,8 +19,7 @@ public class LoginFavorActivity extends AppCompatActivity {
     ActivityLoginFavorBinding binding;
 
     static boolean tv, music, movie, fashion, animal, news, car, sports, game;
-
-//    static boolean
+    int num;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,26 +60,23 @@ public class LoginFavorActivity extends AppCompatActivity {
         binding.cvNext.setOnClickListener(v -> {
             for (int i = 0; i < list.size(); i++) {
                 if(list.get(i).bl){
+                    int j = i;
                     CommonConn conn = new CommonConn(this, "login/favor");
-                    for (int j = 0; j < list.size(); j++) {
-                        conn.addParamMap(list.get(j).num+"", true);
-                    }
+                    conn.addParamMap("favor", list.get(i).num);
+                    conn.addParamMap("member_id", LoginVar.id);
                     conn.onExcute((isResult, data) -> {
-                        if(data.equals("성공")){
-                            Intent intent = new Intent(this, LoginGodokActivity.class);
-                        }else {
-                            Toast.makeText(this, "사용가능한 아이디입니다", Toast.LENGTH_SHORT).show();
-//                            binding.tvIdCheck.setVisibility(View.GONE);
-//                            binding.tvIdCheckDone.setVisibility(View.VISIBLE);
+                        if(!data.equals("성공")){
+                            Toast.makeText(this, list.get(j).name+"관심사 등록 실패", Toast.LENGTH_SHORT).show();
                         }
                     });
-
-//                    startActivity(intent);
-                    break;
                 }
-                if(i==list.size()-1){
-                    Toast.makeText(this, "관심사를 선택해주세요", Toast.LENGTH_SHORT).show();
-                }
+            }
+            if(num==0){
+                Toast.makeText(this, "관심사 등록 완료", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, LoginGodokActivity.class);
+                startActivity(intent);
+            }else {
+                Toast.makeText(this, "관심사를 선택해주세요", Toast.LENGTH_SHORT).show();
             }
         });
 

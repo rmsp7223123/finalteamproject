@@ -117,7 +117,7 @@ public class LoginInfoActivity extends AppCompatActivity {
         binding.tvIdCheck.setOnClickListener(v -> {
             if(binding.edtId.getText().toString().length()>0&&binding.tvIdAlert.getVisibility()==View.INVISIBLE){
                 CommonConn conn = new CommonConn(this, "login/checkId");
-                conn.addParamMap("id", binding.edtId.getText().toString());
+                conn.addParamMap("member_id", binding.edtId.getText().toString());
                 conn.onExcute((isResult, data) -> {
                     if(!data.equals("null")){
                         Toast.makeText(this, "이미 존재하는 아이디입니다", Toast.LENGTH_SHORT).show();

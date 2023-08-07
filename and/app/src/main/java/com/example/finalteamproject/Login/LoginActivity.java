@@ -15,7 +15,6 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 
-import com.example.finalteamproject.R;
 import com.example.finalteamproject.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {

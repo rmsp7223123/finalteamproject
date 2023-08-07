@@ -84,6 +84,9 @@
         <activity
             android:name=".game.GameActivity00"
             android:exported="false" />
+            <activity
+            android:name=".Login.LoginCheckActivity"
+            android:exported="false" />
         <activity
             android:name=".Login.LoginProfileActivity"
             android:exported="false" />
