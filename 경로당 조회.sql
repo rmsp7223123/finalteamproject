@@ -30,5 +30,37 @@ select s.KEY, s.SENIOR_NAME, s.SENIOR_ROADADDRESS, s.SENIOR_NUMADDRESS, s.SENIOR
 from SENIOR s
 left join SENIOR_LIKE l
 on s.key = l.key
-where s.key < 25;
+where s.key < 25
+order by key;
+
+--좋아요 테스트 쿼리
+insert into SENIOR_LIKE (MEMBER_ID, KEY, SENIOR_LIKE_NUM)
+values ('admin', 13, 1);
+commit;
+
+--자주가는 경로당 조회
+select * from SENIOR_LIKE
+where member_id='admin';
+
+select l.member_id, l.KEY, s.SENIOR_NAME, s.SENIOR_ROADADDRESS
+from senior_like l
+left join senior s
+on l.key=s.key
+where member_id='admin';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

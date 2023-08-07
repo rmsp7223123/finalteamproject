@@ -12,4 +12,12 @@ where s.key &lt; 25
 order by key
 </select>
 
+<select id="like" resultType="cloud.gps.GpsVO">
+select l.member_id, l.KEY, s.SENIOR_NAME, s.SENIOR_ROADADDRESS
+from senior_like l
+left join senior s
+on l.key=s.key
+where member_id='admin'
+</select>
+
 </mapper>

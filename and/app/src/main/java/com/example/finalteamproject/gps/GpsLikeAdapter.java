@@ -9,9 +9,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.finalteamproject.databinding.ItemGpslikeBinding;
 
+import java.util.ArrayList;
+
 //자주가는 경로당 아이템(좋아요 버튼 외)
 public class GpsLikeAdapter extends RecyclerView.Adapter<GpsLikeAdapter.ViewHolder> {
     ItemGpslikeBinding binding;
+    ArrayList<GpsVO> list;
+
+    public GpsLikeAdapter(ArrayList<GpsVO> list) {
+        this.list = list;
+    }
 
     @NonNull
     @Override
@@ -23,7 +30,11 @@ public class GpsLikeAdapter extends RecyclerView.Adapter<GpsLikeAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder h, int i) {
+        h.binding.seniorName.setText(list.get(i).getSenior_name()+"");
+        h.binding.seniorAddress.setText(list.get(i).getSenior_roadaddress()+"");
+
         h.binding.unlike.setVisibility(View.GONE);
+
         h.binding.unlike.setOnClickListener(v -> {
             h.binding.unlike.setVisibility(View.GONE);
             h.binding.like.setVisibility(View.VISIBLE);
@@ -36,7 +47,7 @@ public class GpsLikeAdapter extends RecyclerView.Adapter<GpsLikeAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return 3;
+        return list.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

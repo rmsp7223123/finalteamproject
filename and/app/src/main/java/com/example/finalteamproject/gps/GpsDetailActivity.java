@@ -1,6 +1,7 @@
 package com.example.finalteamproject.gps;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -8,7 +9,12 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.finalteamproject.R;
+import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.databinding.ActivityGpsDetailBinding;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.ArrayList;
 
 //경로당 상세정보 페이지(전화걸기 등)
 public class GpsDetailActivity extends AppCompatActivity {
@@ -42,4 +48,10 @@ public class GpsDetailActivity extends AppCompatActivity {
             startActivity(intent);
         });
     }
+
+
+
+
+
+
 }

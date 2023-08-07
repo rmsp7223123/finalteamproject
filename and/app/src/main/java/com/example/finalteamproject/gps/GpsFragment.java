@@ -105,12 +105,6 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                 marker.setWidth(70); //마커사이즈
                 marker.setHeight(100);
 
-                //현재 위치 오버레이 생성
-//                LocationOverlay locationOverlay = naverMap.getLocationOverlay();
-//                locationOverlay.setVisible(true);
-//                locationOverlay.setPosition(new LatLng(lat, lon));
-//                locationOverlay.setCircleRadius(100);
-
                 Log.d("위치", "위도, 경도: "+lat+", "+lon);
             }
         });

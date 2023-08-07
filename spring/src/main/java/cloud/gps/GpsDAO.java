@@ -15,6 +15,9 @@ public class GpsDAO {
 		return sql.selectList("gps.list");
 	}
 
+	public List<GpsVO> senior_like() {
+		return sql.selectList("gps.like");
+	}
 	
 	
 	
