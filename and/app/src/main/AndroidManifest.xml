@@ -68,6 +68,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".Login.LoginCheckActivity"
+            android:exported="false" />
+        <activity
             android:name=".Login.LoginProfileActivity"
             android:exported="false" />
         <activity

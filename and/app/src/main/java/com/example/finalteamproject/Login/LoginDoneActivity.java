@@ -2,6 +2,7 @@ package com.example.finalteamproject.Login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.example.finalteamproject.HideActionBar;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.databinding.ActivityLoginDoneBinding;
+import com.example.finalteamproject.main.MainActivity;
 
 import nl.dionsegijn.konfetti.KonfettiView;
 import nl.dionsegijn.konfetti.models.Shape;
@@ -47,6 +49,11 @@ public class LoginDoneActivity extends AppCompatActivity {
                 binding.imgvLogo.performClick();
             }
         } , 1000);
+
+        binding.cvPhone.setOnClickListener(v -> {
+            Intent intent = new Intent(this, MainActivity.class);
+        });
+
 
     }
 }

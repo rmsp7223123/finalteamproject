@@ -6,6 +6,10 @@
 		select * from member where member_phone = #{phoneNumber}
 	</select>
 	
+	<select id="check" resultType="cloud.member.MemberVO">
+		select * from member where member_id = #{member_id} and member_pw = #{member_pw}
+	</select>
+	
 	<select id="checkId" resultType="cloud.member.MemberVO">
 		select * from member where member_id = #{id}
 	</select>
@@ -21,6 +25,11 @@
 		values (#{member_id}, #{member_pw}, #{member_name}, #{member_nickname},
 				to_date('19'||substr(#{member_birth}, 1, 2)||'-'||substr(#{member_birth}, 3, 2)||'-'||substr(#{member_birth}, -2), 'yyyy-mm-dd'), 
 				#{member_gender}, #{member_phone}, #{member_phone_id})
+	</insert>
+	
+	<insert id="favor">
+		insert into favor
+		values (#{favor}, #{member_id})
 	</insert>
 	
 	<insert id="godok">
