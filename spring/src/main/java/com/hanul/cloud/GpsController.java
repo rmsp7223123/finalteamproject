@@ -15,9 +15,11 @@ import cloud.gps.GpsVO;
 public class GpsController {
 @Autowired private GpsDAO dao;
 
-	@RequestMapping("/senior")
+	@RequestMapping(value = "/senior" , produces = "text/html;charset=utf-8")
 	public String senior_list() {
 		List<GpsVO> list = dao.senior_list();
 		return new Gson().toJson(list);
 	}
+	
+
 }

@@ -18,6 +18,8 @@ import android.view.ViewGroup;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.databinding.FragmentGpsBinding;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.LocationTrackingMode;
 import com.naver.maps.map.MapFragment;
@@ -43,6 +45,7 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentGpsBinding.inflate(inflater, container, false);
+        senior_list();
 
         //지도 객체 생성
         FragmentManager fm = getChildFragmentManager();
@@ -56,10 +59,6 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
         //현재 위치 생성, naverMap에 지정
         locationSource =
                 new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
-
-        //경로당 리스트(리사이클러뷰)
-        binding.recvGps.setAdapter(new GpsAdapter(getContext()));
-        binding.recvGps.setLayoutManager(new LinearLayoutManager(getContext()));
 
         //(자주가는 경로당)더보기 메뉴
         binding.tvMore.setOnClickListener(v -> {
@@ -117,15 +116,19 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
         });
     }
 
-    public void seniorList(){
+    public void senior_list(){
         CommonConn conn = new CommonConn(getContext(), "gps/senior");
         conn.onExcute((isResult, data) -> {
-            ArrayList<GpsVO> list = new ArrayList<>();
+            ArrayList<GpsVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<GpsVO>>(){}.getType());
 
-
+            //경로당 리스트(리사이클러뷰)
+            GpsAdapter adapter = new GpsAdapter(list);
+            binding.recvGps.setAdapter(adapter);
+            binding.recvGps.setLayoutManager(new LinearLayoutManager(getContext()));
 
         });
     }
+
 
 
 }

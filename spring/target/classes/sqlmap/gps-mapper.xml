@@ -3,7 +3,13 @@
 <mapper namespace="gps">
 
 <select id="list" resultType="cloud.gps.GpsVO">
-select * from senior
+select s.KEY, s.SENIOR_NAME, s.SENIOR_ROADADDRESS, s.SENIOR_NUMADDRESS, s.SENIOR_CALL, s.SENIOR_LATITUDE, s.SENIOR_LONGITUDE, s.SIDO, s.SIGUNGU
+, l.SENIOR_LIKE_NUM
+from SENIOR s
+left join SENIOR_LIKE l
+on s.key = l.key
+where s.key &lt; 25
+order by key
 </select>
 
 </mapper>
