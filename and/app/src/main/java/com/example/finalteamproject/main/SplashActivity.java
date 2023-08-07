@@ -30,20 +30,20 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         new Handler().postDelayed(() -> {
             SharedPreferences pref = getSharedPreferences("loginInfo", MODE_PRIVATE);
-            if(pref.getString("loginInfo", null)==null){
+            if (pref.getString("loginInfo", null) == null) {
                 Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 finish();
-            }else {
+            } else {
                 CommonConn conn = new CommonConn(this, "login/checkId");
                 conn.addParamMap("member_id", pref.getString("loginInfo", "null"));
                 conn.onExcute((isResult, data) -> {
                     CommonVar.logininfo = new Gson().fromJson(data, MemberVO.class);
-                    if(CommonVar.logininfo!=null){
+                    if (CommonVar.logininfo != null) {
                         Intent intent = new Intent(this, MainActivity.class);
                         startActivity(intent);
                         finish();
-                    }else {
+                    } else {
                         Intent intent = new Intent(this, LoginActivity.class);
                         startActivity(intent);
                         finish();
@@ -51,8 +51,6 @@ public class SplashActivity extends AppCompatActivity {
                 });
             }
         }, 2000);
-
-
 
 
         new Handler().postDelayed(() -> {
@@ -79,8 +77,4 @@ public class SplashActivity extends AppCompatActivity {
 //                startActivity(intent);
 //                finish();
 //            }, 2000);
-        }
-
-
-
-};
+}

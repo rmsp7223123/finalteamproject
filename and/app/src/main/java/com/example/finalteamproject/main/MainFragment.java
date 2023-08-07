@@ -113,8 +113,8 @@ public class MainFragment extends Fragment {
             dialog.show();
         });
 
-        BoardMainAdapter adapter1 = new BoardMainAdapter(getList(),getActivity());
-        binding.recvBoard.setAdapter(adapter1);
+        BoardMainAdapter adapter2 = new BoardMainAdapter(getList(),getActivity());
+        binding.recvBoard.setAdapter(adapter2);
         binding.recvBoard.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
         binding.imgvMenu.setOnClickListener(v -> {
@@ -125,61 +125,6 @@ public class MainFragment extends Fragment {
             binding.lnBoard.setVisibility(View.INVISIBLE);
         });
 
-
-        binding.containerLinearTv.setOnClickListener(v -> {
-            boardImgColor();
-            boardTextColor();
-            binding.imgvTv.setImageResource(R.drawable.tv_select);
-            binding.tvTv.setTextColor(Color.parseColor("#F5DC6D"));
-        });
-        binding.containerLinearMusic.setOnClickListener(v -> {
-            boardImgColor();
-            boardTextColor();
-            binding.imgvMusic.setImageResource(R.drawable.music_select);
-            binding.tvMusic.setTextColor(Color.parseColor("#F5DC6D"));
-        });
-        binding.containerLinearMovie.setOnClickListener(v -> {
-            boardImgColor();
-            boardTextColor();
-            binding.imgvMovie.setImageResource(R.drawable.movie_select);
-            binding.tvMovie.setTextColor(Color.parseColor("#F5DC6D"));
-        });
-        binding.containerLinearFashion.setOnClickListener(v -> {
-            boardImgColor();
-            boardTextColor();
-            binding.imgvFashion.setImageResource(R.drawable.fashion_select);
-            binding.tvFashion.setTextColor(Color.parseColor("#F5DC6D"));
-        });
-        binding.containerLinearAnimal.setOnClickListener(v -> {
-            boardImgColor();
-            boardTextColor();
-            binding.imgvAnimal.setImageResource(R.drawable.animal_select);
-            binding.tvAnimal.setTextColor(Color.parseColor("#F5DC6D"));
-        });
-        binding.containerLinearNews.setOnClickListener(v -> {
-            boardImgColor();
-            boardTextColor();
-            binding.imgvNews.setImageResource(R.drawable.news_select);
-            binding.tvNews.setTextColor(Color.parseColor("#F5DC6D"));
-        });
-        binding.containerLinearCar.setOnClickListener(v -> {
-            boardImgColor();
-            boardTextColor();
-            binding.imgvCar.setImageResource(R.drawable.car_select);
-            binding.tvCar.setTextColor(Color.parseColor("#F5DC6D"));
-        });
-        binding.containerLinearSports.setOnClickListener(v -> {
-            boardImgColor();
-            boardTextColor();
-            binding.imgvSports.setImageResource(R.drawable.sports_select);
-            binding.tvSports.setTextColor(Color.parseColor("#F5DC6D"));
-        });
-        binding.containerLinearGame.setOnClickListener(v -> {
-            boardImgColor();
-            boardTextColor();
-            binding.imgvGame.setImageResource(R.drawable.game_select);
-            binding.tvGame.setTextColor(Color.parseColor("#F5DC6D"));
-        });
 
         binding.imgvMessage.setOnClickListener(view -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
@@ -200,37 +145,10 @@ public class MainFragment extends Fragment {
             AlertDialog dialog = builder.create();
             dialog.show();
         });
-        binding.tvBoard.setOnClickListener(view -> {
-            Intent intent = new Intent(getContext(), BoardActivity.class);
-            startActivity(intent);
-        });
 
         return binding.getRoot();
     }
 
-    private void boardImgColor() {
-        binding.imgvTv.setImageResource(R.drawable.tv);
-        binding.imgvMusic.setImageResource(R.drawable.music);
-        binding.imgvMovie.setImageResource(R.drawable.movie);
-        binding.imgvFashion.setImageResource(R.drawable.fashion);
-        binding.imgvAnimal.setImageResource(R.drawable.animal);
-        binding.imgvNews.setImageResource(R.drawable.news);
-        binding.imgvCar.setImageResource(R.drawable.car);
-        binding.imgvSports.setImageResource(R.drawable.sports);
-        binding.imgvGame.setImageResource(R.drawable.game);
-    }
-
-    private  void boardTextColor() {
-        binding.tvTv.setTextColor(Color.parseColor("#000000"));
-        binding.tvMusic.setTextColor(Color.parseColor("#000000"));
-        binding.tvMovie.setTextColor(Color.parseColor("#000000"));
-        binding.tvFashion.setTextColor(Color.parseColor("#000000"));
-        binding.tvAnimal.setTextColor(Color.parseColor("#000000"));
-        binding.tvNews.setTextColor(Color.parseColor("#000000"));
-        binding.tvCar.setTextColor(Color.parseColor("#000000"));
-        binding.tvSports.setTextColor(Color.parseColor("#000000"));
-        binding.tvGame.setTextColor(Color.parseColor("#000000"));
-    }
     private ArrayList<BoardMainDTO> getList() {
         ArrayList<BoardMainDTO> list = new ArrayList<>();
         list.add(new BoardMainDTO(R.drawable.tv_select, R.drawable.mini_arrow, "tv"));

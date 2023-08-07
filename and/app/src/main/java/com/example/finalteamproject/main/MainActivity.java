@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
 //    ActionBar actionBar;
     FragmentManager manager;
 
+    ActionBar actionBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
