@@ -5,6 +5,9 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.Log;
 import android.widget.RemoteViews;
@@ -12,11 +15,13 @@ import android.widget.RemoteViews;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
+import com.bumptech.glide.Glide;
 import com.example.finalteamproject.main.MainActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
 
 public class FirebaseMessageReceiver extends FirebaseMessagingService {
     private final String TAG = "확인용";
@@ -65,10 +70,28 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
         RemoteViews remoteViews = new RemoteViews(
                 getApplicationContext().getPackageName(),
                 R.layout.notification);
+
         remoteViews.setTextViewText(R.id.title, title);
         remoteViews.setTextViewText(R.id.message, message);
-        remoteViews.setImageViewResource(R.id.icon,
-                R.drawable.haerin2);
+        try {
+            Bitmap bitmap = Glide.with(getApplicationContext())
+                    .asBitmap()
+                    .load(R.drawable.haerin2)
+                    .circleCrop()
+                    .submit(512, 512)
+                    .get();
+            Drawable d = new BitmapDrawable(getResources(), bitmap);
+            remoteViews.setImageViewBitmap(R.id.icon , bitmap);
+   //         remoteViews.setImageViewResource(R.id.icon ,   d.id);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+
+      /*  remoteViews.setImageViewResource(R.id.icon,
+                R.drawable.haerin2);*/
         return remoteViews;
     }
 
