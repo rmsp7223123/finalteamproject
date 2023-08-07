@@ -60,11 +60,11 @@ public class LoginController {
 		params.put("app_version", "JAVA SDK v1.2");
 		
 		try {
-//			JSONObject obj = sms.send(params);
-//			System.out.println(obj.toString());
-//			String result = obj.toString().contains("\"success_count\":1")==true ? resultNum : "실패";
-//			return result;
-			return resultNum;
+			JSONObject obj = sms.send(params);
+			System.out.println(obj.toString());
+			String result = obj.toString().contains("\"success_count\":1")==true ? resultNum : "실패";
+			return result;
+//			return resultNum;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "실패";
@@ -78,8 +78,8 @@ public class LoginController {
 	
 
 	@RequestMapping(value="/checkId", produces = "text/html;charset=utf-8")
-	public String checkId(String id) {
-		return new Gson().toJson(sql.selectOne("login.checkId", id));
+	public String checkId(String member_id) {
+		return new Gson().toJson(sql.selectOne("login.checkId", member_id));
 	}
 	
 	@RequestMapping(value="/checkNickname", produces = "text/html;charset=utf-8")

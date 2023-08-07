@@ -11,7 +11,7 @@
 	</select>
 	
 	<select id="checkId" resultType="cloud.member.MemberVO">
-		select * from member where member_id = #{id}
+		select * from member where member_id = #{member_id}
 	</select>
 	
 	<select id="checkNickname" resultType="cloud.member.MemberVO">

@@ -22,8 +22,6 @@ public class SplashActivity extends AppCompatActivity {
 
     ActivitySplashBinding binding;
 
-    public static SharedPreferences pref = gets;
-    public static SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +29,8 @@ public class SplashActivity extends AppCompatActivity {
         binding = ActivitySplashBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         new Handler().postDelayed(() -> {
-            if(pref.getString("loginInfo", "null").equals("null")){
+            SharedPreferences pref = getSharedPreferences("loginInfo", MODE_PRIVATE);
+            if(pref.getString("loginInfo", null)==null){
                 Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 finish();
@@ -62,11 +61,11 @@ public class SplashActivity extends AppCompatActivity {
 //            finish();
 //        }, 2000);
 
-            new Handler().postDelayed(() -> {
-                Intent intent = new Intent(this, LoginActivity.class);
-                startActivity(intent);
-                finish();
-            }, 2000);
+//            new Handler().postDelayed(() -> {
+//                Intent intent = new Intent(this, LoginActivity.class);
+//                startActivity(intent);
+//                finish();
+//            }, 2000);
         }
 
 

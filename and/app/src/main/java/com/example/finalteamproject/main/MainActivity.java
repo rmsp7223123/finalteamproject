@@ -7,10 +7,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 
+import com.example.finalteamproject.HideActionBar;
 import com.example.finalteamproject.R;
+import com.example.finalteamproject.board.BoardFragment;
 import com.example.finalteamproject.chat.ChatMainFragment;
 import com.example.finalteamproject.databinding.ActivityMainBinding;
 import com.example.finalteamproject.game.GameFragment;
@@ -19,7 +22,7 @@ import com.example.finalteamproject.setting.SettingFragment;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
-    ActionBar actionBar;
+//    ActionBar actionBar;
     FragmentManager manager;
 
 
@@ -30,9 +33,9 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
 
         setContentView(binding.getRoot());
-        actionBar = getSupportActionBar();
+//        actionBar = getSupportActionBar();
         manager = getSupportFragmentManager();
-      //  //new HideActionBar().hideActionBar(this);
+//        new HideActionBar().hideActionBar(this);
         binding.bottomNavigationView.setSelectedItemId(R.id.fab);
         binding.fltbtnHome.setOnClickListener(v -> {
             binding.bottomNavigationView.setSelectedItemId(R.id.fab);
@@ -64,6 +67,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+    }
+
+
+    public void changeFragment(String board_name){
+        manager.beginTransaction().replace(R.id.container_frame, new BoardFragment(board_name)).commit();
     }
 
 }

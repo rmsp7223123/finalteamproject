@@ -70,7 +70,7 @@ public class LoginProfileActivity extends AppCompatActivity {
                     public void onResponse(Call<String> call, Response<String> response) {
                         if(response.body().equals("성공")){
                             Toast.makeText(LoginProfileActivity.this, "프로필 이미지 업로드 성공", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(LoginProfileActivity.this, LoginGodokActivity.class);
+                            Intent intent = new Intent(LoginProfileActivity.this, LoginFavorActivity.class);
                             startActivity(intent);
                         }else {
                             Toast.makeText(LoginProfileActivity.this, "프로필 이미지 업로드 실패", Toast.LENGTH_SHORT).show();

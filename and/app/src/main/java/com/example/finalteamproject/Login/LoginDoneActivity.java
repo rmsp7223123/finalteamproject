@@ -3,6 +3,7 @@ package com.example.finalteamproject.Login;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -62,6 +63,10 @@ public class LoginDoneActivity extends AppCompatActivity {
                 CommonVar.logininfo = new Gson().fromJson(data, MemberVO.class);
                 if(CommonVar.logininfo!=null){
                     Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show();
+                    SharedPreferences pref = getSharedPreferences("loginInfo", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = pref.edit();
+                    editor.putString("loginInfo", LoginVar.id);
+                    editor.commit();
                     Intent intent = new Intent(this, MainActivity.class);
                     startActivity(intent);
                 }else {

@@ -53,8 +53,10 @@ public class LoginCheckActivity extends AppCompatActivity {
                     CommonVar.logininfo = new Gson().fromJson(data, MemberVO.class);
                     if(CommonVar.logininfo!=null){
                         Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show();
-                        SplashActivity.editor.putString("loginInfo", binding.edtId.getText().toString());
-                        SplashActivity.editor.apply();
+                        SharedPreferences pref = getSharedPreferences("loginInfo", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = pref.edit();
+                        editor.putString("loginInfo", binding.edtId.getText().toString());
+                        editor.commit();
                         Intent intent = new Intent(this, MainActivity.class);
                         startActivity(intent);
                     }else {
