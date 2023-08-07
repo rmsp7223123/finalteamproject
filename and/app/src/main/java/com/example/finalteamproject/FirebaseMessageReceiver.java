@@ -25,7 +25,7 @@ import java.util.concurrent.ExecutionException;
 
 public class FirebaseMessageReceiver extends FirebaseMessagingService {
     private final String TAG = "확인용";
-    int uniqueRandomValue = new Random().nextInt();
+    private static int uniqueRandomValue = new Random().nextInt();
     @Override
     public void onNewToken(@NonNull String token)
     {
@@ -56,7 +56,7 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
             // Since the notification is received directly
             // from FCM, the title and the body can be
             // fetched directly as below.
-            showNotification(
+            showNotification(this,
                     remoteMessage.getNotification().getTitle(),
                     remoteMessage.getNotification().getBody());
         }
@@ -64,30 +64,30 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
 
     // Method to get the custom Design for the display of
     // notification.
-    private RemoteViews getCustomDesign(String title,
+    private static RemoteViews getCustomDesign(Context context, String title,
                                         String message)
     {
         RemoteViews remoteViews = new RemoteViews(
-                getApplicationContext().getPackageName(),
+                context.getPackageName(),
                 R.layout.notification);
 
         remoteViews.setTextViewText(R.id.title, title);
         remoteViews.setTextViewText(R.id.message, message);
-        try {
-            Bitmap bitmap = Glide.with(getApplicationContext())
-                    .asBitmap()
-                    .load(R.drawable.haerin2)
-                    .circleCrop()
-                    .submit(512, 512)
-                    .get();
-            Drawable d = new BitmapDrawable(getResources(), bitmap);
-            remoteViews.setImageViewBitmap(R.id.icon , bitmap);
-   //         remoteViews.setImageViewResource(R.id.icon ,   d.id);
-        } catch (ExecutionException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            Bitmap bitmap = Glide.with(context)
+//                    .asBitmap()
+//                    .load(R.drawable.haerin2)
+//                    .circleCrop()
+//                    .submit(512, 512)
+//                    .get();
+//            Drawable d = new BitmapDrawable(context.getResources(), bitmap);
+//            remoteViews.setImageViewBitmap(R.id.icon , bitmap);
+//   //         remoteViews.setImageViewResource(R.id.icon ,   d.id);
+//        } catch (ExecutionException e) {
+//            throw new RuntimeException(e);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
 
 
       /*  remoteViews.setImageViewResource(R.id.icon,
@@ -96,12 +96,12 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
     }
 
     // Method to display the notifications
-    public void showNotification(String title,
+    public static void showNotification(Context context,String title,
                                  String message)
     {
         // Pass the intent to switch to the MainActivity
         Intent intent
-                = new Intent(this, MainActivity.class);
+                = new Intent(context, MainActivity.class);
         // Assign channel ID
         String channel_id = "notification_channel";
         // Here FLAG_ACTIVITY_CLEAR_TOP flag is set to clear
@@ -111,42 +111,24 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
         // Pass the intent to PendingIntent to start the
         // next Activity
         PendingIntent pendingIntent = PendingIntent.getActivity(
-                this, 0, intent, PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE
+                context, 0, intent, PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE
         );
 
         // Create a Builder object using NotificationCompat
         // class. This will allow control over all the flags
         NotificationCompat.Builder builder
                 = new NotificationCompat
-                .Builder(getApplicationContext(),
+                .Builder(context,
                 channel_id)
-                .setSmallIcon(R.drawable.haerin2)
+                .setSmallIcon(R.drawable.baseline_mail_outline_24)
                 .setAutoCancel(true)
                 .setVibrate(new long[] { 1000, 1000, 1000,
                         1000, 1000 })
                 .setOnlyAlertOnce(true)
-                .setContentIntent(pendingIntent);
-
-        // A customized design for the notification can be
-        // set only for Android versions 4.1 and above. Thus
-        // condition for the same is checked here.
-        if (Build.VERSION.SDK_INT
-                >= Build.VERSION_CODES.JELLY_BEAN) {
-            builder = builder.setContent(
-                    getCustomDesign(title, message));
-        } // If Android Version is lower than Jelly Beans,
-        // customized layout cannot be used and thus the
-        // layout is set as follows
-        else {
-            builder = builder.setContentTitle(title)
-                    .setContentText(message)
-                    .setSmallIcon(R.drawable.haerin2);
-        }
-        // Create an object of NotificationManager class to
-        // notify the
-        // user of events that happen in the background.
+                .setContentIntent(pendingIntent)
+                .setCustomContentView(getCustomDesign(context,title,message));
         NotificationManager notificationManager
-                = (NotificationManager)getSystemService(
+                = (NotificationManager)context.getSystemService(
                 Context.NOTIFICATION_SERVICE);
         // Check if the Android Version is greater than Oreo
         if (Build.VERSION.SDK_INT
@@ -160,5 +142,6 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
         }
 
         notificationManager.notify(uniqueRandomValue, builder.build());
+        uniqueRandomValue++;
     }
 }
