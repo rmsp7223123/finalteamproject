@@ -3,8 +3,10 @@ package com.example.finalteamproject.Login;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.finalteamproject.R;
@@ -13,11 +15,14 @@ import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.common.MemberVO;
 import com.example.finalteamproject.databinding.ActivityLoginCheckBinding;
 import com.example.finalteamproject.main.MainActivity;
+import com.example.finalteamproject.main.SplashActivity;
 import com.google.gson.Gson;
 
 public class LoginCheckActivity extends AppCompatActivity {
 
     ActivityLoginCheckBinding binding;
+
+    SharedPreferences pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +53,8 @@ public class LoginCheckActivity extends AppCompatActivity {
                     CommonVar.logininfo = new Gson().fromJson(data, MemberVO.class);
                     if(CommonVar.logininfo!=null){
                         Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show();
+                        SplashActivity.editor.putString("loginInfo", binding.edtId.getText().toString());
+                        SplashActivity.editor.apply();
                         Intent intent = new Intent(this, MainActivity.class);
                         startActivity(intent);
                     }else {
@@ -58,4 +65,6 @@ public class LoginCheckActivity extends AppCompatActivity {
         });
 
     }
+
+
 }
