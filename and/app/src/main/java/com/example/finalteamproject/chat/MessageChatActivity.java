@@ -5,6 +5,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
 
+import com.example.finalteamproject.FirebaseMessageReceiver;
+import com.example.finalteamproject.R;
 import com.example.finalteamproject.databinding.ActivityMessageChatBinding;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -23,8 +25,8 @@ public class MessageChatActivity extends AppCompatActivity {
 
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
-    public static String messageId = "";
 
+    public static String messageId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,8 @@ public class MessageChatActivity extends AppCompatActivity {
                 MessageDTO temp = new MessageDTO(messageDTO.getImgRes(),messageDTO.getNickname(),messageText,currentTime,true);
                 // 파이어베이스 경로를 닉네임이 아닌 id로 바꾸기
                 databaseReference.child("chat").child(messageDTO.getNickname()).child(messageId).setValue(temp);
+                FirebaseMessageReceiver fmr = new FirebaseMessageReceiver();
+                fmr.showNotification(binding.tvNickname.getText().toString(), binding.edtMessage.getText().toString());
                 adapter.notifyDataSetChanged();
                 binding.edtMessage.setText("");
             }
