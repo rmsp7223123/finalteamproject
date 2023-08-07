@@ -1,9 +1,22 @@
 메인 친구추가 버튼 다이얼로그 수정하기
-게시판 액티비티 추가하기
 로그아웃, 회원탈퇴 기능 추가하기
 글꼴 변경 수정하기
-파이어베이스 클라우드 메시징 추가하기
-기본 시작화면 추가 및 수정하기
 통화기능 삭제하기
 메시지에 음성메시지 남기기, 사진보내기 추가
+알람을 클릭했을 때 그 화면으로 전환되게 수정하기
 
+try {
+            Bitmap bitmap = Glide.with(getApplicationContext())
+                    .asBitmap()
+                    .load(R.drawable.haerin2)
+                    .circleCrop()
+                    .submit(512, 512)
+                    .get();
+            Drawable d = new BitmapDrawable(getResources(), bitmap);
+            remoteViews.setImageViewBitmap(R.id.icon, bitmap);
+            //         remoteViews.setImageViewResource(R.id.icon ,   d.id);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
