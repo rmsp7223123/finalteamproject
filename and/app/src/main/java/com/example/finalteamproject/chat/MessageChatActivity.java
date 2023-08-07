@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.example.finalteamproject.FirebaseMessageReceiver;
 import com.example.finalteamproject.R;
@@ -22,6 +25,7 @@ import java.util.Locale;
 public class MessageChatActivity extends AppCompatActivity {
     ActivityMessageChatBinding binding;
     boolean isChatCheck = false;
+    private int sendCnt = 0;
 
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
@@ -32,7 +36,7 @@ public class MessageChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMessageChatBinding.inflate(getLayoutInflater());
-        MessageChatAdapter adapter = new MessageChatAdapter(getlist(),this,isChatCheck);
+        MessageChatAdapter adapter = new MessageChatAdapter(getlist(), this, isChatCheck);
         setContentView(binding.getRoot());
         binding.imgvBack.setOnClickListener(v -> {
             finish();
@@ -51,18 +55,19 @@ public class MessageChatActivity extends AppCompatActivity {
             SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
             String currentTime = dateFormat.format(new Date());
             String messageText = binding.edtMessage.getText().toString();
-            if(!messageText.isEmpty()) {
-               // String name = getIntent().getStringExtra("nickname");
+            if (!messageText.isEmpty()) {
+                // String name = getIntent().getStringExtra("nickname");
                 //int imgRes = getIntent().getIntExtra("img",0);
                 messageId = databaseReference.child("chat").child(itemName).push().getKey();
-                MessageDTO temp = new MessageDTO(messageDTO.getImgRes(),messageDTO.getNickname(),messageText,currentTime,true);
+                MessageDTO temp = new MessageDTO(messageDTO.getImgRes(), messageDTO.getNickname(), messageText, currentTime, true);
                 // 파이어베이스 경로를 닉네임이 아닌 id로 바꾸기
                 databaseReference.child("chat").child(messageDTO.getNickname()).child(messageId).setValue(temp);
+                binding.recvMessageChat.scrollToPosition(adapter.getItemCount() - 1);
                 adapter.notifyDataSetChanged();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        FirebaseMessageReceiver.showNotification(MessageChatActivity.this,binding.tvNickname.getText().toString(),binding.edtMessage.getText().toString());
+                        FirebaseMessageReceiver.showNotification(MessageChatActivity.this, binding.tvNickname.getText().toString(), binding.edtMessage.getText().toString());
 
                     }
                 });
@@ -99,9 +104,28 @@ public class MessageChatActivity extends AppCompatActivity {
 
             }
         });
-
+        binding.containerLinearSendFile.setVisibility(View.GONE);
         binding.imgvSendFile.setOnClickListener(view -> {
-            // 다이얼로그? 프래그먼트?
+            if (sendCnt % 2 == 1) {
+                binding.containerLinearSendFile.setVisibility(View.VISIBLE);
+            } else {
+                binding.containerLinearSendFile.setVisibility(View.GONE);
+            }
+            if (binding.containerLinearSendFile.getVisibility() == View.VISIBLE) {
+                Animation slideDownAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_down);
+                binding.containerFrameMessage.startAnimation(slideDownAnimation);
+                binding.containerLinearSendFile.startAnimation(slideDownAnimation);
+                binding.containerLinearSendFile.setVisibility(View.GONE);
+                binding.imgvSendFile.setImageResource(R.drawable.baseline_add_24);
+            } else {
+                binding.containerLinearSendFile.setVisibility(View.VISIBLE);
+                Animation slideUpAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_up);
+                binding.containerLinearSendFile.startAnimation(slideUpAnimation);
+                binding.containerFrameMessage.startAnimation(slideUpAnimation);
+                binding.imgvSendFile.setImageResource(R.drawable.baseline_close_24);
+            }
+
+            sendCnt++;
         });
     }
 
