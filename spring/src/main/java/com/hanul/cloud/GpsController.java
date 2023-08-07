@@ -9,15 +9,24 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 
 import cloud.gps.GpsDAO;
+import cloud.gps.GpsLikeVO;
 import cloud.gps.GpsVO;
 
 @RestController @RequestMapping("/gps")
 public class GpsController {
 @Autowired private GpsDAO dao;
 
-	@RequestMapping("/senior")
+	@RequestMapping(value = "/senior" , produces = "text/html;charset=utf-8")
 	public String senior_list() {
 		List<GpsVO> list = dao.senior_list();
 		return new Gson().toJson(list);
 	}
+	
+	@RequestMapping(value = "/like" , produces = "text/html;charset=utf-8")
+	public String senior_like() {
+		List<GpsVO> list = dao.senior_like();
+		return new Gson().toJson(list);
+	}
+	
+
 }

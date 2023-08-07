@@ -1,6 +1,6 @@
 package com.example.finalteamproject.game;
 
-import android.view.View;
+import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -15,7 +15,9 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        binding = ItemGameRankBinding.inflate(inflater, parent, false);
+        return new ViewHolder(binding);
     }
 
     @Override
@@ -25,13 +27,13 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return 0;
+        return 10;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         ItemGameRankBinding binding;
 
-        public ViewHolder(@NonNull View itemView, ItemGameRankBinding binding) {
+        public ViewHolder(ItemGameRankBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

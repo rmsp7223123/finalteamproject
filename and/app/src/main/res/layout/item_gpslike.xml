@@ -13,11 +13,13 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/senior_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:text="금호APT경로당"/>
         <TextView
+            android:id="@+id/senior_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="광주광역시 북구 각화대로 33 (각화동 금호타운)"/>

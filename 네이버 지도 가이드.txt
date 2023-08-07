@@ -1,2 +1,3 @@
 https://navermaps.github.io/android-map-sdk/guide-ko/
 https://github.com/navermaps/android-map-sdk
+https://developers.naver.com/forum/posts/24571

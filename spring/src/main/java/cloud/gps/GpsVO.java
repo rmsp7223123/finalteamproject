@@ -1,15 +1,21 @@
 package cloud.gps;
 
 public class GpsVO {
-	private int key;
+	private int key, senior_like_num;
 	private String senior_name, senior_roadaddress, senior_numaddress
-	, senior_call, senior_latitude, senior_longitude, sido, sigungu;
+	, senior_call, senior_latitude, senior_longitude, sido, sigungu, member_id;
 	
 	public int getKey() {
 		return key;
 	}
 	public void setKey(int key) {
 		this.key = key;
+	}
+	public int getSenior_like_num() {
+		return senior_like_num;
+	}
+	public void setSenior_like_num(int senior_like_num) {
+		this.senior_like_num = senior_like_num;
 	}
 	public String getSenior_name() {
 		return senior_name;
@@ -59,7 +65,12 @@ public class GpsVO {
 	public void setSigungu(String sigungu) {
 		this.sigungu = sigungu;
 	}
-	
+	public String getMember_id() {
+		return member_id;
+	}
+	public void setMember_id(String member_id) {
+		this.member_id = member_id;
+	}
 	
 
 	
