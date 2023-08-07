@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             } else if (item.getItemId() == R.id.setting) {
                 fragment = new SettingFragment();
             } else {
-                return false;
+                return true;
             }
             manager.beginTransaction().remove(fragment);
             manager.beginTransaction().replace(R.id.container_frame, fragment).commit();
