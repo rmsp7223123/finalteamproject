@@ -121,7 +121,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_album"
             android:layout_gravity="center"
-            android:backgroundTint="#123"
+            android:backgroundTint="#000"
             android:layout_width="100dp"
             android:layout_height="100dp"
             app:cardCornerRadius="50dp"
@@ -153,7 +153,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_camera"
                 android:layout_gravity="center"
-                android:backgroundTint="#123"
+                android:backgroundTint="#000"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 app:cardCornerRadius="50dp"
@@ -185,7 +185,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_voice"
                 android:layout_gravity="center"
-                android:backgroundTint="#123"
+                android:backgroundTint="#000"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 app:cardCornerRadius="50dp"
