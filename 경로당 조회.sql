@@ -2,7 +2,7 @@
 --특수문자 변환 사이트
 
 --데이터가 너무 많아서 25개만 우선 보이게 작업 중
-select * from senior where key < 25;
+select * from senior where key between 2040 and 2440;
 
 --경로당 이름으로 조회시 중복값 있음
 select * from senior

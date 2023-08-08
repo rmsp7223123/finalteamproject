@@ -26,6 +26,18 @@ public class GpsDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(binding.getRoot());
 
+        Intent intenttx = getIntent();
+        String senior_name, senior_address, senior_phone, senior_like;
+        senior_name = intenttx.getStringExtra("senior_name");
+        senior_address = intenttx.getStringExtra("senior_address");
+        senior_phone = intenttx.getStringExtra("senior_phone");
+        senior_like = intenttx.getStringExtra("senior_like");
+
+        binding.seniorName.setText(senior_name);
+        binding.seniorAddress.setText(senior_address);
+        binding.phoneNumber.setText(senior_phone);
+        binding.seniorLike.setText("좋아요 "+senior_like);
+
         binding.like.setVisibility(View.GONE);
         binding.btnBack.setOnClickListener(v -> {
             finish();
