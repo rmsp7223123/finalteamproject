@@ -3,6 +3,8 @@ package com.example.finalteamproject.main;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -17,9 +19,12 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.finalteamproject.R;
+import com.example.finalteamproject.common.CommonConn;
+import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.databinding.FragmentMainBinding;
 import com.example.finalteamproject.setting.ChangeProfileActivity;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class MainFragment extends Fragment {
@@ -146,6 +151,15 @@ public class MainFragment extends Fragment {
             dialog.show();
         });
 
+//        CommonConn conn = new CommonConn(getContext(),"main/test");
+//        conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+
+
+        Glide.with(this).load(CommonVar.logininfo.getMember_profileimg()).into(binding.imgvSmallProfile);
+
+
+
+
         return binding.getRoot();
     }
 
@@ -162,4 +176,5 @@ public class MainFragment extends Fragment {
         list.add(new BoardMainDTO(R.drawable.game_select, R.drawable.mini_arrow, "게임"));
         return list;
     }
+
 }

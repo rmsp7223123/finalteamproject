@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 
 import cloud.gps.GpsDAO;
-import cloud.gps.GpsLikeVO;
 import cloud.gps.GpsVO;
 
 @RestController @RequestMapping("/gps")

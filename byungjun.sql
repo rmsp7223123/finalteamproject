@@ -17,5 +17,7 @@ select * from dday;
 
 rollback;
 
+select member_profileimg from member where member_profileimg = 'afsdadsf';
+
 commit;
 

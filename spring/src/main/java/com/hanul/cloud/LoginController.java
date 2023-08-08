@@ -60,11 +60,11 @@ public class LoginController {
 		params.put("app_version", "JAVA SDK v1.2");
 		
 		try {
-			JSONObject obj = sms.send(params);
-			System.out.println(obj.toString());
-			String result = obj.toString().contains("\"success_count\":1")==true ? resultNum : "실패";
-			return result;
-//			return resultNum;
+//			JSONObject obj = sms.send(params);
+//			System.out.println(obj.toString());
+//			String result = obj.toString().contains("\"success_count\":1")==true ? resultNum : "실패";
+//			return result;
+			return resultNum;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "실패";
@@ -73,18 +73,22 @@ public class LoginController {
 	
 	@RequestMapping(value="/checkPhone", produces = "text/html;charset=utf-8")
 	public String checkPhone(String phoneNumber) {
-		return new Gson().toJson(sql.selectOne("login.checkPhone", phoneNumber));
+		MemberVO vo = sql.selectOne("login.checkPhone", phoneNumber);
+		return new Gson().toJson(vo);
 	}
+		
 	
 
 	@RequestMapping(value="/checkId", produces = "text/html;charset=utf-8")
 	public String checkId(String member_id) {
-		return new Gson().toJson(sql.selectOne("login.checkId", member_id));
+		MemberVO vo = sql.selectOne("login.checkId", member_id);
+		return new Gson().toJson(vo);
 	}
 	
 	@RequestMapping(value="/checkNickname", produces = "text/html;charset=utf-8")
 	public String checkNickname(String nickname) {
-		return new Gson().toJson(sql.selectOne("login.checkNickname", nickname));
+		MemberVO vo = sql.selectOne("login.checkNickname", nickname);
+		return new Gson().toJson(vo);
 	}
 	
 	@RequestMapping(value="/file", produces = "text/html;charset=utf-8" )
