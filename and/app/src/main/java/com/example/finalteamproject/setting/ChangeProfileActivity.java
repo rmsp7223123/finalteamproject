@@ -23,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.example.finalteamproject.HideActionBar;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
+import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.common.RetrofitClient;
 import com.example.finalteamproject.common.RetrofitInterface;
 import com.example.finalteamproject.databinding.ActivityChangeProfileBinding;
@@ -51,6 +52,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
         binding = ActivityChangeProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         //new HideActionBar().hideActionBar(this);
+        Glide.with(this).load(CommonVar.logininfo.getMember_profileimg()).into(binding.imgvProfileimg);
         binding.imgvBack.setOnClickListener(v -> {
             finish();
         });
@@ -67,7 +69,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
             builder.setNegativeButton("확인", (dialog, which) -> {
                 EditText edt_nickname = customLayout.findViewById(R.id.edt_nickname);
                 // 중복확인 검사 추가하기
-                if(edt_nickname.length() > 0 ) {
+                if (edt_nickname.length() > 0) {
                     sendDialogDataToActivity(edt_nickname.getText().toString());
                     binding.tvNickname.setText(edt_nickname.getText().toString());
                 }
@@ -103,7 +105,6 @@ public class ChangeProfileActivity extends AppCompatActivity {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_PICK);
-//        startActivity(intent); //단순 실행 결과를 알수가없다.
         startActivityForResult(intent, REQ_GALLERY);
     }
 
@@ -176,7 +177,11 @@ public class ChangeProfileActivity extends AppCompatActivity {
             api.clientSendFile("file.f", new HashMap<>(), filePart).enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(Call<String> call, Response<String> response) {
-
+                    CommonConn conn = new CommonConn(ChangeProfileActivity.this, "main/changeProfile");
+                    conn.addParamMap("member_profileimg", img_path);
+                    conn.onExcute((isResult, data1) -> {
+                        CommonVar.logininfo.setMember_profileimg(img_path);
+                    });
                 }
 
                 @Override
