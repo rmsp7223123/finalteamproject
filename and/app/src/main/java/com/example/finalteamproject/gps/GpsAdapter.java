@@ -38,7 +38,7 @@ public class GpsAdapter extends RecyclerView.Adapter<GpsAdapter.ViewHolder> {
 
         h.binding.itemSenior.setOnClickListener(v -> {
             Intent intent = new Intent(context, GpsDetailActivity.class);
-            intent.putExtra("")
+//            intent.putExtra("")
             context.startActivity(intent);
         });
 
