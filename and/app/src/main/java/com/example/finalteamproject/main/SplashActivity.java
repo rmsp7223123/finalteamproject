@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.finalteamproject.HideActionBar;
@@ -40,6 +41,7 @@ public class SplashActivity extends AppCompatActivity {
                 conn.onExcute((isResult, data) -> {
                     CommonVar.logininfo = new Gson().fromJson(data, MemberVO.class);
                     if (CommonVar.logininfo != null) {
+                        Log.d("test", "onCreate: "+CommonVar.logininfo.getMember_id());
                         Intent intent = new Intent(this, MainActivity.class);
                         startActivity(intent);
                         finish();
@@ -53,28 +55,11 @@ public class SplashActivity extends AppCompatActivity {
         }, 2000);
 
 
-        new Handler().postDelayed(() -> {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-            finish();
-        }, 2000);
-
-//        new Handler().postDelayed(() -> {
-//            Intent intent = new Intent(this, LoginActivity.class);
-//            startActivity(intent);
-//            finish();
-//        }, 2000);
-
-    }
 //        new Handler().postDelayed(() -> {
 //            Intent intent = new Intent(this, MainActivity.class);
 //            startActivity(intent);
 //            finish();
 //        }, 2000);
 
-//            new Handler().postDelayed(() -> {
-//                Intent intent = new Intent(this, LoginActivity.class);
-//                startActivity(intent);
-//                finish();
-//            }, 2000);
+    }
 }

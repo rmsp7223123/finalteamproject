@@ -26,6 +26,8 @@ public class MainFragment extends Fragment {
 
     FragmentMainBinding binding;
 
+    int num;
+
     int[] images = new int[]{
             R.drawable.haerin2,
             R.drawable.minji10,
@@ -35,9 +37,15 @@ public class MainFragment extends Fragment {
             R.drawable.hyein11
     };
 
+    public MainFragment(int num) {
+        this.num = num;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
         binding = FragmentMainBinding.inflate(inflater, container,false);
         Viewpager_main_adapter adapter = new Viewpager_main_adapter(getContext(), images);
         int initialPosition = adapter.getItemCount() / 2;
@@ -46,6 +54,12 @@ public class MainFragment extends Fragment {
         MainBoardAdapter adapter1 = new MainBoardAdapter();
         binding.recvBoard.setAdapter(adapter1);
         binding.recvBoard.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        //게시판에서 뒤로 메인으로 돌아왔을 때 게시판 메뉴 visible로 만들기
+        if(num==1){
+            binding.lnBoard.setVisibility(View.VISIBLE);
+        }
+
         binding.imgViewpager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             int currentState = 0;
             int currentPos = 0;
@@ -113,7 +127,7 @@ public class MainFragment extends Fragment {
             dialog.show();
         });
 
-        BoardMainAdapter adapter2 = new BoardMainAdapter(getList(),getActivity());
+        BoardMainAdapter adapter2 = new BoardMainAdapter(this, getList(),getActivity());
         binding.recvBoard.setAdapter(adapter2);
         binding.recvBoard.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
@@ -151,7 +165,7 @@ public class MainFragment extends Fragment {
 
     private ArrayList<BoardMainDTO> getList() {
         ArrayList<BoardMainDTO> list = new ArrayList<>();
-        list.add(new BoardMainDTO(R.drawable.tv_select, R.drawable.mini_arrow, "tv"));
+        list.add(new BoardMainDTO(R.drawable.tv_select, R.drawable.mini_arrow, "TV"));
         list.add(new BoardMainDTO(R.drawable.music_select, R.drawable.mini_arrow, "음악"));
         list.add(new BoardMainDTO(R.drawable.movie_select, R.drawable.mini_arrow, "영화"));
         list.add(new BoardMainDTO(R.drawable.fashion_select, R.drawable.mini_arrow, "패션"));

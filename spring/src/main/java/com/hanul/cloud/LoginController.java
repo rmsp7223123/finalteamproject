@@ -60,11 +60,11 @@ public class LoginController {
 		params.put("app_version", "JAVA SDK v1.2");
 		
 		try {
-			JSONObject obj = sms.send(params);
-			System.out.println(obj.toString());
-			String result = obj.toString().contains("\"success_count\":1")==true ? resultNum : "실패";
-			return result;
-//			return resultNum;
+//			JSONObject obj = sms.send(params);
+//			System.out.println(obj.toString());
+//			String result = obj.toString().contains("\"success_count\":1")==true ? resultNum : "실패";
+//			return result;
+			return resultNum;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "실패";
@@ -97,11 +97,11 @@ public class LoginController {
 		MultipartFile file = mReq.getFile("file");
 		//파일이 있는 상태의 요청을 받았는지에 따라서 유동적으로 MultipartRequest로 캐스팅
 		if(file!=null) {
-			String fullPath = req.getRealPath("/");
-			String workSpace = fullPath.substring(0, fullPath.indexOf(".metadata"));
-			String projectName = fullPath.substring(fullPath.indexOf("wtpwebapps")+"wtpwebapps".length(), fullPath.length());
+//			String fullPath = req.getRealPath("/");
+//			String workSpace = fullPath.substring(0, fullPath.indexOf(".metadata"));
+//			String projectName = fullPath.substring(fullPath.indexOf("wtpwebapps")+"wtpwebapps".length(), fullPath.length());
 			String fileName = id+".jpg";
-			Path filePath = Paths.get(workSpace, projectName , "src", "main", "resources", "images", "profileImage");
+			Path filePath = Paths.get(CommonVal.path, "profileImage");
 //			File f = filePath.toFile();
 			File f = new File(filePath.toString());
 			File file1 = null;
