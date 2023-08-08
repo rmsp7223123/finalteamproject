@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 
 import com.google.gson.Gson;
 
@@ -45,19 +46,23 @@ public class MainController {
 	}
 
 	@RequestMapping("/changeProfile")
-	public String changeProfile(MultipartFile file, HttpServletRequest req, MemberVO vo) {
+	public String changeProfile(HttpServletRequest req) {
+		
+		MemberVO vo = new Gson().fromJson(req.getParameter("dto"), MemberVO.class) ;
+		MultipartFile file = ((MultipartRequest)req).getFile("file");
 		// 파일저장, 원본파일 삭제, 새로운 파일경로 DB에 업로드
-		String newImagePath = common.uploadAndDeletePreviousImage("profileImg", file, req,
+		String newImagePath = common.uploadAndDeletePreviousImage("profileImage", file, req,
 				vo.getMember_profileimg());
 
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("newImagePath", newImagePath);
+		paramMap.put("member_profileimg", newImagePath);
 		paramMap.put("member_id", vo.getMember_id());
 		sql.update("main.changeProfile", paramMap);
 
 		// System.out.println(req.getLocalAddr() + ":" + req.getContextPath() + "/imgs/"
 		// + modulePath);
 		// DB에 저장
-		return "";
+		MemberVO vo2 = sql.selectOne("login.check", vo.getMember_id());
+		return new Gson().toJson(vo2);
 	}
 }

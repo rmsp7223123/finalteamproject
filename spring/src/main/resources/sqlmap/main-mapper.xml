@@ -5,8 +5,4 @@
 		update member set member_profileimg =
 		#{member_profileimg} where member_id = #{member_id}
 	</update>
-	<select id="previousImg">
-		select member_profileimg from member where member_id
-		= #{member_id}
-	</select>
 </mapper>
