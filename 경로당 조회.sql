@@ -73,6 +73,14 @@ UPDATE SENIOR_LIKE
 SET SENIOR_LIKE_NUM = SENIOR_LIKE_NUM - 1
 WHERE KEY = 20;
 
+
+select key
+from SENIOR_BMARK
+where key=15 and member_id='admin';
+
+select * from senior where key = 1;
+
+
 --데이터 조회
 select * from SENIOR_LIKE;
 select * from SENIOR_BMARK;
