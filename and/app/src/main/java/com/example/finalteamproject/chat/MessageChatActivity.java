@@ -113,19 +113,26 @@ public class MessageChatActivity extends AppCompatActivity {
             }
             if (binding.containerLinearSendFile.getVisibility() == View.VISIBLE) {
                 Animation slideDownAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_down);
-                binding.containerFrameMessage.startAnimation(slideDownAnimation);
-                binding.containerLinearSendFile.startAnimation(slideDownAnimation);
+
                 binding.containerLinearSendFile.setVisibility(View.GONE);
                 binding.imgvSendFile.setImageResource(R.drawable.baseline_add_24);
             } else {
                 binding.containerLinearSendFile.setVisibility(View.VISIBLE);
                 Animation slideUpAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_up);
-                binding.containerLinearSendFile.startAnimation(slideUpAnimation);
-                binding.containerFrameMessage.startAnimation(slideUpAnimation);
+
                 binding.imgvSendFile.setImageResource(R.drawable.baseline_close_24);
             }
 
             sendCnt++;
+        });
+        binding.cvAlbum.setOnClickListener(v -> {
+
+        });
+        binding.cvCamera.setOnClickListener(v -> {
+
+        });
+        binding.cvVoice.setOnClickListener(v -> {
+            
         });
     }
 
