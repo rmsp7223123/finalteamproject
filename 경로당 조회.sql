@@ -1,8 +1,8 @@
 --https://www.baraverkstad.se/encode/
 --특수문자 변환 사이트
 
---데이터가 너무 많아서 25개만 우선 보이게 작업 중
-select * from senior where key < 25;
+--데이터가 너무 많아서 일부만 우선 보이게 작업 중
+select * from senior where key between 2040 and 2440;
 
 --경로당 이름으로 조회시 중복값 있음
 select * from senior
@@ -24,6 +24,7 @@ left join SENIOR_LIKE l
 on s.key = l.key
 where s.key=126);
 
+--mapper
 --전체 경로당 리스트 + 좋아요
 select s.KEY, s.SENIOR_NAME, s.SENIOR_ROADADDRESS, s.SENIOR_NUMADDRESS, s.SENIOR_CALL, s.SENIOR_LATITUDE, s.SENIOR_LONGITUDE, s.SIDO, s.SIGUNGU
 , l.SENIOR_LIKE_NUM
@@ -33,29 +34,62 @@ on s.key = l.key
 where s.key < 25
 order by key;
 
---좋아요 테스트 쿼리
-insert into SENIOR_LIKE (MEMBER_ID, KEY, SENIOR_LIKE_NUM)
-values ('admin', 13, 1);
-commit;
-
---자주가는 경로당 조회
-select * from SENIOR_LIKE
+--자주가는 경로당(즐겨찾기) 조회
+select * from SENIOR_BMARK
 where member_id='admin';
 
-select l.member_id, l.KEY, s.SENIOR_NAME, s.SENIOR_ROADADDRESS
-from senior_like l
+--조회 쿼리 mapper
+select b.member_id, b.KEY, s.SENIOR_NAME, s.SENIOR_ROADADDRESS
+from senior_bmark b
 left join senior s
-on l.key=s.key
+on b.key=s.key
 where member_id='admin';
 
 
+--mapper
+--좋아요 누름
+--자주가는 경로당(즐겨찾기) 추가
+insert into SENIOR_BMARK (KEY, MEMBER_ID)
+values(1, 'admin');
+
+--좋아요 테이블에 컬럼 생성
+insert into SENIOR_LIKE (MEMBER_ID, KEY, SENIOR_LIKE_NUM)
+values ('admin', 1, 0);
+--컬럼은 관리자로만 생성
+
+--카운트 +1
+UPDATE SENIOR_LIKE
+SET SENIOR_LIKE_NUM = SENIOR_LIKE_NUM + 1
+WHERE KEY = 1;
 
 
+--좋아요 취소
+--자주가는 경로당 삭제
+delete from SENIOR_BMARK
+where key = 20 and member_id='admin';
+
+--카운트 -1
+UPDATE SENIOR_LIKE
+SET SENIOR_LIKE_NUM = SENIOR_LIKE_NUM - 1
+WHERE KEY = 20;
 
 
+select key
+from SENIOR_BMARK
+where key=15 and member_id='admin';
+
+select * from senior where key = 1;
 
 
+--데이터 조회
+select * from SENIOR_LIKE;
+select * from SENIOR_BMARK;
 
+select * from senior where key=12;
+
+--트랜잭션
+rollback;
+commit;
 
 
 

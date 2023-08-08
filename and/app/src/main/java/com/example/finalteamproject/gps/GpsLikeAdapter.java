@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.databinding.ItemGpslikeBinding;
 
 import java.util.ArrayList;
@@ -35,13 +36,22 @@ public class GpsLikeAdapter extends RecyclerView.Adapter<GpsLikeAdapter.ViewHold
 
         h.binding.unlike.setVisibility(View.GONE);
 
-        h.binding.unlike.setOnClickListener(v -> {
-            h.binding.unlike.setVisibility(View.GONE);
-            h.binding.like.setVisibility(View.VISIBLE);
-        });
         h.binding.like.setOnClickListener(v -> {
-            h.binding.like.setVisibility(View.GONE);
-            h.binding.unlike.setVisibility(View.VISIBLE);
+            CommonConn conn = new CommonConn(v.getContext(), "gps/unlikebtn");
+            conn.addParamMap("key", list.get(i).getKey());
+            conn.onExcute((isResult, data) -> {
+                h.binding.like.setVisibility(View.GONE);
+                h.binding.unlike.setVisibility(View.VISIBLE);
+            });
+        });
+
+        h.binding.unlike.setOnClickListener(v -> {
+            CommonConn conn = new CommonConn(v.getContext(), "gps/likebtn");
+            conn.addParamMap("key", list.get(i).getKey());
+            conn.onExcute((isResult, data) -> {
+                h.binding.unlike.setVisibility(View.GONE);
+                h.binding.like.setVisibility(View.VISIBLE);
+            });
         });
     }
 
