@@ -1,6 +1,7 @@
 package com.hanul.cloud;
 
 import java.io.File;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -44,9 +45,15 @@ public class MainController {
 	}
 
 	@RequestMapping("/changeProfile")
-	public String changeProfile(MultipartFile file, HttpServletRequest req, String member_id) {
+	public String changeProfile(MultipartFile file, HttpServletRequest req, MemberVO vo) {
 		// 파일저장, 원본파일 삭제, 새로운 파일경로 DB에 업로드
-		common.uploadAndDeletePreviousImage("profileImg", file, req, sql.selectOne("main.previusImg", member_id));
+		String newImagePath = common.uploadAndDeletePreviousImage("profileImg", file, req,
+				vo.getMember_profileimg());
+
+		HashMap<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("newImagePath", newImagePath);
+		paramMap.put("member_id", vo.getMember_id());
+		sql.update("main.changeProfile", paramMap);
 
 		// System.out.println(req.getLocalAddr() + ":" + req.getContextPath() + "/imgs/"
 		// + modulePath);

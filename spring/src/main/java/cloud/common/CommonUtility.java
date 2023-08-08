@@ -19,9 +19,10 @@ import cloud.member.MemberVO;
 
 @Service
 public class CommonUtility {
-	//http://192.168.0.87:8080/cloud/imgs/profileImage/ansqudwns12.jpg
-	//rootPath/profileImage/ansqudwns12.jpg
-	public static String rootPath = "D:\\finalteamproject\\images\\" ;
+	// http://192.168.0.87:8080/cloud/imgs/profileImage/ansqudwns12.jpg
+	// rootPath/profileImage/ansqudwns12.jpg
+	public static String rootPath = "D:\\finalteamproject\\images\\";
+
 	// 파일 업로드
 	public String fileUpload(String category, MultipartFile file, HttpServletRequest req) {
 
@@ -42,13 +43,14 @@ public class CommonUtility {
 
 	private String generateFileURL(HttpServletRequest req, String category, String filename) {
 		String baseUrl = req.getContextPath();
-		return baseUrl + "/images/" + category + "/" + filename;
+		return req.getLocalAddr() + req.getLocalPort() + baseUrl + "/imgs/" + category + "/" + filename;
 	}
 
 	// 파일 삭제 메서드
 	public void deleteFile(String filePath) {
 		if (filePath != null) {
-			File file = new File(filePath);
+			String newData = filePath.replaceAll("http://192.168.0.87:8080/cloud/imgs/", "");
+			File file = new File(rootPath + newData);
 			if (file.exists()) {
 				file.delete();
 			}
