@@ -25,7 +25,7 @@ public class PhoneActivity extends AppCompatActivity {
 
     ActivityPhoneBinding binding;
     String result = null;
-
+    CountDownTimer timer;
 
 
     @Override
@@ -50,7 +50,11 @@ public class PhoneActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                if(binding.tvTimer.getVisibility()==View.VISIBLE){
+                    binding.tvTimer.setVisibility(GONE);
+                    binding.tvReissue.setVisibility(View.VISIBLE);
+                    stopTimer();
+                }
             }
 
             @Override
@@ -77,7 +81,7 @@ public class PhoneActivity extends AppCompatActivity {
                         Toast.makeText(this, "sms 문자 전송에 실패하였습니다\n다시 시도해주세요", Toast.LENGTH_SHORT).show();
                     }else {
                         result = data;
-                        binding.edtNumber.setText(data);
+//                        binding.edtNumber.setText(data);
                         binding.tvMessage.setVisibility(View.VISIBLE);
                         binding.rlMessage.setVisibility(View.VISIBLE);
                         setTimer();
@@ -130,7 +134,7 @@ public class PhoneActivity extends AppCompatActivity {
                         Intent intent = new Intent(this, IDCardActivity.class);
                         startActivity(intent);
                     }else {
-                        Intent intent = new Intent(this, MainActivity.class);
+                        Intent intent = new Intent(this, LoginCheckActivity.class);
                         startActivity(intent);
                     }
                 });
@@ -140,7 +144,7 @@ public class PhoneActivity extends AppCompatActivity {
     }
 
     private void setTimer(){
-        CountDownTimer timer = new CountDownTimer(180000, 1000) {
+        timer = new CountDownTimer(180000, 1000) {
             int time = 180;
             @Override
             public void onTick(long millisUntilFinished) {
@@ -160,6 +164,10 @@ public class PhoneActivity extends AppCompatActivity {
             }
         };
         timer.start();
+    }
+
+    private void stopTimer(){
+        timer.cancel();
     }
     
 }

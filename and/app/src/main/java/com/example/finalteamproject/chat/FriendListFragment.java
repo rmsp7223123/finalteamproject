@@ -33,7 +33,8 @@ public class FriendListFragment extends Fragment {
         binding.recvFriendList.setLayoutManager(new LinearLayoutManager(getContext()));
         originalList = getList();
         filteredList = new ArrayList<>(originalList);
-        binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        binding.searchView.setIconifiedByDefault(false);
+        binding.searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
                 return false;
@@ -59,9 +60,13 @@ public class FriendListFragment extends Fragment {
     }
     private void filterList(String query) {
         filteredList.clear();
+        String queryInitialSound = HangulUtils.convertToHangulInitialSound(query);
+
         for (int i = 0; i < originalList.size(); i++) {
             MessageDTO friend = originalList.get(i);
-            if (friend.getNickname().toLowerCase().contains(query.toLowerCase())) {
+            String nicknameInitialSound = HangulUtils.convertToHangulInitialSound(friend.getNickname());
+
+            if (nicknameInitialSound.toLowerCase().contains(queryInitialSound.toLowerCase())) {
                 filteredList.add(friend);
             }
         }

@@ -2,6 +2,7 @@ package com.hanul.cloud;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Random;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartRequest;
 import com.google.gson.Gson;
 
 import cloud.member.EphoneVO;
+import cloud.member.FavorVO;
 import cloud.member.MemberVO;
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
@@ -58,11 +60,11 @@ public class LoginController {
 		params.put("app_version", "JAVA SDK v1.2");
 		
 		try {
-//			JSONObject obj = sms.send(params);
-//			System.out.println(obj.toString());
-//			String result = obj.toString().contains("\"success_count\":1")==true ? resultNum : "실패";
-//			return result;
-			return resultNum;
+			JSONObject obj = sms.send(params);
+			System.out.println(obj.toString());
+			String result = obj.toString().contains("\"success_count\":1")==true ? resultNum : "실패";
+			return result;
+//			return resultNum;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "실패";
@@ -76,8 +78,8 @@ public class LoginController {
 	
 
 	@RequestMapping(value="/checkId", produces = "text/html;charset=utf-8")
-	public String checkId(String id) {
-		return new Gson().toJson(sql.selectOne("login.checkId", id));
+	public String checkId(String member_id) {
+		return new Gson().toJson(sql.selectOne("login.checkId", member_id));
 	}
 	
 	@RequestMapping(value="/checkNickname", produces = "text/html;charset=utf-8")
@@ -95,46 +97,42 @@ public class LoginController {
 		MultipartFile file = mReq.getFile("file");
 		//파일이 있는 상태의 요청을 받았는지에 따라서 유동적으로 MultipartRequest로 캐스팅
 		if(file!=null) {
-//			ClassPathResource resource = new ClassPathResource("profileImage");
-			System.out.println(id);
-			String path = "/src/main/resources/profileImage";
-			file.transferTo(new File(path, id+".jpg"));
-			File file1 = new File(path+"/"+id+".jpg");
+			String fullPath = req.getRealPath("/");
+			String workSpace = fullPath.substring(0, fullPath.indexOf(".metadata"));
+			String projectName = fullPath.substring(fullPath.indexOf("wtpwebapps")+"wtpwebapps".length(), fullPath.length());
+			String fileName = id+".jpg";
+			Path filePath = Paths.get(workSpace, projectName , "src", "main", "resources", "images", "profileImage");
+//			File f = filePath.toFile();
+			File f = new File(filePath.toString());
+			File file1 = null;
+			if(f.exists()) {
+				System.out.println("tr");
+				file.transferTo(new File(filePath.toString(), fileName));
+				file1 = new File(filePath.toString()+"/"+fileName);
+			}else {
+				f.mkdir();
+				System.out.println("fr");
+				file.transferTo(new File(filePath.toString(), fileName));
+				file1 = new File(filePath.toString()+"/"+fileName);
+			}
 			if(file1.exists()) {
 				HashMap<Object, Object> map = new HashMap<Object, Object>();
-			map.put("member_profileimg", path+"/"+id+".jpg");
-			map.put("member_id", id);
-			return sql.update("login.file", map)==1 ? "성공" : "실패";
+				map.put("member_profileimg", filePath+"/"+fileName);
+				map.put("member_id", id);
+				return sql.update("login.file", map)==1 ? "성공" : "실패";
 			}else {
 				return "실패";
 			}
 		}else {
 			return "실패";
 		}
-		//파일을 빼오고 저장하기.
-		//Middle/img/파일명을 크롬으로 요청하면 열리게 하기.
-		//실제 파일은 D\Android\폴더\...
-//		return new Gson().toJson("");
-	}
-	@RequestMapping(value="/file.test", produces = "text/html;charset=utf-8")
-	public String f(HttpServletRequest req) {
-		System.out.println(Paths.get("").toAbsolutePath().toString());
-		System.out.println(System.getProperty("user.dir"));
-		System.out.println(LoginController.class.getResource(".").getPath());
-		File f = new File("/src/main/resources/profileImage");
-		if(f.exists()) {
-			System.out.println("경로있음");
-			
-		}else {
-			System.out.println("경로 없음");
-			f.mkdir();
-		}
-		
-		System.out.println(f.getAbsolutePath());
-		
-		return  "aa";
 	}
 	
+	@RequestMapping(value="/check", produces = "text/html;charset=utf-8")
+	public String check(MemberVO vo) {
+		MemberVO result = sql.selectOne("login.check", vo);
+		return new Gson().toJson(result = sql.selectOne("login.check", vo)); 
+	}
 	
 	@RequestMapping(value="/join", produces = "text/html;charset=utf-8")
 	public String join(MemberVO vo) {
@@ -142,7 +140,7 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value="/favor", produces = "text/html;charset=utf-8")
-	public String favor(EphoneVO vo) {
+	public String favor(FavorVO vo) {
 		return sql.insert("login.favor", vo)==1 ? "성공" : "실패";
 	}
 	

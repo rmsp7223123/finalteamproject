@@ -39,7 +39,7 @@
     </LinearLayout>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cv_phone"
+        android:id="@+id/cv_done"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
