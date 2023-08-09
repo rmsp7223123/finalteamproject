@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
 
 
-    <style name="Project02.LastProject" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="Project02.LastProject" parent="Theme.MaterialComponents.Light">
         <item name="android:windowBackground">@color/white</item>
         <item name="android:statusBarColor" tools:targetApi="l">@android:color/white</item>
         <item name="android:windowLightStatusBar">true</item>
