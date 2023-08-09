@@ -21,32 +21,51 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.finalteamproject.Login.LoginFavorActivity;
 import com.example.finalteamproject.Login.LoginProfileActivity;
+import com.example.finalteamproject.Login.LoginVar;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
+import com.example.finalteamproject.common.RetrofitClient;
+import com.example.finalteamproject.common.RetrofitInterface;
 import com.example.finalteamproject.databinding.FragmentNewBoardBinding;
 import com.example.finalteamproject.main.MainActivity;
 import com.google.android.gms.common.internal.service.Common;
 
 import java.io.File;
+import java.util.HashMap;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class NewBoardFragment extends Fragment {
 
     MainActivity activity;
     FragmentNewBoardBinding binding;
     String board_name;
+    String align;
     private final int REQ_GALLERY = 1000;
     ActivityResultLauncher<Intent> launcher;
     static int num;
+    static String img_path = null;
     static Uri camera_uri = null;
     File file = null;
+    String[] list = {"TV", "음악", "영화", "패션", "동물", "뉴스", "자동차", "운동", "게임"};
 
-    public NewBoardFragment(Activity activity, String board_name) {
+    public NewBoardFragment(Activity activity, String board_name, String align) {
         this.board_name = board_name;
+        this.align = align;
         this.activity = (MainActivity) activity;
     }
 
@@ -55,8 +74,33 @@ public class NewBoardFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentNewBoardBinding.inflate(inflater, container, false);
 
+        binding.spnBoard.getSelectedItem();
+        Spinner favorSpinner = binding.spnBoard;
+        ArrayAdapter favorAdapter = new ArrayAdapter(this.getContext(), android.R.layout.simple_spinner_item, list);
+        favorSpinner.setAdapter(favorAdapter);
+
+        for (int i = 0; i < list.length; i++) {
+            if(list[i].equals(board_name)){
+                binding.spnBoard.setSelection(i);
+            }
+        }
+        binding.spnBoard.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int i, long id) {
+                if(!list[i].equals(board_name)) {
+                    board_name = list[i];
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
         binding.imgvBack.setOnClickListener(v -> {
-            activity.changeFragment(this, board_name, activity);
+            activity.changeFragment(this, board_name, align, activity);
         });
 
         binding.lnImage.setOnClickListener(v -> {
@@ -86,7 +130,7 @@ public class NewBoardFragment extends Fragment {
                         conn1.addParamMap("favor", Integer.parseInt(data));
                         conn1.onExcute((isResult1, data1) -> {
                             if (data1.equals("성공")) {
-                                activity.changeFragment(this, board_name, activity);
+                                activity.changeFragment(this, board_name, align, activity);
                                 Toast.makeText(activity, "게시글 등록 성공", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(activity, "게시글 등록 실패", Toast.LENGTH_SHORT).show();

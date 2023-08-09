@@ -15,6 +15,7 @@
 
         <ImageView
             android:id="@+id/imgv_image"
+            android:layout_marginEnd="20dp"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/ic_launcher_background"/>
@@ -26,24 +27,33 @@
 
             <TextView
                 android:id="@+id/tv_title"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="글 제목"/>
 
             <TextView
                 android:id="@+id/tv_writer"
+                android:textColor="@color/black"
+                android:textSize="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="글쓴이"/>
 
             <TextView
                 android:id="@+id/tv_rec"
+                android:textColor="@color/black"
+                android:textSize="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="추천수"/>
 
             <TextView
                 android:id="@+id/tv_view"
+                android:textColor="@color/black"
+                android:textSize="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="조회수"/>

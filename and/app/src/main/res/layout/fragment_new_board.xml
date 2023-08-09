@@ -31,6 +31,17 @@
             android:textSize="25dp"
             android:textStyle="bold" />
 
+        <Spinner
+            android:id="@+id/spn_board"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_radius0"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="5dp"
+            />
+
     </RelativeLayout>
 
     <androidx.cardview.widget.CardView
@@ -155,94 +166,5 @@
     </androidx.cardview.widget.CardView>
 
     </RelativeLayout>
-
-<!--    <RelativeLayout-->
-<!--        android:layout_marginTop="20dp"-->
-<!--        android:layout_marginHorizontal="30dp"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="40dp">-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/tv_title"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_centerVertical="true"-->
-<!--            android:layout_alignParentStart="true"-->
-<!--            android:text="게시글 제목"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textSize="30dp"-->
-<!--            android:textStyle="bold" />-->
-
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="2023.08.08"-->
-<!--            android:layout_alignParentBottom="true"-->
-<!--            android:layout_alignParentEnd="true"/>-->
-
-<!--    </RelativeLayout>-->
-
-<!--    <RelativeLayout-->
-<!--        android:layout_marginTop="20dp"-->
-<!--        android:layout_marginHorizontal="30dp"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="35dp">-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/tv_boardTitle"-->
-<!--            android:text="글쓴이"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_centerVertical="true"-->
-<!--            android:layout_alignParentStart="true"-->
-<!--            android:textColor="#666"-->
-<!--            android:textSize="23dp"/>-->
-
-<!--        <LinearLayout-->
-<!--            android:layout_centerVertical="true"-->
-<!--            android:layout_alignParentEnd="true"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="vertical">-->
-
-<!--            <TextView-->
-<!--                android:textSize="11dp"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="조회수 0"/>-->
-
-<!--            <TextView-->
-<!--                android:textSize="11dp"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="추천수 0"/>-->
-
-<!--        </LinearLayout>-->
-
-<!--    </RelativeLayout>-->
-
-<!--    <androidx.cardview.widget.CardView-->
-<!--        android:layout_marginTop="20dp"-->
-<!--        android:layout_marginHorizontal="30dp"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:cardCornerRadius="10dp">-->
-
-<!--    <TextView-->
-<!--        android:padding="10dp"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:background="@drawable/border_radius0_white"-->
-<!--        android:text="게시글 내용\n내용\n내용"/>-->
-
-<!--    </androidx.cardview.widget.CardView>-->
-
-
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:id="@+id/recv_board_comment"-->
-<!--        android:layout_marginHorizontal="30dp"-->
-<!--        android:layout_marginVertical="10dp"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"/>-->
 
     </LinearLayout>

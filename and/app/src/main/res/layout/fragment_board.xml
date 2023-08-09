@@ -22,6 +22,28 @@
             android:layout_height="30dp"
             android:src="@drawable/back"/>
 
+
+        <EditText
+            android:id="@+id/edt_search"
+            android:textColor="@color/black"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:hint="게시글, 작성자, 내용"
+            android:paddingStart="10dp"
+            android:paddingEnd="40dp"
+            android:paddingVertical="5dp"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_rounded_corner_rectangle"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/search"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="6dp"/>
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -40,15 +62,6 @@
             android:textColor="@color/black"
             android:textSize="30dp"
             android:textStyle="bold" />
-
-<!--        <Spinner-->
-<!--            android:id="@+id/spn_relation"-->
-<!--            android:textColor="#AEAEAE"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="48dp"-->
-<!--            android:background="@drawable/border_radius0"-->
-<!--            android:paddingHorizontal="15dp"-->
-<!--            android:paddingVertical="10dp" />-->
 
         <Spinner
             android:id="@+id/spn_board"
@@ -79,8 +92,20 @@
         android:textColor="#666"
         android:textSize="23dp"/>
 
+        <Spinner
+            android:id="@+id/spn_board2"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/cv_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_radius0"
+            android:paddingHorizontal="2dp"
+            android:paddingVertical="3dp"
+            />
+
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_new"
+            android:layout_marginStart="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:cardCornerRadius="10dp"

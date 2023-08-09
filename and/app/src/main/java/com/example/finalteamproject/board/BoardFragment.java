@@ -37,11 +37,13 @@ public class BoardFragment extends Fragment {
     MainActivity activity;
     FragmentBoardBinding binding;
     String board_name;
+    String align;
     String[] list = {"TV", "음악", "영화", "패션", "동물", "뉴스", "자동차", "운동", "게임"};
-    int num;
+    String[] list2 = {"최신순", "조회순", "추천순"};
 
-    public BoardFragment(String board_name, Activity activity) {
+    public BoardFragment(String board_name, String align, Activity activity) {
         this.board_name = board_name;
+        this.align = align;
         this.activity = (MainActivity) activity;
     }
 
@@ -51,6 +53,7 @@ public class BoardFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentBoardBinding.inflate(inflater, container, false);
 
+        //게시판 카테고리 변경 스피너
         binding.tvBoardTitle.setText(board_name);
         binding.spnBoard.getSelectedItem();
         Spinner favorSpinner = binding.spnBoard;
@@ -92,10 +95,11 @@ public class BoardFragment extends Fragment {
             public void afterTextChanged(Editable s) {
                 CommonConn conn = new CommonConn(getContext(), "board/list");
                 conn.addParamMap("favor", board_name);
+                conn.addParamMap("align", align);
                 conn.onExcute((isResult, data) -> {
                     List<FavorBoardVO> list = new Gson().fromJson(data, new TypeToken<List<FavorBoardVO>>(){}.getType());
                     if(list!=null){
-                        BoardListAdapter adapter = new BoardListAdapter(BoardFragment.this.getContext(), list);
+                        BoardListAdapter adapter = new BoardListAdapter(activity, BoardFragment.this, list, board_name, align);
                         binding.recvBoard.setAdapter(adapter);
                         binding.recvBoard.setLayoutManager(new LinearLayoutManager(BoardFragment.this.getContext()));
 
@@ -105,25 +109,68 @@ public class BoardFragment extends Fragment {
                 });
             }
         });
+        //
+
+        //게시판 글 정렬 스피너
+        binding.spnBoard2.getSelectedItem();
+        Spinner favorSpinner2 = binding.spnBoard2;
+        ArrayAdapter favorAdapter2 = new ArrayAdapter(this.getContext(), android.R.layout.simple_spinner_item, list2);
+        favorSpinner2.setAdapter(favorAdapter2);
+
+        for(int i=0;i<list2.length;i++){
+            if(list2[i].equals(align)){
+                binding.spnBoard2.setSelection(i);
+            }else {
+                binding.spnBoard2.setSelection(0);
+            }
+        }
+
+        binding.spnBoard2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int i, long id) {
+                align = list2[i];
+                CommonConn conn = new CommonConn(getContext(), "board/list");
+                conn.addParamMap("favor", board_name);
+                conn.addParamMap("align", align);
+                conn.onExcute((isResult, data) -> {
+                    List<FavorBoardVO> list = new Gson().fromJson(data, new TypeToken<List<FavorBoardVO>>(){}.getType());
+                    if(list!=null){
+                        BoardListAdapter adapter = new BoardListAdapter(activity, BoardFragment.this, list, board_name, align);
+                        binding.recvBoard.setAdapter(adapter);
+                        binding.recvBoard.setLayoutManager(new LinearLayoutManager(BoardFragment.this.getContext()));
+                    }else {
+                        Toast.makeText(activity, "내용 없음", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+//        CommonConn conn = new CommonConn(getContext(), "board/list");
+//        conn.addParamMap("favor", board_name);
+//        conn.addParamMap("align", "최신순");
+//        conn.onExcute((isResult, data) -> {
+//            List<FavorBoardVO> list = new Gson().fromJson(data, new TypeToken<List<FavorBoardVO>>(){}.getType());
+//            if(list!=null){
+//                BoardListAdapter adapter = new BoardListAdapter(BoardFragment.this.getContext(), list);
+//                binding.recvBoard.setAdapter(adapter);
+//                binding.recvBoard.setLayoutManager(new LinearLayoutManager(BoardFragment.this.getContext()));
+//            }else {
+//                Toast.makeText(activity, "내용 없음", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
 
         binding.cvNew.setOnClickListener(v -> {
             Log.d("result", "onCreateView: "+binding.tvBoardTitle.getText().toString());
-            activity.replaceFragment(this, new NewBoardFragment(activity, binding.tvBoardTitle.getText().toString()));
+            activity.replaceFragment(this, new NewBoardFragment(activity, binding.tvBoardTitle.getText().toString(), align));
         });
 
-        CommonConn conn = new CommonConn(getContext(), "board/list");
-        conn.addParamMap("favor", board_name);
-        conn.onExcute((isResult, data) -> {
-            List<FavorBoardVO> list = new Gson().fromJson(data, new TypeToken<List<FavorBoardVO>>(){}.getType());
-            if(list!=null){
-                BoardListAdapter adapter = new BoardListAdapter(this.getContext(), list);
-                binding.recvBoard.setAdapter(adapter);
-                binding.recvBoard.setLayoutManager(new LinearLayoutManager(this.getContext()));
-
-            }else {
-                Toast.makeText(activity, "내용 없음", Toast.LENGTH_SHORT).show();
-            }
-        });
 
         binding.imgvBack.setOnClickListener(v -> {
             activity.replaceFragment(this, new MainFragment(1));
