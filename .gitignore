@@ -76,9 +76,3 @@ atlassian-ide-plugin.xml
 .vscode/
 .metadata/
 cached-antora-playbook.yml
-
-lecture
-target
-pom.properties
-.classpath
-MANIFEST.MF
