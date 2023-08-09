@@ -20,10 +20,11 @@ import com.example.finalteamproject.databinding.FragmentSettingBinding;
 public class SettingFragment extends Fragment {
 
     FragmentSettingBinding binding;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentSettingBinding.inflate(inflater,container,false);
+        binding = FragmentSettingBinding.inflate(inflater, container, false);
         Glide.with(this).load(CommonVar.logininfo.getMember_profileimg()).into(binding.imgvProfileImg);
         binding.tvNickname.setText(CommonVar.logininfo.getMember_nickname());
         binding.containerLinearChangeProfile.setOnClickListener(v -> {
@@ -54,6 +55,7 @@ public class SettingFragment extends Fragment {
             builder.setNegativeButton("확인", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    CommonVar.logininfo = null;
                     Intent intent = new Intent(getContext(), LoginActivity.class);
                     startActivity(intent);
                     dialog.dismiss();
