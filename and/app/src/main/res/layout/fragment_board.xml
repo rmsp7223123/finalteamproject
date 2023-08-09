@@ -12,6 +12,47 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+<<<<<<< HEAD
+=======
+        <ImageView
+            android:id="@+id/imgv_back"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/back"/>
+
+
+        <EditText
+            android:id="@+id/edt_search"
+            android:textColor="@color/black"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:hint="게시글, 작성자, 내용"
+            android:paddingStart="10dp"
+            android:paddingEnd="40dp"
+            android:paddingVertical="5dp"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_rounded_corner_rectangle"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/search"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="6dp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+>>>>>>> bitna
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -21,6 +62,20 @@
             android:textSize="35dp"
             android:textStyle="bold" />
 
+<<<<<<< HEAD
+=======
+        <Spinner
+            android:id="@+id/spn_board"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_radius0"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="5dp"
+            />
+
+>>>>>>> bitna
     </RelativeLayout>
 
     <Spinner
@@ -28,6 +83,54 @@
         android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:background="@drawable/spinner_board"/>
+=======
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:textColor="#666"
+        android:textSize="23dp"/>
+
+        <Spinner
+            android:id="@+id/spn_board2"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/cv_new"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_radius0"
+            android:paddingHorizontal="2dp"
+            android:paddingVertical="3dp"
+            />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_new"
+            android:layout_marginStart="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
+            android:backgroundTint="#F6DD6D"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true">
+
+        <TextView
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:paddingVertical="5dp"
+            android:paddingHorizontal="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="새글쓰기"/>
+
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recv_board"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginVertical="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+>>>>>>> bitna
 
 </LinearLayout>
