@@ -1,15 +1,88 @@
-*.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
+# Miscellaneous
+*.java.hsp
+*.sonarj
+*.sw*
 .DS_Store
+build.sh
+integration-repo
+ivy-cache
+argfile*
+activemq-data/
+classes/
+
+# Log files
+jxl.log
+jmx.log
+derby.log
+
+# Gradle artifacts
+.gradle
+.gradletasknamecache
 /build
-/captures
-.externalNativeBuild
-.cxx
+buildSrc/build
+/spring-*/build
+/framework-bom/build
+/framework-docs/build
+/integration-tests/build
+/src/asciidoc/build
+spring-test/test-output/
+
+# Maven artifacts
+/target/
+
+# Eclipse artifacts, including WTP generated manifests
+bin
+.classpath
+.project
+.settings
+.springBeans
+spring-*/src/main/java/META-INF/MANIFEST.MF
+
+# IDEA artifacts and output dirs
+*.iml
+*.ipr
+*.iws
+.idea
+out
+test-output
+atlassian-ide-plugin.xml
+
+# VS Code
+.vscode/
+
+cached-antora-playbook.yml
+
+
+# Gradle files
+.gradle/
+build/
+
+# Local configuration file (sdk path, etc)
 local.properties
+
+# Log/OS Files
+*.log
+
+# Android Studio generated files and folders
+captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+output.json
+
+# IntelliJ
+*.iml
+.idea/
+misc.xml
+deploymentTargetDropDown.xml
+render.experimental.xml
+
+# Keystore files
+*.jks
+*.keystore
+
+# Google Services (e.g. APIs or Firebase)
+google-services.json
+
+# Android Profiling
+*.hprof
