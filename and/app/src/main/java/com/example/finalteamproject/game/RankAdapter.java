@@ -21,7 +21,10 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder h, int i) {
+        int rank = i+1;
+        h.binding.gameRank.setText(rank+"");
+
 
     }
 

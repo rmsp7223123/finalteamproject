@@ -1,14 +1,12 @@
 package com.example.finalteamproject.main;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,14 +19,10 @@ public class BoardMainAdapter extends RecyclerView.Adapter<BoardMainAdapter.View
 
     ArrayList<BoardMainDTO> list;
     MainActivity activity;
-    Fragment fragment;
-    String align;
 
-    public BoardMainAdapter(Fragment fragment, ArrayList<BoardMainDTO> list, Activity activity, String align) {
-        this.fragment = fragment;
+    public BoardMainAdapter(ArrayList<BoardMainDTO> list, Activity activity) {
         this.list = list;
         this.activity = (MainActivity) activity;
-        this.align = align;
     }
     @NonNull
     @Override
@@ -44,7 +38,7 @@ public class BoardMainAdapter extends RecyclerView.Adapter<BoardMainAdapter.View
         h.binding.tvBoardName.setText(list.get(i).getTv_board_name());
         h.binding.imgvMove.setImageResource(list.get(i).getImgv_move());
         h.binding.lnBoardSelect.setOnClickListener(v -> {
-            activity.changeFragment(fragment, list.get(i).getTv_board_name(), align, activity);
+            activity.changeFragment(list.get(i).getTv_board_name());
         });
     }
 

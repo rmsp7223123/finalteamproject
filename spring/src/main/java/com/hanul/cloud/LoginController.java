@@ -73,18 +73,22 @@ public class LoginController {
 	
 	@RequestMapping(value="/checkPhone", produces = "text/html;charset=utf-8")
 	public String checkPhone(String phoneNumber) {
-		return new Gson().toJson(sql.selectOne("login.checkPhone", phoneNumber));
+		MemberVO vo = sql.selectOne("login.checkPhone", phoneNumber);
+		return new Gson().toJson(vo);
 	}
+		
 	
 
 	@RequestMapping(value="/checkId", produces = "text/html;charset=utf-8")
 	public String checkId(String member_id) {
-		return new Gson().toJson(sql.selectOne("login.checkId", member_id));
+		MemberVO vo = sql.selectOne("login.checkId", member_id);
+		return new Gson().toJson(vo);
 	}
 	
 	@RequestMapping(value="/checkNickname", produces = "text/html;charset=utf-8")
 	public String checkNickname(String nickname) {
-		return new Gson().toJson(sql.selectOne("login.checkNickname", nickname));
+		MemberVO vo = sql.selectOne("login.checkNickname", nickname);
+		return new Gson().toJson(vo);
 	}
 	
 	@RequestMapping(value="/file", produces = "text/html;charset=utf-8" )
@@ -97,11 +101,11 @@ public class LoginController {
 		MultipartFile file = mReq.getFile("file");
 		//파일이 있는 상태의 요청을 받았는지에 따라서 유동적으로 MultipartRequest로 캐스팅
 		if(file!=null) {
-//			String fullPath = req.getRealPath("/");
-//			String workSpace = fullPath.substring(0, fullPath.indexOf(".metadata"));
-//			String projectName = fullPath.substring(fullPath.indexOf("wtpwebapps")+"wtpwebapps".length(), fullPath.length());
+			String fullPath = req.getRealPath("/");
+			String workSpace = fullPath.substring(0, fullPath.indexOf(".metadata"));
+			String projectName = fullPath.substring(fullPath.indexOf("wtpwebapps")+"wtpwebapps".length(), fullPath.length());
 			String fileName = id+".jpg";
-			Path filePath = Paths.get(CommonVal.path, "profileImage");
+			Path filePath = Paths.get(workSpace, projectName , "src", "main", "resources", "images", "profileImage");
 //			File f = filePath.toFile();
 			File f = new File(filePath.toString());
 			File file1 = null;

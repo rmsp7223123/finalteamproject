@@ -31,7 +31,7 @@ public class GpsLikeActivity extends AppCompatActivity {
     }
 
     public void senior_like(){
-        CommonConn conn = new CommonConn(this, "gps/like");
+        CommonConn conn = new CommonConn(this, "gps/likelist");
         conn.onExcute((isResult, data) -> {
             ArrayList<GpsVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<GpsVO>>(){}.getType());
 
@@ -42,6 +42,7 @@ public class GpsLikeActivity extends AppCompatActivity {
 
         });
     }
+
 
 
 

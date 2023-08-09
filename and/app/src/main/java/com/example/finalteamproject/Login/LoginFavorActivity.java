@@ -60,7 +60,6 @@ public class LoginFavorActivity extends AppCompatActivity {
         binding.cvNext.setOnClickListener(v -> {
             for (int i = 0; i < list.size(); i++) {
                 if(list.get(i).bl){
-                    num=1;
                     int j = i;
                     CommonConn conn = new CommonConn(this, "login/favor");
                     conn.addParamMap("favor", list.get(i).num);
@@ -72,7 +71,7 @@ public class LoginFavorActivity extends AppCompatActivity {
                     });
                 }
             }
-            if(num!=0){
+            if(num==0){
                 Toast.makeText(this, "관심사 등록 완료", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, LoginGodokActivity.class);
                 startActivity(intent);

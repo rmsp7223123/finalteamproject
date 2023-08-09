@@ -3,8 +3,15 @@ package cloud.gps;
 public class GpsVO {
 	private int key, senior_like_num;
 	private String senior_name, senior_roadaddress, senior_numaddress
-	, senior_call, senior_latitude, senior_longitude, sido, sigungu, member_id;
+	, senior_call, senior_latitude, senior_longitude, sido, sigungu, member_id, distance;
 	
+	
+	public String getDistance() {
+		return distance;
+	}
+	public void setDistance(String distance) {
+		this.distance = distance;
+	}
 	public int getKey() {
 		return key;
 	}
