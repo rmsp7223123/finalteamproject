@@ -1,5 +1,7 @@
 package com.hanul.cloud;
 
+<<<<<<< HEAD
+=======
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -11,6 +13,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+>>>>>>> bitna
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,6 +27,13 @@ import com.google.gson.Gson;
 @RestController @RequestMapping("/board")
 public class BoardController {
 	@Autowired @Qualifier("project") SqlSession sql;
+<<<<<<< HEAD
+	
+	@RequestMapping(value="/favorlist", produces = "text/html;charset=utf-8")
+	public String favorlist() {
+		return new Gson().toJson(sql.selectList("board.favorlist"));
+	}
+=======
 
 	//관심사 게시판 정렬
 	@RequestMapping(value="/list", produces = "text/html;charset=utf-8")
@@ -122,5 +132,6 @@ public class BoardController {
 	
 	
 	
+>>>>>>> bitna
 
 }

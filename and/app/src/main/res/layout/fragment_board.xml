@@ -12,6 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+<<<<<<< HEAD
+=======
         <ImageView
             android:id="@+id/imgv_back"
             android:layout_alignParentStart="true"
@@ -50,6 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp">
 
+>>>>>>> bitna
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -59,6 +62,8 @@
             android:textSize="35dp"
             android:textStyle="bold" />
 
+<<<<<<< HEAD
+=======
         <Spinner
             android:id="@+id/spn_board"
             android:layout_alignParentBottom="true"
@@ -70,6 +75,7 @@
             android:paddingVertical="5dp"
             />
 
+>>>>>>> bitna
     </RelativeLayout>
 
     <Spinner
@@ -77,6 +83,9 @@
         android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
+        android:background="@drawable/spinner_board"/>
+=======
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true"
         android:textColor="#666"
@@ -122,5 +131,6 @@
         android:layout_marginVertical="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+>>>>>>> bitna
 
 </LinearLayout>
