@@ -91,6 +91,19 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+    //게시판 메뉴 이동
+    public void changeFragment(Fragment fragment, String board_name, String align, Activity activity){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.remove(fragment);
+        manager.beginTransaction().replace(R.id.container_frame, new BoardFragment(board_name, align, activity)).commit();
+    }
+>>>>>>> bitna
+>>>>>>> test2
 
     public void changeFragment(String board_name){
         manager.beginTransaction().replace(R.id.container_frame, new BoardFragment(board_name)).commit();

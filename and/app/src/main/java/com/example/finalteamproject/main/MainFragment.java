@@ -119,7 +119,15 @@ public class MainFragment extends Fragment {
             dialog.show();
         });
 
+<<<<<<< HEAD
         BoardMainAdapter adapter2 = new BoardMainAdapter(getList(),getActivity());
+=======
+<<<<<<< HEAD
+        BoardMainAdapter adapter2 = new BoardMainAdapter(getList(),getActivity());
+=======
+        BoardMainAdapter adapter2 = new BoardMainAdapter(this, getList(), getActivity(), null);
+>>>>>>> bitna
+>>>>>>> test2
         binding.recvBoard.setAdapter(adapter2);
         binding.recvBoard.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
