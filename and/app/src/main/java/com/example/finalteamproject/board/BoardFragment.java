@@ -18,18 +18,11 @@ import java.util.ArrayList;
 public class BoardFragment extends Fragment {
 
     FragmentBoardBinding binding;
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> test2
 
     String board_name;
 
     public BoardFragment(String board_name) {
         this.board_name = board_name;
-<<<<<<< HEAD
-=======
-=======
     String board_name;
     String align;
     String[] list = {"TV", "음악", "영화", "패션", "동물", "뉴스", "자동차", "운동", "게임"};
@@ -39,8 +32,6 @@ public class BoardFragment extends Fragment {
         this.board_name = board_name;
         this.align = align;
         this.activity = (MainActivity) activity;
->>>>>>> bitna
->>>>>>> test2
     }
 
 
@@ -54,10 +45,6 @@ public class BoardFragment extends Fragment {
 //        });
 //        binding.spnBoard.
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
         //게시판 카테고리 변경 스피너
         binding.tvBoardTitle.setText(board_name);
         binding.spnBoard.getSelectedItem();
@@ -180,9 +167,6 @@ public class BoardFragment extends Fragment {
         binding.imgvBack.setOnClickListener(v -> {
             activity.replaceFragment(this, new MainFragment(1));
         });
->>>>>>> bitna
->>>>>>> test2
-
 
         return binding.getRoot();
     }

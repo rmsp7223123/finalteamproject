@@ -3,7 +3,10 @@ package com.hanul.cloud;
 <<<<<<< HEAD
 =======
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> temp_brc
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -16,7 +19,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 >>>>>>> bitna
+<<<<<<< HEAD
 >>>>>>> test2
+=======
+>>>>>>> temp_brc
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -29,16 +35,22 @@ import com.google.gson.Gson;
 public class BoardController {
 	@Autowired @Qualifier("project") SqlSession sql;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 >>>>>>> test2
+=======
+>>>>>>> temp_brc
 	
 	@RequestMapping(value="/favorlist", produces = "text/html;charset=utf-8")
 	public String favorlist() {
 		return new Gson().toJson(sql.selectList("board.favorlist"));
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> temp_brc
 =======
 
 	//관심사 게시판 정렬
@@ -139,6 +151,9 @@ public class BoardController {
 	
 	
 >>>>>>> bitna
+<<<<<<< HEAD
 >>>>>>> test2
+=======
+>>>>>>> temp_brc
 
 }

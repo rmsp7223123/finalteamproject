@@ -77,3 +77,10 @@ atlassian-ide-plugin.xml
 .metadata/
 cached-antora-playbook.yml
 spring/.classpath
+
+lecture
+target
+pom.properties
+.classpath
+MANIFEST.MF
+/classes/

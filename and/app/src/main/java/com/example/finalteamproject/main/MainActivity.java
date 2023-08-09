@@ -94,7 +94,10 @@ public class MainActivity extends AppCompatActivity {
 <<<<<<< HEAD
 =======
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> temp_brc
     //게시판 메뉴 이동
     public void changeFragment(Fragment fragment, String board_name, String align, Activity activity){
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -103,7 +106,10 @@ public class MainActivity extends AppCompatActivity {
         manager.beginTransaction().replace(R.id.container_frame, new BoardFragment(board_name, align, activity)).commit();
     }
 >>>>>>> bitna
+<<<<<<< HEAD
 >>>>>>> test2
+=======
+>>>>>>> temp_brc
 
     public void changeFragment(String board_name){
         manager.beginTransaction().replace(R.id.container_frame, new BoardFragment(board_name)).commit();

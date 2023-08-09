@@ -123,11 +123,16 @@ public class MainFragment extends Fragment {
         BoardMainAdapter adapter2 = new BoardMainAdapter(getList(),getActivity());
 =======
 <<<<<<< HEAD
+<<<<<<< HEAD
         BoardMainAdapter adapter2 = new BoardMainAdapter(getList(),getActivity());
 =======
         BoardMainAdapter adapter2 = new BoardMainAdapter(this, getList(), getActivity(), null);
 >>>>>>> bitna
 >>>>>>> test2
+=======
+        BoardMainAdapter adapter2 = new BoardMainAdapter(this, getList(), getActivity(), null);
+>>>>>>> bitna
+>>>>>>> temp_brc
         binding.recvBoard.setAdapter(adapter2);
         binding.recvBoard.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
