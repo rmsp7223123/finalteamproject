@@ -45,6 +45,18 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentGpsBinding.inflate(inflater, container, false);
+        binding.gpsSearch.setVisibility(View.GONE);
+
+        //자주 가는 경로당(리사이클러뷰)
+        CommonConn conn = new CommonConn(getContext(), "gps/likelist");
+        conn.onExcute((isResult, data) -> {
+            ArrayList<GpsVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<GpsVO>>(){}.getType());
+
+            GpsBmarkAdapter adapter = new GpsBmarkAdapter(list);
+            binding.recvBmark.setAdapter(adapter);
+            binding.recvBmark.setLayoutManager(new LinearLayoutManager(getContext()));
+        });
+
         senior_list();
 
         //지도 객체 생성
@@ -119,7 +131,6 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
             GpsAdapter adapter = new GpsAdapter(list);
             binding.recvGps.setAdapter(adapter);
             binding.recvGps.setLayoutManager(new LinearLayoutManager(getContext()));
-
         });
     }
 
