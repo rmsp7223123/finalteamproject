@@ -15,3 +15,6 @@ https://www.baraverkstad.se/encode/
 
 초록
 #39E29B
+
+핑꾸
+#F537BA
