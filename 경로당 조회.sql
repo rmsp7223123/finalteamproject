@@ -43,14 +43,14 @@ select b.member_id, b.KEY, s.SENIOR_NAME, s.SENIOR_ROADADDRESS
 from senior_bmark b
 left join senior s
 on b.key=s.key
-where member_id='admin';
+where member_id='test';
 
 
 --mapper
 --좋아요 누름
 --자주가는 경로당(즐겨찾기) 추가
 insert into SENIOR_BMARK (KEY, MEMBER_ID)
-values(1, 'admin');
+values(2, 'test');
 
 --좋아요 테이블에 컬럼 생성
 insert into SENIOR_LIKE (MEMBER_ID, KEY, SENIOR_LIKE_NUM)
@@ -60,7 +60,7 @@ values ('admin', 1, 0);
 --카운트 +1
 UPDATE SENIOR_LIKE
 SET SENIOR_LIKE_NUM = SENIOR_LIKE_NUM + 1
-WHERE KEY = 1;
+WHERE KEY = 6910;
 
 
 --좋아요 취소
@@ -71,7 +71,7 @@ where key = 20 and member_id='admin';
 --카운트 -1
 UPDATE SENIOR_LIKE
 SET SENIOR_LIKE_NUM = SENIOR_LIKE_NUM - 1
-WHERE KEY = 20;
+WHERE KEY = 6910;
 
 
 select key
@@ -84,16 +84,33 @@ select * from senior where key = 1;
 --데이터 조회
 select * from SENIOR_LIKE;
 select * from SENIOR_BMARK;
+select * from senior where SENIOR_ROADADDRESS like '%광주광역시%';
 
 select * from senior where key=12;
 
---트랜잭션
+
 rollback;
 commit;
+    
+    
 
 
+--화면에 보이는 지도 위 정보만 표현하기
 
-
+SELECT  CASE WHEN DISTANCE < 1 THEN RTRIM(TO_CHAR(DISTANCE*1000 , 'FM9990D99'),'.')||'m' ELSE DISTANCE||'km' END distance,T.*
+        , S.* ,  (SELECT COUNT(*) FROM SENIOR_LIKE L WHERE L.KEY = S.KEY ) SENIOR_LIKE_NUM
+    from 
+     (
+        SELECT ROWNUM no, C.DISTANCE , S.KEY 
+        FROM SENIOR S LEFT OUTER JOIN 
+        (SELECT  KEY , DISTNACE_WGS84(35.1535583, 126.8879957, SENIOR_LATITUDE, SENIOR_LONGITUDE) AS DISTANCE
+           FROM SENIOR S
+      
+        ) C ON S.KEY=C.KEY
+        WHERE S.SENIOR_ROADADDRESS LIKE '%광주%'
+        ORDER BY C.DISTANCE ASC
+    ) T INNER JOIN SENIOR S ON T.KEY = S.KEY
+    WHERE T.NO < 20 ;
 
 
 

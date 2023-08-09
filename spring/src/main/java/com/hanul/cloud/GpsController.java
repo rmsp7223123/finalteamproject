@@ -32,7 +32,11 @@ public class GpsController {
 	@RequestMapping("/likebtn")
 	public void likebtn(int key) {
 		dao.bmark(key);
-		dao.addlike(key);
+		try {
+			dao.addlike(key);
+		} catch (Exception e) {
+			
+		}
 		dao.likecnt(key);
 	}
 
@@ -46,4 +50,5 @@ public class GpsController {
 	public String likeyet(int key) {
 		return dao.likeyet(key);
 	}
+	
 }

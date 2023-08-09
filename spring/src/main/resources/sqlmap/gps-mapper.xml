@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="gps">
+
 	<!-- 경로당 목록 -->
-	<select id="list" resultType="cloud.gps.GpsVO">
+	<!-- <select id="list" resultType="cloud.gps.GpsVO">
 		select s.KEY, s.SENIOR_NAME, s.SENIOR_ROADADDRESS, s.SENIOR_NUMADDRESS,
 		s.SENIOR_CALL, s.SENIOR_LATITUDE, s.SENIOR_LONGITUDE, s.SIDO,
 		s.SIGUNGU
@@ -10,8 +11,27 @@
 		from SENIOR s
 		left join SENIOR_LIKE l
 		on s.key = l.key
-		where s.key between 1 and 25
+		where s.key between 6910 and 6950
 		order by key
+	</select> -->
+	
+	<select id="list" resultType="cloud.gps.GpsVO">
+	SELECT CASE WHEN DISTANCE &lt; 1 THEN RTRIM(TO_CHAR(DISTANCE*1000 ,
+	'FM9990D99'),'.')||'m' ELSE DISTANCE||'km' END distance,T.*
+	, S.*,  (SELECT COUNT(*) FROM SENIOR_LIKE L WHERE L.KEY = S.KEY ) SENIOR_LIKE_NUM
+	from
+	(
+	SELECT ROWNUM no, C.DISTANCE , S.KEY
+	FROM SENIOR S LEFT OUTER JOIN
+	(SELECT KEY , DISTNACE_WGS84(35.1534, 126.8880, SENIOR_LATITUDE,
+	SENIOR_LONGITUDE) AS DISTANCE
+	FROM SENIOR S
+
+	) C ON S.KEY=C.KEY
+	WHERE S.SENIOR_ROADADDRESS LIKE '%광주%'
+	ORDER BY C.DISTANCE ASC
+	) T INNER JOIN SENIOR S ON T.KEY = S.KEY
+	WHERE T.NO &lt; 5
 	</select>
 
 	<!-- 자주가는 경로당 목록 -->
@@ -20,13 +40,13 @@
 		from senior_bmark b
 		left join senior s
 		on b.key=s.key
-		where member_id='admin'
+		where member_id='test'
 	</select>
 
 	<!-- 좋아요 버튼 선택시 자주가는 경로당 등록 -->
 	<insert id="bmark">
 		insert into SENIOR_BMARK (KEY, MEMBER_ID)
-		values(#{key}, 'admin')
+		values(#{key}, 'test')
 	</insert>
 
 	<!-- 좋아요 버튼 선택시 좋아요 리스트 컬럼 생성 -->
@@ -46,7 +66,7 @@
 	<!-- 좋아요 취소시 자주가는 경로당 삭제 -->
 	<delete id="delbmark">
 		delete from SENIOR_BMARK
-		where key = #{key} and member_id='admin'
+		where key = #{key} and member_id='test'
 	</delete>
 
 	<!-- 좋아요 취소시 좋아요 카운트 감소 -->
@@ -60,7 +80,7 @@
 	<select id="likeyet" resultType="String">
 		select key
 		from SENIOR_BMARK
-		where key=#{key} and member_id='admin'
+		where key=#{key} and member_id='test'
 	</select>
 
 </mapper>

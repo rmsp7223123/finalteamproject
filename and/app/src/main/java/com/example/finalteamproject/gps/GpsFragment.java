@@ -21,6 +21,7 @@ import com.example.finalteamproject.databinding.FragmentGpsBinding;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.naver.maps.geometry.LatLng;
+import com.naver.maps.map.CameraUpdate;
 import com.naver.maps.map.LocationTrackingMode;
 import com.naver.maps.map.MapFragment;
 import com.naver.maps.map.NaverMap;
@@ -45,6 +46,17 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentGpsBinding.inflate(inflater, container, false);
+
+        //자주 가는 경로당(리사이클러뷰)
+        CommonConn conn = new CommonConn(getContext(), "gps/likelist");
+        conn.onExcute((isResult, data) -> {
+            ArrayList<GpsVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<GpsVO>>(){}.getType());
+
+            GpsBmarkAdapter adapter = new GpsBmarkAdapter(list);
+            binding.recvBmark.setAdapter(adapter);
+            binding.recvBmark.setLayoutManager(new LinearLayoutManager(getContext()));
+        });
+
         senior_list();
 
         //지도 객체 생성
@@ -101,13 +113,16 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                 marker.setMap(naverMap);
                 //마커 디자인
                 marker.setIcon(MarkerIcons.BLACK); //색상
-                marker.setIconTintColor(Color.RED);
+                marker.setIconTintColor(Color.parseColor("#FE69B7"));
                 marker.setWidth(70); //마커사이즈
                 marker.setHeight(100);
 
                 Log.d("위치", "위도, 경도: "+lat+", "+lon);
             }
         });
+
+        showMultipleMarkers();
+
     }
 
     public void senior_list(){
@@ -119,9 +134,34 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
             GpsAdapter adapter = new GpsAdapter(list);
             binding.recvGps.setAdapter(adapter);
             binding.recvGps.setLayoutManager(new LinearLayoutManager(getContext()));
+        });
+    }
+
+    //다중마커 메소드
+    private void showMultipleMarkers() {
+        CommonConn conn = new CommonConn(getContext(), "gps/senior");
+        conn.onExcute((isResult, data) -> {
+            ArrayList<GpsVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<GpsVO>>() {
+            }.getType());
+
+            for (GpsVO gpsVO : list) {
+                double markerLat = Double.parseDouble(gpsVO.getSenior_latitude());
+                double markerLon = Double.parseDouble(gpsVO.getSenior_longitude());
+
+                // 각 마커에 위치 정보를 설정하고 지도에 추가
+                Marker marker = new Marker();
+                marker.setPosition(new LatLng(markerLat, markerLon));
+                marker.setMap(naverMap);
+                marker.setIcon(MarkerIcons.BLACK);
+                marker.setIconTintColor(Color.parseColor("#4B6EFD")); // 다중 마커 색상
+                marker.setWidth(70);
+                marker.setHeight(100);
+            }
+
 
         });
     }
+
 
 
 
