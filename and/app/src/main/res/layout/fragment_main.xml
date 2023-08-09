@@ -70,6 +70,7 @@
 
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/card_pager2"
             android:layout_width="200dp"
             android:layout_height="200dp"
             app:cardElevation="0dp"
@@ -93,8 +94,23 @@
             />
     </LinearLayout>
 
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="20dp"
+            android:gravity="center"
+            android:id="@+id/tv_nickname"
+            android:layout_below="@+id/ln_center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="닉네임"
+            android:textSize="28dp"
+            android:textColor="@color/black"/>
+
+
     <LinearLayout
-        android:layout_below="@id/ln_center"
+        android:layout_marginTop="60dp"
+        android:layout_alignTop="@+id/tv_nickname"
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:layout_width="match_parent"
@@ -155,9 +171,9 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recv_board"
-            android:layout_marginHorizontal="30dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="30dp" />
 
     </LinearLayout>
 

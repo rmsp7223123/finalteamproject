@@ -21,57 +21,65 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
+import com.example.finalteamproject.common.MemberVO;
 import com.example.finalteamproject.databinding.FragmentMainBinding;
 import com.example.finalteamproject.setting.ChangeProfileActivity;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainFragment extends Fragment {
 
     FragmentMainBinding binding;
 
-    ArrayList<Integer> viewpagerImages = new ArrayList<Integer>();
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentMainBinding.inflate(inflater, container,false);
-        Viewpager_main_adapter adapter = new Viewpager_main_adapter(getContext(), images());
-        int initialPosition = adapter.getItemCount() / 2;
-        binding.imgViewpager.setAdapter(adapter);
-        binding.imgViewpager.setCurrentItem(initialPosition, false);
+        CommonConn conn = new CommonConn(getContext(),"main/viewpager");
+        conn.addParamMap("member_id",CommonVar.logininfo.getMember_id());
+        conn.onExcute((isResult, data) -> {
+            ArrayList<MemberVO> list = new Gson().fromJson(data , new TypeToken<ArrayList<MemberVO>>(){}.getType());
+            Viewpager_main_adapter adapter = new Viewpager_main_adapter(getContext(), list);
+            int initialPosition = adapter.getItemCount() / 2;
+            binding.imgViewpager.setAdapter(adapter);
+            binding.imgViewpager.setCurrentItem(0, true);
+            binding.imgViewpager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                int currentState = 0;
+                int currentPos = 0;
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                    if(currentState == ViewPager2.SCROLL_STATE_DRAGGING && currentPos == position) {
+                        if(currentPos == 0) {
+                            binding.imgViewpager.setCurrentItem(list.size());
+//                            binding.tvNickname.setText(list.get(position).getMember_nickname());
+                        }
+                        else if(currentPos == 2) {
+                            binding.imgViewpager.setCurrentItem(0);
+                        }
+                    }
+                    super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+                }
+
+                @Override
+                public void onPageSelected(int position) {
+                    currentPos = position;
+                    super.onPageSelected(position);
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+                    currentState = state;
+                    super.onPageScrollStateChanged(state);
+                }
+            });
+        });
         MainBoardAdapter adapter1 = new MainBoardAdapter();
         binding.recvBoard.setAdapter(adapter1);
         binding.recvBoard.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.imgViewpager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            int currentState = 0;
-            int currentPos = 0;
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if(currentState == ViewPager2.SCROLL_STATE_DRAGGING && currentPos == position) {
-                    if(currentPos == 0) {
-                        binding.imgViewpager.setCurrentItem(images().size());
-                    }
-                    else if(currentPos == 2) {
-                        binding.imgViewpager.setCurrentItem(0);
-                    }
-                }
-                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                currentPos = position;
-                super.onPageSelected(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                currentState = state;
-                super.onPageScrollStateChanged(state);
-            }
-        });
 
         binding.imgvAlarmHistory.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), MainAlarmHistoryActivity.class);
@@ -176,13 +184,7 @@ public class MainFragment extends Fragment {
         Glide.with(this).load(CommonVar.logininfo.getMember_profileimg()).into(binding.imgvSmallProfile);
     }
 
-    public ArrayList<Integer> images() {
-        ArrayList<Integer> images = new ArrayList<>();
-        images.add(new Integer(R.drawable.haerin2));
-        images.add(new Integer(R.drawable.hanni9));
-        images.add(new Integer(R.drawable.minji10));
-        images.add(new Integer(R.drawable.danielle11));
-        images.add(new Integer(R.drawable.hyein11));
-        return images;
+    public void images() {
+
     }
 }

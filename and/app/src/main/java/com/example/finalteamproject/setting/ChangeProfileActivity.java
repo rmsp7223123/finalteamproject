@@ -95,13 +95,6 @@ public class ChangeProfileActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Glide.with(this).load(CommonVar.logininfo.getMember_profileimg()).into(binding.imgvProfileimg);
-    }
-
-
     public void showDialog() {
         String[] dialog_item = {"갤러리", "카메라"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -194,9 +187,9 @@ public class ChangeProfileActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQ_GALLERY && resultCode == RESULT_OK) {
-            Glide.with(this).load(data.getData()).into(binding.imgvProfileimg);
-            String img_path = getRealPath(data.getData());
 
+            String  img_path= getRealPath(data.getData());
+            Glide.with(this).load(data.getData()).into(binding.imgvProfileimg);
 
 
             //MultiPart 형태로 전송 (File)

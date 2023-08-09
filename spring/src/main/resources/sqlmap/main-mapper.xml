@@ -9,17 +9,20 @@
 		select * from member where
 		member_id = #{member_id}
 	</select>
-	<select id="viewpager" resultType="String">
-		SELECT M.member_profileimg
-		FROM ( SELECT MEMBER_ID
+	<select id="viewpager" resultType="cloud.member.MemberVO">
+		SELECT M.*
+		FROM ( SELECT
+		MEMBER_ID
 		FROM FAVOR
 		WHERE MEMBER_ID != #{member_id}
 		AND
-		FAVOR IN ( SELECT FAVOR
+		FAVOR IN ( SELECT
+		FAVOR
 		FROM FAVOR
 		WHERE MEMBER_ID=#{member_id}
 		)
 		GROUP BY
-		MEMBER_ID ) F INNER JOIN MEMBER M ON F.MEMBER_ID = M.MEMBER_ID
+		MEMBER_ID ) F
+		INNER JOIN MEMBER M ON F.MEMBER_ID = M.MEMBER_ID
 	</select>
 </mapper>
