@@ -5,4 +5,7 @@
 		update member set member_profileimg =
 		#{member_profileimg} where member_id = #{member_id}
 	</update>
+	<select id="check" resultType="cloud.member.MemberVO">
+		select * from member where member_id = #{member_id}
+	</select>
 </mapper>

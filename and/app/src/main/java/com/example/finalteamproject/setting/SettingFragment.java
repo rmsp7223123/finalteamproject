@@ -11,8 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.example.finalteamproject.Login.LoginActivity;
 import com.example.finalteamproject.R;
+import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.databinding.FragmentSettingBinding;
 
 public class SettingFragment extends Fragment {
@@ -22,6 +24,7 @@ public class SettingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentSettingBinding.inflate(inflater,container,false);
+        Glide.with(this).load(CommonVar.logininfo.getMember_profileimg()).into(binding.imgvProfileImg);
         binding.containerLinearChangeProfile.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), ChangeProfileActivity.class);
             startActivity(intent);
@@ -64,5 +67,11 @@ public class SettingFragment extends Fragment {
             // 본인 회원가입 했을 때 주민등록번호나 핸드폰 번호를 활용해 검증 시키고 맞을 시 회원 탈퇴
         });
         return binding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Glide.with(this).load(CommonVar.logininfo.getMember_profileimg()).into(binding.imgvProfileImg);
     }
 }

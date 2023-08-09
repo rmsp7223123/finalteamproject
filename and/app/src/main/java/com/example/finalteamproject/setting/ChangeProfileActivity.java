@@ -25,6 +25,7 @@ import com.example.finalteamproject.Login.LoginVar;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
+import com.example.finalteamproject.common.MemberVO;
 import com.example.finalteamproject.common.RetrofitClient;
 import com.example.finalteamproject.common.RetrofitInterface;
 import com.example.finalteamproject.databinding.ActivityChangeProfileBinding;
@@ -79,6 +80,12 @@ public class ChangeProfileActivity extends AppCompatActivity {
             AlertDialog dialog = builder.create();
             dialog.show();
         });
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Glide.with(this).load(CommonVar.logininfo.getMember_profileimg()).into(binding.imgvProfileimg);
     }
 
     private void sendDialogDataToActivity(String data) {
@@ -183,13 +190,13 @@ public class ChangeProfileActivity extends AppCompatActivity {
 //            conn.addParamMap("vo", CommonVar.logininfo);
 //            conn.addParamMap("file", filePart);
 //            conn.onExcute((isResult, data1) -> {
-//                CommonVar.logininfo.setMember_profileimg(img_path);
+             CommonVar.logininfo.setMember_profileimg(img_path);
 //            });
             RetrofitInterface api = new RetrofitClient().retrofitLogin().create(RetrofitInterface.class);
             api.clientSendFile("main/changeProfile",map, filePart).enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(Call<String> call, Response<String> response) {
-
+                    CommonVar.logininfo = new Gson().fromJson( response.body() , MemberVO.class);
                 }
 
                 @Override

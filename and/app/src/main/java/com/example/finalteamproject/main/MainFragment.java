@@ -177,4 +177,9 @@ public class MainFragment extends Fragment {
         return list;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Glide.with(this).load(CommonVar.logininfo.getMember_profileimg()).into(binding.imgvSmallProfile);
+    }
 }

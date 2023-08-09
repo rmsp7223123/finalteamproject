@@ -62,7 +62,7 @@ public class MainController {
 		// System.out.println(req.getLocalAddr() + ":" + req.getContextPath() + "/imgs/"
 		// + modulePath);
 		// DB에 저장
-		MemberVO vo2 = sql.selectOne("login.check", vo.getMember_id());
+		MemberVO vo2 = sql.selectOne("main.check", vo.getMember_id());
 		return new Gson().toJson(vo2);
 	}
 }
