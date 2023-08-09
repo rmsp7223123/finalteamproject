@@ -82,3 +82,4 @@ target
 pom.properties
 .classpath
 MANIFEST.MF
+/classes/
