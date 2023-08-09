@@ -16,9 +16,12 @@
 =======
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> temp_brc
+=======
+>>>>>>> test
         <ImageView
             android:id="@+id/imgv_back"
             android:layout_alignParentStart="true"
@@ -59,9 +62,12 @@
 
 >>>>>>> bitna
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> test2
 =======
 >>>>>>> temp_brc
+=======
+>>>>>>> test
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -75,9 +81,12 @@
 =======
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> temp_brc
+=======
+>>>>>>> test
         <Spinner
             android:id="@+id/spn_board"
             android:layout_alignParentBottom="true"
@@ -91,9 +100,12 @@
 
 >>>>>>> bitna
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> test2
 =======
 >>>>>>> temp_brc
+=======
+>>>>>>> test
     </RelativeLayout>
 
     <Spinner
@@ -106,10 +118,13 @@
 =======
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         android:background="@drawable/spinner_board"/>
 =======
 =======
 >>>>>>> temp_brc
+=======
+>>>>>>> test
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true"
         android:textColor="#666"
@@ -157,8 +172,11 @@
         android:layout_height="match_parent"/>
 >>>>>>> bitna
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> test2
 =======
 >>>>>>> temp_brc
+=======
+>>>>>>> test
 
 </LinearLayout>

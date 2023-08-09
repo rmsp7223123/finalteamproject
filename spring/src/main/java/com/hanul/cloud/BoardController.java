@@ -4,9 +4,12 @@ package com.hanul.cloud;
 =======
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> temp_brc
+=======
+>>>>>>> test
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -20,9 +23,12 @@ import javax.servlet.http.HttpServletRequest;
 
 >>>>>>> bitna
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> test2
 =======
 >>>>>>> temp_brc
+=======
+>>>>>>> test
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -36,11 +42,14 @@ public class BoardController {
 	@Autowired @Qualifier("project") SqlSession sql;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 >>>>>>> test2
 =======
 >>>>>>> temp_brc
+=======
+>>>>>>> test
 	
 	@RequestMapping(value="/favorlist", produces = "text/html;charset=utf-8")
 	public String favorlist() {
@@ -48,9 +57,12 @@ public class BoardController {
 	}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> temp_brc
+=======
+>>>>>>> test
 =======
 
 	//관심사 게시판 정렬
@@ -152,8 +164,11 @@ public class BoardController {
 	
 >>>>>>> bitna
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> test2
 =======
 >>>>>>> temp_brc
+=======
+>>>>>>> test
 
 }
