@@ -51,9 +51,4 @@ public class GpsController {
 		return dao.likeyet(key);
 	}
 	
-	@RequestMapping(value = "/marker", produces = "text/html;charset=utf-8")
-	public String marker() {
-		List<GpsVO> list = dao.marker();
-		return new Gson().toJson(list);
-	}
 }

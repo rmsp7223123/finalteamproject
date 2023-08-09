@@ -45,7 +45,4 @@ public class GpsDAO {
 		return sql.selectOne("gps.likeyet", key);
 	}
 
-	public List<GpsVO> marker() {
-		return sql.selectList("gps.marker");
-	}
 }
