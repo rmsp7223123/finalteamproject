@@ -147,13 +147,21 @@ public class ChangeProfileActivity extends AppCompatActivity {
                 Glide.with(ChangeProfileActivity.this).load(camera_uri).into(binding.imgvProfileimg);
                 File file = new File(getRealPath(camera_uri));
                 if (file != null) {
-                    RequestBody fileBody = RequestBody.create(MediaType.parse("image/jpeg"), file);
-                    MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", "test.jpg", fileBody);
+                  //  Glide.with(this).load(data.getData()).into(binding.imgvProfileimg);
+                   // String img_path = getRealPath(data.getData());
+                    RequestBody fileBody = RequestBody.create(MediaType.parse("image/jpeg"),file);
+                    MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", CommonVar.logininfo.getMember_id()+".jpg", fileBody);
+                    HashMap<String, RequestBody> map = new HashMap<>();
+                    map.put("dto", RequestBody.create(MediaType.parse("multipart/form-data"), new Gson().toJson(CommonVar.logininfo)));
+                 //   CommonVar.logininfo.setMember_profileimg(img_path);
+
+
+
                     RetrofitInterface api = new RetrofitClient().retrofitLogin().create(RetrofitInterface.class);
-                    api.clientSendFile("file.f", new HashMap<>(), filePart).enqueue(new Callback<String>() {
+                    api.clientSendFile("main/changeProfile", map, filePart).enqueue(new Callback<String>() {
                         @Override
                         public void onResponse(Call<String> call, Response<String> response) {
-
+                            CommonVar.logininfo = new Gson().fromJson( response.body() , MemberVO.class);
                         }
 
                         @Override
@@ -196,12 +204,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
             MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", CommonVar.logininfo.getMember_id()+".jpg", fileBody);
             HashMap<String, RequestBody> map = new HashMap<>();
             map.put("dto", RequestBody.create(MediaType.parse("multipart/form-data"), new Gson().toJson(CommonVar.logininfo)));
-//            CommonConn conn = new CommonConn(ChangeProfileActivity.this, "main/changeProfile");
-//            conn.addParamMap("vo", CommonVar.logininfo);
-//            conn.addParamMap("file", filePart);
-//            conn.onExcute((isResult, data1) -> {
-             CommonVar.logininfo.setMember_profileimg(img_path);
-//            });
+           //  CommonVar.logininfo.setMember_profileimg(img_path);
             RetrofitInterface api = new RetrofitClient().retrofitLogin().create(RetrofitInterface.class);
             api.clientSendFile("main/changeProfile",map, filePart).enqueue(new Callback<String>() {
                 @Override

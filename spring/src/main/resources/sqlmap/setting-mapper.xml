@@ -9,4 +9,8 @@
 		update member set member_nickname =
 		#{member_nickname} where member_id = #{member_id}
 	</update>
+	<delete id="deleteAccount">
+		delete from member where member_id = #{member_id}
+		and member_pw = #{member_pw}
+	</delete>
 </mapper>

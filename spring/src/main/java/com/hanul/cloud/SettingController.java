@@ -36,5 +36,13 @@ public class SettingController {
 		paramMap.put("member_id", member_id);
 		return new Gson().toJson(sql.update("setting.changeNickname",paramMap));
 	}
+	
+	@RequestMapping("deleteAccount")
+	public String deleteAccount(MemberVO vo) {
+		HashMap<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("member_id", vo.getMember_id());
+		paramMap.put("member_pw", vo.getMember_pw());
+		return new Gson().toJson(sql.delete("setting.deleteAccount",paramMap));
+	}
 
 }

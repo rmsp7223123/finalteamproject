@@ -6,6 +6,20 @@
 		#{member_profileimg} where member_id = #{member_id}
 	</update>
 	<select id="check" resultType="cloud.member.MemberVO">
-		select * from member where member_id = #{member_id}
+		select * from member where
+		member_id = #{member_id}
+	</select>
+	<select id="viewpager" resultType="String">
+		SELECT M.member_profileimg
+		FROM ( SELECT MEMBER_ID
+		FROM FAVOR
+		WHERE MEMBER_ID != #{member_id}
+		AND
+		FAVOR IN ( SELECT FAVOR
+		FROM FAVOR
+		WHERE MEMBER_ID=#{member_id}
+		)
+		GROUP BY
+		MEMBER_ID ) F INNER JOIN MEMBER M ON F.MEMBER_ID = M.MEMBER_ID
 	</select>
 </mapper>

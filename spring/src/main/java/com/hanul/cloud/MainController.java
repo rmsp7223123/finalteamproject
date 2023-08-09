@@ -2,6 +2,7 @@ package com.hanul.cloud;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartRequest;
 
 import com.google.gson.Gson;
 
+import cloud.member.FavorVO;
 import cloud.member.MemberVO;
 
 @RestController
@@ -47,12 +49,11 @@ public class MainController {
 
 	@RequestMapping("/changeProfile")
 	public String changeProfile(HttpServletRequest req) {
-		
-		MemberVO vo = new Gson().fromJson(req.getParameter("dto"), MemberVO.class) ;
-		MultipartFile file = ((MultipartRequest)req).getFile("file");
+
+		MemberVO vo = new Gson().fromJson(req.getParameter("dto"), MemberVO.class);
+		MultipartFile file = ((MultipartRequest) req).getFile("file");
 		// 파일저장, 원본파일 삭제, 새로운 파일경로 DB에 업로드
-		String newImagePath = common.uploadAndDeletePreviousImage("profileImage", file, req,
-				vo.getMember_profileimg());
+		String newImagePath = common.uploadAndDeletePreviousImage("profileImage", file, req, vo.getMember_profileimg());
 
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("member_profileimg", newImagePath);
@@ -64,5 +65,11 @@ public class MainController {
 		// DB에 저장
 		MemberVO vo2 = sql.selectOne("main.check", vo.getMember_id());
 		return new Gson().toJson(vo2);
+	}
+
+	@RequestMapping("/viewpager")
+	public List<MemberVO> viewpager(String member_id) {
+		List<MemberVO> vo = sql.selectList("main.viewpager", member_id);
+		return vo;
 	}
 }

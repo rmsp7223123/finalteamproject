@@ -31,67 +31,8 @@
 
     </RelativeLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="30dp"
-        android:text="이름"
-        android:textColor="@color/black"
-        android:textSize="20sp" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/edt_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="25dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/border_radius0"
-            android:maxLength="30"
-            android:paddingHorizontal="15dp"
-            android:paddingVertical="10dp"
-            android:textColor="#AEAEAE"
-            android:textSize="21sp" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="25dp"
-        android:layout_marginTop="20dp">
-
-        <TextView
-            android:id="@+id/tv_nickname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:text="닉네임"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-    </RelativeLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <EditText
-            android:id="@+id/edt_nickname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="25dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/border_radius0"
-            android:maxLength="15"
-            android:paddingHorizontal="15dp"
-            android:paddingVertical="10dp"
-            android:textColor="#AEAEAE"
-            android:textSize="21sp" />
-    </com.google.android.material.textfield.TextInputLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -175,7 +116,7 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginHorizontal="25dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="330dp"
         android:backgroundTint="#FFC81E"
         app:cardCornerRadius="30dp">
 

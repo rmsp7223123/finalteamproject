@@ -31,20 +31,13 @@ public class MainFragment extends Fragment {
 
     FragmentMainBinding binding;
 
-    int[] images = new int[]{
-            R.drawable.haerin2,
-            R.drawable.minji10,
-            R.drawable.minji12,
-            R.drawable.danielle11,
-            R.drawable.hanni9,
-            R.drawable.hyein11
-    };
+    ArrayList<Integer> viewpagerImages = new ArrayList<Integer>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentMainBinding.inflate(inflater, container,false);
-        Viewpager_main_adapter adapter = new Viewpager_main_adapter(getContext(), images);
+        Viewpager_main_adapter adapter = new Viewpager_main_adapter(getContext(), images());
         int initialPosition = adapter.getItemCount() / 2;
         binding.imgViewpager.setAdapter(adapter);
         binding.imgViewpager.setCurrentItem(initialPosition, false);
@@ -58,7 +51,7 @@ public class MainFragment extends Fragment {
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 if(currentState == ViewPager2.SCROLL_STATE_DRAGGING && currentPos == position) {
                     if(currentPos == 0) {
-                        binding.imgViewpager.setCurrentItem(images.length);
+                        binding.imgViewpager.setCurrentItem(images().size());
                     }
                     else if(currentPos == 2) {
                         binding.imgViewpager.setCurrentItem(0);
@@ -181,5 +174,15 @@ public class MainFragment extends Fragment {
     public void onResume() {
         super.onResume();
         Glide.with(this).load(CommonVar.logininfo.getMember_profileimg()).into(binding.imgvSmallProfile);
+    }
+
+    public ArrayList<Integer> images() {
+        ArrayList<Integer> images = new ArrayList<>();
+        images.add(new Integer(R.drawable.haerin2));
+        images.add(new Integer(R.drawable.hanni9));
+        images.add(new Integer(R.drawable.minji10));
+        images.add(new Integer(R.drawable.danielle11));
+        images.add(new Integer(R.drawable.hyein11));
+        return images;
     }
 }
