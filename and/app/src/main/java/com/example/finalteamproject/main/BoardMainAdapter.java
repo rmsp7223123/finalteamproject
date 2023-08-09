@@ -19,8 +19,13 @@ public class BoardMainAdapter extends RecyclerView.Adapter<BoardMainAdapter.View
 
     ArrayList<BoardMainDTO> list;
     MainActivity activity;
-
     public BoardMainAdapter(ArrayList<BoardMainDTO> list, Activity activity) {
+    public BoardMainAdapter(ArrayList<BoardMainDTO> list, Activity activity) {
+    Fragment fragment;
+    String align;
+
+    public BoardMainAdapter(Fragment fragment, ArrayList<BoardMainDTO> list, Activity activity, String align) {
+        this.fragment = fragment;
         this.list = list;
         this.activity = (MainActivity) activity;
     }
@@ -39,6 +44,13 @@ public class BoardMainAdapter extends RecyclerView.Adapter<BoardMainAdapter.View
         h.binding.imgvMove.setImageResource(list.get(i).getImgv_move());
         h.binding.lnBoardSelect.setOnClickListener(v -> {
             activity.changeFragment(list.get(i).getTv_board_name());
+
+            activity.changeFragment(list.get(i).getTv_board_name());
+
+            activity.changeFragment(fragment, list.get(i).getTv_board_name(), align, activity);
+
+            activity.changeFragment(fragment, list.get(i).getTv_board_name(), align, activity);
+
         });
     }
 

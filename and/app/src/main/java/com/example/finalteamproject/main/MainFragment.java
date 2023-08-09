@@ -119,7 +119,7 @@ public class MainFragment extends Fragment {
             dialog.show();
         });
 
-        BoardMainAdapter adapter2 = new BoardMainAdapter(getList(),getActivity());
+        BoardMainAdapter adapter2 = new BoardMainAdapter(this, getList(), getActivity(), null);
         binding.recvBoard.setAdapter(adapter2);
         binding.recvBoard.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
