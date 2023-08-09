@@ -46,7 +46,6 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentGpsBinding.inflate(inflater, container, false);
-        binding.gpsSearch.setVisibility(View.GONE);
 
         //자주 가는 경로당(리사이클러뷰)
         CommonConn conn = new CommonConn(getContext(), "gps/likelist");
@@ -114,7 +113,7 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                 marker.setMap(naverMap);
                 //마커 디자인
                 marker.setIcon(MarkerIcons.BLACK); //색상
-                marker.setIconTintColor(Color.RED);
+                marker.setIconTintColor(Color.parseColor("#FE69B7"));
                 marker.setWidth(70); //마커사이즈
                 marker.setHeight(100);
 
@@ -154,7 +153,7 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                 marker.setPosition(new LatLng(markerLat, markerLon));
                 marker.setMap(naverMap);
                 marker.setIcon(MarkerIcons.BLACK);
-                marker.setIconTintColor(Color.GREEN); // 다중 마커 색상
+                marker.setIconTintColor(Color.parseColor("#4B6EFD")); // 다중 마커 색상
                 marker.setWidth(70);
                 marker.setHeight(100);
             }

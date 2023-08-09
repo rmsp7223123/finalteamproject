@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="gps">
+
 	<!-- 경로당 목록 -->
 	<select id="list" resultType="cloud.gps.GpsVO">
 		select s.KEY, s.SENIOR_NAME, s.SENIOR_ROADADDRESS, s.SENIOR_NUMADDRESS,
@@ -61,6 +62,18 @@
 		select key
 		from SENIOR_BMARK
 		where key=#{key} and member_id='test'
+	</select>
+	
+	<!-- 보이는 영역만 조회 -->
+	<select id="marker" resultType="cloud.gps.GpsVO">
+	SELECT CASE WHEN DISTANCE &lt; 1 THEN RTRIM(TO_CHAR(DISTANCE*1000 ,
+	'FM9990D99'),'.')||'m' ELSE DISTANCE||'km' END 거리 , C.*
+	FROM (
+	SELECT
+	S.* , DISTNACE_WGS84(35.1535583, 126.8879957, SENIOR_LATITUDE,
+	SENIOR_LONGITUDE) AS DISTANCE
+	FROM SENIOR S) C
+	WHERE KEY BETWEEN 1 and 5
 	</select>
 
 </mapper>
