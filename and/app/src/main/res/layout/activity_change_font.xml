@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".setting.ChangeFontActivity"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imgv_back"
+            android:layout_marginStart="20dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/back"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="글꼴"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="27sp" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:layout_weight="2"
+            android:textColor="@color/black"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="글씨 크기 조절"
+            android:textSize="35dp"/>
+
+        <TextView
+            android:id="@+id/tv_font_size"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="작게"
+            android:textSize="25dp"
+            android:textColor="@color/black"
+            android:gravity="right|center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:layout_weight="2"
+            android:textColor="@color/black"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="글씨 색깔"
+            android:textSize="35dp"/>
+
+        <TextView
+            android:id="@+id/tv_font_color"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="검은색"
+            android:textSize="35dp"
+            android:textColor="@color/black"
+            android:gravity="right|center"/>
+
+    </LinearLayout>
+
+</LinearLayout>
