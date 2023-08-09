@@ -76,9 +76,14 @@ atlassian-ide-plugin.xml
 .vscode/
 .metadata/
 cached-antora-playbook.yml
+<<<<<<< HEAD
+spring/.classpath
 
 lecture
 target
 pom.properties
 .classpath
 MANIFEST.MF
+/classes/
+=======
+>>>>>>> parent of 67f6eca (Update .gitignore)
