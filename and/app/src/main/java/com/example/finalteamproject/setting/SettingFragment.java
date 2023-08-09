@@ -25,6 +25,7 @@ public class SettingFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentSettingBinding.inflate(inflater,container,false);
         Glide.with(this).load(CommonVar.logininfo.getMember_profileimg()).into(binding.imgvProfileImg);
+        binding.tvNickname.setText(CommonVar.logininfo.getMember_nickname());
         binding.containerLinearChangeProfile.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), ChangeProfileActivity.class);
             startActivity(intent);

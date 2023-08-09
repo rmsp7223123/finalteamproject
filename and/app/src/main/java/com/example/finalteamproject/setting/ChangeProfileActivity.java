@@ -56,6 +56,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         //new HideActionBar().hideActionBar(this);
         Glide.with(this).load(CommonVar.logininfo.getMember_profileimg()).into(binding.imgvProfileimg);
+        binding.tvNickname.setText(CommonVar.logininfo.getMember_nickname());
         binding.imgvBack.setOnClickListener(v -> {
             finish();
         });
@@ -72,10 +73,22 @@ public class ChangeProfileActivity extends AppCompatActivity {
             builder.setNegativeButton("확인", (dialog, which) -> {
                 EditText edt_nickname = customLayout.findViewById(R.id.edt_nickname);
                 // 중복확인 검사 추가하기
-                if (edt_nickname.length() > 0) {
-                    sendDialogDataToActivity(edt_nickname.getText().toString());
-                    binding.tvNickname.setText(edt_nickname.getText().toString());
-                }
+                CommonConn conn = new CommonConn(this,"setting/checkNickname");
+                conn.addParamMap("member_nickname", edt_nickname.getText().toString());
+                conn.onExcute((isResult, data) -> {
+                    if(data.equals("null") && edt_nickname.length() > 0) {
+                        CommonConn conn2 = new CommonConn(this, "setting/changeNickname");
+                        conn2.addParamMap("member_nickname", edt_nickname.getText().toString());
+                        conn2.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                        conn2.onExcute((isResult1, data1) -> {
+                            binding.tvNickname.setText(edt_nickname.getText().toString());
+                            Toast.makeText(this, edt_nickname.getText().toString() + "으로 변경되었습니다.", Toast.LENGTH_SHORT).show();
+                            CommonVar.logininfo.setMember_nickname(edt_nickname.getText().toString());
+                        });
+                    } else {
+                        Toast.makeText(this, "이미 존재하는 닉네임이거나 길이가 너무 짧습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                });
             });
             AlertDialog dialog = builder.create();
             dialog.show();
@@ -88,9 +101,6 @@ public class ChangeProfileActivity extends AppCompatActivity {
         Glide.with(this).load(CommonVar.logininfo.getMember_profileimg()).into(binding.imgvProfileimg);
     }
 
-    private void sendDialogDataToActivity(String data) {
-        Toast.makeText(this, data + "으로 변경되었습니다.", Toast.LENGTH_SHORT).show();
-    }
 
     public void showDialog() {
         String[] dialog_item = {"갤러리", "카메라"};

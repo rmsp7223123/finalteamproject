@@ -21,3 +21,5 @@ select member_profileimg from member where member_profileimg = 'afsdadsf';
 
 commit;
 
+select * from member where member_nickname = 'ansqudwns';
+
