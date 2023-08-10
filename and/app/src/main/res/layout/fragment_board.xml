@@ -22,6 +22,14 @@
             android:layout_height="30dp"
             android:src="@drawable/back"/>
 
+        <ImageView
+            android:id="@+id/img_refresh"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_toStartOf="@id/edt_search"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="5dp"
+            android:src="@drawable/refresh"/>
 
         <EditText
             android:id="@+id/edt_search"
@@ -37,6 +45,7 @@
             android:background="@drawable/edittext_rounded_corner_rectangle"/>
 
         <ImageView
+            android:id="@+id/imgv_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/search"
@@ -126,8 +135,19 @@
 
     </RelativeLayout>
 
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tv_none"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:text="게시판 글 목록이 존재하지 않습니다"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recv_board"
+        android:visibility="visible"
         android:layout_marginHorizontal="30dp"
         android:layout_marginVertical="10dp"
         android:layout_width="match_parent"

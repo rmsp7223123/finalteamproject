@@ -15,6 +15,7 @@ import android.view.Window;
 
 import com.example.finalteamproject.HideActionBar;
 import com.example.finalteamproject.R;
+import com.example.finalteamproject.board.BoardCommonVar;
 import com.example.finalteamproject.board.BoardFragment;
 import com.example.finalteamproject.chat.ChatMainFragment;
 import com.example.finalteamproject.databinding.ActivityMainBinding;
@@ -60,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
 //        new HideActionBar().hideActionBar(this);
         binding.bottomNavigationView.setSelectedItemId(R.id.fab);
         binding.fltbtnHome.setOnClickListener(v -> {
+            // 홈버튼 눌렀을 때 게시판 메뉴 없애기
+            BoardCommonVar.board = false;
             // 홈버튼 눌렀을 때 네비게이션 뷰 아이템 올라오는처리 삭제하기
             binding.bottomNavigationView.setSelectedItemId(R.id.fab);
             FragmentTransaction transaction = manager.beginTransaction();
@@ -93,11 +96,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //게시판 메뉴 이동
-    public void changeFragment(Fragment fragment, String board_name, String align, Activity activity){
+    public void changeFragment(Fragment fragment, Activity activity){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.remove(fragment);
-        manager.beginTransaction().replace(R.id.container_frame, new BoardFragment(board_name, align, activity)).commit();
+        manager.beginTransaction().replace(R.id.container_frame, new BoardFragment(activity)).commit();
     }
 
     //일반 프래그먼트 이동

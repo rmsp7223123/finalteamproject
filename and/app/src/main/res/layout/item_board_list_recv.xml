@@ -21,7 +21,9 @@
             android:src="@drawable/ic_launcher_background"/>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
@@ -35,12 +37,22 @@
                 android:text="글 제목"/>
 
             <TextView
+                android:layout_marginTop="15dp"
                 android:id="@+id/tv_writer"
                 android:textColor="@color/black"
                 android:textSize="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="글쓴이"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_rec"
@@ -57,6 +69,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="조회수"/>
+
+            <TextView
+                android:id="@+id/tv_comment"
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="댓글수"/>
+
         </LinearLayout>
 
     </LinearLayout>

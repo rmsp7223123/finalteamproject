@@ -3,20 +3,34 @@
 <mapper namespace="board">
 	
 	<select id="list" resultType="cloud.member.FavorBoardVO">
-		select * 
-		from fav_board 
+		select f.* 
+		from fav_board f
 		where favor = (select key2 from common2 where name = #{favor} and key1 = 1)
+			and (writer like '%'||#{context}||'%' or fav_board_title like '%'||#{context}||'%' or fav_board_content like '%'||#{context}||'%')
 		<choose>
-			<when test="align == '최신순'||align == null">
-				order by fav_board_id desc
+			<when test="align == '최신순'">
+				order by f.fav_board_id desc
 			</when>
 			<when test="align == '조회순'">
-				order by fav_board_writecount desc, fav_board_id desc
+				order by f.fav_board_writecount desc, f.fav_board_id desc
 			</when>
 			<when test="align == '추천순'">
-				order by (select count(member_id_like) from fav_board_like where fav_board_id = 
-				(select fav_board_id from fav_board where favor = 
-				(select key2 from common2 where name = #{favor} and key1 = 1))) desc, fav_board_id desc
+				order by (
+					select count(l.member_id_like) 
+					from fav_board_like l 
+					where l.fav_board_id = f.FAV_BOARD_ID
+					) desc, fav_board_id desc
+			</when>				
+			<when test="align == '오래된순'">
+				order by fav_board_id
+			</when>
+			<when test="align == '댓글순'">
+				order by (
+					select count(c.fav_board_comment_id)
+					from fav_board_comment c
+					where c.fav_board_id = f.fav_board_id
+					) desc, fav_board_id desc
+				)
 			</when>
 		</choose>
 	</select>
@@ -70,5 +84,48 @@
 	<update id="viewCnt">
 		update fav_board set fav_board_writecount=100 where fav_board_id = #{id}
 	</update>
+	
+	<delete id="deleteBoard">
+		delete fav_board where fav_board_id = #{id}
+	</delete>
+	
+	<update id="modify">
+		update fav_board set fav_board_title = #{fav_board_title}, fav_board_content = #{fav_board_content}
+		, fav_board_writedate = sysdate, fav_board_img = #{fav_board_img,jdbcType=VARCHAR}
+		where fav_board_id = #{fav_board_id}
+	</update>
+	
+	<select id="commentList" resultType="cloud.member.FavorBoardCommentVO">
+		select fav_board_comment_id, fav_board_id, writer, fav_board_comment_content, 
+		to_char(fav_board_comment_writedate, 'yyyy-dd-mm hh:mm:ss') fav_board_comment_writedate
+		from fav_board_comment where fav_board_id = #{fav_board_id}
+			<choose>
+				<when test="align == '최신순'">
+					order by fav_board_id desc
+				</when>
+				<when test="align == '오래된순'">
+					order by fav_board_id
+				</when>
+			</choose>
+	</select>
+	
+	<delete id="deleteComment">
+		delete fav_board_comment where fav_board_comment_id = #{id}
+	</delete>
+	
+	<select id="nickname" resultType="string">
+		select member_nickname from member where member_id = #{id}
+	</select>
+	
+	<insert id="insertComment">
+		insert into fav_board_comment values (0, #{fav_board_id}, #{writer}, #{fav_board_comment_content}, sysdate)
+	</insert>
+	
+	<update id="updateComment">
+		update fav_board_comment set FAV_BOARD_COMMENT_CONTENT = #{fav_board_comment_content}, 
+		FAV_BOARD_COMMENT_WRITEDATE = sysdate
+		  where FAV_BOARD_COMMENT_ID = #{fav_board_comment_id}
+	</update>
+
 	
 </mapper>

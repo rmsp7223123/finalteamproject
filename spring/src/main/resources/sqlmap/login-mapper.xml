@@ -7,7 +7,7 @@
 	</select>
 	
 	<select id="check" resultType="cloud.member.MemberVO">
-		select * from member where member_id = #{member_id} and member_pw = #{member_pw}
+		select * from member where member_id = #{member_id} and member_pw = #{member_pw} and member_phone = #{member_phone}
 	</select>
 	
 	<select id="checkId" resultType="cloud.member.MemberVO">

@@ -23,16 +23,11 @@ public class BoardListAdapter extends RecyclerView.Adapter<BoardListAdapter.View
     List<FavorBoardVO> list;
     MainActivity activity;
     Fragment fragment;
-    int fav_board_id;
-    String board_name;
-    String align;
 
-    public BoardListAdapter(Activity activity, Fragment fragment,  List<FavorBoardVO> list, String board_name, String align) {
+    public BoardListAdapter(Activity activity, Fragment fragment,  List<FavorBoardVO> list) {
         this.activity = (MainActivity) activity;
         this.fragment = fragment;
         this.list = list;
-        this.board_name = board_name;
-        this.align = align;
     }
 
     @NonNull
@@ -45,7 +40,6 @@ public class BoardListAdapter extends RecyclerView.Adapter<BoardListAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder h, int i) {
-        fav_board_id = list.get(i).fav_board_id;
         if(list.get(i).fav_board_img==null){
             h.binding.imgvImage.setImageResource(R.drawable.logo);
         }
@@ -54,16 +48,25 @@ public class BoardListAdapter extends RecyclerView.Adapter<BoardListAdapter.View
         }else {
             h.binding.tvTitle.setText(list.get(i).fav_board_title);
         }
-        h.binding.tvWriter.setText(list.get(i).writer);
+        CommonConn conn1 = new CommonConn(fragment.getContext(), "board/nickname");
+        conn1.addParamMap("id", list.get(i).writer);
+        conn1.onExcute((isResult, data) -> {
+            h.binding.tvWriter.setText(data);
+        });
         CommonConn conn = new CommonConn(fragment.getContext(), "board/rec");
         conn.addParamMap("id", list.get(i).fav_board_id);
         conn.onExcute((isResult, data) -> {
             h.binding.tvRec.setText("추천 : "+data);
         });
         h.binding.tvView.setText("조회 : "+list.get(i).fav_board_writecount);
+        CommonConn conn2 = new CommonConn(fragment.getContext(), "board/commentCnt");
+        conn2.addParamMap("fav_board_id", list.get(i).fav_board_id);
+        conn2.onExcute((isResult, data) -> {
+            h.binding.tvComment.setText("댓글 : "+data);
+        });
 
         h.binding.lnBoard.setOnClickListener(v -> {
-            activity.replaceFragment(fragment, new BoardContextFragment(activity, fav_board_id, board_name, align));
+            activity.replaceFragment(fragment, new BoardContextFragment(activity, list.get(i).fav_board_id));
         });
     }
 
