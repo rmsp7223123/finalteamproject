@@ -135,6 +135,7 @@ public class PhoneActivity extends AppCompatActivity {
                         startActivity(intent);
                     }else {
                         Intent intent = new Intent(this, LoginCheckActivity.class);
+                        intent.putExtra("member_phone", binding.edtPhone.getText().toString());
                         startActivity(intent);
                     }
                 });

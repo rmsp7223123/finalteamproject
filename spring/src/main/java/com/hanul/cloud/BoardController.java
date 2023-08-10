@@ -21,16 +21,18 @@ import org.springframework.web.multipart.MultipartRequest;
 
 import com.google.gson.Gson;
 
+import cloud.member.FavorBoardCommentVO;
 import cloud.member.FavorBoardVO;
 
 @RestController @RequestMapping("/board")
 public class BoardController {
 	@Autowired @Qualifier("project") SqlSession sql;
-
-	//관심사 게시판 정렬
+	
+	//게시물 검색
 	@RequestMapping(value="/list", produces = "text/html;charset=utf-8")
-	public String list(String favor , String align) {
+	public String list(String context, String favor, String align) {		
 		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("context", context);
 		paramMap.put("favor", favor);
 		paramMap.put("align", align);
 		List<FavorBoardVO> list = sql.selectList("board.list", paramMap);
@@ -113,13 +115,68 @@ public class BoardController {
 		return result;
 	}
 	
-	
 	//게시물 조회수 증가
 	@RequestMapping(value="/viewCnt", produces = "text/html;charset=utf-8")
 	public String viewCnt(int id) {
 		String result = sql.update("board.viewCnt", id)==1 ? "성공" : "실패";
 		return result;
 	}
+	
+	//게시물 삭제
+	@RequestMapping(value="/deleteBoard", produces = "text/html;charset=utf-8")
+	public String deleteBoard(int id) {
+		String result = sql.delete("board.deleteBoard", id)==1 ? "성공" : "실패";
+		return result;
+	}
+	
+	//게시물 수정
+	@RequestMapping(value="/modify", produces = "text/html;charset=utf-8")
+	public String modify(FavorBoardVO vo) {
+		String result = sql.insert("board.modify", vo)== 1 ? "성공" : "실패";
+		return result ;
+	}
+	
+	//댓글 목록 가져오기
+	@RequestMapping(value="/commentList", produces = "text/html;charset=utf-8")
+	public String commentList(int fav_board_id, String align) {		
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("fav_board_id", fav_board_id+"");
+		paramMap.put("align", align);
+		List<FavorBoardVO> list = sql.selectList("board.commentList", paramMap);
+		return new Gson().toJson(list);
+	}	
+	
+	//댓글 삭제
+	@RequestMapping(value="/deleteComment", produces = "text/html;charset=utf-8")
+	public String deleteComment(int id) {
+		String result = sql.delete("board.deleteComment", id)==1 ? "성공" : "실패";
+		return result;
+	}
+	
+	//작성자 아이디로 닉네임 가져오기
+	@RequestMapping(value="/nickname", produces = "text/html;charset=utf-8")
+	public String nickname(String id) {
+		String result = sql.selectOne("board.nickname", id);
+		return result;
+	}
+	
+	//댓글 등록하기
+	@RequestMapping(value="/insertComment", produces = "text/html;charset=utf-8")
+	public String insertComment(FavorBoardCommentVO vo) {
+		String result = sql.insert("board.insertComment", vo)==1 ? "성공" : "실패";
+		return result;
+	}
+	
+	//댓글 수정하기
+	@RequestMapping(value="/updateComment", produces = "text/html;charset=utf-8")
+	public String updateCommnet(String fav_board_comment_id, String fav_board_comment_content) {
+		HashMap<String, String> paramMap = new HashMap<String, String>();
+		paramMap.put("fav_board_id", fav_board_comment_id);
+		paramMap.put("align", fav_board_comment_content);
+		String result = sql.update("board.updateComment", paramMap)==1 ? "성공" : "실패";
+		return result;
+	}
+	
 	
 	
 	

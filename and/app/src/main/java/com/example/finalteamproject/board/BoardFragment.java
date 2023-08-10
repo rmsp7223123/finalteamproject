@@ -36,14 +36,10 @@ public class BoardFragment extends Fragment {
 
     MainActivity activity;
     FragmentBoardBinding binding;
-    String board_name;
-    String align;
     String[] list = {"TV", "음악", "영화", "패션", "동물", "뉴스", "자동차", "운동", "게임"};
-    String[] list2 = {"최신순", "조회순", "추천순"};
+    String[] list2 = {"최신순", "조회순", "추천순", "댓글순", "오래된순"};
 
-    public BoardFragment(String board_name, String align, Activity activity) {
-        this.board_name = board_name;
-        this.align = align;
+    public BoardFragment(Activity activity) {
         this.activity = (MainActivity) activity;
     }
 
@@ -54,22 +50,22 @@ public class BoardFragment extends Fragment {
         binding = FragmentBoardBinding.inflate(inflater, container, false);
 
         //게시판 카테고리 변경 스피너
-        binding.tvBoardTitle.setText(board_name);
+        binding.tvBoardTitle.setText(BoardCommonVar.board_name);
         binding.spnBoard.getSelectedItem();
         Spinner favorSpinner = binding.spnBoard;
         ArrayAdapter favorAdapter = new ArrayAdapter(this.getContext(), android.R.layout.simple_spinner_item, list);
         favorSpinner.setAdapter(favorAdapter);
 
         for (int i = 0; i < list.length; i++) {
-            if(list[i].equals(board_name)){
+            if(list[i].equals(BoardCommonVar.board_name)){
                 binding.spnBoard.setSelection(i);
             }
         }
         binding.spnBoard.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int i, long id) {
-                if(!list[i].equals(board_name)) {
-                    board_name = list[i];
+                if(!list[i].equals(BoardCommonVar.board_name)) {
+                    BoardCommonVar.board_name = list[i];
                     binding.tvBoardTitle.setText(list[i]);
                 }
             }
@@ -94,17 +90,20 @@ public class BoardFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 CommonConn conn = new CommonConn(getContext(), "board/list");
-                conn.addParamMap("favor", board_name);
-                conn.addParamMap("align", align);
+                conn.addParamMap("context", binding.edtSearch.getText().toString());
+                conn.addParamMap("favor", BoardCommonVar.board_name);
+                conn.addParamMap("align", BoardCommonVar.board_align);
                 conn.onExcute((isResult, data) -> {
                     List<FavorBoardVO> list = new Gson().fromJson(data, new TypeToken<List<FavorBoardVO>>(){}.getType());
-                    if(list!=null){
-                        BoardListAdapter adapter = new BoardListAdapter(activity, BoardFragment.this, list, board_name, align);
+                    if(list.size()!=0){
+                        binding.recvBoard.setVisibility(View.VISIBLE);
+                        binding.tvNone.setVisibility(View.GONE);
+                        BoardListAdapter adapter = new BoardListAdapter(activity, BoardFragment.this, list);
                         binding.recvBoard.setAdapter(adapter);
                         binding.recvBoard.setLayoutManager(new LinearLayoutManager(BoardFragment.this.getContext()));
-
                     }else {
-                        Toast.makeText(activity, "내용 없음", Toast.LENGTH_SHORT).show();
+                        binding.recvBoard.setVisibility(View.GONE);
+                        binding.tvNone.setVisibility(View.VISIBLE);
                     }
                 });
             }
@@ -118,28 +117,30 @@ public class BoardFragment extends Fragment {
         favorSpinner2.setAdapter(favorAdapter2);
 
         for(int i=0;i<list2.length;i++){
-            if(list2[i].equals(align)){
+            if(list2[i].equals(BoardCommonVar.board_align)){
                 binding.spnBoard2.setSelection(i);
-            }else {
-                binding.spnBoard2.setSelection(0);
             }
         }
 
         binding.spnBoard2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int i, long id) {
-                align = list2[i];
+                BoardCommonVar.board_align = list2[i];
                 CommonConn conn = new CommonConn(getContext(), "board/list");
-                conn.addParamMap("favor", board_name);
-                conn.addParamMap("align", align);
+                conn.addParamMap("context", binding.edtSearch.getText().toString());
+                conn.addParamMap("favor", BoardCommonVar.board_name);
+                conn.addParamMap("align", BoardCommonVar.board_align);
                 conn.onExcute((isResult, data) -> {
                     List<FavorBoardVO> list = new Gson().fromJson(data, new TypeToken<List<FavorBoardVO>>(){}.getType());
-                    if(list!=null){
-                        BoardListAdapter adapter = new BoardListAdapter(activity, BoardFragment.this, list, board_name, align);
+                    if(list.size()!=0){
+                        binding.recvBoard.setVisibility(View.VISIBLE);
+                        binding.tvNone.setVisibility(View.GONE);
+                        BoardListAdapter adapter = new BoardListAdapter(activity, BoardFragment.this, list);
                         binding.recvBoard.setAdapter(adapter);
                         binding.recvBoard.setLayoutManager(new LinearLayoutManager(BoardFragment.this.getContext()));
                     }else {
-                        Toast.makeText(activity, "내용 없음", Toast.LENGTH_SHORT).show();
+                        binding.recvBoard.setVisibility(View.GONE);
+                        binding.tvNone.setVisibility(View.VISIBLE);
                     }
                 });
             }
@@ -150,25 +151,30 @@ public class BoardFragment extends Fragment {
             }
         });
 
-
-//        CommonConn conn = new CommonConn(getContext(), "board/list");
-//        conn.addParamMap("favor", board_name);
-//        conn.addParamMap("align", "최신순");
-//        conn.onExcute((isResult, data) -> {
-//            List<FavorBoardVO> list = new Gson().fromJson(data, new TypeToken<List<FavorBoardVO>>(){}.getType());
-//            if(list!=null){
-//                BoardListAdapter adapter = new BoardListAdapter(BoardFragment.this.getContext(), list);
-//                binding.recvBoard.setAdapter(adapter);
-//                binding.recvBoard.setLayoutManager(new LinearLayoutManager(BoardFragment.this.getContext()));
-//            }else {
-//                Toast.makeText(activity, "내용 없음", Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        binding.imgvSearch.setOnClickListener(v -> {
+            CommonConn conn = new CommonConn(getContext(), "board/list");
+            conn.addParamMap("context", binding.edtSearch.getText().toString());
+            conn.addParamMap("favor", BoardCommonVar.board_name);
+            conn.addParamMap("align", BoardCommonVar.board_align);
+            conn.onExcute((isResult, data) -> {
+                List<FavorBoardVO> list = new Gson().fromJson(data, new TypeToken<List<FavorBoardVO>>(){}.getType());
+                if(list.size()!=0){
+                    binding.recvBoard.setVisibility(View.VISIBLE);
+                    binding.tvNone.setVisibility(View.GONE);
+                    BoardListAdapter adapter = new BoardListAdapter(activity, BoardFragment.this, list);
+                    binding.recvBoard.setAdapter(adapter);
+                    binding.recvBoard.setLayoutManager(new LinearLayoutManager(BoardFragment.this.getContext()));
+                }else {
+                    binding.recvBoard.setVisibility(View.GONE);
+                    binding.tvNone.setVisibility(View.VISIBLE);
+                }
+            });
+        });
 
 
         binding.cvNew.setOnClickListener(v -> {
             Log.d("result", "onCreateView: "+binding.tvBoardTitle.getText().toString());
-            activity.replaceFragment(this, new NewBoardFragment(activity, binding.tvBoardTitle.getText().toString(), align));
+            activity.replaceFragment(this, new NewBoardFragment(activity, binding.tvBoardTitle.getText().toString(), BoardCommonVar.board_align));
         });
 
 
@@ -176,6 +182,9 @@ public class BoardFragment extends Fragment {
             activity.replaceFragment(this, new MainFragment());
         });
 
+        binding.imgRefresh.setOnClickListener(v -> {
+            activity.changeFragment(this, activity);
+        });
 
         return binding.getRoot();
     }

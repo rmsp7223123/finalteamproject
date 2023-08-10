@@ -47,6 +47,8 @@ public class LoginCheckActivity extends AppCompatActivity {
                 manager.showSoftInput(binding.edtPw, InputMethodManager.SHOW_IMPLICIT);
             }else {
                 CommonConn conn = new CommonConn(this, "login/check");
+                Intent intent1 = getIntent();
+                conn.addParamMap("member_phone", intent1.getStringExtra("member_phone"));
                 conn.addParamMap("member_id", binding.edtId.getText().toString());
                 conn.addParamMap("member_pw", binding.edtPw.getText().toString());
                 conn.onExcute((isResult, data) -> {

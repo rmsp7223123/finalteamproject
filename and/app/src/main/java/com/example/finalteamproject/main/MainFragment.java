@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.finalteamproject.R;
+import com.example.finalteamproject.board.BoardCommonVar;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.common.MemberVO;
@@ -138,18 +139,21 @@ public class MainFragment extends Fragment {
             dialog.show();
         });
 
-        BoardMainAdapter adapter2 = new BoardMainAdapter(this, getList(), getActivity(), null);
+        BoardMainAdapter adapter2 = new BoardMainAdapter(this, getList(), getActivity());
         binding.recvBoard.setAdapter(adapter2);
         binding.recvBoard.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
+        //
         binding.imgvMenu.setOnClickListener(v -> {
+            BoardCommonVar.board = true;
             binding.lnBoard.setVisibility(View.VISIBLE);
         });
 
         binding.imgvClose.setOnClickListener(v -> {
+            BoardCommonVar.board = false;
             binding.lnBoard.setVisibility(View.INVISIBLE);
         });
-
+        //
 
         binding.imgvMessage.setOnClickListener(view -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
@@ -177,13 +181,21 @@ public class MainFragment extends Fragment {
 
         Glide.with(this).load(CommonVar.logininfo.getMember_profileimg()).into(binding.imgvSmallProfile);
 
+        //게시판에서 뒤로갔을 때 게시판 메뉴 보여주기
+        if(BoardCommonVar.board){
+            binding.lnBoard.setVisibility(View.VISIBLE);
+        }else {
+            binding.lnBoard.setVisibility(View.GONE);
+        }
+        //
+
 
         return binding.getRoot();
     }
 
     private ArrayList<BoardMainDTO> getList() {
         ArrayList<BoardMainDTO> list = new ArrayList<>();
-        list.add(new BoardMainDTO(R.drawable.tv_select, R.drawable.mini_arrow, "tv"));
+        list.add(new BoardMainDTO(R.drawable.tv_select, R.drawable.mini_arrow, "TV"));
         list.add(new BoardMainDTO(R.drawable.music_select, R.drawable.mini_arrow, "음악"));
         list.add(new BoardMainDTO(R.drawable.movie_select, R.drawable.mini_arrow, "영화"));
         list.add(new BoardMainDTO(R.drawable.fashion_select, R.drawable.mini_arrow, "패션"));

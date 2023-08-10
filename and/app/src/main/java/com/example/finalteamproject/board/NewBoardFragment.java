@@ -89,6 +89,7 @@ public class NewBoardFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int i, long id) {
                 if(!list[i].equals(board_name)) {
                     board_name = list[i];
+                    BoardCommonVar.board_name = list[i];
                 }
             }
 
@@ -100,7 +101,7 @@ public class NewBoardFragment extends Fragment {
 
 
         binding.imgvBack.setOnClickListener(v -> {
-            activity.changeFragment(this, board_name, align, activity);
+            activity.changeFragment(this, activity);
         });
 
         binding.lnImage.setOnClickListener(v -> {
@@ -130,7 +131,7 @@ public class NewBoardFragment extends Fragment {
                         conn1.addParamMap("favor", Integer.parseInt(data));
                         conn1.onExcute((isResult1, data1) -> {
                             if (data1.equals("성공")) {
-                                activity.changeFragment(this, board_name, align, activity);
+                                activity.changeFragment(this, activity);
                                 Toast.makeText(activity, "게시글 등록 성공", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(activity, "게시글 등록 실패", Toast.LENGTH_SHORT).show();
