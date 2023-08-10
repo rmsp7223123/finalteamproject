@@ -77,3 +77,4 @@ atlassian-ide-plugin.xml
 .metadata/
 cached-antora-playbook.yml
 spring/target/
+pom.properties
