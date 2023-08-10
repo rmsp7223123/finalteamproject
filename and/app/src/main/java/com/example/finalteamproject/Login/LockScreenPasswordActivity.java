@@ -134,12 +134,14 @@ public class LockScreenPasswordActivity extends AppCompatActivity {
                     // 비밀번호 불일치하는 경우의 처리
                     Toast.makeText(this, "비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT).show();
                 }
+                pw ="";
             });
 
             binding.imgvPw1.setImageResource(R.drawable.baseline_circle_24_white);
             binding.imgvPw2.setImageResource(R.drawable.baseline_circle_24_white);
             binding.imgvPw3.setImageResource(R.drawable.baseline_circle_24_white);
             binding.imgvPw4.setImageResource(R.drawable.baseline_circle_24_white);
+
 //            Toast.makeText(this,  ChangePasswordActivity.password+"확인용", Toast.LENGTH_SHORT).show();
         } else {
             binding.imgvPw1.setImageResource(R.drawable.baseline_circle_24_white);
@@ -147,6 +149,7 @@ public class LockScreenPasswordActivity extends AppCompatActivity {
             binding.imgvPw3.setImageResource(R.drawable.baseline_circle_24_white);
             binding.imgvPw4.setImageResource(R.drawable.baseline_circle_24_white);
         }
+
     }
 
 }
