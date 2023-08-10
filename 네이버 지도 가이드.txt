@@ -18,3 +18,12 @@ https://www.baraverkstad.se/encode/
 
 핑꾸
 #F537BA
+
+축적에 따른 조건절 변경하기
+WHERE (
+    CASE 
+        WHEN #{zoom_level} > 10 THEN C.DISTANCE < 10 -- 예시 축적 레벨에 따라 조건 설정
+        WHEN #{zoom_level} <= 10 THEN C.DISTANCE < 5
+    END
+)
+AND ROWNUM < 20;

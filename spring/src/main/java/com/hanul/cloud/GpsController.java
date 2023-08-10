@@ -18,8 +18,8 @@ public class GpsController {
 	private GpsDAO dao;
 
 	@RequestMapping(value = "/senior", produces = "text/html;charset=utf-8")
-	public String senior_list() {
-		List<GpsVO> list = dao.senior_list();
+	public String senior_list(GpsVO vo) {
+		List<GpsVO> list = dao.senior_list(vo);
 		return new Gson().toJson(list);
 	}
 

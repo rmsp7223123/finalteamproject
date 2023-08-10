@@ -13,8 +13,8 @@ public class GpsDAO {
 	@Qualifier("project")
 	private SqlSession sql;
 
-	public List<GpsVO> senior_list() {
-		return sql.selectList("gps.list");
+	public List<GpsVO> senior_list(GpsVO vo) {
+		return sql.selectList("gps.list", vo);
 	}
 
 	public List<GpsVO> senior_like() {
