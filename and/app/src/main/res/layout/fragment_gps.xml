@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
+    android:layout_marginHorizontal="10dp"
+    android:layout_marginTop="10dp"
     tools:context=".gps.GpsFragment">
 
     <LinearLayout
@@ -13,18 +14,32 @@
         android:layout_marginBottom="10dp"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/gps_search"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:background="@drawable/box_radius"
-            android:drawableLeft="@drawable/resize_search"
-            android:drawablePadding="10dp"
-            android:drawableTint="#A9A9AB"
-            android:hint="경로당 찾기"
-            android:paddingLeft="10dp"
-            android:textColorHint="#A9A9AB"
-            android:textSize="15sp" />
+            android:layout_height="35dp">
+
+            <EditText
+                android:id="@+id/gps_search"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:background="@drawable/box_radius"
+                android:drawableLeft="@drawable/resize_search"
+                android:drawablePadding="10dp"
+                android:drawableTint="#A9A9AB"
+                android:hint="경로당 찾기"
+                android:paddingLeft="10dp"
+                android:textColorHint="#A9A9AB"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="35dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/box_fill"
+                android:gravity="center"
+                android:text="검색" />
+
+        </RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -102,5 +117,41 @@
             </LinearLayout>
 
         </ScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ln_result"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/box_search_result"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="검색결과"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/btn_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/baseline_close_24" />
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="2dp"
+            android:background="@color/white" />
+
     </LinearLayout>
 </RelativeLayout>

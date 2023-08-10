@@ -48,6 +48,11 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                              Bundle savedInstanceState) {
         binding = FragmentGpsBinding.inflate(inflater, container, false);
 
+        //검색 결과
+        binding.btnClose.setOnClickListener(v -> {
+            binding.lnResult.setVisibility(View.GONE);
+        });
+
         //자주 가는 경로당(리사이클러뷰)
         CommonConn conn = new CommonConn(getContext(), "gps/likelist");
         conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());

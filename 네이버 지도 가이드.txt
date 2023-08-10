@@ -19,6 +19,10 @@ https://www.baraverkstad.se/encode/
 핑꾸
 #F537BA
 
+슬라이드 애니메이션 효과
+binding.containerLinearSendFile.setVisibility(View.VISIBLE);
+                Animation slideUpAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_up);
+
 축적에 따른 조건절 변경하기
 WHERE (
     CASE 
