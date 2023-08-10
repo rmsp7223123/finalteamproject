@@ -57,8 +57,6 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
             binding.recvBmark.setLayoutManager(new LinearLayoutManager(getContext()));
         });
 
-        senior_list();
-
         //지도 객체 생성
         FragmentManager fm = getChildFragmentManager();
         MapFragment mapFragment = (MapFragment) fm.findFragmentById(R.id.map);
@@ -125,17 +123,31 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
 
     }
 
-    public void senior_list(){
-        CommonConn conn = new CommonConn(getContext(), "gps/senior");
-        conn.onExcute((isResult, data) -> {
-            ArrayList<GpsVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<GpsVO>>(){}.getType());
+//    public void senior_list(){
+//        CommonConn conn = new CommonConn(getContext(), "gps/senior");
+//        conn.onExcute((isResult, data) -> {
+//            ArrayList<GpsVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<GpsVO>>(){}.getType());
+//
+//            //경로당 리스트(리사이클러뷰)
+//            GpsAdapter adapter = new GpsAdapter(list);
+//            binding.recvGps.setAdapter(adapter);
+//            binding.recvGps.setLayoutManager(new LinearLayoutManager(getContext()));
+//        });
+//
+//
+//        //자주 가는 경로당(리사이클러뷰)
+//        CommonConn conn = new CommonConn(getContext(), "gps/likelist");
+//        conn.onExcute((isResult, data) -> {
+//            ArrayList<GpsVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<GpsVO>>(){}.getType());
+//
+//            GpsBmarkAdapter adapter = new GpsBmarkAdapter(list);
+//            binding.recvBmark.setAdapter(adapter);
+//            binding.recvBmark.setLayoutManager(new LinearLayoutManager(getContext()));
+//        });
+//
+//    }
 
-            //경로당 리스트(리사이클러뷰)
-            GpsAdapter adapter = new GpsAdapter(list);
-            binding.recvGps.setAdapter(adapter);
-            binding.recvGps.setLayoutManager(new LinearLayoutManager(getContext()));
-        });
-    }
+
 
     //다중마커 메소드
     private void showMultipleMarkers() {
@@ -157,6 +169,11 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                 marker.setWidth(70);
                 marker.setHeight(100);
             }
+
+            //경로당 리스트(리사이클러뷰)
+            GpsAdapter adapter = new GpsAdapter(list);
+            binding.recvGps.setAdapter(adapter);
+            binding.recvGps.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
         });
