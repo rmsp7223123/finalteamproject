@@ -20,7 +20,7 @@
 
             <EditText
                 android:id="@+id/gps_search"
-                android:layout_width="match_parent"
+                android:layout_width="310dp"
                 android:layout_height="35dp"
                 android:background="@drawable/box_radius"
                 android:drawableLeft="@drawable/resize_search"
@@ -122,7 +122,7 @@
     <LinearLayout
         android:id="@+id/ln_result"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="400dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/box_search_result"
         android:orientation="vertical">
