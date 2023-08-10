@@ -6,14 +6,31 @@
 		select * 
 		from fav_board 
 		where favor = (select key2 from common2 where name = #{favor} and key1 = 1)
+		<choose>
+			<when test="align == '최신순'||align == null">
+				order by fav_board_id desc
+			</when>
+			<when test="align == '조회순'">
+				order by fav_board_writecount desc, fav_board_id desc
+			</when>
+			<when test="align == '추천순'">
+				order by (select count(member_id_like) from fav_board_like where fav_board_id = 
+				(select fav_board_id from fav_board where favor = 
+				(select key2 from common2 where name = #{favor} and key1 = 1))) desc, fav_board_id desc
+			</when>
+		</choose>
 	</select>
 	
 	<select id="rec" resultType="string">
-		select like_cnt from fav_board_like where fav_board_id = #{id}
+		select count(member_id_like) from fav_board_like where fav_board_id = #{id}
 	</select>
 	
 	<select id="favor" resultType="Integer">
 		select key2 from common2 where name = #{favor}
+	</select>
+	
+	<select id="favorName" resultType="string">
+		select name from common2 where key2 = (select favor from fav_board where fav_board_id = #{id})
 	</select>
 	
 	<insert id="insert">
@@ -22,5 +39,36 @@
 		values (#{writer}, #{favor}, #{fav_board_title}, #{fav_board_content},
 				sysdate, 0, #{fav_board_img,jdbcType=VARCHAR})
 	</insert>
+	
+	<select id="select" resultType="cloud.member.FavorBoardVO">
+		select fav_board_id, writer, fav_board_title, fav_board_content, 
+		to_char(fav_board_writedate, 'yyyy-dd-mm hh:mm:ss') fav_board_writedate,
+		fav_board_writecount, fav_board_img from fav_board where fav_board_id = #{fav_board_id}
+	</select>
+	
+	<select id="selectFavor" resultType="String">
+		select name from common2 where key2 = (select favor from fav_board where fav_board_id = #{fav_board_id} and key1 = 1)
+	</select>
+	
+	<select id="commentCnt" resultType="String">
+		select count(*) from fav_board_comment where fav_board_id = #{fav_board_id} group by fav_board_id
+	</select>
+	
+	<select id="checkRec" resultType="integer">
+		select count(member_id_like) from fav_board_like where member_id_like = #{member_id_like} 
+		and FAV_BOARD_ID = #{fav_board_id} group by member_id_like
+	</select>
+	
+	<insert id="insertRec">
+		insert into fav_board_like values (#{member_id_like}, #{fav_board_id})
+	</insert>
+	
+	<delete id="deleteRec">
+		delete fav_board_like where member_id_like = #{member_id_like} and fav_board_id = #{fav_board_id}
+	</delete>
+	
+	<update id="viewCnt">
+		update fav_board set fav_board_writecount=100 where fav_board_id = #{id}
+	</update>
 	
 </mapper>

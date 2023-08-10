@@ -85,9 +85,7 @@
         <activity
             android:name=".game.GameActivity"
             android:exported="false" />
-        <activity
-            android:name=".game.GameActivity00"
-            android:exported="false" />
+
         <activity
             android:name=".Login.LoginCheckActivity"
             android:exported="false" />
@@ -158,12 +156,7 @@
         <activity
             android:name=".gps.GpsLikeActivity"
             android:exported="false" />
-        <activity
-            android:name=".MainAlarmHistoryActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="false" />
+
         <activity
             android:name=".main.MainAlarmHistoryActivity"
             android:exported="false" />

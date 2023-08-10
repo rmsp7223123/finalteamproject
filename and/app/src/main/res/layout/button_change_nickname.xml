@@ -7,10 +7,10 @@
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".setting.ChangeProfileActivity">
-
+<!--
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="showAlertDialogButtonClicked"
-        android:text="Show Dialog" />
+        android:text="Show Dialog" />-->
 </LinearLayout>

@@ -34,7 +34,6 @@ import java.util.List;
 public class MainFragment extends Fragment {
 
     FragmentMainBinding binding;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -119,7 +118,7 @@ public class MainFragment extends Fragment {
             dialog.show();
         });
 
-        BoardMainAdapter adapter2 = new BoardMainAdapter(getList(),getActivity());
+        BoardMainAdapter adapter2 = new BoardMainAdapter(this, getList(), getActivity(), null);
         binding.recvBoard.setAdapter(adapter2);
         binding.recvBoard.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
