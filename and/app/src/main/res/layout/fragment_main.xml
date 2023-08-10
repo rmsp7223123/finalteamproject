@@ -50,6 +50,7 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:layout_marginTop="20dp"
         android:id="@+id/ln_center"
         android:layout_below="@id/rl_top_bar"
         android:layout_gravity="center"
@@ -109,6 +110,7 @@
 
 
     <LinearLayout
+        android:id="@+id/ln_sub"
         android:layout_marginTop="60dp"
         android:layout_alignTop="@+id/tv_nickname"
         android:layout_centerHorizontal="true"
@@ -129,43 +131,261 @@
             android:layout_height="40dp"
             android:src="@drawable/main_message_send"/>
 
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ln_favor_list1"
+        android:layout_marginTop="40dp"
+        android:layout_below="@id/ln_sub"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/ln_tv"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imgv_tv"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/tv"/>
+
+            <TextView
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TV"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ln_music"
+            android:layout_marginStart="25dp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imgv_music"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/music"/>
+
+            <TextView
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="음악"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ln_movie"
+            android:layout_marginStart="25dp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imgv_movie"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/movie"/>
+
+            <TextView
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="영화"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ln_fashion"
+            android:layout_marginStart="25dp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imgv_fashion"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/fashion"/>
+
+            <TextView
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="패션"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ln_animal"
+            android:layout_marginStart="25dp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imgv_animal"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/animal"/>
+
+            <TextView
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="동물"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ln_favor_list2"
+        android:layout_below="@+id/ln_favor_list1"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/ln_news"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imgv_news"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/news"/>
+
+            <TextView
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="뉴스"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ln_car"
+            android:layout_marginStart="25dp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imgv_car"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/car"/>
+
+            <TextView
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="자동차"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ln_sports"
+            android:layout_marginStart="25dp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imgv_sports"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/sports"/>
+
+            <TextView
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="운동"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ln_game"
+            android:layout_marginStart="25dp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imgv_game"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/game"/>
+
+            <TextView
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="게임"/>
+
+        </LinearLayout>
     </LinearLayout>
 
 
-
     <LinearLayout
-        android:visibility="invisible"
         android:id="@+id/ln_board"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#000"
         android:alpha="0.9"
+        android:background="#000"
         android:orientation="vertical"
-        >
+        android:visibility="invisible">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp">
 
             <TextView
-                android:layout_centerVertical="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="40dp"
-                android:layout_marginBottom="20dp"
-                android:textSize="35dp"
-                android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="20dp"
                 android:text="게시판"
-                android:textColor="#F6DD6D"/>
+                android:textColor="#F6DD6D"
+                android:textSize="35dp"
+                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/imgv_close"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/close_white"
                 android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"/>
+                android:layout_centerVertical="true"
+                android:src="@drawable/close_white" />
 
         </RelativeLayout>
 
