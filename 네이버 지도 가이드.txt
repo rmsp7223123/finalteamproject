@@ -1,3 +1,20 @@
 https://navermaps.github.io/android-map-sdk/guide-ko/
 https://github.com/navermaps/android-map-sdk
 https://developers.naver.com/forum/posts/24571
+https://navermaps.github.io/maps.js.ncp/docs/tutorial-2-Marker.html
+https://3uomlkh.tistory.com/94
+
+특수문자 변환
+https://www.baraverkstad.se/encode/
+
+팀 컬러
+#F7DE6D
+
+주황
+#F68A1D
+
+초록
+#39E29B
+
+핑꾸
+#F537BA

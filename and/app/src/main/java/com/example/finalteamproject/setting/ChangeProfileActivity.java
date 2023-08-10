@@ -21,11 +21,15 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.finalteamproject.HideActionBar;
+import com.example.finalteamproject.Login.LoginVar;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
+import com.example.finalteamproject.common.CommonVar;
+import com.example.finalteamproject.common.MemberVO;
 import com.example.finalteamproject.common.RetrofitClient;
 import com.example.finalteamproject.common.RetrofitInterface;
 import com.example.finalteamproject.databinding.ActivityChangeProfileBinding;
+import com.google.gson.Gson;
 
 import java.io.File;
 import java.util.HashMap;
@@ -51,6 +55,8 @@ public class ChangeProfileActivity extends AppCompatActivity {
         binding = ActivityChangeProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         //new HideActionBar().hideActionBar(this);
+        Glide.with(this).load(CommonVar.logininfo.getMember_profileimg()).into(binding.imgvProfileimg);
+        binding.tvNickname.setText(CommonVar.logininfo.getMember_nickname());
         binding.imgvBack.setOnClickListener(v -> {
             finish();
         });
@@ -67,18 +73,26 @@ public class ChangeProfileActivity extends AppCompatActivity {
             builder.setNegativeButton("확인", (dialog, which) -> {
                 EditText edt_nickname = customLayout.findViewById(R.id.edt_nickname);
                 // 중복확인 검사 추가하기
-                if(edt_nickname.length() > 0 ) {
-                    sendDialogDataToActivity(edt_nickname.getText().toString());
-                    binding.tvNickname.setText(edt_nickname.getText().toString());
-                }
+                CommonConn conn = new CommonConn(this,"setting/checkNickname");
+                conn.addParamMap("member_nickname", edt_nickname.getText().toString());
+                conn.onExcute((isResult, data) -> {
+                    if(data.equals("null") && edt_nickname.length() > 0) {
+                        CommonConn conn2 = new CommonConn(this, "setting/changeNickname");
+                        conn2.addParamMap("member_nickname", edt_nickname.getText().toString());
+                        conn2.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                        conn2.onExcute((isResult1, data1) -> {
+                            binding.tvNickname.setText(edt_nickname.getText().toString());
+                            Toast.makeText(this, edt_nickname.getText().toString() + "으로 변경되었습니다.", Toast.LENGTH_SHORT).show();
+                            CommonVar.logininfo.setMember_nickname(edt_nickname.getText().toString());
+                        });
+                    } else {
+                        Toast.makeText(this, "이미 존재하는 닉네임이거나 길이가 너무 짧습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                });
             });
             AlertDialog dialog = builder.create();
             dialog.show();
         });
-    }
-
-    private void sendDialogDataToActivity(String data) {
-        Toast.makeText(this, data + "으로 변경되었습니다.", Toast.LENGTH_SHORT).show();
     }
 
     public void showDialog() {
@@ -103,7 +117,6 @@ public class ChangeProfileActivity extends AppCompatActivity {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_PICK);
-//        startActivity(intent); //단순 실행 결과를 알수가없다.
         startActivityForResult(intent, REQ_GALLERY);
     }
 
@@ -127,13 +140,21 @@ public class ChangeProfileActivity extends AppCompatActivity {
                 Glide.with(ChangeProfileActivity.this).load(camera_uri).into(binding.imgvProfileimg);
                 File file = new File(getRealPath(camera_uri));
                 if (file != null) {
-                    RequestBody fileBody = RequestBody.create(MediaType.parse("image/jpeg"), file);
-                    MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", "test.jpg", fileBody);
+                  //  Glide.with(this).load(data.getData()).into(binding.imgvProfileimg);
+                   // String img_path = getRealPath(data.getData());
+                    RequestBody fileBody = RequestBody.create(MediaType.parse("image/jpeg"),file);
+                    MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", CommonVar.logininfo.getMember_id()+".jpg", fileBody);
+                    HashMap<String, RequestBody> map = new HashMap<>();
+                    map.put("dto", RequestBody.create(MediaType.parse("multipart/form-data"), new Gson().toJson(CommonVar.logininfo)));
+                 //   CommonVar.logininfo.setMember_profileimg(img_path);
+
+
+
                     RetrofitInterface api = new RetrofitClient().retrofitLogin().create(RetrofitInterface.class);
-                    api.clientSendFile("file.f", new HashMap<>(), filePart).enqueue(new Callback<String>() {
+                    api.clientSendFile("main/changeProfile", map, filePart).enqueue(new Callback<String>() {
                         @Override
                         public void onResponse(Call<String> call, Response<String> response) {
-
+                            CommonVar.logininfo = new Gson().fromJson( response.body() , MemberVO.class);
                         }
 
                         @Override
@@ -166,17 +187,22 @@ public class ChangeProfileActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQ_GALLERY && resultCode == RESULT_OK) {
+
+            String  img_path= getRealPath(data.getData());
             Glide.with(this).load(data.getData()).into(binding.imgvProfileimg);
-            String img_path = getRealPath(data.getData());
+
 
             //MultiPart 형태로 전송 (File)
             RequestBody fileBody = RequestBody.create(MediaType.parse("image/jpeg"), new File(img_path));
-            MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", "test.jpg", fileBody);
+            MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", CommonVar.logininfo.getMember_id()+".jpg", fileBody);
+            HashMap<String, RequestBody> map = new HashMap<>();
+            map.put("dto", RequestBody.create(MediaType.parse("multipart/form-data"), new Gson().toJson(CommonVar.logininfo)));
+           //  CommonVar.logininfo.setMember_profileimg(img_path);
             RetrofitInterface api = new RetrofitClient().retrofitLogin().create(RetrofitInterface.class);
-            api.clientSendFile("file.f", new HashMap<>(), filePart).enqueue(new Callback<String>() {
+            api.clientSendFile("main/changeProfile",map, filePart).enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(Call<String> call, Response<String> response) {
-
+                    CommonVar.logininfo = new Gson().fromJson( response.body() , MemberVO.class);
                 }
 
                 @Override

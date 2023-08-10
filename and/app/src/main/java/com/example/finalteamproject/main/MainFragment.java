@@ -3,6 +3,8 @@ package com.example.finalteamproject.main;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -17,77 +19,67 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.finalteamproject.R;
+import com.example.finalteamproject.common.CommonConn;
+import com.example.finalteamproject.common.CommonVar;
+import com.example.finalteamproject.common.MemberVO;
 import com.example.finalteamproject.databinding.FragmentMainBinding;
 import com.example.finalteamproject.setting.ChangeProfileActivity;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainFragment extends Fragment {
 
     FragmentMainBinding binding;
 
-    int num;
-
-    int[] images = new int[]{
-            R.drawable.haerin2,
-            R.drawable.minji10,
-            R.drawable.minji12,
-            R.drawable.danielle11,
-            R.drawable.hanni9,
-            R.drawable.hyein11
-    };
-
-    public MainFragment(int num) {
-        this.num = num;
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
         binding = FragmentMainBinding.inflate(inflater, container,false);
-        Viewpager_main_adapter adapter = new Viewpager_main_adapter(getContext(), images);
-        int initialPosition = adapter.getItemCount() / 2;
-        binding.imgViewpager.setAdapter(adapter);
-        binding.imgViewpager.setCurrentItem(initialPosition, false);
+        CommonConn conn = new CommonConn(getContext(),"main/viewpager");
+        conn.addParamMap("member_id",CommonVar.logininfo.getMember_id());
+        conn.onExcute((isResult, data) -> {
+            ArrayList<MemberVO> list = new Gson().fromJson(data , new TypeToken<ArrayList<MemberVO>>(){}.getType());
+            Viewpager_main_adapter adapter = new Viewpager_main_adapter(getContext(), list);
+            int initialPosition = adapter.getItemCount() / 2;
+            binding.imgViewpager.setAdapter(adapter);
+            binding.imgViewpager.setCurrentItem(0, true);
+            binding.imgViewpager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                int currentState = 0;
+                int currentPos = 0;
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                    if(currentState == ViewPager2.SCROLL_STATE_DRAGGING && currentPos == position) {
+                        if(currentPos == 0) {
+                            binding.imgViewpager.setCurrentItem(list.size());
+//                            binding.tvNickname.setText(list.get(position).getMember_nickname());
+                        }
+                        else if(currentPos == 2) {
+                            binding.imgViewpager.setCurrentItem(0);
+                        }
+                    }
+                    super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+                }
+
+                @Override
+                public void onPageSelected(int position) {
+                    currentPos = position;
+                    super.onPageSelected(position);
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+                    currentState = state;
+                    super.onPageScrollStateChanged(state);
+                }
+            });
+        });
         MainBoardAdapter adapter1 = new MainBoardAdapter();
         binding.recvBoard.setAdapter(adapter1);
         binding.recvBoard.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        //게시판에서 뒤로 메인으로 돌아왔을 때 게시판 메뉴 visible로 만들기
-        if(num==1){
-            binding.lnBoard.setVisibility(View.VISIBLE);
-        }
-
-        binding.imgViewpager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            int currentState = 0;
-            int currentPos = 0;
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if(currentState == ViewPager2.SCROLL_STATE_DRAGGING && currentPos == position) {
-                    if(currentPos == 0) {
-                        binding.imgViewpager.setCurrentItem(images.length);
-                    }
-                    else if(currentPos == 2) {
-                        binding.imgViewpager.setCurrentItem(0);
-                    }
-                }
-                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                currentPos = position;
-                super.onPageSelected(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                currentState = state;
-                super.onPageScrollStateChanged(state);
-            }
-        });
 
         binding.imgvAlarmHistory.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), MainAlarmHistoryActivity.class);
@@ -127,7 +119,7 @@ public class MainFragment extends Fragment {
             dialog.show();
         });
 
-        BoardMainAdapter adapter2 = new BoardMainAdapter(this, getList(), getActivity(), null);
+        BoardMainAdapter adapter2 = new BoardMainAdapter(getList(),getActivity());
         binding.recvBoard.setAdapter(adapter2);
         binding.recvBoard.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
@@ -160,12 +152,21 @@ public class MainFragment extends Fragment {
             dialog.show();
         });
 
+//        CommonConn conn = new CommonConn(getContext(),"main/test");
+//        conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+
+
+        Glide.with(this).load(CommonVar.logininfo.getMember_profileimg()).into(binding.imgvSmallProfile);
+
+
+
+
         return binding.getRoot();
     }
 
     private ArrayList<BoardMainDTO> getList() {
         ArrayList<BoardMainDTO> list = new ArrayList<>();
-        list.add(new BoardMainDTO(R.drawable.tv_select, R.drawable.mini_arrow, "TV"));
+        list.add(new BoardMainDTO(R.drawable.tv_select, R.drawable.mini_arrow, "tv"));
         list.add(new BoardMainDTO(R.drawable.music_select, R.drawable.mini_arrow, "음악"));
         list.add(new BoardMainDTO(R.drawable.movie_select, R.drawable.mini_arrow, "영화"));
         list.add(new BoardMainDTO(R.drawable.fashion_select, R.drawable.mini_arrow, "패션"));
@@ -175,5 +176,15 @@ public class MainFragment extends Fragment {
         list.add(new BoardMainDTO(R.drawable.sports_select, R.drawable.mini_arrow, "운동"));
         list.add(new BoardMainDTO(R.drawable.game_select, R.drawable.mini_arrow, "게임"));
         return list;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Glide.with(this).load(CommonVar.logininfo.getMember_profileimg()).into(binding.imgvSmallProfile);
+    }
+
+    public void images() {
+
     }
 }
