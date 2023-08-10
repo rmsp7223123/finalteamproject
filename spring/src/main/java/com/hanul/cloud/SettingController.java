@@ -73,5 +73,10 @@ public class SettingController {
 		OptionVO vo = sql.selectOne("setting.inquirePattern",member_id);
 		return new Gson().toJson(vo);
 	}
+	
+	@RequestMapping("/deletePw")
+	public String deletePw(String member_id) {
+		return new Gson().toJson(sql.update("setting.deletePw", member_id));
+	}
 
 }

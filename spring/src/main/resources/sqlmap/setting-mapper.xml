@@ -36,4 +36,7 @@
 		JOIN member ON option_table.member_id = member.member_id
 		WHERE member.member_id = #{member_id}
 	</select>
+	<update id="deletePw">
+		update option_table set option_lock_pw = null where member_id = #{member_id}
+	</update>
 </mapper>
