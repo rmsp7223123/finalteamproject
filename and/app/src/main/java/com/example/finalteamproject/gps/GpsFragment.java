@@ -123,32 +123,6 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
 
     }
 
-//    public void senior_list(){
-//        CommonConn conn = new CommonConn(getContext(), "gps/senior");
-//        conn.onExcute((isResult, data) -> {
-//            ArrayList<GpsVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<GpsVO>>(){}.getType());
-//
-//            //경로당 리스트(리사이클러뷰)
-//            GpsAdapter adapter = new GpsAdapter(list);
-//            binding.recvGps.setAdapter(adapter);
-//            binding.recvGps.setLayoutManager(new LinearLayoutManager(getContext()));
-//        });
-//
-//
-//        //자주 가는 경로당(리사이클러뷰)
-//        CommonConn conn = new CommonConn(getContext(), "gps/likelist");
-//        conn.onExcute((isResult, data) -> {
-//            ArrayList<GpsVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<GpsVO>>(){}.getType());
-//
-//            GpsBmarkAdapter adapter = new GpsBmarkAdapter(list);
-//            binding.recvBmark.setAdapter(adapter);
-//            binding.recvBmark.setLayoutManager(new LinearLayoutManager(getContext()));
-//        });
-//
-//    }
-
-
-
     //다중마커 메소드
     private void showMultipleMarkers() {
         CommonConn conn = new CommonConn(getContext(), "gps/senior");
@@ -174,8 +148,6 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
             GpsAdapter adapter = new GpsAdapter(list);
             binding.recvGps.setAdapter(adapter);
             binding.recvGps.setLayoutManager(new LinearLayoutManager(getContext()));
-
-
         });
     }
 
