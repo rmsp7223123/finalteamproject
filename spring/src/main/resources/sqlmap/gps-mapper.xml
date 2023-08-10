@@ -55,13 +55,13 @@
 		from senior_bmark b
 		left join senior s
 		on b.key=s.key
-		where member_id='test'
+		where member_id=#{member_id}
 	</select>
 
 	<!-- 좋아요 버튼 선택시 자주가는 경로당 등록 -->
 	<insert id="bmark">
 		insert into SENIOR_BMARK (KEY, MEMBER_ID)
-		values(#{key}, 'test')
+		values(#{key}, #{member_id})
 	</insert>
 
 	<!-- 좋아요 버튼 선택시 좋아요 리스트 컬럼 생성 -->
@@ -81,7 +81,7 @@
 	<!-- 좋아요 취소시 자주가는 경로당 삭제 -->
 	<delete id="delbmark">
 		delete from SENIOR_BMARK
-		where key = #{key} and member_id='test'
+		where key = #{key} and member_id=#{member_id}
 	</delete>
 
 	<!-- 좋아요 취소시 좋아요 카운트 감소 -->
@@ -95,7 +95,7 @@
 	<select id="likeyet" resultType="String">
 		select key
 		from SENIOR_BMARK
-		where key=#{key} and member_id='test'
+		where key=#{key} and member_id=#{member_id}
 	</select>
 
 </mapper>

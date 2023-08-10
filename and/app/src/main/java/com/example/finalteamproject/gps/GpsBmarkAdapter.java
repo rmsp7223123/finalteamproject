@@ -28,13 +28,13 @@ public class GpsBmarkAdapter extends RecyclerView.Adapter<GpsBmarkAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder h, int i) {
-        h.binding.seniorName.setText(list.get(i).getSenior_name()+"");
+        h.binding.seniorName.setText(list.get(i).getSenior_name());
 
     }
 
     @Override
     public int getItemCount() {
-        return 2;
+        return list.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

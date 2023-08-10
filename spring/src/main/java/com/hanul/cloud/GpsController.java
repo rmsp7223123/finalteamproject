@@ -24,14 +24,14 @@ public class GpsController {
 	}
 
 	@RequestMapping(value = "/likelist", produces = "text/html;charset=utf-8")
-	public String senior_like() {
-		List<GpsVO> list = dao.senior_like();
+	public String senior_like(String member_id) {
+		List<GpsVO> list = dao.senior_like(member_id);
 		return new Gson().toJson(list);
 	}
 
 	@RequestMapping("/likebtn")
-	public void likebtn(int key) {
-		dao.bmark(key);
+	public void likebtn(int key, String member_id) {
+		dao.bmark(key, member_id);
 		try {
 			dao.addlike(key);
 		} catch (Exception e) {
@@ -41,14 +41,14 @@ public class GpsController {
 	}
 
 	@RequestMapping("/unlikebtn")
-	public void unlikebtn(int key) {
-		dao.delbmark(key);
+	public void unlikebtn(int key, String member_id) {
+		dao.delbmark(key, member_id);
 		dao.unlikecnt(key);
 	}
 
 	@RequestMapping("/likeyet")
-	public String likeyet(int key) {
-		return dao.likeyet(key);
+	public String likeyet(int key, String member_id) {
+		return dao.likeyet(key, member_id);
 	}
 	
 }

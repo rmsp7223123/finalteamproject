@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
+import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.databinding.FragmentGpsBinding;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -49,6 +50,7 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
 
         //자주 가는 경로당(리사이클러뷰)
         CommonConn conn = new CommonConn(getContext(), "gps/likelist");
+        conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
         conn.onExcute((isResult, data) -> {
             ArrayList<GpsVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<GpsVO>>(){}.getType());
 
