@@ -67,13 +67,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
             });
         });
         binding.btnDeletePassword.setOnClickListener(v -> {
-            if(password.length() > 4) {
-                // 패턴
-            } else if (!password.equals("") && password.length()<5){
-                // 비밀번호
-            } else {
-                Toast.makeText(this, "비밀번호가 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
-            }
+            CommonConn conn = new CommonConn(this, "setting/inquirePw");
         });
         // 비밀번호가 있는경우 비밀번호 재입력, 패턴이 있는경우 패턴 재입력 후 비밀번호 삭제되게 추가하기
     }
