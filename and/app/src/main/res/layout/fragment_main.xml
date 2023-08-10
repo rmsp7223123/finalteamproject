@@ -157,6 +157,8 @@
                 android:src="@drawable/tv"/>
 
             <TextView
+                android:id="@+id/tv_tv"
+                android:textColor="@color/black"
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
@@ -179,6 +181,8 @@
                 android:src="@drawable/music"/>
 
             <TextView
+                android:id="@+id/tv_music"
+                android:textColor="@color/black"
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
@@ -201,6 +205,8 @@
                 android:src="@drawable/movie"/>
 
             <TextView
+                android:id="@+id/tv_movie"
+                android:textColor="@color/black"
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
@@ -223,6 +229,8 @@
                 android:src="@drawable/fashion"/>
 
             <TextView
+                android:id="@+id/tv_fashion"
+                android:textColor="@color/black"
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
@@ -245,6 +253,8 @@
                 android:src="@drawable/animal"/>
 
             <TextView
+                android:id="@+id/tv_animal"
+                android:textColor="@color/black"
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
@@ -277,6 +287,8 @@
                 android:src="@drawable/news"/>
 
             <TextView
+                android:id="@+id/tv_news"
+                android:textColor="@color/black"
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
@@ -299,6 +311,8 @@
                 android:src="@drawable/car"/>
 
             <TextView
+                android:id="@+id/tv_car"
+                android:textColor="@color/black"
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
@@ -321,6 +335,8 @@
                 android:src="@drawable/sports"/>
 
             <TextView
+                android:id="@+id/tv_sports"
+                android:textColor="@color/black"
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
@@ -343,6 +359,8 @@
                 android:src="@drawable/game"/>
 
             <TextView
+                android:id="@+id/tv_game"
+                android:textColor="@color/black"
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"

@@ -217,22 +217,31 @@ public class MainFragment extends Fragment {
                 int favor = favorVO.favor;
                 if (favor == 1) {
                     binding.imgvTv.setImageResource(R.drawable.tv_select);
+                    binding.tvTv.setTextColor(Color.parseColor("#F5DC6D"));
                 } else if (favor == 2) {
                     binding.imgvMusic.setImageResource(R.drawable.music_select);
+                    binding.tvMusic.setTextColor(Color.parseColor("#F5DC6D"));
                 } else if (favor == 3) {
                     binding.imgvMovie.setImageResource(R.drawable.movie_select);
+                    binding.tvMovie.setTextColor(Color.parseColor("#F5DC6D"));
                 } else if (favor == 4) {
                     binding.imgvFashion.setImageResource(R.drawable.fashion_select);
+                    binding.tvFashion.setTextColor(Color.parseColor("#F5DC6D"));
                 } else if (favor == 5) {
                     binding.imgvAnimal.setImageResource(R.drawable.animal_select);
+                    binding.tvAnimal.setTextColor(Color.parseColor("#F5DC6D"));
                 } else if (favor == 6) {
                     binding.imgvNews.setImageResource(R.drawable.news_select);
+                    binding.tvNews.setTextColor(Color.parseColor("#F5DC6D"));
                 } else if (favor == 7) {
                     binding.imgvCar.setImageResource(R.drawable.car_select);
+                    binding.tvCar.setTextColor(Color.parseColor("#F5DC6D"));
                 } else if (favor == 8) {
                     binding.imgvSports.setImageResource(R.drawable.sports_select);
+                    binding.tvSports.setTextColor(Color.parseColor("#F5DC6D"));
                 } else if (favor == 9) {
                     binding.imgvGame.setImageResource(R.drawable.game_select);
+                    binding.tvGame.setTextColor(Color.parseColor("#F5DC6D"));
                 }
             }
         });
@@ -248,5 +257,14 @@ public class MainFragment extends Fragment {
         binding.imgvCar.setImageResource(R.drawable.car);
         binding.imgvSports.setImageResource(R.drawable.sports);
         binding.imgvGame.setImageResource(R.drawable.game);
+        binding.tvTv.setTextColor(Color.parseColor("#000000"));
+        binding.tvMusic.setTextColor(Color.parseColor("#000000"));
+        binding.tvMovie.setTextColor(Color.parseColor("#000000"));
+        binding.tvFashion.setTextColor(Color.parseColor("#000000"));
+        binding.tvAnimal.setTextColor(Color.parseColor("#000000"));
+        binding.tvNews.setTextColor(Color.parseColor("#000000"));
+        binding.tvCar.setTextColor(Color.parseColor("#000000"));
+        binding.tvSports.setTextColor(Color.parseColor("#000000"));
+        binding.tvGame.setTextColor(Color.parseColor("#000000"));
     }
 }
