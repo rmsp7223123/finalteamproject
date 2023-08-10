@@ -10,6 +10,7 @@
         android:name="android.hardware.telephony"
         android:required="true" />
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SEND_SMS" /> <!-- 카메라 접근 권한 -->
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -67,6 +68,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".setting.DeleteAccountActivity"
+            android:exported="false" />
+        <activity
             android:name=".main.BoardActivity"
             android:exported="false" />
         <activity
@@ -81,10 +85,8 @@
         <activity
             android:name=".game.GameActivity"
             android:exported="false" />
+
         <activity
-            android:name=".game.GameActivity00"
-            android:exported="false" />
-            <activity
             android:name=".Login.LoginCheckActivity"
             android:exported="false" />
         <activity
@@ -154,12 +156,7 @@
         <activity
             android:name=".gps.GpsLikeActivity"
             android:exported="false" />
-        <activity
-            android:name=".MainAlarmHistoryActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="false" />
+
         <activity
             android:name=".main.MainAlarmHistoryActivity"
             android:exported="false" />
@@ -175,6 +172,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service
             android:name=".FirebaseMessageReceiver"
             android:exported="false">

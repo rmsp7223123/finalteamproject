@@ -73,18 +73,22 @@ public class LoginController {
 	
 	@RequestMapping(value="/checkPhone", produces = "text/html;charset=utf-8")
 	public String checkPhone(String phoneNumber) {
-		return new Gson().toJson(sql.selectOne("login.checkPhone", phoneNumber));
+		MemberVO vo = sql.selectOne("login.checkPhone", phoneNumber);
+		return new Gson().toJson(vo);
 	}
+		
 	
 
 	@RequestMapping(value="/checkId", produces = "text/html;charset=utf-8")
 	public String checkId(String member_id) {
-		return new Gson().toJson(sql.selectOne("login.checkId", member_id));
+		MemberVO vo = sql.selectOne("login.checkId", member_id);
+		return new Gson().toJson(vo);
 	}
 	
 	@RequestMapping(value="/checkNickname", produces = "text/html;charset=utf-8")
 	public String checkNickname(String nickname) {
-		return new Gson().toJson(sql.selectOne("login.checkNickname", nickname));
+		MemberVO vo = sql.selectOne("login.checkNickname", nickname);
+		return new Gson().toJson(vo);
 	}
 	
 	@RequestMapping(value="/file", produces = "text/html;charset=utf-8" )

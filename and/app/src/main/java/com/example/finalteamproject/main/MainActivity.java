@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -91,9 +92,19 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-    public void changeFragment(String board_name){
-        manager.beginTransaction().replace(R.id.container_frame, new BoardFragment(board_name)).commit();
+    //게시판 메뉴 이동
+    public void changeFragment(Fragment fragment, String board_name, String align, Activity activity){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.remove(fragment);
+        manager.beginTransaction().replace(R.id.container_frame, new BoardFragment(board_name, align, activity)).commit();
     }
 
+    //일반 프래그먼트 이동
+    public void replaceFragment(Fragment fragment1, Fragment fragment2) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.remove(fragment1);
+        fragmentTransaction.replace(R.id.container_frame, fragment2).commit();
+    }
 }
