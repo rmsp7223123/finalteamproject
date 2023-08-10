@@ -68,6 +68,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".setting.CheckPasswordActivity"
+            android:exported="false" />
+        <activity
             android:name=".setting.DeleteAccountActivity"
             android:exported="false" />
         <activity
@@ -85,7 +88,6 @@
         <activity
             android:name=".game.GameActivity"
             android:exported="false" />
-
         <activity
             android:name=".Login.LoginCheckActivity"
             android:exported="false" />
@@ -156,7 +158,6 @@
         <activity
             android:name=".gps.GpsLikeActivity"
             android:exported="false" />
-
         <activity
             android:name=".main.MainAlarmHistoryActivity"
             android:exported="false" />

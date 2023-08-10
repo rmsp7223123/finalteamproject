@@ -1,99 +1,98 @@
 package com.example.finalteamproject.setting;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.finalteamproject.R;
+import com.example.finalteamproject.common.CommonConn;
+import com.example.finalteamproject.common.CommonVar;
+import com.example.finalteamproject.databinding.ActivityCheckPasswordBinding;
 import com.example.finalteamproject.databinding.ActivitySetPasswordBinding;
 
-public class SetPasswordActivity extends AppCompatActivity {
+public class CheckPasswordActivity extends AppCompatActivity {
 
-    ActivitySetPasswordBinding binding;
+    ActivityCheckPasswordBinding binding;
 
-
+    String pw = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivitySetPasswordBinding.inflate(getLayoutInflater());
+        binding = ActivityCheckPasswordBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        binding.imgvBack.setOnClickListener(v -> finish());
 
         binding.containerFrameTv0.setOnClickListener(v -> {
-            ChangePasswordActivity.password += "0";
-            int length =  ChangePasswordActivity.password.length();
+            pw += "0";
+            int length =  pw.length();
             updatePasswordImage(length);
         });
 
         binding.containerFrameTv1.setOnClickListener(v -> {
-            ChangePasswordActivity.password += "1";
-            int length =  ChangePasswordActivity.password.length();
+            pw += "1";
+            int length =  pw.length();
             updatePasswordImage(length);
         });
 
         binding.containerFrameTv2.setOnClickListener(v -> {
-            ChangePasswordActivity.password += "2";
-            int length =  ChangePasswordActivity.password.length();
+            pw += "2";
+            int length =  pw.length();
             updatePasswordImage(length);
         });
 
         binding.containerFrameTv3.setOnClickListener(v -> {
-            ChangePasswordActivity.password += "3";
-            int length =  ChangePasswordActivity.password.length();
+            pw += "3";
+            int length =  pw.length();
             updatePasswordImage(length);
         });
 
         binding.containerFrameTv4.setOnClickListener(v -> {
-            ChangePasswordActivity.password += "4";
-            int length =  ChangePasswordActivity.password.length();
+            pw += "4";
+            int length =  pw.length();
             updatePasswordImage(length);
         });
 
         binding.containerFrameTv5.setOnClickListener(v -> {
-            ChangePasswordActivity.password += "5";
-            int length =  ChangePasswordActivity.password.length();
+            pw += "5";
+            int length =  pw.length();
             updatePasswordImage(length);
         });
 
         binding.containerFrameTv6.setOnClickListener(v -> {
-            ChangePasswordActivity.password += "6";
-            int length =  ChangePasswordActivity.password.length();
+            pw += "6";
+            int length =  pw.length();
             updatePasswordImage(length);
         });
 
         binding.containerFrameTv7.setOnClickListener(v -> {
-            ChangePasswordActivity.password += "7";
-            int length =  ChangePasswordActivity.password.length();
+            pw += "7";
+            int length =  pw.length();
             updatePasswordImage(length);
         });
 
         binding.containerFrameTv8.setOnClickListener(v -> {
-            ChangePasswordActivity.password += "8";
-            int length =  ChangePasswordActivity.password.length();
+            pw += "8";
+            int length =  pw.length();
             updatePasswordImage(length);
         });
 
         binding.containerFrameTv9.setOnClickListener(v -> {
-            ChangePasswordActivity.password += "9";
-            int length =  ChangePasswordActivity.password.length();
+            pw += "9";
+            int length =  pw.length();
             updatePasswordImage(length);
         });
 
         binding.containerFrameDelete.setOnClickListener(v -> {
 
-            int length =  ChangePasswordActivity.password.length();
+            int length =  pw.length();
             if (length > 0) {
-                ChangePasswordActivity.password =  ChangePasswordActivity.password.substring(0, length - 1);
+                pw =  pw.substring(0, length - 1);
                 updatePasswordImage(length - 1);
             }
-        });
-
-        binding.imgvBack.setOnClickListener(v -> {
-            finish();
         });
     }
 
@@ -112,15 +111,24 @@ public class SetPasswordActivity extends AppCompatActivity {
             binding.imgvPw4.setImageResource(R.drawable.baseline_circle_24_white);
         } else if (length == 4) {
             binding.imgvPw4.setImageResource(R.drawable.baseline_circle_24);
-            String pw = ChangePasswordActivity.password;
-            Intent intent = new Intent(this, CheckPasswordActivity.class);
-            intent.putExtra("pw", pw);
-            Toast.makeText(this,  "비밀번호를 한번 더 입력해주세요.", Toast.LENGTH_SHORT).show();
+            String originalPassword = getIntent().getStringExtra("pw");
+            if(pw.equals(originalPassword)) {
+                Toast.makeText(this, "비밀번호가 설정되었습니다.", Toast.LENGTH_SHORT).show();
+                CommonConn conn = new CommonConn(this, "setting/insertPw");
+                conn.addParamMap("option_lock_pw", pw);
+                conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                conn.onExcute((isResult, data) -> {
+
+                });
+                finish();
+            } else {
+                finish();
+                Toast.makeText(this, "비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT).show();
+            }
             binding.imgvPw1.setImageResource(R.drawable.baseline_circle_24_white);
             binding.imgvPw2.setImageResource(R.drawable.baseline_circle_24_white);
             binding.imgvPw3.setImageResource(R.drawable.baseline_circle_24_white);
             binding.imgvPw4.setImageResource(R.drawable.baseline_circle_24_white);
-            startActivity(intent);
 //            Toast.makeText(this,  ChangePasswordActivity.password+"확인용", Toast.LENGTH_SHORT).show();
         } else {
             binding.imgvPw1.setImageResource(R.drawable.baseline_circle_24_white);
@@ -129,4 +137,6 @@ public class SetPasswordActivity extends AppCompatActivity {
             binding.imgvPw4.setImageResource(R.drawable.baseline_circle_24_white);
         }
     }
+
+
 }
