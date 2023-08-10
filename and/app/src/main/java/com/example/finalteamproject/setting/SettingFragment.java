@@ -29,6 +29,7 @@ public class SettingFragment extends Fragment {
         binding = FragmentSettingBinding.inflate(inflater, container, false);
         Glide.with(this).load(CommonVar.logininfo.getMember_profileimg()).into(binding.imgvProfileImg);
         binding.tvNickname.setText(CommonVar.logininfo.getMember_nickname());
+        binding.tvName.setText(CommonVar.logininfo.getMember_name());
         binding.containerLinearChangeProfile.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), ChangeProfileActivity.class);
             startActivity(intent);

@@ -30,7 +30,6 @@ public class CheckPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityCheckPasswordBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        binding.imgvBack.setOnClickListener(v -> finish());
 
         binding.containerFrameTv0.setOnClickListener(v -> {
             pw += "0";
@@ -132,8 +131,8 @@ public class CheckPasswordActivity extends AppCompatActivity {
                 });
                 finish();
             } else {
+                Toast.makeText(this, "비밀번호가 일치하지 않습니다. 다시 입력해주세요.", Toast.LENGTH_SHORT).show();
                 finish();
-                Toast.makeText(this, "비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT).show();
             }
             binding.imgvPw1.setImageResource(R.drawable.baseline_circle_24_white);
             binding.imgvPw2.setImageResource(R.drawable.baseline_circle_24_white);

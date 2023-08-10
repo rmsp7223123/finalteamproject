@@ -1,8 +1,7 @@
 package com.example.finalteamproject.main;
 
 public class OptionVO {
-    String member_id, option_font_color, option_alarm, option_godok_alarm, option_lock_pw;
-    int option_font_size;
+    String member_id, option_font_color, option_alarm, option_godok_alarm, option_lock_pw, option_font_size, option_lock_pattern_pw;
 
     public String getMember_id() {
         return member_id;
@@ -44,11 +43,19 @@ public class OptionVO {
         this.option_lock_pw = option_lock_pw;
     }
 
-    public int getOption_font_size() {
+    public String getOption_font_size() {
         return option_font_size;
     }
 
-    public void setOption_font_size(int option_font_size) {
+    public void setOption_font_size(String option_font_size) {
         this.option_font_size = option_font_size;
+    }
+
+    public String getOption_lock_pattern_pw() {
+        return option_lock_pattern_pw;
+    }
+
+    public void setOption_lock_pattern_pw(String option_lock_pattern_pw) {
+        this.option_lock_pattern_pw = option_lock_pattern_pw;
     }
 }

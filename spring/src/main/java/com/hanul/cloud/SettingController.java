@@ -47,7 +47,7 @@ public class SettingController {
 	}
 	
 	@RequestMapping("/insertPw")
-	public String insertPw(int option_lock_pw, String member_id) {
+	public String insertPw(String option_lock_pw, String member_id) {
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("option_lock_pw", option_lock_pw);
 		paramMap.put("member_id", member_id);		
@@ -57,6 +57,20 @@ public class SettingController {
 	@RequestMapping("/inquirePw")
 	public String inquirePw(String member_id) {
 		OptionVO vo = sql.selectOne("setting.inquirePw", member_id);
+		return new Gson().toJson(vo);
+	}
+	
+	@RequestMapping("/insertPattern")
+	public String insertPattern(String option_lock_pattern_pw, String member_id) {
+		HashMap<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("option_lock_pattern_pw", option_lock_pattern_pw);
+		paramMap.put("member_id", member_id);
+		return new Gson().toJson(sql.insert("setting.insertPattern", paramMap));
+	}
+	
+	@RequestMapping("/inquirePattern")
+	public String inquirePattern(String member_id) {
+		OptionVO vo = sql.selectOne("setting.inquirePattern",member_id);
 		return new Gson().toJson(vo);
 	}
 
