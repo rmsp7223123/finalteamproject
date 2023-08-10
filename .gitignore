@@ -78,3 +78,4 @@ atlassian-ide-plugin.xml
 cached-antora-playbook.yml
 spring/target/
 pom.properties
+and/app/src/main/java/com/example/finalteamproject/common/RetrofitClient.java
