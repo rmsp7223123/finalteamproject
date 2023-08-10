@@ -121,6 +121,7 @@ public class SetPasswordActivity extends AppCompatActivity {
             binding.imgvPw3.setImageResource(R.drawable.baseline_circle_24_white);
             binding.imgvPw4.setImageResource(R.drawable.baseline_circle_24_white);
             startActivity(intent);
+            finish();
 //            Toast.makeText(this,  ChangePasswordActivity.password+"확인용", Toast.LENGTH_SHORT).show();
         } else {
             binding.imgvPw1.setImageResource(R.drawable.baseline_circle_24_white);

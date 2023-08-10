@@ -10,8 +10,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
+import com.example.finalteamproject.common.MemberVO;
 import com.example.finalteamproject.databinding.ActivityCheckPasswordBinding;
 import com.example.finalteamproject.databinding.ActivitySetPasswordBinding;
+import com.example.finalteamproject.main.OptionVO;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.ArrayList;
 
 public class CheckPasswordActivity extends AppCompatActivity {
 
@@ -113,12 +119,16 @@ public class CheckPasswordActivity extends AppCompatActivity {
             binding.imgvPw4.setImageResource(R.drawable.baseline_circle_24);
             String originalPassword = getIntent().getStringExtra("pw");
             if(pw.equals(originalPassword)) {
-                Toast.makeText(this, "비밀번호가 설정되었습니다.", Toast.LENGTH_SHORT).show();
+
                 CommonConn conn = new CommonConn(this, "setting/insertPw");
                 conn.addParamMap("option_lock_pw", pw);
                 conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
                 conn.onExcute((isResult, data) -> {
-
+                    if(isResult) {
+                        Toast.makeText(this, "비밀번호가 설정되었습니다.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(this, "오류 발생", Toast.LENGTH_SHORT).show();
+                    }
                 });
                 finish();
             } else {

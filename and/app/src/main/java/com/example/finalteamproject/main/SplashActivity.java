@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.widget.Toast;
 
 import com.example.finalteamproject.HideActionBar;
+import com.example.finalteamproject.Login.LockScreenPasswordActivity;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
@@ -40,9 +41,19 @@ public class SplashActivity extends AppCompatActivity {
                 conn.onExcute((isResult, data) -> {
                     CommonVar.logininfo = new Gson().fromJson(data, MemberVO.class);
                     if (CommonVar.logininfo != null) {
-                        Intent intent = new Intent(this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
+                        CommonConn conn1 = new CommonConn(this,"setting/inquirePw");
+                        conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                        conn1.onExcute((isResult1, data1) -> {
+                            if(data1 != null) {
+                                Intent intent = new Intent(this, LockScreenPasswordActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Intent intent = new Intent(this, MainActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        });
                     } else {
                         Intent intent = new Intent(this, LoginActivity.class);
                         startActivity(intent);
