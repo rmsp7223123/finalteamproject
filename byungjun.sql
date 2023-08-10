@@ -128,4 +128,6 @@ FOREIGN KEY (MEMBER_ID) REFERENCES MEMBER (MEMBER_ID) ON DELETE CASCADE;
 
 commit;
 
+insert into option_table (option_lock_pw, member_id) values ('1234', 'ansquwdns9811');
 
+select * from option_table;

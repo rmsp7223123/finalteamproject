@@ -9,6 +9,8 @@ import android.os.Handler;
 import android.widget.Toast;
 
 import com.example.finalteamproject.HideActionBar;
+import com.example.finalteamproject.Login.LockScreenPasswordActivity;
+import com.example.finalteamproject.Login.LockScreenPatternActivity;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
@@ -17,11 +19,16 @@ import com.example.finalteamproject.main.MainActivity;
 import com.example.finalteamproject.Login.LoginActivity;
 import com.example.finalteamproject.databinding.ActivitySplashBinding;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.HashMap;
 
 public class SplashActivity extends AppCompatActivity {
 
     ActivitySplashBinding binding;
 
+    String storedPw = "";
+    String storedPattern = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +47,45 @@ public class SplashActivity extends AppCompatActivity {
                 conn.onExcute((isResult, data) -> {
                     CommonVar.logininfo = new Gson().fromJson(data, MemberVO.class);
                     if (CommonVar.logininfo != null) {
-                        Intent intent = new Intent(this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
+                        CommonConn conn1 = new CommonConn(this, "setting/inquirePw");
+                        conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                        conn1.onExcute((isResult1, data1) -> {
+                            if (isResult1 && data1 != null) {
+                                HashMap<String, String> paramMap = new Gson().fromJson(data1, new TypeToken<HashMap<String, String>>() {
+                                }.getType());
+                                if (paramMap != null && paramMap.containsKey("option_lock_pw")) {
+                                    storedPw = paramMap.get("option_lock_pw");
+                                }
+                            }
+
+                            if (!storedPw.isEmpty()) {
+                                Intent intent = new Intent(this, LockScreenPasswordActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+
+                                CommonConn conn2 = new CommonConn(this, "setting/inquirePattern");
+                                conn2.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                                conn2.onExcute((isResult2, data2) -> {
+                                    if (isResult2 && data2 != null) {
+                                        HashMap<String, String> paramMap = new Gson().fromJson(data2, new TypeToken<HashMap<String, String>>() {
+                                        }.getType());
+                                        if (paramMap != null && paramMap.containsKey("option_lock_pattern_pw")) {
+                                            storedPw = paramMap.get("option_lock_pattern_pw");
+                                        }
+                                    }
+                                    if (!storedPw.isEmpty()) {
+                                        Intent intent = new Intent(this, LockScreenPatternActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    } else {
+                                        Intent intent = new Intent(this, MainActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                });
+                            }
+                        });
                     } else {
                         Intent intent = new Intent(this, LoginActivity.class);
                         startActivity(intent);
@@ -53,5 +96,5 @@ public class SplashActivity extends AppCompatActivity {
         }, 2000);
 
 
-}
+    }
 }

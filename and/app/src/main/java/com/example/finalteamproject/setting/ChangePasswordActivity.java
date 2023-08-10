@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.finalteamproject.R;
+import com.example.finalteamproject.common.CommonConn;
+import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.databinding.ActivityChangePasswordBinding;
 
 public class ChangePasswordActivity extends AppCompatActivity {
@@ -23,12 +25,46 @@ public class ChangePasswordActivity extends AppCompatActivity {
             finish();
         });
         binding.btnPassword.setOnClickListener(view -> {
-            intent = new Intent(this, SetPasswordActivity.class);
-            startActivity(intent);
+            CommonConn conn = new CommonConn(this, "setting/inquirePattern");
+            conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+            conn.onExcute((isResult, data) -> {
+                if(!data.equals("null")) {
+                    Toast.makeText(this, "패턴이 존재합니다.", Toast.LENGTH_SHORT).show();
+                } else {
+                    CommonConn conn2 = new CommonConn(this, "setting/inquirePw");
+                    conn2.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                    conn2.onExcute((isResult1, data1) -> {
+                        if(data != null) {
+                            Toast.makeText(this, "비밀번호가 존재합니다.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            intent = new Intent(this, SetPasswordActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+
+                }
+            });
+
         });
         binding.btnPattern.setOnClickListener(view -> {
-            intent = new Intent(this, SetPatternActivity.class);
-            startActivity(intent);
+            CommonConn conn = new CommonConn(this, "setting/inquirePw");
+            conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+            conn.onExcute((isResult, data) -> {
+                if(!data.equals("null")) {
+                    Toast.makeText(this, "비밀번호가 존재합니다.", Toast.LENGTH_SHORT).show();
+                } else {
+                    CommonConn conn2 = new CommonConn(this, "setting/inquirePattern");
+                    conn2.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                    conn2.onExcute((isResult1, data1) -> {
+                        if(data != null) {
+                            Toast.makeText(this, "패턴이 존재합니다.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            intent = new Intent(this, SetPasswordActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+                }
+            });
         });
         binding.btnDeletePassword.setOnClickListener(v -> {
             if(password.length() > 4) {

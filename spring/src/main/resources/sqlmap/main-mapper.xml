@@ -25,4 +25,8 @@
 		MEMBER_ID ) F
 		INNER JOIN MEMBER M ON F.MEMBER_ID = M.MEMBER_ID
 	</select>
+	
+	<select id="favor" resultType="cloud.member.FavorVO">
+	select favor from favor where member_id=#{member_id}
+	</select>
 </mapper>

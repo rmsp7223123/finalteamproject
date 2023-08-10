@@ -11,6 +11,29 @@
 	</update>
 	<delete id="deleteAccount">
 		delete from member where member_id = #{member_id}
-		and member_pw = #{member_pw}
+		and
+		member_pw = #{member_pw}
 	</delete>
+	<insert id="insertPw">
+		insert into option_table (option_lock_pw, member_id)
+		values (#{option_lock_pw}, #{member_id})
+	</insert>
+	<select id="inquirePw" resultType="cloud.setting.OptionVO">
+		SELECT
+		option_table.option_lock_pw
+		FROM option_table
+		JOIN member ON option_table.member_id = member.member_id
+		WHERE member.member_id = #{member_id}
+	</select>
+	<insert id="insertPattern">
+		insert into option_table (option_lock_pattern_pw, member_id)
+		values (#{option_lock_pattern_pw}, #{member_id})
+	</insert>
+	<select id="inquirePattern" resultType="cloud.setting.OptionVO">
+		SELECT
+		option_table.option_lock_pattern_pw
+		FROM option_table
+		JOIN member ON option_table.member_id = member.member_id
+		WHERE member.member_id = #{member_id}
+	</select>
 </mapper>
