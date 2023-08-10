@@ -50,7 +50,7 @@ where member_id='test';
 --좋아요 누름
 --자주가는 경로당(즐겨찾기) 추가
 insert into SENIOR_BMARK (KEY, MEMBER_ID)
-values(2, 'test');
+values(2, 'conan1');
 
 --좋아요 테이블에 컬럼 생성
 insert into SENIOR_LIKE (MEMBER_ID, KEY, SENIOR_LIKE_NUM)
