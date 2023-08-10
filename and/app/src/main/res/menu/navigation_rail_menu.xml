@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        app:showAsAction="always"
+        android:icon="@drawable/back"
+        android:id="@+id/close"
+        android:enabled="true"
+        android:title="접기"/>
+    <item
+        app:showAsAction="always"
+        android:icon="@drawable/baseline_call_24"
+        android:id="@+id/call"
+        android:enabled="true"
+        android:title="전화"/>
+    <item
+        app:showAsAction="always"
+        android:icon="@drawable/baseline_chat_24"
+        android:id="@+id/message"
+        android:enabled="true"
+        android:title="문자"/>
+    <item
+        app:showAsAction="always"
+        android:icon="@drawable/friend_list"
+        android:id="@+id/friend_list"
+        android:enabled="true"
+        android:title="친구목록"/>
+
+</menu>
