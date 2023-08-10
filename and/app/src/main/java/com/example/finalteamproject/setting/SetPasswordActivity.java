@@ -2,6 +2,7 @@ package com.example.finalteamproject.setting;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -111,7 +112,17 @@ public class SetPasswordActivity extends AppCompatActivity {
             binding.imgvPw4.setImageResource(R.drawable.baseline_circle_24_white);
         } else if (length == 4) {
             binding.imgvPw4.setImageResource(R.drawable.baseline_circle_24);
-            Toast.makeText(this,  ChangePasswordActivity.password+" 확인용 ", Toast.LENGTH_SHORT).show();
+            String pw = ChangePasswordActivity.password;
+            Intent intent = new Intent(this, CheckPasswordActivity.class);
+            intent.putExtra("pw", pw);
+            Toast.makeText(this,  "비밀번호를 한번 더 입력해주세요.", Toast.LENGTH_SHORT).show();
+            binding.imgvPw1.setImageResource(R.drawable.baseline_circle_24_white);
+            binding.imgvPw2.setImageResource(R.drawable.baseline_circle_24_white);
+            binding.imgvPw3.setImageResource(R.drawable.baseline_circle_24_white);
+            binding.imgvPw4.setImageResource(R.drawable.baseline_circle_24_white);
+            startActivity(intent);
+            finish();
+//            Toast.makeText(this,  ChangePasswordActivity.password+"확인용", Toast.LENGTH_SHORT).show();
         } else {
             binding.imgvPw1.setImageResource(R.drawable.baseline_circle_24_white);
             binding.imgvPw2.setImageResource(R.drawable.baseline_circle_24_white);

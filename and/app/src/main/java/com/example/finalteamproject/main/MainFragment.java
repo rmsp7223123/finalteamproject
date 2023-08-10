@@ -28,36 +28,51 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainFragment extends Fragment {
 
     FragmentMainBinding binding;
+
+    public static ArrayList<MemberVO> list;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentMainBinding.inflate(inflater, container,false);
-        CommonConn conn = new CommonConn(getContext(),"main/viewpager");
-        conn.addParamMap("member_id",CommonVar.logininfo.getMember_id());
+        binding = FragmentMainBinding.inflate(inflater, container, false);
+        CommonConn conn = new CommonConn(getContext(), "main/viewpager");
+        conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
         conn.onExcute((isResult, data) -> {
-            ArrayList<MemberVO> list = new Gson().fromJson(data , new TypeToken<ArrayList<MemberVO>>(){}.getType());
-            Viewpager_main_adapter adapter = new Viewpager_main_adapter(getContext(), list);
-            int initialPosition = adapter.getItemCount() / 2;
+            list = new Gson().fromJson(data, new TypeToken<ArrayList<MemberVO>>() {
+            }.getType());
+
+            favorChange(0);
+
+            ArrayList<MemberVO> virtualList = new ArrayList<>();
+            for (MemberVO member : list) {
+                virtualList.add(member);
+            }
+
+            Viewpager_main_adapter adapter = new Viewpager_main_adapter(getContext(), virtualList);
             binding.imgViewpager.setAdapter(adapter);
-            binding.imgViewpager.setCurrentItem(0, true);
+
+
+            int initialPosition = list.size() * 1000;
+            binding.imgViewpager.setCurrentItem(0, false);
+            binding.tvNickname.setText(list.get(0).getMember_nickname());
             binding.imgViewpager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
                 int currentState = 0;
-                int currentPos = 0;
+                int currentPos = initialPosition;
+
                 @Override
                 public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                    if(currentState == ViewPager2.SCROLL_STATE_DRAGGING && currentPos == position) {
-                        if(currentPos == 0) {
-                            binding.imgViewpager.setCurrentItem(list.size());
-//                            binding.tvNickname.setText(list.get(position).getMember_nickname());
-                        }
-                        else if(currentPos == 2) {
-                            binding.imgViewpager.setCurrentItem(0);
+                    if (currentState == ViewPager2.SCROLL_STATE_DRAGGING && currentPos == position) {
+                        if (currentPos == 0) {
+                            binding.imgViewpager.setCurrentItem(list.size() * 2 - 2, false);
+                        } else if (currentPos == list.size() * 2 - 1) {
+                            binding.imgViewpager.setCurrentItem(1, false);
                         }
                     }
                     super.onPageScrolled(position, positionOffset, positionOffsetPixels);
@@ -65,7 +80,10 @@ public class MainFragment extends Fragment {
 
                 @Override
                 public void onPageSelected(int position) {
+                    favorChange(position);
                     currentPos = position;
+                    int realPosition = position % list.size();
+                    binding.tvNickname.setText(list.get(realPosition).getMember_nickname());
                     super.onPageSelected(position);
                 }
 
@@ -75,6 +93,8 @@ public class MainFragment extends Fragment {
                     super.onPageScrollStateChanged(state);
                 }
             });
+
+
         });
         MainBoardAdapter adapter1 = new MainBoardAdapter();
         binding.recvBoard.setAdapter(adapter1);
@@ -91,11 +111,11 @@ public class MainFragment extends Fragment {
         });
 
         binding.imgvRight.setOnClickListener(v -> {
-            binding.imgViewpager.setCurrentItem(binding.imgViewpager.getCurrentItem()+1);
+            binding.imgViewpager.setCurrentItem(binding.imgViewpager.getCurrentItem() + 1);
         });
 
         binding.imgvLeft.setOnClickListener(v -> {
-            binding.imgViewpager.setCurrentItem(binding.imgViewpager.getCurrentItem()-1);
+            binding.imgViewpager.setCurrentItem(binding.imgViewpager.getCurrentItem() - 1);
         });
 
         binding.imgvAdd.setOnClickListener(view -> {
@@ -158,8 +178,6 @@ public class MainFragment extends Fragment {
         Glide.with(this).load(CommonVar.logininfo.getMember_profileimg()).into(binding.imgvSmallProfile);
 
 
-
-
         return binding.getRoot();
     }
 
@@ -185,5 +203,68 @@ public class MainFragment extends Fragment {
 
     public void images() {
 
+    }
+
+    public void favorChange(int position) {
+        returnFavorColor();
+        CommonConn conn1 = new CommonConn(getContext(), "main/favor");
+        conn1.addParamMap("member_id", list.get(position).getMember_id());
+        conn1.onExcute((isResult1, data1) -> {
+            ArrayList<FavorVO> list1 = new Gson().fromJson(data1, new TypeToken<ArrayList<FavorVO>>() {
+            }.getType());
+            for (int i = 0; i < list1.size(); i++) {
+                FavorVO favorVO = list1.get(i);
+                int favor = favorVO.favor;
+                if (favor == 1) {
+                    binding.imgvTv.setImageResource(R.drawable.tv_select);
+                    binding.tvTv.setTextColor(Color.parseColor("#F5DC6D"));
+                } else if (favor == 2) {
+                    binding.imgvMusic.setImageResource(R.drawable.music_select);
+                    binding.tvMusic.setTextColor(Color.parseColor("#F5DC6D"));
+                } else if (favor == 3) {
+                    binding.imgvMovie.setImageResource(R.drawable.movie_select);
+                    binding.tvMovie.setTextColor(Color.parseColor("#F5DC6D"));
+                } else if (favor == 4) {
+                    binding.imgvFashion.setImageResource(R.drawable.fashion_select);
+                    binding.tvFashion.setTextColor(Color.parseColor("#F5DC6D"));
+                } else if (favor == 5) {
+                    binding.imgvAnimal.setImageResource(R.drawable.animal_select);
+                    binding.tvAnimal.setTextColor(Color.parseColor("#F5DC6D"));
+                } else if (favor == 6) {
+                    binding.imgvNews.setImageResource(R.drawable.news_select);
+                    binding.tvNews.setTextColor(Color.parseColor("#F5DC6D"));
+                } else if (favor == 7) {
+                    binding.imgvCar.setImageResource(R.drawable.car_select);
+                    binding.tvCar.setTextColor(Color.parseColor("#F5DC6D"));
+                } else if (favor == 8) {
+                    binding.imgvSports.setImageResource(R.drawable.sports_select);
+                    binding.tvSports.setTextColor(Color.parseColor("#F5DC6D"));
+                } else if (favor == 9) {
+                    binding.imgvGame.setImageResource(R.drawable.game_select);
+                    binding.tvGame.setTextColor(Color.parseColor("#F5DC6D"));
+                }
+            }
+        });
+    }
+
+    public void returnFavorColor() {
+        binding.imgvTv.setImageResource(R.drawable.tv);
+        binding.imgvMusic.setImageResource(R.drawable.music);
+        binding.imgvMovie.setImageResource(R.drawable.movie);
+        binding.imgvFashion.setImageResource(R.drawable.fashion);
+        binding.imgvAnimal.setImageResource(R.drawable.animal);
+        binding.imgvNews.setImageResource(R.drawable.news);
+        binding.imgvCar.setImageResource(R.drawable.car);
+        binding.imgvSports.setImageResource(R.drawable.sports);
+        binding.imgvGame.setImageResource(R.drawable.game);
+        binding.tvTv.setTextColor(Color.parseColor("#000000"));
+        binding.tvMusic.setTextColor(Color.parseColor("#000000"));
+        binding.tvMovie.setTextColor(Color.parseColor("#000000"));
+        binding.tvFashion.setTextColor(Color.parseColor("#000000"));
+        binding.tvAnimal.setTextColor(Color.parseColor("#000000"));
+        binding.tvNews.setTextColor(Color.parseColor("#000000"));
+        binding.tvCar.setTextColor(Color.parseColor("#000000"));
+        binding.tvSports.setTextColor(Color.parseColor("#000000"));
+        binding.tvGame.setTextColor(Color.parseColor("#000000"));
     }
 }

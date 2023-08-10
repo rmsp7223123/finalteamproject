@@ -41,14 +41,18 @@ public class SetPatternActivity extends AppCompatActivity {
 
             @Override
             public void onComplete(List<com.andrognito.patternlockview.PatternLockView.Dot> pattern) {
-                SharedPreferences sharedPreferences = getSharedPreferences("PREFS", 0);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("password", PatternLockUtils.patternToString(binding.patternLockView, pattern));
-                editor.apply();
-//                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-//                startActivity(intent);
-                Toast.makeText(SetPatternActivity.this, sharedPreferences.getString("password","0") + " 확인용 ", Toast.LENGTH_SHORT).show();
-                finish();
+                String pw = PatternLockUtils.patternToString(binding.patternLockView, pattern);
+                if(pw.length() < 4) {
+                    Toast.makeText(SetPatternActivity.this, "패턴이 너무 짧습니다. 다시 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    binding.patternLockView.clearPattern();
+                } else {
+                    Intent intent = new Intent(SetPatternActivity.this, CheckPatternActivity.class);
+                    intent.putExtra("pw",pw);
+                    startActivity(intent);
+                    finish();
+                }
+
+
             }
 
             @Override

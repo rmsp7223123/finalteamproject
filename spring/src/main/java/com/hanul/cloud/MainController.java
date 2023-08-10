@@ -72,4 +72,10 @@ public class MainController {
 		List<MemberVO> vo = sql.selectList("main.viewpager", member_id);
 		return vo;
 	}
+	
+	@RequestMapping("/favor")
+	public List<FavorVO> favor(String member_id) {
+		List<FavorVO> vo = sql.selectList("main.favor",member_id);
+		return vo;
+	}
 }
