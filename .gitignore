@@ -76,3 +76,4 @@ atlassian-ide-plugin.xml
 .vscode/
 .metadata/
 cached-antora-playbook.yml
+spring/target/
