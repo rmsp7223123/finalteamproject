@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/chat"
+        android:title="대화"
+        android:icon="@drawable/bottomnav_chat"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/gps"
+        android:title="위치추적"
+        android:icon="@drawable/bottomnav_gps"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/fab"
+        android:title=""
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/game"
+        android:title="게임"
+        android:icon="@drawable/bottomnav_game"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/setting"
+        android:title="설정"
+        android:icon="@drawable/bottomnav_setting"
+        app:showAsAction="ifRoom"/>
+</menu>
