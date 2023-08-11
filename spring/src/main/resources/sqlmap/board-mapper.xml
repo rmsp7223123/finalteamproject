@@ -55,7 +55,7 @@
 	
 	<select id="select" resultType="cloud.member.FavorBoardVO">
 		select fav_board_id, writer, fav_board_title, fav_board_content, 
-		to_char(fav_board_writedate, 'yyyy-mm-dd hh24:mi:ss') fav_board_writedate,
+		to_char(fav_board_writedate, 'YYYY-MM-DD HH24:MI:SS') fav_board_writedate,
 		fav_board_writecount, fav_board_img from fav_board where fav_board_id = #{fav_board_id}
 	</select>
 	
@@ -96,7 +96,7 @@
 	
 	<select id="commentList" resultType="cloud.member.FavorBoardCommentVO">
 		select fav_board_comment_id, fav_board_id, writer, fav_board_comment_content, 
-		to_char(fav_board_comment_writedate, 'yyyy-mm-dd hh24:mi:ss') fav_board_comment_writedate
+		to_char(fav_board_comment_writedate, 'YYYY-MM-DD HH24:MI:SS') fav_board_comment_writedate
 		from fav_board_comment where fav_board_id = #{fav_board_id}
 			<choose>
 				<when test="align == '최신순'">
