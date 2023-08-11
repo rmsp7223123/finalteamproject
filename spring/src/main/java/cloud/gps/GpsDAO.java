@@ -1,5 +1,6 @@
 package cloud.gps;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -13,16 +14,19 @@ public class GpsDAO {
 	@Qualifier("project")
 	private SqlSession sql;
 
-	public List<GpsVO> senior_list() {
-		return sql.selectList("gps.list");
+	public List<GpsVO> senior_list(GpsVO vo) {
+		return sql.selectList("gps.list", vo);
 	}
 
-	public List<GpsVO> senior_like() {
-		return sql.selectList("gps.likelist");
+	public List<GpsVO> senior_like(String member_id) {
+		return sql.selectList("gps.likelist", member_id);
 	}
 
-	public void bmark(int key) {
-		sql.insert("gps.bmark", key);
+	public void bmark(int key, String member_id) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("key", key+"");
+		map.put("member_id", member_id);
+		sql.insert("gps.bmark", map);
 	}
 
 	public void addlike(int key) {
@@ -33,16 +37,22 @@ public class GpsDAO {
 		sql.update("gps.likecnt", key);
 	}
 
-	public void delbmark(int key) {
-		sql.delete("gps.delbmark", key);
+	public void delbmark(int key, String member_id) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("key", key+"");
+		map.put("member_id", member_id);
+		sql.delete("gps.delbmark", map);
 	}
 
 	public void unlikecnt(int key) {
 		sql.update("gps.unlikecnt", key);
 	}
 
-	public String likeyet(int key) {
-		return sql.selectOne("gps.likeyet", key);
+	public String likeyet(int key, String member_id) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("key", key+"");
+		map.put("member_id", member_id);
+		return sql.selectOne("gps.likeyet", map);
 	}
 
 }

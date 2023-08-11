@@ -34,7 +34,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                     CommonConn conn2 = new CommonConn(this, "setting/inquirePw");
                     conn2.addParamMap("member_id", CommonVar.logininfo.getMember_id());
                     conn2.onExcute((isResult1, data1) -> {
-                        if(data != null) {
+                        if(!data.equals("null")) {
                             Toast.makeText(this, "비밀번호가 존재합니다.", Toast.LENGTH_SHORT).show();
                         } else {
                             intent = new Intent(this, SetPasswordActivity.class);
@@ -56,10 +56,10 @@ public class ChangePasswordActivity extends AppCompatActivity {
                     CommonConn conn2 = new CommonConn(this, "setting/inquirePattern");
                     conn2.addParamMap("member_id", CommonVar.logininfo.getMember_id());
                     conn2.onExcute((isResult1, data1) -> {
-                        if(data != null) {
+                        if(!data.equals("null")) {
                             Toast.makeText(this, "패턴이 존재합니다.", Toast.LENGTH_SHORT).show();
                         } else {
-                            intent = new Intent(this, SetPasswordActivity.class);
+                            intent = new Intent(this, SetPatternActivity.class);
                             startActivity(intent);
                         }
                     });
@@ -67,14 +67,25 @@ public class ChangePasswordActivity extends AppCompatActivity {
             });
         });
         binding.btnDeletePassword.setOnClickListener(v -> {
-            if(password.length() > 4) {
-                // 패턴
-            } else if (!password.equals("") && password.length()<5){
-                // 비밀번호
-            } else {
-                Toast.makeText(this, "비밀번호가 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
-            }
+            CommonConn conn = new CommonConn(this, "setting/inquirePw");
+            conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+            conn.onExcute((isResult, data) -> {
+                if(!data.equals("null")) {
+                    Intent intent1 = new Intent(this, DeletePasswordActivity.class);
+                    startActivity(intent1);
+                } else {
+                    CommonConn conn1 = new CommonConn(this, "setting/inquirePattern");
+                    conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                    conn1.onExcute((isResult1, data1) -> {
+                        if(!data1.equals("null")) {
+                            Intent intent1 = new Intent(this, DeletePatternActivity.class);
+                            startActivity(intent1);
+                        } else {
+                            Toast.makeText(this, "비밀번호나 패턴이 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            });
         });
-        // 비밀번호가 있는경우 비밀번호 재입력, 패턴이 있는경우 패턴 재입력 후 비밀번호 삭제되게 추가하기
     }
 }

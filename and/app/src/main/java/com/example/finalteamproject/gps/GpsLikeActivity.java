@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
+import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.databinding.ActivityGpsLikeBinding;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -32,9 +33,9 @@ public class GpsLikeActivity extends AppCompatActivity {
 
     public void senior_like(){
         CommonConn conn = new CommonConn(this, "gps/likelist");
+        conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
         conn.onExcute((isResult, data) -> {
             ArrayList<GpsVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<GpsVO>>(){}.getType());
-
             //자주 가는 경로당(리사이클러뷰)
             GpsLikeAdapter adapter = new GpsLikeAdapter(list);
             binding.recvGpsLike.setAdapter(adapter);

@@ -16,14 +16,15 @@
 	</select> -->
 	
 	<select id="list" resultType="cloud.gps.GpsVO">
-	SELECT CASE WHEN DISTANCE &lt; 1 THEN RTRIM(TO_CHAR(DISTANCE*1000 ,
+	<!-- SELECT CASE WHEN DISTANCE &lt; 1 THEN RTRIM(TO_CHAR(DISTANCE*1000 ,
 	'FM9990D99'),'.')||'m' ELSE DISTANCE||'km' END distance,T.*
-	, S.*,  (SELECT COUNT(*) FROM SENIOR_LIKE L WHERE L.KEY = S.KEY ) SENIOR_LIKE_NUM
+	, S.* , (SELECT COUNT(*) FROM SENIOR_BMARK B WHERE B.KEY = S.KEY )
+	SENIOR_LIKE_NUM
 	from
 	(
 	SELECT ROWNUM no, C.DISTANCE , S.KEY
 	FROM SENIOR S LEFT OUTER JOIN
-	(SELECT KEY , DISTNACE_WGS84(35.1534, 126.8880, SENIOR_LATITUDE,
+	(SELECT KEY , DISTNACE_WGS84(#{senior_latitude}, #{senior_longitude}, SENIOR_LATITUDE,
 	SENIOR_LONGITUDE) AS DISTANCE
 	FROM SENIOR S
 
@@ -31,7 +32,21 @@
 	WHERE S.SENIOR_ROADADDRESS LIKE '%광주%'
 	ORDER BY C.DISTANCE ASC
 	) T INNER JOIN SENIOR S ON T.KEY = S.KEY
-	WHERE T.NO &lt; 5
+	WHERE T.NO &lt; 20 -->
+	
+	SELECT ROWNUM no, CASE WHEN DISTANCE &lt; 1 THEN RTRIM(TO_CHAR(DISTANCE*1000 , 'FM9990D99'),'.')||'m' ELSE DISTANCE||'km' END distance,T.*
+        , S.* ,  (SELECT COUNT(*) FROM SENIOR_BMARK B WHERE B.KEY = S.KEY ) SENIOR_LIKE_NUM
+    from 
+     (
+        SELECT  C.DISTANCE , S.KEY , S.SENIOR_ROADADDRESS
+        FROM SENIOR S LEFT OUTER JOIN 
+        (SELECT  KEY , DISTNACE_WGS84(#{senior_latitude}, #{senior_longitude}, SENIOR_LATITUDE, SENIOR_LONGITUDE) AS DISTANCE
+           FROM SENIOR S
+        ) C ON S.KEY=C.KEY
+        ORDER BY C.DISTANCE ASC
+    ) T INNER JOIN SENIOR S ON T.KEY = S.KEY
+    WHERE ROWNUM &lt; 20
+	
 	</select>
 
 	<!-- 자주가는 경로당 목록 -->
@@ -40,13 +55,13 @@
 		from senior_bmark b
 		left join senior s
 		on b.key=s.key
-		where member_id='test'
+		where member_id=#{member_id}
 	</select>
 
 	<!-- 좋아요 버튼 선택시 자주가는 경로당 등록 -->
 	<insert id="bmark">
 		insert into SENIOR_BMARK (KEY, MEMBER_ID)
-		values(#{key}, 'test')
+		values(#{key}, #{member_id})
 	</insert>
 
 	<!-- 좋아요 버튼 선택시 좋아요 리스트 컬럼 생성 -->
@@ -66,7 +81,7 @@
 	<!-- 좋아요 취소시 자주가는 경로당 삭제 -->
 	<delete id="delbmark">
 		delete from SENIOR_BMARK
-		where key = #{key} and member_id='test'
+		where key = #{key} and member_id=#{member_id}
 	</delete>
 
 	<!-- 좋아요 취소시 좋아요 카운트 감소 -->
@@ -80,7 +95,7 @@
 	<select id="likeyet" resultType="String">
 		select key
 		from SENIOR_BMARK
-		where key=#{key} and member_id='test'
+		where key=#{key} and member_id=#{member_id}
 	</select>
 
 </mapper>

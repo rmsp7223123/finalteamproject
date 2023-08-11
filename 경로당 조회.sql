@@ -50,7 +50,7 @@ where member_id='test';
 --좋아요 누름
 --자주가는 경로당(즐겨찾기) 추가
 insert into SENIOR_BMARK (KEY, MEMBER_ID)
-values(2, 'test');
+values(2, 'conan1');
 
 --좋아요 테이블에 컬럼 생성
 insert into SENIOR_LIKE (MEMBER_ID, KEY, SENIOR_LIKE_NUM)
@@ -112,6 +112,21 @@ SELECT  CASE WHEN DISTANCE < 1 THEN RTRIM(TO_CHAR(DISTANCE*1000 , 'FM9990D99'),'
     ) T INNER JOIN SENIOR S ON T.KEY = S.KEY
     WHERE T.NO < 20 ;
 
+--수정 1
+SELECT  CASE WHEN DISTANCE < 1 THEN RTRIM(TO_CHAR(DISTANCE*1000 , 'FM9990D99'),'.')||'m' ELSE DISTANCE||'km' END distance,T.*
+        , S.* ,  (SELECT COUNT(*) FROM SENIOR_BMARK B WHERE B.KEY = S.KEY ) SENIOR_LIKE_NUM
+    from 
+     (
+        SELECT ROWNUM no, C.DISTANCE , S.KEY 
+        FROM SENIOR S LEFT OUTER JOIN 
+        (SELECT  KEY , DISTNACE_WGS84(35.1535583, 126.8879957, SENIOR_LATITUDE, SENIOR_LONGITUDE) AS DISTANCE
+           FROM SENIOR S
+      
+        ) C ON S.KEY=C.KEY
+        WHERE S.SENIOR_ROADADDRESS LIKE '%광주%'
+        ORDER BY C.DISTANCE ASC
+    ) T INNER JOIN SENIOR S ON T.KEY = S.KEY
+    WHERE T.NO < 20 ;
 
-
+select * from senior;
 

@@ -1,4 +1,4 @@
-package com.example.finalteamproject.Login;
+package com.example.finalteamproject.setting;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,29 +9,27 @@ import android.widget.Toast;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
-import com.example.finalteamproject.databinding.ActivityLockScreenPasswordBinding;
+import com.example.finalteamproject.databinding.ActivityCheckPasswordBinding;
+import com.example.finalteamproject.databinding.ActivityDeletePasswordBinding;
 import com.example.finalteamproject.main.MainActivity;
-import com.example.finalteamproject.main.OptionVO;
-import com.example.finalteamproject.setting.ChangePasswordActivity;
-import com.example.finalteamproject.setting.CheckPasswordActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
-public class LockScreenPasswordActivity extends AppCompatActivity {
-
-    ActivityLockScreenPasswordBinding binding;
-
+public class DeletePasswordActivity extends AppCompatActivity {
+    ActivityDeletePasswordBinding binding;
     String pw = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityLockScreenPasswordBinding.inflate(getLayoutInflater());
+        binding = ActivityDeletePasswordBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        binding.imgvBack.setOnClickListener(v -> {
+            finish();
+        });
 
         binding.containerFrameTv0.setOnClickListener(v -> {
             pw += "0";
@@ -117,39 +115,43 @@ public class LockScreenPasswordActivity extends AppCompatActivity {
             binding.imgvPw3.setImageResource(R.drawable.baseline_circle_24);
             binding.imgvPw4.setImageResource(R.drawable.baseline_circle_24_white);
         } else if (length == 4) {
+
             binding.imgvPw4.setImageResource(R.drawable.baseline_circle_24);
+
 
             CommonConn conn = new CommonConn(this, "setting/inquirePw");
             conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
             conn.onExcute((isResult, data) -> {
                 HashMap<String, String> paramMap = new Gson().fromJson(data, new TypeToken<HashMap<String, String>>() {
-                }.getType()); // 가져온 비밀번호
+                }.getType());
                 String storedPw = paramMap.get("option_lock_pw");
 
                 if (pw.equals(storedPw)) {
-                    Intent intent = new Intent(this, MainActivity.class);
-                    startActivity(intent);
+                    CommonConn conn1 = new CommonConn(this, "setting/deletePw");
+                    conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                    conn1.onExcute((isResult1, data1) -> {
+                        if (isResult1) {
+                            Toast.makeText(this, "비밀번호가 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(this, "오류 발생", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                     finish();
                 } else {
-                    // 비밀번호 불일치하는 경우의 처리
-                    Toast.makeText(this, "비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
                 }
-                pw ="";
             });
-
             binding.imgvPw1.setImageResource(R.drawable.baseline_circle_24_white);
             binding.imgvPw2.setImageResource(R.drawable.baseline_circle_24_white);
             binding.imgvPw3.setImageResource(R.drawable.baseline_circle_24_white);
             binding.imgvPw4.setImageResource(R.drawable.baseline_circle_24_white);
-
-//            Toast.makeText(this,  ChangePasswordActivity.password+"확인용", Toast.LENGTH_SHORT).show();
         } else {
             binding.imgvPw1.setImageResource(R.drawable.baseline_circle_24_white);
             binding.imgvPw2.setImageResource(R.drawable.baseline_circle_24_white);
             binding.imgvPw3.setImageResource(R.drawable.baseline_circle_24_white);
             binding.imgvPw4.setImageResource(R.drawable.baseline_circle_24_white);
         }
-
     }
+
 
 }
