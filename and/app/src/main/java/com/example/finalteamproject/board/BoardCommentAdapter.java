@@ -62,25 +62,6 @@ public class BoardCommentAdapter extends RecyclerView.Adapter<BoardCommentAdapte
                 h.binding.lnModifyComment.setVisibility(View.VISIBLE);
                 h.binding.tvCommentWriterModify.setText(CommonVar.logininfo.getMember_nickname());
                 h.binding.edtCommentContentModify.setText(list.get(i).fav_board_comment_content);
-                h.binding.tvModifyModify.setOnClickListener(v1 -> {
-                    if(h.binding.edtCommentContentModify.getText().toString().length()<1){
-                        Toast.makeText(activity, "내용을 입력하세요", Toast.LENGTH_SHORT).show();
-//                        h.binding.edtCommentContentModify.requestFocus();
-//                        manager.showSoftInput(h.binding.edtCommentContentModify, InputMethodManager.SHOW_IMPLICIT);
-                    }else {
-                        CommonConn conn = new CommonConn(context, "board/updateComment");
-                        conn.addParamMap("fav_board_comment_id", list.get(i).fav_board_comment_id);
-                        conn.addParamMap("fav_board_comment_content", h.binding.edtCommentContentModify.getText().toString());
-                        conn.onExcute((isResult, data) -> {
-                            if(data.equals("성공")){
-                                Toast.makeText(context, "댓글 수정 성공", Toast.LENGTH_SHORT).show();
-                                activity.replaceFragment(fragment, new BoardContextFragment(activity, fav_board_id));
-                            }else {
-                                Toast.makeText(context, "댓글 수정 실패", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                });
         });
         h.binding.tvDelete.setOnClickListener(v -> {
             CommonConn conn = new CommonConn(context, "board/deleteComment");
@@ -93,6 +74,23 @@ public class BoardCommentAdapter extends RecyclerView.Adapter<BoardCommentAdapte
                     Toast.makeText(context, "댓글 삭제 실패", Toast.LENGTH_SHORT).show();
                 }
             });
+        });
+        h.binding.tvModifyModify.setOnClickListener(v1 -> {
+            if(h.binding.edtCommentContentModify.getText().toString().length()<1){
+                Toast.makeText(activity, "내용을 입력하세요", Toast.LENGTH_SHORT).show();
+            }else {
+                CommonConn conn = new CommonConn(context, "board/updateComment");
+                conn.addParamMap("fav_board_comment_id", list.get(i).fav_board_comment_id);
+                conn.addParamMap("fav_board_comment_content", h.binding.edtCommentContentModify.getText().toString());
+                conn.onExcute((isResult, data) -> {
+                    if(data.equals("성공")){
+                        Toast.makeText(context, "댓글 수정 성공", Toast.LENGTH_SHORT).show();
+                        activity.replaceFragment(fragment, new BoardContextFragment(activity, fav_board_id));
+                    }else {
+                        Toast.makeText(context, "댓글 수정 실패", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
         });
         h.binding.tvModifyDelete.setOnClickListener(v -> {
             CommonConn conn = new CommonConn(context, "board/deleteComment");

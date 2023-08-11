@@ -61,11 +61,6 @@ public class BoardContextFragment extends Fragment {
         conn.onExcute((isResult, data) -> {
             FavorBoardVO vo = new Gson().fromJson(data, FavorBoardVO.class);
             if(vo!=null){
-//                CommonConn conn1 = new CommonConn(this.getContext(), "board/selectFavor");
-//                conn1.addParamMap("fav_board_id", fav_board_id);
-//                conn1.onExcute((isResult1, data1) -> {
-//                    binding.tvBoardName.setText(data1);
-//                });
                 if(CommonVar.logininfo.getMember_id().equals(vo.writer)){
                     binding.tvModify.setVisibility(View.VISIBLE);
                     binding.tvDelete.setVisibility(View.VISIBLE);
@@ -101,7 +96,7 @@ public class BoardContextFragment extends Fragment {
                     }
                 });
             }else {
-                Toast.makeText(activity, "오류로 게시글 불러오기를 실패하였습니다", Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, "게시글 불러오기를 실패하였습니다", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -170,7 +165,7 @@ public class BoardContextFragment extends Fragment {
                 BoardCommonVar.board_comment_align = list[i];
                 CommonConn conn1 = new CommonConn(getContext(), "board/commentList");
                 conn1.addParamMap("fav_board_id", fav_board_id);
-                conn1.addParamMap("align", BoardCommonVar.board_align);
+                conn1.addParamMap("align", BoardCommonVar.board_comment_align);
                 conn1.onExcute((isResult, data) -> {
                     List<FavorBoardCommentVO> list = new Gson().fromJson(data, new TypeToken<List<FavorBoardCommentVO>>(){}.getType());
                     if(list.size()!=0){

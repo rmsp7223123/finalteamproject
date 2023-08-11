@@ -118,10 +118,12 @@ public class LoginProfileActivity extends AppCompatActivity {
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
-                //액티비티(카메라 액티비티)가 종료되면 콜백으로 데이터를 받는 부분. (기존에는 onActivityResult메소드가 실행되었고 현재는 해당 메소드)
-                Glide.with(LoginProfileActivity.this).load(camera_uri).into(binding.imgvProfile);
-                num = 2;
-                file = new File(getRealPath(camera_uri));
+                if(result.getResultCode() == -1){
+                    //액티비티(카메라 액티비티)가 종료되면 콜백으로 데이터를 받는 부분. (기존에는 onActivityResult메소드가 실행되었고 현재는 해당 메소드)
+                    Glide.with(LoginProfileActivity.this).load(camera_uri).into(binding.imgvProfile);
+                    num = 2;
+                    file = new File(getRealPath(camera_uri));
+                }
             }
         });
     }

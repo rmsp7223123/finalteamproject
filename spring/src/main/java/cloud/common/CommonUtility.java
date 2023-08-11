@@ -21,7 +21,9 @@ import cloud.member.MemberVO;
 public class CommonUtility {
 	// http://192.168.0.87:8080/cloud/imgs/profileImage/ansqudwns12.jpg
 	// rootPath/profileImage/ansqudwns12.jpg
-	public static String rootPath = "D:\\finalteamproject\\images\\";
+//	public static String rootPath = "D:\\finalteamproject\\images\\";
+	public static String rootPath = "http://192.168.0.33:8080/cloud/imgs/profileImage/";
+	
 
 	// 파일 업로드
 	public String fileUpload(String category, MultipartFile file, HttpServletRequest req) {

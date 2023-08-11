@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartRequest;
 
 import com.google.gson.Gson;
 
+import cloud.common.CommonUtility;
 import cloud.member.EphoneVO;
 import cloud.member.FavorVO;
 import cloud.member.MemberVO;
@@ -32,6 +33,7 @@ import net.nurigo.java_sdk.exceptions.CoolsmsException;
 public class LoginController {
 	
 	@Autowired @Qualifier("project") SqlSession sql;
+	@Autowired CommonUtility commonUtility;
 
 	@RequestMapping(value="/sendSms", produces = "text/html;charset=utf-8")
 	public String sendSms(String phoneNumber) {
@@ -93,12 +95,14 @@ public class LoginController {
 	
 	@RequestMapping(value="/file", produces = "text/html;charset=utf-8" )
 	public String list(HttpServletRequest req) throws IllegalStateException, IOException { //req(요청에 대한 모든정보), res
-		System.out.println(req.getLocalAddr());
-		System.out.println(req.getLocalPort());
-		System.out.println(req.getContextPath()+"/img/이름.jpg"); //DB에 저장
+//		String imagePath = req.getLocalAddr()+":"+req.getLocalPort()+"/"+req.getContextPath();
+//		System.out.println(req.getLocalAddr());
+//		System.out.println(req.getLocalPort());
+//		System.out.println(req.getContextPath()+"/img/이름.jpg"); //DB에 저장
 		String id =  req.getParameter("member_id");
 		MultipartRequest mReq = (MultipartRequest) req; //file정보가 없는 req => 있는 mReq
 		MultipartFile file = mReq.getFile("file");
+//		return commonUtility.fileUpload("profileImage", file, req);
 		//파일이 있는 상태의 요청을 받았는지에 따라서 유동적으로 MultipartRequest로 캐스팅
 		if(file!=null) {
 			String fullPath = req.getRealPath("/");
@@ -106,6 +110,7 @@ public class LoginController {
 			String projectName = fullPath.substring(fullPath.indexOf("wtpwebapps")+"wtpwebapps".length(), fullPath.length());
 			String fileName = id+".jpg";
 			Path filePath = Paths.get(workSpace, projectName , "src", "main", "resources", "images", "profileImage");
+//			Path filePath = Paths.get(CommonUtility.rootPath);
 //			File f = filePath.toFile();
 			File f = new File(filePath.toString());
 			File file1 = null;
