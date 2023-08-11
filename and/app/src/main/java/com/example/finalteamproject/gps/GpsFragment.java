@@ -122,20 +122,6 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
         this.naverMap = naverMap;
         naverMap.setLocationSource(locationSource); //내 위치
         naverMap.setLocationTrackingMode(LocationTrackingMode.Follow); //위치 추적 모드
-        //지도 줌 관련 기능
-        UiSettings uiSettings = naverMap.getUiSettings();
-        uiSettings.setZoomControlEnabled(true); // 줌 컨트롤 활성화
-        naverMap.addOnCameraChangeListener((i, b) -> {
-            float ZoomLevel = (float) naverMap.getCameraPosition().zoom;
-            Log.d("줌", "onMapReady: "+ZoomLevel);
-        });
-//        float currentZoomLevel = (float) naverMap.getCameraPosition().zoom;
-//        Log.d("줌", "onMapReady: "+currentZoomLevel);
-//        float currentZoomLevel = (float) naverMap.getCameraPosition().zoom;
-//        Log.d("줌", "onMapReady: "+currentZoomLevel);
-//        float newZoomLevel = 10.0f;
-//        CameraUpdate cameraUpdate = CameraUpdate.zoomTo(newZoomLevel);
-//        naverMap.moveCamera(cameraUpdate);
 
         //내 위치 위도, 경도 이동
         naverMap.addOnLocationChangeListener(new NaverMap.OnLocationChangeListener() {
@@ -144,6 +130,7 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                 //내 위치 위도, 경도
                 lat = location.getLatitude();
                 lon = location.getLongitude();
+
                 CommonConn conn = new CommonConn(getContext(), "gps/senior");
                 conn.addParamMap("senior_latitude", lat);
                 conn.addParamMap("senior_longitude", lon);
@@ -175,6 +162,15 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                         marker.setIconTintColor(Color.parseColor("#4B6EFD")); // 다중 마커 색상
                         marker.setWidth(70);
                         marker.setHeight(100);
+
+                        //지도 줌 레벨
+                        UiSettings uiSettings = naverMap.getUiSettings();
+                        float ZoomLevel = (float) naverMap.getCameraPosition().zoom;
+                        uiSettings.setZoomControlEnabled(true); // 줌 컨트롤 활성화
+                        naverMap.addOnCameraChangeListener((i, b) -> {
+                            Log.d("줌", "onMapReady: "+ZoomLevel);
+                        });
+
                     }
 
                     //경로당 리스트(리사이클러뷰)
