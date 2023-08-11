@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,6 +13,8 @@ import android.content.ClipData;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -29,19 +32,25 @@ import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.common.RetrofitClient;
 import com.example.finalteamproject.common.RetrofitInterface;
 import com.example.finalteamproject.databinding.ActivityMessageChatBinding;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -72,6 +81,8 @@ public class MessageChatActivity extends AppCompatActivity {
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
     String currentTime = dateFormat.format(new Date());
+
+    private FirebaseStorage storage;
 
 
 
@@ -254,15 +265,29 @@ public class MessageChatActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "사진은 10장까지 선택 가능합니다.", Toast.LENGTH_LONG).show();
                     }
                     else{   // 선택한 이미지가 1장 이상 10장 이하인 경우
+                        String uuid = UUID.randomUUID().toString();
 
                         for (int i = 0; i < clipData.getItemCount(); i++){
+                            storage = FirebaseStorage.getInstance();
+                            StorageReference storageRef = storage.getReference();
+                            StorageReference riversRef = storageRef.child(CommonVar.logininfo.getMember_id()+"/"+uuid+".jpg");
                             Uri imageUri = clipData.getItemAt(i).getUri();  // 선택한 이미지들의 uri를 가져온다.
+                            UploadTask uploadTask = riversRef.putFile(imageUri);
                             try {
-                                MessageDTO temp = new MessageDTO(messageDTO.getImgRes(), messageDTO.getNickname(), imageUri +"", currentTime, true);
-                                databaseReference.child("chat").child(messageDTO.getNickname()).child(messageId).setValue(temp);
-                                adapter.notifyDataSetChanged();
+                                InputStream in = getContentResolver().openInputStream(data.getData());
+                                Bitmap img = BitmapFactory.decodeStream(in);
+                                in.close();
+//                                MessageDTO temp = new MessageDTO(messageDTO.getImgRes(), messageDTO.getNickname(), imageUri +"", currentTime, true);
+//                                databaseReference.child("chat").child(messageDTO.getNickname()).child(messageId).setValue(temp);
+//                                adapter.notifyDataSetChanged();
                             } catch (Exception e) {
                             }
+                            uploadTask.addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(MessageChatActivity.this, "사진이 정상적으로 업로드되지 않았습니다.", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
 
                         adapter = new MessageChatAdapter(getlist(), this, isChatCheck);
