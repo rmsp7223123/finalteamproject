@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
@@ -73,6 +74,11 @@ public class BoardContextFragment extends Fragment {
                 binding.tvDate.setText(vo.fav_board_writedate);
                 binding.tvView.setText("조회수 : "+vo.fav_board_writecount);
                 binding.tvContent.setText(vo.fav_board_content);
+                if(vo.fav_board_img!=null){
+                    Glide.with(this).load(vo.fav_board_img).into(binding.imgvImg);
+                }else {
+                    binding.imgvImg.setVisibility(View.GONE);
+                }
                 CommonConn conn2 = new CommonConn(getContext(), "board/rec");
                 conn2.addParamMap("id", fav_board_id);
                 conn2.onExcute((isResult1, data1) -> {

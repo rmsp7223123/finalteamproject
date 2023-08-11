@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.databinding.ItemBoardListRecvBinding;
@@ -42,6 +43,8 @@ public class BoardListAdapter extends RecyclerView.Adapter<BoardListAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder h, int i) {
         if(list.get(i).fav_board_img==null){
             h.binding.imgvImage.setImageResource(R.drawable.logo);
+        }else {
+            Glide.with(fragment.getContext()).load(list.get(i).fav_board_img).into(h.binding.imgvImage);
         }
         if(list.get(i).fav_board_title.length()>8){
             h.binding.tvTitle.setText(list.get(i).fav_board_title.substring(0, 8)+"...");
