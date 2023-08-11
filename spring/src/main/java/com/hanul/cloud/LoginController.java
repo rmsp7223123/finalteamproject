@@ -22,7 +22,6 @@ import org.springframework.web.multipart.MultipartRequest;
 
 import com.google.gson.Gson;
 
-import cloud.common.CommonUtility;
 import cloud.member.EphoneVO;
 import cloud.member.FavorVO;
 import cloud.member.MemberVO;
@@ -32,8 +31,10 @@ import net.nurigo.java_sdk.exceptions.CoolsmsException;
 @RestController @RequestMapping("/login")
 public class LoginController {
 	
+	@Autowired
+	private cloud.common.CommonUtility common;
+	
 	@Autowired @Qualifier("project") SqlSession sql;
-	@Autowired CommonUtility commonUtility;
 
 	@RequestMapping(value="/sendSms", produces = "text/html;charset=utf-8")
 	public String sendSms(String phoneNumber) {
@@ -94,47 +95,51 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value="/file", produces = "text/html;charset=utf-8" )
-	public String list(HttpServletRequest req) throws IllegalStateException, IOException { //req(요청에 대한 모든정보), res
-//		String imagePath = req.getLocalAddr()+":"+req.getLocalPort()+"/"+req.getContextPath();
+	public String list(HttpServletRequest req) { //req(요청에 대한 모든정보), res
 //		System.out.println(req.getLocalAddr());
 //		System.out.println(req.getLocalPort());
 //		System.out.println(req.getContextPath()+"/img/이름.jpg"); //DB에 저장
 		String id =  req.getParameter("member_id");
 		MultipartRequest mReq = (MultipartRequest) req; //file정보가 없는 req => 있는 mReq
 		MultipartFile file = mReq.getFile("file");
-//		return commonUtility.fileUpload("profileImage", file, req);
+		String newImagePath = common.fileUpload("profileImage", file, req);
+		HashMap<String, Object>paramMap = new HashMap<String, Object>();
+		paramMap.put("member_id", id);
+		paramMap.put("member_profileimg", newImagePath);
+		return new Gson().toJson(sql.insert("login.file",paramMap) ==1 ? "성공" : "실패");
+		
+		
 		//파일이 있는 상태의 요청을 받았는지에 따라서 유동적으로 MultipartRequest로 캐스팅
-		if(file!=null) {
-			String fullPath = req.getRealPath("/");
-			String workSpace = fullPath.substring(0, fullPath.indexOf(".metadata"));
-			String projectName = fullPath.substring(fullPath.indexOf("wtpwebapps")+"wtpwebapps".length(), fullPath.length());
-			String fileName = id+".jpg";
-			Path filePath = Paths.get(workSpace, projectName , "src", "main", "resources", "images", "profileImage");
-//			Path filePath = Paths.get(CommonUtility.rootPath);
-//			File f = filePath.toFile();
-			File f = new File(filePath.toString());
-			File file1 = null;
-			if(f.exists()) {
-				System.out.println("tr");
-				file.transferTo(new File(filePath.toString(), fileName));
-				file1 = new File(filePath.toString()+"/"+fileName);
-			}else {
-				f.mkdir();
-				System.out.println("fr");
-				file.transferTo(new File(filePath.toString(), fileName));
-				file1 = new File(filePath.toString()+"/"+fileName);
-			}
-			if(file1.exists()) {
-				HashMap<Object, Object> map = new HashMap<Object, Object>();
-				map.put("member_profileimg", filePath+"/"+fileName);
-				map.put("member_id", id);
-				return sql.update("login.file", map)==1 ? "성공" : "실패";
-			}else {
-				return "실패";
-			}
-		}else {
-			return "실패";
-		}
+//		if(file!=null) {
+//			String fullPath = req.getRealPath("/");
+//			String workSpace = fullPath.substring(0, fullPath.indexOf(".metadata"));
+//			String projectName = fullPath.substring(fullPath.indexOf("wtpwebapps")+"wtpwebapps".length(), fullPath.length());
+//			String fileName = id+".jpg";
+//			Path filePath = Paths.get(workSpace, projectName , "src", "main", "resources", "images", "profileImage");
+////			File f = filePath.toFile();
+//			File f = new File(filePath.toString());
+//			File file1 = null;
+//			if(f.exists()) {
+//				System.out.println("tr");
+//				file.transferTo(new File(filePath.toString(), fileName));
+//				file1 = new File(filePath.toString()+"/"+fileName);
+//			}else {
+//				f.mkdir();
+//				System.out.println("fr");
+//				file.transferTo(new File(filePath.toString(), fileName));
+//				file1 = new File(filePath.toString()+"/"+fileName);
+//			}
+//			if(file1.exists()) {
+//				HashMap<Object, Object> map = new HashMap<Object, Object>();
+//				map.put("member_profileimg", filePath+"/"+fileName);
+//				map.put("member_id", id);
+//				return sql.update("login.file", map)==1 ? "성공" : "실패";
+//			}else {
+//				return "실패";
+//			}
+//		}else {
+//			return "실패";
+//		}
 	}
 	
 	@RequestMapping(value="/check", produces = "text/html;charset=utf-8")
