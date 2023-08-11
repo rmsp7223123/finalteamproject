@@ -26,7 +26,7 @@
                 android:drawableLeft="@drawable/resize_search"
                 android:drawablePadding="10dp"
                 android:drawableTint="#A9A9AB"
-                android:hint="경로당 찾기"
+                android:hint="이름 또는 주소로 경로당 찾기"
                 android:paddingLeft="10dp"
                 android:textColorHint="#A9A9AB"
                 android:textSize="15sp" />
@@ -149,6 +149,7 @@
         </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recv_search_result"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="2dp"

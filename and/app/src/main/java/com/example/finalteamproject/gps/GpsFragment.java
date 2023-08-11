@@ -48,10 +48,19 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                              Bundle savedInstanceState) {
         binding = FragmentGpsBinding.inflate(inflater, container, false);
 
-        //검색 결과
+        //결과 창
         binding.lnResult.setVisibility(View.GONE);
         binding.btnSearch.setOnClickListener(v -> {
             binding.lnResult.setVisibility(View.VISIBLE);
+            //검색 결과
+            CommonConn connresult = new CommonConn(getContext(), "gps/search");
+            connresult.addParamMap("keyword", binding.gpsSearch.getText());
+            connresult.onExcute((isResult, data) -> {
+                ArrayList<GpsVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<GpsVO>>(){}.getType());
+                GpsAdapter adapter = new GpsAdapter(list);
+                binding.recvSearchResult.setAdapter(adapter);
+                binding.recvSearchResult.setLayoutManager(new LinearLayoutManager(getContext()));
+            });
         });
         binding.btnClose.setOnClickListener(v -> {
             binding.lnResult.setVisibility(View.GONE);
