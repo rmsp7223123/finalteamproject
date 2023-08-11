@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.bumptech.glide.Glide;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.databinding.ActivityChatPhotoDetailBinding;
+
+import java.util.ArrayList;
 
 public class ChatPhotoDetailActivity extends AppCompatActivity {
 
@@ -20,5 +23,9 @@ public class ChatPhotoDetailActivity extends AppCompatActivity {
         binding.imgvBack.setOnClickListener(v -> {
             finish();
         });
+        String imageUri = getIntent().getStringExtra("image");
+        if(imageUri.contains("https://firebasestorage.googleapis.com/")) {
+        Glide.with(this).load(imageUri).into(binding.imgvImage);
+        }
     }
 }
