@@ -22,11 +22,15 @@ import com.example.finalteamproject.databinding.FragmentGpsBinding;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.naver.maps.geometry.LatLng;
+import com.naver.maps.map.CameraPosition;
 import com.naver.maps.map.CameraUpdate;
+import com.naver.maps.map.CameraUpdateParams;
 import com.naver.maps.map.LocationTrackingMode;
 import com.naver.maps.map.MapFragment;
 import com.naver.maps.map.NaverMap;
+import com.naver.maps.map.NaverMapOptions;
 import com.naver.maps.map.OnMapReadyCallback;
+import com.naver.maps.map.UiSettings;
 import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.util.FusedLocationSource;
 import com.naver.maps.map.util.MarkerIcons;
@@ -48,11 +52,11 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                              Bundle savedInstanceState) {
         binding = FragmentGpsBinding.inflate(inflater, container, false);
 
-        //결과 창
+        //검색 결과 페이지
         binding.lnResult.setVisibility(View.GONE);
         binding.btnSearch.setOnClickListener(v -> {
             binding.lnResult.setVisibility(View.VISIBLE);
-            //검색 결과
+            //검색 결과 데이터
             CommonConn connresult = new CommonConn(getContext(), "gps/search");
             connresult.addParamMap("keyword", binding.gpsSearch.getText());
             connresult.onExcute((isResult, data) -> {
@@ -118,6 +122,20 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
         this.naverMap = naverMap;
         naverMap.setLocationSource(locationSource); //내 위치
         naverMap.setLocationTrackingMode(LocationTrackingMode.Follow); //위치 추적 모드
+        //지도 줌 관련 기능
+        UiSettings uiSettings = naverMap.getUiSettings();
+        uiSettings.setZoomControlEnabled(true); // 줌 컨트롤 활성화
+        naverMap.addOnCameraChangeListener((i, b) -> {
+            float currentZoomLevel = (float) naverMap.getCameraPosition().zoom;
+            Log.d("줌", "onMapReady: "+currentZoomLevel);
+        });
+//        float currentZoomLevel = (float) naverMap.getCameraPosition().zoom;
+//        Log.d("줌", "onMapReady: "+currentZoomLevel);
+//        float currentZoomLevel = (float) naverMap.getCameraPosition().zoom;
+//        Log.d("줌", "onMapReady: "+currentZoomLevel);
+//        float newZoomLevel = 10.0f;
+//        CameraUpdate cameraUpdate = CameraUpdate.zoomTo(newZoomLevel);
+//        naverMap.moveCamera(cameraUpdate);
 
         //내 위치 위도, 경도 이동
         naverMap.addOnLocationChangeListener(new NaverMap.OnLocationChangeListener() {
