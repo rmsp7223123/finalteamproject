@@ -266,9 +266,11 @@ public class MessageChatActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "사진은 10장까지 선택 가능합니다.", Toast.LENGTH_LONG).show();
                     }
                     else{   // 선택한 이미지가 1장 이상 10장 이하인 경우
-                        String itemName = messageDTO.getNickname();
-                        messageId = databaseReference.child("chat").child(itemName).push().getKey();
+
+
                         for (int i = 0; i < clipData.getItemCount(); i++){
+                            String itemName = messageDTO.getNickname();
+                            messageId = databaseReference.child("chat").child(itemName).push().getKey();
                             String uuid = UUID.randomUUID().toString();
                             storage = FirebaseStorage.getInstance();
                             StorageReference storageRef = storage.getReference();

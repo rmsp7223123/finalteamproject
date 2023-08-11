@@ -71,6 +71,7 @@ public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.
         holder.binding.imgvMain.setImageResource(dto.getImgRes());
 
         holder.binding.containerFrame.removeAllViews();
+        ImageView imageView = new ImageView(context);
         TextView tv_msg = new TextView(context);
         TextView tv_time = new TextView(context);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -85,7 +86,6 @@ public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.
             params2.gravity = Gravity.END;
 
             if(list.get(position).getContent().contains("https://firebasestorage.googleapis.com/")) {
-                ImageView imageView = new ImageView(context);
                 imageView.setLayoutParams(params3);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 Glide.with(context).load(list.get(position).getContent()).into(imageView);
@@ -109,7 +109,6 @@ public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.
         } else {
             params.gravity = Gravity.BOTTOM | Gravity.START;
             if(list.get(position).getContent().contains("https://firebasestorage.googleapis.com/")) {
-                ImageView imageView = new ImageView(context);
                 imageView.setLayoutParams(params3);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 Glide.with(context).load(list.get(position).getContent()).into(imageView);
