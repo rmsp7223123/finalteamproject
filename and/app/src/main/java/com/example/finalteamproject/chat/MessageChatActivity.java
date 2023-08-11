@@ -45,6 +45,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.InputStream;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -277,6 +278,8 @@ public class MessageChatActivity extends AppCompatActivity {
                             StorageReference riversRef = storageRef.child(CommonVar.logininfo.getMember_id()+"/"+uuid+".jpg");
                             Uri imageUri = clipData.getItemAt(i).getUri();  // 선택한 이미지들의 uri를 가져온다.
                             UploadTask uploadTask = riversRef.putFile(imageUri);
+                            ArrayList<UploadTask> upload = new ArrayList<>();
+                            upload.add(riversRef.putFile(imageUri));
                             uploadTask.addOnCompleteListener(command -> {
                                 riversRef.getDownloadUrl().addOnCompleteListener(command1 -> {
                                     MessageDTO temp = new MessageDTO(messageDTO.getImgRes(), messageDTO.getNickname(), command1.getResult()+"", currentTime, true);
