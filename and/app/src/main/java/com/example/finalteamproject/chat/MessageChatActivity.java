@@ -33,6 +33,7 @@ import com.example.finalteamproject.common.RetrofitClient;
 import com.example.finalteamproject.common.RetrofitInterface;
 import com.example.finalteamproject.databinding.ActivityMessageChatBinding;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -265,23 +266,25 @@ public class MessageChatActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "사진은 10장까지 선택 가능합니다.", Toast.LENGTH_LONG).show();
                     }
                     else{   // 선택한 이미지가 1장 이상 10장 이하인 경우
-                        String uuid = UUID.randomUUID().toString();
-
+                        String itemName = messageDTO.getNickname();
+                        messageId = databaseReference.child("chat").child(itemName).push().getKey();
                         for (int i = 0; i < clipData.getItemCount(); i++){
+                            String uuid = UUID.randomUUID().toString();
                             storage = FirebaseStorage.getInstance();
                             StorageReference storageRef = storage.getReference();
                             StorageReference riversRef = storageRef.child(CommonVar.logininfo.getMember_id()+"/"+uuid+".jpg");
                             Uri imageUri = clipData.getItemAt(i).getUri();  // 선택한 이미지들의 uri를 가져온다.
                             UploadTask uploadTask = riversRef.putFile(imageUri);
-                            try {
-                                InputStream in = getContentResolver().openInputStream(data.getData());
-                                Bitmap img = BitmapFactory.decodeStream(in);
-                                in.close();
-//                                MessageDTO temp = new MessageDTO(messageDTO.getImgRes(), messageDTO.getNickname(), imageUri +"", currentTime, true);
-//                                databaseReference.child("chat").child(messageDTO.getNickname()).child(messageId).setValue(temp);
-//                                adapter.notifyDataSetChanged();
-                            } catch (Exception e) {
-                            }
+                            uploadTask.addOnCompleteListener(command -> {
+                                riversRef.getDownloadUrl().addOnCompleteListener(command1 -> {
+                                    MessageDTO temp = new MessageDTO(messageDTO.getImgRes(), messageDTO.getNickname(), command1.getResult()+"", currentTime, true);
+                                    databaseReference.child("chat").child(messageDTO.getNickname()).child(messageId).setValue(temp);
+                                    adapter = new MessageChatAdapter(getlist(), this, isChatCheck);
+                                    binding.recvMessageChat.setAdapter(adapter);
+                                    binding.recvMessageChat.setLayoutManager(new LinearLayoutManager(this));
+                                });
+
+                            });
                             uploadTask.addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
@@ -290,9 +293,7 @@ public class MessageChatActivity extends AppCompatActivity {
                             });
                         }
 
-                        adapter = new MessageChatAdapter(getlist(), this, isChatCheck);
-                        binding.recvMessageChat.setAdapter(adapter);
-                        binding.recvMessageChat.setLayoutManager(new LinearLayoutManager(this));
+
                     }
                 }
             }
