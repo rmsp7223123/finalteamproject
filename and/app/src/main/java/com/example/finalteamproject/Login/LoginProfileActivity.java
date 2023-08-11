@@ -61,7 +61,7 @@ public class LoginProfileActivity extends AppCompatActivity {
             if(num==1){
                 //갤러리
                 RequestBody fileBody = RequestBody.create(MediaType.parse("image/jpeg"), new File(img_path));
-                MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", "test.jpg", fileBody);
+                MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", "asd.jpg", fileBody);
                 RetrofitInterface api = new RetrofitClient().retrofitLogin().create(RetrofitInterface.class);
                 HashMap<String, RequestBody> map = new HashMap<>();
                 map.put("member_id", RequestBody.create(MediaType.parse("multipart/form-data"), LoginVar.id));

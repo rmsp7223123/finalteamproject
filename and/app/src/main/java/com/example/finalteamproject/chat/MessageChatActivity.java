@@ -45,6 +45,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.InputStream;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -267,18 +268,23 @@ public class MessageChatActivity extends AppCompatActivity {
                     }
                     else{   // 선택한 이미지가 1장 이상 10장 이하인 경우
 
-
+                        ArrayList<UploadTask> upload = new ArrayList<>();
+                        storage = FirebaseStorage.getInstance();
+                        StorageReference storageRef = storage.getReference();
                         for (int i = 0; i < clipData.getItemCount(); i++){
                             String itemName = messageDTO.getNickname();
-                            messageId = databaseReference.child("chat").child(itemName).push().getKey();
                             String uuid = UUID.randomUUID().toString();
-                            storage = FirebaseStorage.getInstance();
-                            StorageReference storageRef = storage.getReference();
+
+
                             StorageReference riversRef = storageRef.child(CommonVar.logininfo.getMember_id()+"/"+uuid+".jpg");
                             Uri imageUri = clipData.getItemAt(i).getUri();  // 선택한 이미지들의 uri를 가져온다.
-                            UploadTask uploadTask = riversRef.putFile(imageUri);
-                            uploadTask.addOnCompleteListener(command -> {
-                                riversRef.getDownloadUrl().addOnCompleteListener(command1 -> {
+
+                            final int tempIdx = i;
+                            upload.add(riversRef.putFile(imageUri));
+                            upload.get(tempIdx).addOnCompleteListener(command -> {
+
+                                upload.get(tempIdx).getResult().getStorage().getDownloadUrl().addOnCompleteListener(command1 -> {
+                                    messageId = databaseReference.child("chat").child(itemName).push().getKey();
                                     MessageDTO temp = new MessageDTO(messageDTO.getImgRes(), messageDTO.getNickname(), command1.getResult()+"", currentTime, true);
                                     databaseReference.child("chat").child(messageDTO.getNickname()).child(messageId).setValue(temp);
                                     adapter = new MessageChatAdapter(getlist(), this, isChatCheck);
@@ -286,12 +292,6 @@ public class MessageChatActivity extends AppCompatActivity {
                                     binding.recvMessageChat.setLayoutManager(new LinearLayoutManager(this));
                                 });
 
-                            });
-                            uploadTask.addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(MessageChatActivity.this, "사진이 정상적으로 업로드되지 않았습니다.", Toast.LENGTH_SHORT).show();
-                                }
                             });
                         }
 
