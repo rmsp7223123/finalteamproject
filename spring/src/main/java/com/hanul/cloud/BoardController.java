@@ -28,6 +28,10 @@ import cloud.member.FavorBoardVO;
 public class BoardController {
 	@Autowired @Qualifier("project") SqlSession sql;
 	
+	@Autowired
+	private cloud.common.CommonUtility common;
+	
+	
 	//게시물 검색
 	@RequestMapping(value="/list", produces = "text/html;charset=utf-8")
 	public String list(String context, String favor, String align) {		
@@ -62,6 +66,22 @@ public class BoardController {
 	@RequestMapping(value="/insert", produces = "text/html;charset=utf-8")
 	public String insert(FavorBoardVO vo) {
 		return sql.insert("board.insert", vo)==1 ? "성공" : "실패";
+	}
+	
+	//새 게시글 작성 + 파일첨부
+	@RequestMapping(value="/insertFile", produces = "text/html;charset=utf-8" )
+	public String list(HttpServletRequest req) { 
+		
+		MultipartRequest mReq = (MultipartRequest) req; //file정보가 없는 req => 있는 mReq
+		MultipartFile file = mReq.getFile("file");
+		String newImagePath = common.fileUpload("boardImage", file, req);
+		HashMap<String, Object>paramMap = new HashMap<String, Object>();
+		paramMap.put("fav_board_title", req.getParameter("fav_board_title"));
+		paramMap.put("fav_board_content", req.getParameter("fav_board_content"));
+		paramMap.put("writer", req.getParameter("writer"));
+		paramMap.put("favor", req.getParameter("favor"));
+		paramMap.put("fav_board_img", newImagePath);
+		return new Gson().toJson(sql.insert("board.insert",paramMap) ==1 ? "성공" : "실패");
 	}
 	
 	//게시글 아이디로 게시글 불러오기
@@ -125,6 +145,11 @@ public class BoardController {
 	//게시물 삭제
 	@RequestMapping(value="/deleteBoard", produces = "text/html;charset=utf-8")
 	public String deleteBoard(int id) {
+		int fav_board_id = id;
+		FavorBoardVO vo = sql.selectOne("board.select", fav_board_id);
+		if(vo.getFav_board_img()!=null) {
+			common.deleteFile(vo.getFav_board_img());
+		}
 		String result = sql.delete("board.deleteBoard", id)==1 ? "성공" : "실패";
 		return result;
 	}
@@ -169,10 +194,10 @@ public class BoardController {
 	
 	//댓글 수정하기
 	@RequestMapping(value="/updateComment", produces = "text/html;charset=utf-8")
-	public String updateCommnet(String fav_board_comment_id, String fav_board_comment_content) {
-		HashMap<String, String> paramMap = new HashMap<String, String>();
-		paramMap.put("fav_board_id", fav_board_comment_id);
-		paramMap.put("align", fav_board_comment_content);
+	public String updateCommnet(int fav_board_comment_id, String fav_board_comment_content) {
+		HashMap<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("fav_board_comment_id", fav_board_comment_id);
+		paramMap.put("fav_board_comment_content", fav_board_comment_content);
 		String result = sql.update("board.updateComment", paramMap)==1 ? "성공" : "실패";
 		return result;
 	}

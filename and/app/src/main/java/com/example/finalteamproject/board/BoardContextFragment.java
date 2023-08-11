@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
@@ -61,11 +62,6 @@ public class BoardContextFragment extends Fragment {
         conn.onExcute((isResult, data) -> {
             FavorBoardVO vo = new Gson().fromJson(data, FavorBoardVO.class);
             if(vo!=null){
-//                CommonConn conn1 = new CommonConn(this.getContext(), "board/selectFavor");
-//                conn1.addParamMap("fav_board_id", fav_board_id);
-//                conn1.onExcute((isResult1, data1) -> {
-//                    binding.tvBoardName.setText(data1);
-//                });
                 if(CommonVar.logininfo.getMember_id().equals(vo.writer)){
                     binding.tvModify.setVisibility(View.VISIBLE);
                     binding.tvDelete.setVisibility(View.VISIBLE);
@@ -78,6 +74,11 @@ public class BoardContextFragment extends Fragment {
                 binding.tvDate.setText(vo.fav_board_writedate);
                 binding.tvView.setText("조회수 : "+vo.fav_board_writecount);
                 binding.tvContent.setText(vo.fav_board_content);
+                if(vo.fav_board_img!=null){
+                    Glide.with(this).load(vo.fav_board_img).into(binding.imgvImg);
+                }else {
+                    binding.imgvImg.setVisibility(View.GONE);
+                }
                 CommonConn conn2 = new CommonConn(getContext(), "board/rec");
                 conn2.addParamMap("id", fav_board_id);
                 conn2.onExcute((isResult1, data1) -> {
@@ -101,7 +102,7 @@ public class BoardContextFragment extends Fragment {
                     }
                 });
             }else {
-                Toast.makeText(activity, "오류로 게시글 불러오기를 실패하였습니다", Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, "게시글 불러오기를 실패하였습니다", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -170,7 +171,7 @@ public class BoardContextFragment extends Fragment {
                 BoardCommonVar.board_comment_align = list[i];
                 CommonConn conn1 = new CommonConn(getContext(), "board/commentList");
                 conn1.addParamMap("fav_board_id", fav_board_id);
-                conn1.addParamMap("align", BoardCommonVar.board_align);
+                conn1.addParamMap("align", BoardCommonVar.board_comment_align);
                 conn1.onExcute((isResult, data) -> {
                     List<FavorBoardCommentVO> list = new Gson().fromJson(data, new TypeToken<List<FavorBoardCommentVO>>(){}.getType());
                     if(list.size()!=0){
@@ -195,6 +196,7 @@ public class BoardContextFragment extends Fragment {
             if(binding.lnNewComment.getVisibility()==View.GONE){
                 binding.lnNewComment.setVisibility(View.VISIBLE);
                 binding.tvCommentWriter.setText(CommonVar.logininfo.getMember_nickname());
+                binding.edtCommentContent.setText("");
             }else {
                 if(binding.edtCommentContent.getText().toString().length()<1){
                     Toast.makeText(activity, "내용을 입력하세요", Toast.LENGTH_SHORT).show();
@@ -210,7 +212,7 @@ public class BoardContextFragment extends Fragment {
                             Toast.makeText(activity, "댓글 등록 성공", Toast.LENGTH_SHORT).show();
                             CommonConn conn2 = new CommonConn(getContext(), "board/commentList");
                             conn2.addParamMap("fav_board_id", fav_board_id);
-                            conn2.addParamMap("align", BoardCommonVar.board_align);
+                            conn2.addParamMap("align", BoardCommonVar.board_comment_align);
                             conn2.onExcute((isResult1, data1) -> {
                                 List<FavorBoardCommentVO> list = new Gson().fromJson(data1, new TypeToken<List<FavorBoardCommentVO>>(){}.getType());
                                 if(list.size()!=0){

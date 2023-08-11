@@ -78,5 +78,10 @@ public class SettingController {
 	public String deletePw(String member_id) {
 		return new Gson().toJson(sql.update("setting.deletePw", member_id));
 	}
+	
+	@RequestMapping("/deletePattern")
+	public String deletePattern(String member_id) {
+		return new Gson().toJson(sql.update("setting.deletePattern", member_id));
+	}
 
 }

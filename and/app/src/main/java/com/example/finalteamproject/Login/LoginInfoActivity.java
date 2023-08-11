@@ -90,9 +90,9 @@ public class LoginInfoActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (Pattern.compile("[A-Z$@$!%*#?&]").matcher(binding.edtId.getText().toString()).find()){
+                if (Pattern.compile("[A-Z$@$!%*#?&가-힣]").matcher(binding.edtId.getText().toString()).find()){
                     binding.tvIdAlert.setVisibility(View.VISIBLE);
-                    binding.tvIdAlert.setText("대문자와 특수문자 미포함");
+                    binding.tvIdAlert.setText("영문, 숫자 외의 다른 문자 미포함");
                 }else if(!Pattern.compile("[0-9]").matcher(binding.edtId.getText().toString()).find()){
                     binding.tvIdAlert.setVisibility(View.VISIBLE);
                     binding.tvIdAlert.setText("숫자 1글자 이상");
@@ -157,7 +157,10 @@ public class LoginInfoActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(!Pattern.compile("[0-9]").matcher(binding.edtPw.getText().toString()).find()){
+                if (Pattern.compile("[가-힣]").matcher(binding.edtPw.getText().toString()).find()){
+                    binding.tvPwAlert.setVisibility(View.VISIBLE);
+                    binding.tvPwAlert.setText("영문, 숫자, 특수문자 외의 다른 문자 미포함");
+                }if(!Pattern.compile("[0-9]").matcher(binding.edtPw.getText().toString()).find()){
                     binding.tvPwAlert.setVisibility(View.VISIBLE);
                     binding.tvPwAlert.setText("숫자 1글자 이상");
                 }else if(!Pattern.compile("[a-z]").matcher(binding.edtPw.getText().toString()).find()){
@@ -211,11 +214,11 @@ public class LoginInfoActivity extends AppCompatActivity {
                 binding.edtName.requestFocus();
                 manager.showSoftInput(binding.edtName, InputMethodManager.SHOW_IMPLICIT);
             }else if(binding.tvNicknameCheck.getVisibility()==View.VISIBLE){
-                Toast.makeText(this, "닉네임을 입력해주세요", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "닉네임을 중복확인을 완료해주세요", Toast.LENGTH_SHORT).show();
                 binding.edtNickname.requestFocus();
                 manager.showSoftInput(binding.edtNickname, InputMethodManager.SHOW_IMPLICIT);
             }else if(binding.tvIdCheck.getVisibility()==View.VISIBLE){
-                Toast.makeText(this, "아이디를 입력해주세요", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "아이디를 중복확인을 완료해주세요", Toast.LENGTH_SHORT).show();
                 binding.edtId.requestFocus();
                 manager.showSoftInput(binding.edtId, InputMethodManager.SHOW_IMPLICIT);
             }else if(binding.edtPw.getText().toString().length()<1||binding.tvPwAlert.getVisibility()==View.VISIBLE){

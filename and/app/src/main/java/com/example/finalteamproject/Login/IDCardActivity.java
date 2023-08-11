@@ -17,6 +17,7 @@ import android.content.pm.Signature;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.finalteamproject.R;
+import com.example.finalteamproject.common.ProgressDialog;
 import com.example.finalteamproject.databinding.ActivityIdcardBinding;
 import com.example.finalteamproject.main.MainActivity;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
@@ -179,10 +181,17 @@ public class IDCardActivity extends AppCompatActivity {
             if (activity != null && !activity.isFinishing()) {
                 TextView tv_result = activity.findViewById(R.id.edt_rgNumber);
                 try {
-                    name = result.substring(result.indexOf("증")+2, result.indexOf("("));
-                    birth = result.substring(result.indexOf("-")-6, result.indexOf("-"));
-                    gender = Integer.parseInt(result.substring(result.indexOf("-")+1, result.indexOf("-")+2))%2==1 ? "남" : "여";
-                    tv_result.setText(result.substring(result.indexOf("-")-6, result.indexOf("-")+2));
+                    if(result.contains("주민등록증")){
+                        name = result.substring(result.indexOf("증")+2, result.indexOf("("));
+                        birth = result.substring(result.indexOf("-")-6, result.indexOf("-"));
+                        gender = Integer.parseInt(result.substring(result.indexOf("-")+1, result.indexOf("-")+2))%2==1 ? "남" : "여";
+                        tv_result.setText(result.substring(result.indexOf("-")-6, result.indexOf("-")+2));
+                    }else if(result.contains("자동차운전면허증")){
+                        name = result.substring(result.indexOf("-", 115)+3, result.indexOf("-", 123)-6);
+                        birth = result.substring(result.indexOf("-", 123)-6, result.indexOf("-", 123));
+                        gender = Integer.parseInt(result.substring(result.indexOf("-", 123)+1, result.indexOf("-", 123)+2))%2==1 ? "남" : "여";
+                        tv_result.setText(result.substring(result.indexOf("-", 123)-6, result.indexOf("-", 123)+2));
+                    }
                 }catch (Exception e) {
                     Toast.makeText(activity, "신분증을 선택해주세요", Toast.LENGTH_SHORT).show();
                 }

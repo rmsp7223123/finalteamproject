@@ -4,13 +4,17 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.ClipData;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -24,22 +28,31 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.finalteamproject.FirebaseMessageReceiver;
 import com.example.finalteamproject.R;
+import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.common.RetrofitClient;
 import com.example.finalteamproject.common.RetrofitInterface;
 import com.example.finalteamproject.databinding.ActivityMessageChatBinding;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.io.InputStream;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -64,11 +77,21 @@ public class MessageChatActivity extends AppCompatActivity {
 
     private static final int SPEECH_REQUEST_CODE = 0;
 
+    MessageChatAdapter adapter;
+
+    ArrayList<Uri> uriList = new ArrayList<>();
+
+    SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+    String currentTime = dateFormat.format(new Date());
+
+    private FirebaseStorage storage;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMessageChatBinding.inflate(getLayoutInflater());
-        MessageChatAdapter adapter = new MessageChatAdapter(getlist(), this, isChatCheck);
+        adapter = new MessageChatAdapter(getlist(), this, isChatCheck);
         setContentView(binding.getRoot());
         binding.imgvBack.setOnClickListener(v -> {
             finish();
@@ -82,10 +105,7 @@ public class MessageChatActivity extends AppCompatActivity {
         binding.imgvProfileImg.setImageResource(messageDTO.getImgRes());
         binding.recvMessageChat.setAdapter(adapter);
         binding.recvMessageChat.setLayoutManager(new LinearLayoutManager(this));
-
         binding.imgvSend.setOnClickListener(v -> {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
-            String currentTime = dateFormat.format(new Date());
             String messageText = binding.edtMessage.getText().toString();
             if (!messageText.isEmpty()) {
                 // String name = getIntent().getStringExtra("nickname");
@@ -113,6 +133,10 @@ public class MessageChatActivity extends AppCompatActivity {
                 MessageDTO MessageDTO = dataSnapshot.getValue(MessageDTO.class);
                 MessageDTO.setImgRes(messageDTO.getImgRes());
                 adapter.addData(MessageDTO);
+                int position = adapter.getItemCount() - 1;
+                if (position >= 0) {
+                    binding.recvMessageChat.scrollToPosition(position);
+                }
             }
 
             @Override
@@ -182,34 +206,45 @@ public class MessageChatActivity extends AppCompatActivity {
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
-                Glide.with(MessageChatActivity.this).load(camera_uri).into(binding.imgvProfileImg);
-                File file = new File(getRealPath(camera_uri));
-                if (file != null) {
-                    RequestBody fileBody = RequestBody.create(MediaType.parse("image/jpeg"), file);
-                    MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", "test.jpg", fileBody);
-                    RetrofitInterface api = new RetrofitClient().retrofitLogin().create(RetrofitInterface.class);
-                    api.clientSendFile("file.f", new HashMap<>(), filePart).enqueue(new Callback<String>() {
-                        @Override
-                        public void onResponse(Call<String> call, Response<String> response) {
-
-                        }
-
-                        @Override
-                        public void onFailure(Call<String> call, Throwable t) {
-
-                        }
-                    });
-                }
+                MessageDTO messageDTO = (MessageDTO) getIntent().getSerializableExtra("dto");
+                handleCameraImage(camera_uri, messageDTO);
             }
         });
     }
 
-    public String getRealPath(Uri contentUri){
+    private void handleCameraImage(Uri cameraImageUri, MessageDTO messageDTO) {
+        storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+
+        String itemName = messageDTO.getNickname();
+        String uuid = UUID.randomUUID().toString();
+        StorageReference riversRef = storageRef.child(CommonVar.logininfo.getMember_id() + "/" + uuid + ".jpg");
+
+        riversRef.putFile(cameraImageUri).addOnSuccessListener(taskSnapshot -> {
+            // 이미지 업로드 성공
+            riversRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                String imageUrl = uri.toString();
+                String currentTime = dateFormat.format(new Date());
+
+                // 채팅 메시지에 이미지 URL 추가
+                messageId = databaseReference.child("chat").child(itemName).push().getKey();
+                MessageDTO temp = new MessageDTO(messageDTO.getImgRes(), messageDTO.getNickname(), imageUrl, currentTime, true);
+                databaseReference.child("chat").child(messageDTO.getNickname()).child(messageId).setValue(temp);
+
+                // 어댑터 갱신 등의 필요한 작업 수행
+//                adapter.addData(temp);
+//                binding.recvMessageChat.scrollToPosition(adapter.getItemCount() - 1);
+                adapter.notifyDataSetChanged();
+            });
+        });
+    }
+
+    public String getRealPath(Uri contentUri) {
         String res = null;
         String[] proj = {MediaStore.Images.Media.DATA};//
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             Cursor cursor = getContentResolver().query(contentUri, proj, null, null);
-            if(cursor.moveToFirst()){
+            if (cursor.moveToFirst()) {
                 int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
                 res = cursor.getString(column_index);
             }
@@ -218,44 +253,67 @@ public class MessageChatActivity extends AppCompatActivity {
         return res;
     }
 
-    public void showGallery(){
+    public void showGallery() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_PICK);
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
         startActivityForResult(intent, REQ_GALLERY);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == SPEECH_REQUEST_CODE && resultCode == RESULT_OK) {
-            List<String> results = data.getStringArrayListExtra(
-                    RecognizerIntent.EXTRA_RESULTS);
-            String spokenText = results.get(0);
-        }
-        if(requestCode==REQ_GALLERY && resultCode ==RESULT_OK){
-            Glide.with(this).load(data.getData()).into(binding.imgvProfileImg);
-            String img_path = getRealPath(data.getData());
+        MessageDTO messageDTO = (MessageDTO) getIntent().getSerializableExtra("dto");
+        if (requestCode == REQ_GALLERY) {
+            if (data == null) {   // 어떤 이미지도 선택하지 않은 경우
+                Toast.makeText(getApplicationContext(), "이미지를 선택하지 않았습니다.", Toast.LENGTH_LONG).show();
+            } else {   // 이미지를 하나라도 선택한 경우
+                if (data.getClipData() == null) {     // 이미지를 하나만 선택한 경우
+                    Uri imageUri = data.getData();
 
-            //MultiPart 형태로 전송 (File)
-            RequestBody fileBody = RequestBody.create(MediaType.parse("image/jpeg"), new File(img_path));
-            MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", "test.jpg", fileBody);
-            RetrofitInterface api = new RetrofitClient().retrofitLogin().create(RetrofitInterface.class);
-            api.clientSendFile("file.f", new HashMap<>(), filePart).enqueue(new Callback<String>() {
-                @Override
-                public void onResponse(Call<String> call, Response<String> response) {
+                } else {      // 이미지를 여러장 선택한 경우
+                    ClipData clipData = data.getClipData();
 
+                    if (clipData.getItemCount() > 10) {   // 선택한 이미지가 11장 이상인 경우
+                        Toast.makeText(getApplicationContext(), "사진은 10장까지 선택 가능합니다.", Toast.LENGTH_LONG).show();
+                    } else {   // 선택한 이미지가 1장 이상 10장 이하인 경우
+
+                        ArrayList<UploadTask> upload = new ArrayList<>();
+                        storage = FirebaseStorage.getInstance();
+                        StorageReference storageRef = storage.getReference();
+                        for (int i = 0; i < clipData.getItemCount(); i++) {
+                            String itemName = messageDTO.getNickname();
+                            String uuid = UUID.randomUUID().toString();
+
+
+                            StorageReference riversRef = storageRef.child(CommonVar.logininfo.getMember_id() + "/" + uuid + ".jpg");
+                            Uri imageUri = clipData.getItemAt(i).getUri();  // 선택한 이미지들의 uri를 가져온다.
+
+                            final int tempIdx = i;
+                            upload.add(riversRef.putFile(imageUri));
+                            upload.get(tempIdx).addOnCompleteListener(command -> {
+
+                                upload.get(tempIdx).getResult().getStorage().getDownloadUrl().addOnCompleteListener(command1 -> {
+                                    messageId = databaseReference.child("chat").child(itemName).push().getKey();
+                                    MessageDTO temp = new MessageDTO(messageDTO.getImgRes(), messageDTO.getNickname(), command1.getResult() + "", currentTime, true);
+                                    databaseReference.child("chat").child(messageDTO.getNickname()).child(messageId).setValue(temp);
+                                    adapter = new MessageChatAdapter(getlist(), this, isChatCheck);
+                                    binding.recvMessageChat.setAdapter(adapter);
+                                    binding.recvMessageChat.setLayoutManager(new LinearLayoutManager(this));
+                                });
+
+                            });
+                        }
+
+
+                    }
                 }
-
-                @Override
-                public void onFailure(Call<String> call, Throwable t) {
-
-                }
-            });
+            }
         }
     }
 
-    public void showCamera(){
+    public void showCamera() {
         //ContentResolver(). 앱 ---> 컨텐트리졸버(작업자) ---> 미디어 저장소
 //        ContentValues values = new ContentValues();
 //        values.describeContents()

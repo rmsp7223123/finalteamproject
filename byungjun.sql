@@ -131,3 +131,27 @@ commit;
 insert into option_table (option_lock_pw, member_id) values ('1234', 'ansquwdns9811');
 
 select * from option_table;
+
+SELECT M.*
+		FROM ( SELECT
+		MEMBER_ID
+		FROM FAVOR
+		WHERE MEMBER_ID != '123qwe'
+		AND
+		FAVOR IN ( SELECT
+		FAVOR
+		FROM FAVOR
+		WHERE MEMBER_ID='123qwe'
+		)
+		GROUP BY
+		MEMBER_ID ) F
+		INNER JOIN MEMBER M ON F.MEMBER_ID = M.MEMBER_ID;
+        
+        commit;
+        
+CREATE TABLE FRIEND_LIST(
+    member_id nvarchar2(30) constraint friend_pk primary key ,
+    friend_id nvarchar2(30),
+    constraint friend_member_fk foreign key(member_id) references member(member_id) on delete cascade,
+    constraint friend_friend_fk foreign key(friend_id) references member(member_id) on delete cascade
+);

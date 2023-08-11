@@ -12,6 +12,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
@@ -33,6 +34,7 @@ import com.example.finalteamproject.Login.LoginVar;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
+//import com.example.finalteamproject.common.RetrofitClient;
 import com.example.finalteamproject.common.RetrofitClient;
 import com.example.finalteamproject.common.RetrofitInterface;
 import com.example.finalteamproject.databinding.FragmentNewBoardBinding;
@@ -51,17 +53,44 @@ import retrofit2.Response;
 
 public class NewBoardFragment extends Fragment {
 
+
+    ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        @Override
+        public void onActivityResult(ActivityResult result) {
+            if(result.getResultCode() == -1){
+                //액티비티(카메라 액티비티)가 종료되면 콜백으로 데이터를 받는 부분. (기존에는 onActivityResult메소드가 실행되었고 현재는 해당 메소드)
+                 binding.rlPic.setVisibility(View.VISIBLE);
+                 Glide.with(getActivity()).load(camera_uri).into(binding.imgvPic);
+                 num = 2;
+                 file = new File(getRealPath(camera_uri));
+
+            }
+        }
+    });
     MainActivity activity;
     FragmentNewBoardBinding binding;
     String board_name;
     String align;
-    private final int REQ_GALLERY = 1000;
-    ActivityResultLauncher<Intent> launcher;
+    private final int REQ_GALLERY = 1000, REQ_CAMERA = 2000;
+//    ActivityResultLauncher<Intent>        launcher  = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+//        @Override
+//        public void onActivityResult(ActivityResult result) {
+//            //액티비티(카메라 액티비티)가 종료되면 콜백으로 데이터를 받는 부분. (기존에는 onActivityResult메소드가 실행되었고 현재는 해당 메소드)
+//        }
+//    });
     static int num;
     static String img_path = null;
     static Uri camera_uri = null;
     File file = null;
     String[] list = {"TV", "음악", "영화", "패션", "동물", "뉴스", "자동차", "운동", "게임"};
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
+    }
 
     public NewBoardFragment(Activity activity, String board_name, String align) {
         this.board_name = board_name;
@@ -124,41 +153,89 @@ public class NewBoardFragment extends Fragment {
                 conn.addParamMap("favor", board_name);
                 conn.onExcute((isResult, data) -> {
                     if(Integer.parseInt(data)>0){
-                        CommonConn conn1 = new CommonConn(this.getContext(), "board/insert");
-                        conn1.addParamMap("fav_board_title", binding.edtTitle.getText().toString());
-                        conn1.addParamMap("fav_board_content", binding.edtContent.getText().toString());
-                        conn1.addParamMap("writer", CommonVar.logininfo.getMember_id());
-                        conn1.addParamMap("favor", Integer.parseInt(data));
-                        conn1.onExcute((isResult1, data1) -> {
-                            if (data1.equals("성공")) {
-                                activity.changeFragment(this, activity);
-                                Toast.makeText(activity, "게시글 등록 성공", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(activity, "게시글 등록 실패", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        if(num==1){
+                            //갤러리
+                            RequestBody fileBody = RequestBody.create(MediaType.parse("image/jpeg"), new File(img_path));
+                            MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", "gallery.jpg", fileBody);
+                            RetrofitInterface api = new RetrofitClient().retrofitLogin().create(RetrofitInterface.class);
+                            HashMap<String, RequestBody> map = new HashMap<>();
+                            map.put("fav_board_title", RequestBody.create(MediaType.parse("multipart/form-data"), binding.edtTitle.getText().toString()));
+                            map.put("fav_board_content", RequestBody.create(MediaType.parse("multipart/form-data"), binding.edtContent.getText().toString()));
+                            map.put("writer", RequestBody.create(MediaType.parse("multipart/form-data"), CommonVar.logininfo.getMember_id()));
+                            map.put("favor", RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(Integer.parseInt(data))));
+                            api.clientSendFile("board/insertFile", map, filePart).enqueue(new Callback<String>() {
+                                @Override
+                                public void onResponse(Call<String> call, Response<String> response) {
+                                    if(response.body().equals("성공")){
+                                        Toast.makeText(NewBoardFragment.this.getContext(), "게시글 등록 성공", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(NewBoardFragment.this.getContext(), LoginFavorActivity.class);
+                                        startActivity(intent);
+                                    }else {
+                                        Toast.makeText(NewBoardFragment.this.getContext(), "게시글 등록 실패", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                                @Override
+                                public void onFailure(Call<String> call, Throwable t) {
+                                    Toast.makeText(NewBoardFragment.this.getContext(), "게시글 등록 실패", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }else if(num==2){
+                            //카메라
+                            RequestBody fileBody = RequestBody.create(MediaType.parse("image/jpeg"), file);
+                            MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", "camera.jpg", fileBody);
+                            RetrofitInterface api = new RetrofitClient().retrofitLogin().create(RetrofitInterface.class);
+                            HashMap<String, RequestBody> map = new HashMap<>();
+                            map.put("fav_board_title", RequestBody.create(MediaType.parse("multipart/form-data"), binding.edtTitle.getText().toString()));
+                            map.put("fav_board_content", RequestBody.create(MediaType.parse("multipart/form-data"), binding.edtContent.getText().toString()));
+                            map.put("writer", RequestBody.create(MediaType.parse("multipart/form-data"), CommonVar.logininfo.getMember_id()));
+                            map.put("favor", RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(Integer.parseInt(data))));
+                            api.clientSendFile("board/insertFile", map, filePart).enqueue(new Callback<String>() {
+                                @Override
+                                public void onResponse(Call<String> call, Response<String> response) {
+                                    if(response.body().equals("성공")){
+                                        Toast.makeText(NewBoardFragment.this.getContext(), "게시글 등록 성공", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(NewBoardFragment.this.getContext(), LoginFavorActivity.class);
+                                        startActivity(intent);
+                                    }else {
+                                        Toast.makeText(NewBoardFragment.this.getContext(), "게시글 등록 실패", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                                @Override
+                                public void onFailure(Call<String> call, Throwable t) {
+                                    Toast.makeText(NewBoardFragment.this.getContext(), "게시글 등록 실패", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }else {
+                            CommonConn conn1 = new CommonConn(this.getContext(), "board/insert");
+                            conn1.addParamMap("fav_board_title", binding.edtTitle.getText().toString());
+                            conn1.addParamMap("fav_board_content", binding.edtContent.getText().toString());
+                            conn1.addParamMap("writer", CommonVar.logininfo.getMember_id());
+                            conn1.addParamMap("favor", Integer.parseInt(data));
+                            conn1.onExcute((isResult1, data1) -> {
+                                if (data1.equals("성공")) {
+                                    activity.changeFragment(this, activity);
+                                    Toast.makeText(activity, "게시글 등록 성공", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(activity, "게시글 등록 실패", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
                     }
                 });
             }
             });
 
+        binding.imgvDelete.setOnClickListener(v -> {
+            binding.rlPic.setVisibility(View.GONE);
+            Toast.makeText(activity, "이미지가 삭제되었습니다", Toast.LENGTH_SHORT).show();
+            img_path = null;
+            file = null;
+            num=0;
+        });
+
 
         return binding.getRoot();
     }
-
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-//            @Override
-//            public void onActivityResult(ActivityResult result) {
-//                //액티비티(카메라 액티비티)가 종료되면 콜백으로 데이터를 받는 부분. (기존에는 onActivityResult메소드가 실행되었고 현재는 해당 메소드)
-//                Glide.with(NewBoardFragment.this).load(camera_uri).into(binding.imgvPic);
-//                num = 2;
-//                file = new File(getRealPath(camera_uri));
-//            }
-//        });
-//    }
 
     public void showDialog(){
         String[] dialog_item = {"갤러리", "카메라"};
@@ -187,10 +264,35 @@ public class NewBoardFragment extends Fragment {
 
     public void showCamera(){
         camera_uri = getActivity().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new ContentValues());
-//        camera_uri = applicationContext.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new ContentValues());
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, camera_uri);
         launcher.launch(cameraIntent);
+       // camera_uri = getActivity().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new ContentValues());
+        //Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+      //  startActivityForResult(cameraIntent, REQ_CAMERA);
+       // cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, camera_uri);
+//        launcher.launch(cameraIntent);
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==REQ_GALLERY && resultCode==getActivity().RESULT_OK){
+            binding.rlPic.setVisibility(View.VISIBLE);
+            //갤러리 액티비티가 종료되었다. (사용자가 사진을 선택했는지?)
+            Log.d("갤러리", "onActivityResult: "+data.getData());
+            Log.d("갤러리", "onActivityResult: "+data.getData().getPath());
+            Glide.with(this).load(data.getData()).into(binding.imgvPic);//갤러리 이미지가 잘붙는지?
+            img_path = getRealPath(data.getData());
+            num = 1;
+        }
+//        else if(requestCode==REQ_CAMERA && resultCode==getActivity().RESULT_OK){
+//            binding.rlPic.setVisibility(View.VISIBLE);
+//            Glide.with(this).load(file).into(binding.imgvPic);
+//            file = new File(getRealPath(camera_uri));
+//            num = 2;
+//        }
     }
 
 

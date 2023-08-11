@@ -60,6 +60,7 @@ public class LoginCheckActivity extends AppCompatActivity {
                         editor.putString("loginInfo", binding.edtId.getText().toString());
                         editor.commit();
                         Intent intent = new Intent(this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                     }else {
                         Toast.makeText(this, "로그인 실패\n아이디나 비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show();
