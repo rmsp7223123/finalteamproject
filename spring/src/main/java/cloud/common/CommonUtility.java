@@ -21,7 +21,7 @@ import cloud.member.MemberVO;
 public class CommonUtility {
 	// http://192.168.0.87:8080/cloud/imgs/profileImage/ansqudwns12.jpg
 	// rootPath/profileImage/ansqudwns12.jpg
-	public static String rootPath = "D:\\finalteamproject\\images\\";
+	public static String rootPath = "C:\\finalteamproject\\images\\";
 //	public static String rootPath = "http://192.168.0.87:8080/cloud/images/";
 	
 
@@ -51,7 +51,7 @@ public class CommonUtility {
 	// 파일 삭제 메서드
 	public void deleteFile(String filePath) {
 		if (filePath != null) {
-			String newData = filePath.replaceAll("http://192.168.0.87:8080/cloud/imgs/", "");
+			String newData = filePath.replaceAll("http://192.168.219.100:8080/cloud/imgs/", "");
 			File file = new File(rootPath + newData);
 			if (file.exists()) {
 				file.delete();

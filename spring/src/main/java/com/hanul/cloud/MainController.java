@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartRequest;
 
 import com.google.gson.Gson;
 
+import cloud.gps.GpsVO;
 import cloud.member.FavorVO;
 import cloud.member.MemberVO;
 
@@ -49,7 +50,6 @@ public class MainController {
 
 	@RequestMapping("/changeProfile")
 	public String changeProfile(HttpServletRequest req) {
-
 		MemberVO vo = new Gson().fromJson(req.getParameter("dto"), MemberVO.class);
 		MultipartFile file = ((MultipartRequest) req).getFile("file");
 		// 파일저장, 원본파일 삭제, 새로운 파일경로 DB에 업로드
