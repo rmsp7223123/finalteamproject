@@ -49,6 +49,10 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
         binding = FragmentGpsBinding.inflate(inflater, container, false);
 
         //검색 결과
+        binding.lnResult.setVisibility(View.GONE);
+        binding.btnSearch.setOnClickListener(v -> {
+            binding.lnResult.setVisibility(View.VISIBLE);
+        });
         binding.btnClose.setOnClickListener(v -> {
             binding.lnResult.setVisibility(View.GONE);
         });
