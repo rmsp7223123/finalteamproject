@@ -190,6 +190,7 @@ public class BoardContextFragment extends Fragment {
             if(binding.lnNewComment.getVisibility()==View.GONE){
                 binding.lnNewComment.setVisibility(View.VISIBLE);
                 binding.tvCommentWriter.setText(CommonVar.logininfo.getMember_nickname());
+                binding.edtCommentContent.setText("");
             }else {
                 if(binding.edtCommentContent.getText().toString().length()<1){
                     Toast.makeText(activity, "내용을 입력하세요", Toast.LENGTH_SHORT).show();
@@ -205,7 +206,7 @@ public class BoardContextFragment extends Fragment {
                             Toast.makeText(activity, "댓글 등록 성공", Toast.LENGTH_SHORT).show();
                             CommonConn conn2 = new CommonConn(getContext(), "board/commentList");
                             conn2.addParamMap("fav_board_id", fav_board_id);
-                            conn2.addParamMap("align", BoardCommonVar.board_align);
+                            conn2.addParamMap("align", BoardCommonVar.board_comment_align);
                             conn2.onExcute((isResult1, data1) -> {
                                 List<FavorBoardCommentVO> list = new Gson().fromJson(data1, new TypeToken<List<FavorBoardCommentVO>>(){}.getType());
                                 if(list.size()!=0){

@@ -34,6 +34,7 @@ import com.example.finalteamproject.Login.LoginVar;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
+//import com.example.finalteamproject.common.RetrofitClient;
 import com.example.finalteamproject.common.RetrofitClient;
 import com.example.finalteamproject.common.RetrofitInterface;
 import com.example.finalteamproject.databinding.FragmentNewBoardBinding;
@@ -158,28 +159,28 @@ public class NewBoardFragment extends Fragment {
                         conn1.addParamMap("writer", CommonVar.logininfo.getMember_id());
                         conn1.addParamMap("favor", Integer.parseInt(data));
                         if(num==1){
-//                            //갤러리
-//                            RequestBody fileBody = RequestBody.create(MediaType.parse("image/jpeg"), new File(img_path));
-//                            MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", "test.jpg", fileBody);
-//                            RetrofitInterface api = new RetrofitClient().retrofitLogin().create(RetrofitInterface.class);
-//                            HashMap<String, RequestBody> map = new HashMap<>();
-//                            map.put("member_id", RequestBody.create(MediaType.parse("multipart/form-data"), LoginVar.id));
-//                            api.clientSendFile("login/file", map, filePart).enqueue(new Callback<String>() {
-//                                @Override
-//                                public void onResponse(Call<String> call, Response<String> response) {
-//                                    if(response.body().equals("성공")){
-//                                        Toast.makeText(LoginProfileActivity.this, "프로필 이미지 업로드 성공", Toast.LENGTH_SHORT).show();
-//                                        Intent intent = new Intent(LoginProfileActivity.this, LoginFavorActivity.class);
-//                                        startActivity(intent);
-//                                    }else {
-//                                        Toast.makeText(LoginProfileActivity.this, "프로필 이미지 업로드 실패", Toast.LENGTH_SHORT).show();
-//                                    }
-//                                }
-//                                @Override
-//                                public void onFailure(Call<String> call, Throwable t) {
-//                                    Toast.makeText(LoginProfileActivity.this, "프로필 이미지 업로드 실패", Toast.LENGTH_SHORT).show();
-//                                }
-//                            });
+                            //갤러리
+                            RequestBody fileBody = RequestBody.create(MediaType.parse("image/jpeg"), new File(img_path));
+                            MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", "test.jpg", fileBody);
+                            RetrofitInterface api = new RetrofitClient().retrofitLogin().create(RetrofitInterface.class);
+                            HashMap<String, RequestBody> map = new HashMap<>();
+                            map.put("member_id", RequestBody.create(MediaType.parse("multipart/form-data"), LoginVar.id));
+                            api.clientSendFile("login/file", map, filePart).enqueue(new Callback<String>() {
+                                @Override
+                                public void onResponse(Call<String> call, Response<String> response) {
+                                    if(response.body().equals("성공")){
+                                        Toast.makeText(LoginProfileActivity.this, "프로필 이미지 업로드 성공", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(LoginProfileActivity.this, LoginFavorActivity.class);
+                                        startActivity(intent);
+                                    }else {
+                                        Toast.makeText(LoginProfileActivity.this, "프로필 이미지 업로드 실패", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                                @Override
+                                public void onFailure(Call<String> call, Throwable t) {
+                                    Toast.makeText(LoginProfileActivity.this, "프로필 이미지 업로드 실패", Toast.LENGTH_SHORT).show();
+                                }
+                            });
 
                         }else if(num==2){
 
