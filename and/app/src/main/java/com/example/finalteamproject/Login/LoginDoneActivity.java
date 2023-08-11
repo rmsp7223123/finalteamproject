@@ -17,6 +17,7 @@ import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.common.MemberVO;
 import com.example.finalteamproject.databinding.ActivityLoginDoneBinding;
 import com.example.finalteamproject.main.MainActivity;
+import com.google.android.datatransport.runtime.scheduling.jobscheduling.SchedulerConfig;
 import com.google.gson.Gson;
 
 import nl.dionsegijn.konfetti.KonfettiView;
@@ -68,6 +69,7 @@ public class LoginDoneActivity extends AppCompatActivity {
                     editor.putString("loginInfo", LoginVar.id);
                     editor.commit();
                     Intent intent = new Intent(this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 }else {
                     Toast.makeText(this, "로그인 실패", Toast.LENGTH_SHORT).show();

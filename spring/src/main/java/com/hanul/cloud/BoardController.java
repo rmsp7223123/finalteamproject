@@ -169,10 +169,10 @@ public class BoardController {
 	
 	//댓글 수정하기
 	@RequestMapping(value="/updateComment", produces = "text/html;charset=utf-8")
-	public String updateCommnet(String fav_board_comment_id, String fav_board_comment_content) {
-		HashMap<String, String> paramMap = new HashMap<String, String>();
-		paramMap.put("fav_board_id", fav_board_comment_id);
-		paramMap.put("align", fav_board_comment_content);
+	public String updateCommnet(int fav_board_comment_id, String fav_board_comment_content) {
+		HashMap<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("fav_board_comment_id", fav_board_comment_id);
+		paramMap.put("fav_board_comment_content", fav_board_comment_content);
 		String result = sql.update("board.updateComment", paramMap)==1 ? "성공" : "실패";
 		return result;
 	}

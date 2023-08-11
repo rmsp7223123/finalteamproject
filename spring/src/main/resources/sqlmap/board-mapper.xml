@@ -9,7 +9,7 @@
 			and (writer like '%'||#{context}||'%' or fav_board_title like '%'||#{context}||'%' or fav_board_content like '%'||#{context}||'%')
 		<choose>
 			<when test="align == '최신순'">
-				order by f.fav_board_id desc
+				order by f.fav_board_writedate desc
 			</when>
 			<when test="align == '조회순'">
 				order by f.fav_board_writecount desc, f.fav_board_id desc
@@ -22,7 +22,7 @@
 					) desc, fav_board_id desc
 			</when>				
 			<when test="align == '오래된순'">
-				order by fav_board_id
+				order by f.fav_board_writedate
 			</when>
 			<when test="align == '댓글순'">
 				order by (
@@ -30,7 +30,6 @@
 					from fav_board_comment c
 					where c.fav_board_id = f.fav_board_id
 					) desc, fav_board_id desc
-				)
 			</when>
 		</choose>
 	</select>
@@ -56,7 +55,7 @@
 	
 	<select id="select" resultType="cloud.member.FavorBoardVO">
 		select fav_board_id, writer, fav_board_title, fav_board_content, 
-		to_char(fav_board_writedate, 'yyyy-dd-mm hh:mm:ss') fav_board_writedate,
+		to_char(fav_board_writedate, 'yyyy-mm-dd hh24:mi:ss') fav_board_writedate,
 		fav_board_writecount, fav_board_img from fav_board where fav_board_id = #{fav_board_id}
 	</select>
 	
@@ -97,14 +96,14 @@
 	
 	<select id="commentList" resultType="cloud.member.FavorBoardCommentVO">
 		select fav_board_comment_id, fav_board_id, writer, fav_board_comment_content, 
-		to_char(fav_board_comment_writedate, 'yyyy-dd-mm hh:mm:ss') fav_board_comment_writedate
+		to_char(fav_board_comment_writedate, 'yyyy-mm-dd hh24:mi:ss') fav_board_comment_writedate
 		from fav_board_comment where fav_board_id = #{fav_board_id}
 			<choose>
 				<when test="align == '최신순'">
-					order by fav_board_id desc
+					order by fav_board_comment_writedate desc
 				</when>
 				<when test="align == '오래된순'">
-					order by fav_board_id
+					order by fav_board_comment_writedate asc
 				</when>
 			</choose>
 	</select>
