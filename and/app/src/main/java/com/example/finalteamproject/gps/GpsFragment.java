@@ -126,8 +126,8 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
         UiSettings uiSettings = naverMap.getUiSettings();
         uiSettings.setZoomControlEnabled(true); // 줌 컨트롤 활성화
         naverMap.addOnCameraChangeListener((i, b) -> {
-            float currentZoomLevel = (float) naverMap.getCameraPosition().zoom;
-            Log.d("줌", "onMapReady: "+currentZoomLevel);
+            float ZoomLevel = (float) naverMap.getCameraPosition().zoom;
+            Log.d("줌", "onMapReady: "+ZoomLevel);
         });
 //        float currentZoomLevel = (float) naverMap.getCameraPosition().zoom;
 //        Log.d("줌", "onMapReady: "+currentZoomLevel);
