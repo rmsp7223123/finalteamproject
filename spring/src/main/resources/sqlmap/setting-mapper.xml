@@ -19,12 +19,15 @@
 		MERGE
 		INTO option_table a
 		USING dual
-		ON (a.MEMBER_ID = #{member_id})
+		ON (a.MEMBER_ID =
+		#{member_id})
 		WHEN MATCHED THEN
 		UPDATE
-		SET a.OPTION_LOCK_PW = #{option_lock_pw}
+		SET a.OPTION_LOCK_PW =
+		#{option_lock_pw}
 		WHEN NOT MATCHED THEN
-		INSERT (a.MEMBER_ID, a.OPTION_LOCK_PW)
+		INSERT (a.MEMBER_ID,
+		a.OPTION_LOCK_PW)
 		VALUES ( #{member_id}, #{option_lock_pw})
 	</insert>
 	<select id="inquirePw" resultType="cloud.setting.OptionVO">
@@ -40,13 +43,17 @@
 		MERGE
 		INTO option_table a
 		USING dual
-		ON (a.MEMBER_ID = #{member_id})
+		ON (a.MEMBER_ID =
+		#{member_id})
 		WHEN MATCHED THEN
 		UPDATE
-		SET a.OPTION_LOCK_PATTERN_PW = #{option_lock_pattern_pw}
+		SET a.OPTION_LOCK_PATTERN_PW =
+		#{option_lock_pattern_pw}
 		WHEN NOT MATCHED THEN
-		INSERT (a.MEMBER_ID, a.OPTION_LOCK_PATTERN_PW)
-		VALUES ( #{member_id}, #{option_lock_pattern_pw})
+		INSERT (a.MEMBER_ID,
+		a.OPTION_LOCK_PATTERN_PW)
+		VALUES ( #{member_id},
+		#{option_lock_pattern_pw})
 	</insert>
 	<select id="inquirePattern" resultType="cloud.setting.OptionVO">
 		SELECT
@@ -60,5 +67,9 @@
 	<update id="deletePw">
 		update option_table set option_lock_pw = null where
 		member_id = #{member_id}
+	</update>
+	<update id="deletePattern">
+		update option_table set option_lock_pattern_pw = null
+		where member_id = #{member_id}
 	</update>
 </mapper>
