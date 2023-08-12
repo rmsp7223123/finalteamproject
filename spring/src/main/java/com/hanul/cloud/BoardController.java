@@ -81,7 +81,8 @@ public class BoardController {
 		paramMap.put("writer", req.getParameter("writer"));
 		paramMap.put("favor", req.getParameter("favor"));
 		paramMap.put("fav_board_img", newImagePath);
-		return new Gson().toJson(sql.insert("board.insert",paramMap) ==1 ? "성공" : "실패");
+		String result = sql.insert("board.insert",paramMap) ==1 ? "성공" : "실패";
+		return new Gson().toJson(result);
 	}
 	
 	//게시글 아이디로 게시글 불러오기
