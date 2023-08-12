@@ -30,13 +30,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HomeController {
 	
-//	@Autowired @Qualifier("test") SqlSession sql;
-//	
-//	@RequestMapping("test")
-//	public String test() {
-//		sql.selectOne("customer.mapper.test");
-//		return "a";
-//	}
+	@Autowired @Qualifier("project") SqlSession sql;
+	
+	@RequestMapping("test")
+	public String test() {
+	 sql.selectOne("customer.mapper.test");
+		return "a";
+	}
 //	
 //	
 //	@RequestMapping("/")
