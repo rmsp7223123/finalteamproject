@@ -22,11 +22,15 @@ import com.example.finalteamproject.databinding.FragmentGpsBinding;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.naver.maps.geometry.LatLng;
+import com.naver.maps.map.CameraPosition;
 import com.naver.maps.map.CameraUpdate;
+import com.naver.maps.map.CameraUpdateParams;
 import com.naver.maps.map.LocationTrackingMode;
 import com.naver.maps.map.MapFragment;
 import com.naver.maps.map.NaverMap;
+import com.naver.maps.map.NaverMapOptions;
 import com.naver.maps.map.OnMapReadyCallback;
+import com.naver.maps.map.UiSettings;
 import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.util.FusedLocationSource;
 import com.naver.maps.map.util.MarkerIcons;
@@ -48,7 +52,20 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                              Bundle savedInstanceState) {
         binding = FragmentGpsBinding.inflate(inflater, container, false);
 
-        //검색 결과
+        //검색 결과 페이지
+        binding.lnResult.setVisibility(View.GONE);
+        binding.btnSearch.setOnClickListener(v -> {
+            binding.lnResult.setVisibility(View.VISIBLE);
+            //검색 결과 데이터
+            CommonConn connresult = new CommonConn(getContext(), "gps/search");
+            connresult.addParamMap("keyword", binding.gpsSearch.getText());
+            connresult.onExcute((isResult, data) -> {
+                ArrayList<GpsVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<GpsVO>>(){}.getType());
+                GpsAdapter adapter = new GpsAdapter(list);
+                binding.recvSearchResult.setAdapter(adapter);
+                binding.recvSearchResult.setLayoutManager(new LinearLayoutManager(getContext()));
+            });
+        });
         binding.btnClose.setOnClickListener(v -> {
             binding.lnResult.setVisibility(View.GONE);
         });
@@ -113,6 +130,7 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                 //내 위치 위도, 경도
                 lat = location.getLatitude();
                 lon = location.getLongitude();
+
                 CommonConn conn = new CommonConn(getContext(), "gps/senior");
                 conn.addParamMap("senior_latitude", lat);
                 conn.addParamMap("senior_longitude", lon);
@@ -144,6 +162,15 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                         marker.setIconTintColor(Color.parseColor("#4B6EFD")); // 다중 마커 색상
                         marker.setWidth(70);
                         marker.setHeight(100);
+
+                        //지도 줌 레벨
+                        UiSettings uiSettings = naverMap.getUiSettings();
+                        float ZoomLevel = (float) naverMap.getCameraPosition().zoom;
+                        uiSettings.setZoomControlEnabled(true); // 줌 컨트롤 활성화
+                        naverMap.addOnCameraChangeListener((i, b) -> {
+                            Log.d("줌", "onMapReady: "+ZoomLevel);
+                        });
+
                     }
 
                     //경로당 리스트(리사이클러뷰)

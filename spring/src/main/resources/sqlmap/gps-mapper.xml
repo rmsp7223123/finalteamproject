@@ -3,57 +3,52 @@
 <mapper namespace="gps">
 
 	<!-- 경로당 목록 -->
-	<!-- <select id="list" resultType="cloud.gps.GpsVO">
-		select s.KEY, s.SENIOR_NAME, s.SENIOR_ROADADDRESS, s.SENIOR_NUMADDRESS,
-		s.SENIOR_CALL, s.SENIOR_LATITUDE, s.SENIOR_LONGITUDE, s.SIDO,
-		s.SIGUNGU
-		, l.SENIOR_LIKE_NUM
-		from SENIOR s
-		left join SENIOR_LIKE l
-		on s.key = l.key
-		where s.key between 6910 and 6950
-		order by key
-	</select> -->
-	
-	<select id="list" resultType="cloud.gps.GpsVO">
-	<!-- SELECT CASE WHEN DISTANCE &lt; 1 THEN RTRIM(TO_CHAR(DISTANCE*1000 ,
-	'FM9990D99'),'.')||'m' ELSE DISTANCE||'km' END distance,T.*
-	, S.* , (SELECT COUNT(*) FROM SENIOR_BMARK B WHERE B.KEY = S.KEY )
-	SENIOR_LIKE_NUM
-	from
-	(
-	SELECT ROWNUM no, C.DISTANCE , S.KEY
-	FROM SENIOR S LEFT OUTER JOIN
-	(SELECT KEY , DISTNACE_WGS84(#{senior_latitude}, #{senior_longitude}, SENIOR_LATITUDE,
-	SENIOR_LONGITUDE) AS DISTANCE
-	FROM SENIOR S
+	<!-- <select id="list" resultType="cloud.gps.GpsVO"> select s.KEY, s.SENIOR_NAME, 
+		s.SENIOR_ROADADDRESS, s.SENIOR_NUMADDRESS, s.SENIOR_CALL, s.SENIOR_LATITUDE, 
+		s.SENIOR_LONGITUDE, s.SIDO, s.SIGUNGU , l.SENIOR_LIKE_NUM from SENIOR s left 
+		join SENIOR_LIKE l on s.key = l.key where s.key between 6910 and 6950 order 
+		by key </select> -->
 
-	) C ON S.KEY=C.KEY
-	WHERE S.SENIOR_ROADADDRESS LIKE '%광주%'
-	ORDER BY C.DISTANCE ASC
-	) T INNER JOIN SENIOR S ON T.KEY = S.KEY
-	WHERE T.NO &lt; 20 -->
-	
-	SELECT ROWNUM no, CASE WHEN DISTANCE &lt; 1 THEN RTRIM(TO_CHAR(DISTANCE*1000 , 'FM9990D99'),'.')||'m' ELSE DISTANCE||'km' END distance,T.*
-        , S.* ,  (SELECT COUNT(*) FROM SENIOR_BMARK B WHERE B.KEY = S.KEY ) SENIOR_LIKE_NUM
-    from 
-     (
-        SELECT  C.DISTANCE , S.KEY , S.SENIOR_ROADADDRESS
-        FROM SENIOR S LEFT OUTER JOIN 
-        (SELECT  KEY , DISTNACE_WGS84(#{senior_latitude}, #{senior_longitude}, SENIOR_LATITUDE, SENIOR_LONGITUDE) AS DISTANCE
-           FROM SENIOR S
-        ) C ON S.KEY=C.KEY
-        ORDER BY C.DISTANCE ASC
-    ) T INNER JOIN SENIOR S ON T.KEY = S.KEY
-    WHERE ROWNUM &lt; 20
-	
+	<select id="list" resultType="cloud.gps.GpsVO">
+		<!-- SELECT CASE WHEN DISTANCE &lt; 1 THEN RTRIM(TO_CHAR(DISTANCE*1000 
+			, 'FM9990D99'),'.')||'m' ELSE DISTANCE||'km' END distance,T.* , S.* , (SELECT 
+			COUNT(*) FROM SENIOR_BMARK B WHERE B.KEY = S.KEY ) SENIOR_LIKE_NUM from ( 
+			SELECT ROWNUM no, C.DISTANCE , S.KEY FROM SENIOR S LEFT OUTER JOIN (SELECT 
+			KEY , DISTNACE_WGS84(#{senior_latitude}, #{senior_longitude}, SENIOR_LATITUDE, 
+			SENIOR_LONGITUDE) AS DISTANCE FROM SENIOR S ) C ON S.KEY=C.KEY WHERE S.SENIOR_ROADADDRESS 
+			LIKE '%광주%' ORDER BY C.DISTANCE ASC ) T INNER JOIN SENIOR S ON T.KEY = S.KEY 
+			WHERE T.NO &lt; 20 -->
+
+		SELECT ROWNUM no, CASE WHEN DISTANCE &lt; 1 THEN
+		RTRIM(TO_CHAR(DISTANCE*1000 , 'FM9990D99'),'.')||'m' ELSE
+		DISTANCE||'km' END distance,T.*
+		, S.* , (SELECT COUNT(*) FROM
+		SENIOR_BMARK B WHERE B.KEY = S.KEY )
+		SENIOR_LIKE_NUM
+		from
+		(
+		SELECT
+		C.DISTANCE , S.KEY , S.SENIOR_ROADADDRESS
+		FROM SENIOR S LEFT OUTER JOIN
+		(SELECT KEY , DISTNACE_WGS84(#{senior_latitude}, #{senior_longitude},
+		SENIOR_LATITUDE, SENIOR_LONGITUDE) AS DISTANCE
+		FROM SENIOR S
+		) C ON
+		S.KEY=C.KEY
+		ORDER BY C.DISTANCE ASC
+		) T INNER JOIN SENIOR S ON T.KEY =
+		S.KEY
+		WHERE ROWNUM &lt; 20
+
 	</select>
 
 	<!-- 자주가는 경로당 목록 -->
 	<select id="likelist" resultType="cloud.gps.GpsVO">
-		select b.member_id, b.KEY, s.SENIOR_NAME, s.SENIOR_ROADADDRESS
+		select b.member_id, b.KEY,
+		s.SENIOR_NAME, s.SENIOR_ROADADDRESS
 		from senior_bmark b
-		left join senior s
+		left join senior
+		s
 		on b.key=s.key
 		where member_id=#{member_id}
 	</select>
@@ -67,27 +62,31 @@
 	<!-- 좋아요 버튼 선택시 좋아요 리스트 컬럼 생성 -->
 	<!-- 컬럼은 admin으로만 생성 -->
 	<insert id="addlike">
-		insert into SENIOR_LIKE (MEMBER_ID, KEY, SENIOR_LIKE_NUM)
+		insert into SENIOR_LIKE (MEMBER_ID, KEY,
+		SENIOR_LIKE_NUM)
 		values ('admin', #{key}, 0)
 	</insert>
 
 	<!-- 좋아요 버튼 선택시 좋아요 카운트 증가 -->
 	<update id="likecnt">
 		UPDATE SENIOR_LIKE
-		SET SENIOR_LIKE_NUM = SENIOR_LIKE_NUM + 1
+		SET SENIOR_LIKE_NUM =
+		SENIOR_LIKE_NUM + 1
 		WHERE KEY = #{key}
 	</update>
 
 	<!-- 좋아요 취소시 자주가는 경로당 삭제 -->
 	<delete id="delbmark">
 		delete from SENIOR_BMARK
-		where key = #{key} and member_id=#{member_id}
+		where key = #{key} and
+		member_id=#{member_id}
 	</delete>
 
 	<!-- 좋아요 취소시 좋아요 카운트 감소 -->
 	<update id="unlikecnt">
 		UPDATE SENIOR_LIKE
-		SET SENIOR_LIKE_NUM = SENIOR_LIKE_NUM - 1
+		SET SENIOR_LIKE_NUM =
+		SENIOR_LIKE_NUM - 1
 		WHERE KEY = #{key}
 	</update>
 
@@ -98,4 +97,17 @@
 		where key=#{key} and member_id=#{member_id}
 	</select>
 
+	<!-- 검색 결과 -->
+	<select id="search" resultType="cloud.gps.GpsVO">
+		SELECT s.KEY, s.SENIOR_NAME,
+		s.SENIOR_ROADADDRESS, s.SENIOR_NUMADDRESS, s.SENIOR_CALL,
+		s.SENIOR_LATITUDE, s.SENIOR_LONGITUDE, s.SIDO, s.SIGUNGU
+		, l.SENIOR_LIKE_NUM
+		FROM SENIOR s
+		LEFT JOIN SENIOR_LIKE l
+		ON s.key = l.key
+		WHERE s.SENIOR_NAME LIKE '%'||#{keyword}||'%' OR
+		s.SENIOR_ROADADDRESS LIKE '%'||#{keyword}||'%'
+		ORDER BY s.KEY
+	</select>
 </mapper>

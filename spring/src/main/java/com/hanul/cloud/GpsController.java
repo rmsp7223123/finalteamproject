@@ -51,4 +51,8 @@ public class GpsController {
 		return dao.likeyet(key, member_id);
 	}
 	
+	@RequestMapping("/search")
+	public List<GpsVO> search_result(String keyword) {
+		return dao.search_result(keyword);
+	}
 }

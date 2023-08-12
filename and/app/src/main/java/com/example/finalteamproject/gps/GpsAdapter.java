@@ -17,7 +17,6 @@ import java.util.ArrayList;
 public class GpsAdapter extends RecyclerView.Adapter<GpsAdapter.ViewHolder> {
     ItemGpsBinding binding;
     ArrayList<GpsVO> list;
-    GpsVO vo;
     Context context;
 
     public GpsAdapter(ArrayList<GpsVO> list) {

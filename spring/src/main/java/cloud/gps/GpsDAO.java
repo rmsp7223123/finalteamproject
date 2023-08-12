@@ -54,5 +54,9 @@ public class GpsDAO {
 		map.put("member_id", member_id);
 		return sql.selectOne("gps.likeyet", map);
 	}
+	
+	public List<GpsVO> search_result(String keyword) {
+		return sql.selectList("gps.search", keyword);
+	}
 
 }
