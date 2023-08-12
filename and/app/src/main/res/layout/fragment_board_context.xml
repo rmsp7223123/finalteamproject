@@ -78,12 +78,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="2023-08-09"/>
-                <TextView
-                    android:id="@+id/tv_view"
-                    android:textSize="11dp"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="조회 : 500000"/>
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_writer"
+                        android:textSize="11dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="작성자 : test"/>
+                    <TextView
+                        android:id="@+id/tv_view"
+                        android:layout_marginStart="4dp"
+                        android:textSize="11dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="조회 : 500000"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
