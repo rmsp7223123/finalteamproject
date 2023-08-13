@@ -155,3 +155,19 @@ CREATE TABLE FRIEND_LIST(
     constraint friend_member_fk foreign key(member_id) references member(member_id) on delete cascade,
     constraint friend_friend_fk foreign key(friend_id) references member(member_id) on delete cascade
 );
+
+create table alarm(
+    member_id nvarchar2(30),
+    alarm_content nvarchar2(1000),
+    alarm_time nvarchar2(100),
+    constraint alarm_member_fk foreign key(member_id) references member(member_id) on delete cascade
+);
+
+insert into alarm (member_id, alarm_content, alarm_time) values ('ansqudwns98', '알람내용12', '시간1234');
+
+drop table alarm;
+
+select  * from alarm;
+
+select * from member;
+
