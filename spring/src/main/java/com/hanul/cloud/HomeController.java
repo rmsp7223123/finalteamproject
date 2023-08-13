@@ -34,8 +34,10 @@ public class HomeController {
 	
 	@RequestMapping("test")
 	public String test() {
-	 sql.selectOne("customer.mapper.test");
-		return "a";
+		
+	 int aa =sql.selectOne("customer.mapper.test");
+	System.out.println(aa);	
+	 return "a";
 	}
 //	
 //	
