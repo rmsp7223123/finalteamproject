@@ -84,6 +84,9 @@ public class MainFragment extends Fragment {
 
                     @Override
                     public void onPageSelected(int position) {
+                        binding.imgvAdd.setOnClickListener(view -> {
+                            dialog_friend(position);
+                        });
                         favorChange(position);
                         currentPos = position;
                         int realPosition = position % list.size();
@@ -126,23 +129,7 @@ public class MainFragment extends Fragment {
         });
 
         binding.imgvAdd.setOnClickListener(view -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-            builder.setTitle("친구추가 보내기");
-            builder.setPositiveButton("취소", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            builder.setNegativeButton("확인", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-
-            AlertDialog dialog = builder.create();
-            dialog.show();
+            dialog_friend(0);
         });
 
         BoardMainAdapter adapter2 = new BoardMainAdapter(this, getList(), getActivity());
@@ -288,5 +275,32 @@ public class MainFragment extends Fragment {
         binding.tvCar.setTextColor(Color.parseColor("#000000"));
         binding.tvSports.setTextColor(Color.parseColor("#000000"));
         binding.tvGame.setTextColor(Color.parseColor("#000000"));
+    }
+
+    public void dialog_friend (int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        CommonConn conn1 = new CommonConn(getContext(),"main/viewpager");
+        conn1.addParamMap("member_id",CommonVar.logininfo.getMember_id());
+        conn1.onExcute((isResult, data) -> {
+            list = new Gson().fromJson(data, new TypeToken<ArrayList<MemberVO>>() {
+            }.getType());
+            builder.setTitle("친구추가");
+            builder.setMessage(list.get(position).getMember_nickname() + "님에게 친구추가 보내기");
+            builder.setPositiveButton("취소", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        });
     }
 }
