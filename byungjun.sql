@@ -200,3 +200,27 @@ select  * from alarm;
 select * from member;
 
 rollback;
+
+CREATE OR REPLACE TRIGGER trg_insert_option
+AFTER INSERT ON MEMBER
+FOR EACH ROW
+BEGIN
+   INSERT INTO OPTION_TABLE (
+      MEMBER_ID,
+      OPTION_FONT_SIZE,
+      OPTION_FONT_COLOR,
+      OPTION_ALARM,
+      OPTION_LOCK_PW,
+      OPTION_GODOK_ALARM
+   ) VALUES (
+      :NEW.MEMBER_ID,
+      '크게',
+      '#000000',
+      'N', 
+      NULL,
+      'N'
+   );
+END;
+/
+
+commit;
