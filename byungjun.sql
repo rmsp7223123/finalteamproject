@@ -232,3 +232,5 @@ select * from alarm;
 delete alarm where member_id = 'ansqudwns98';
 
 commit;
+
+select alarm_content, alarm_time from alarm where member_id = 'ansqudwns98';

@@ -98,4 +98,10 @@ public class MainController {
 		
 		return new Gson().toJson(sql.insert("main.addAlarm", paramMap));
 	}
+	
+	@RequestMapping("/viewAlarm")
+	public List<AlarmVO> viewAlarm(String member_id) {
+		List<AlarmVO>list =  sql.selectList("main.viewAlarm", member_id);
+		return list;
+	}
 }
