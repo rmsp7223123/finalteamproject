@@ -34,7 +34,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                     CommonConn conn2 = new CommonConn(this, "setting/inquirePw");
                     conn2.addParamMap("member_id", CommonVar.logininfo.getMember_id());
                     conn2.onExcute((isResult1, data1) -> {
-                        if(!data.equals("null")) {
+                        if(!data1.equals("null")) {
                             Toast.makeText(this, "비밀번호가 존재합니다.", Toast.LENGTH_SHORT).show();
                         } else {
                             intent = new Intent(this, SetPasswordActivity.class);
@@ -56,7 +56,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                     CommonConn conn2 = new CommonConn(this, "setting/inquirePattern");
                     conn2.addParamMap("member_id", CommonVar.logininfo.getMember_id());
                     conn2.onExcute((isResult1, data1) -> {
-                        if(!data.equals("null")) {
+                        if(!data1.equals("null")) {
                             Toast.makeText(this, "패턴이 존재합니다.", Toast.LENGTH_SHORT).show();
                         } else {
                             intent = new Intent(this, SetPatternActivity.class);

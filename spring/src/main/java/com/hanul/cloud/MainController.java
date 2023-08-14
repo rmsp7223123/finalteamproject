@@ -78,4 +78,15 @@ public class MainController {
 		List<FavorVO> vo = sql.selectList("main.favor",member_id);
 		return vo;
 	}
+	
+	@RequestMapping("addFriend")
+	public String addFriend(String member_id) {
+		// 알림으로 보내고 상대방이 확인눌렀을 때 
+		return new Gson().toJson(sql.insert("member_id", member_id));
+	}
+	
+	@RequestMapping("addFriendAlarm")
+	public String addFriendAlarm(String member_id) {
+		return "";
+	}
 }
