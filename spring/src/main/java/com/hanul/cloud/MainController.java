@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartRequest;
 import com.google.gson.Gson;
 
 import cloud.gps.GpsVO;
+import cloud.member.AlarmVO;
 import cloud.member.FavorVO;
 import cloud.member.MemberVO;
 
@@ -79,14 +80,22 @@ public class MainController {
 		return vo;
 	}
 	
-	@RequestMapping("addFriend")
-	public String addFriend(String member_id) {
+	@RequestMapping("/addFriend")
+	public String addFriend(String member_id, String friend_id) {
 		// 알림으로 보내고 상대방이 확인눌렀을 때 
-		return new Gson().toJson(sql.insert("member_id", member_id));
+		HashMap<String, Object> paramMap = new HashMap<>();
+		paramMap.put("member_id", member_id);
+		paramMap.put("friend_id", friend_id);
+		return new Gson().toJson(sql.insert("main.addFriend", paramMap));
 	}
 	
-	@RequestMapping("addFriendAlarm")
-	public String addFriendAlarm(String member_id) {
-		return "";
+	@RequestMapping("/addAlarm")
+	public String addAlarm(String member_id, String alarm_content, String alarm_time) {
+		HashMap<String, Object> paramMap = new HashMap<>();
+		paramMap.put("member_id", member_id);
+		paramMap.put("alarm_content", alarm_content);
+		paramMap.put("alarm_time", alarm_time);
+		
+		return new Gson().toJson(sql.insert("main.addAlarm", paramMap));
 	}
 }

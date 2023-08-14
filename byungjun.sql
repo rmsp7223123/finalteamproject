@@ -224,3 +224,11 @@ END;
 /
 
 commit;
+
+insert into Alarm (member_id, alarm_content, alarm_date) values ('ansqudwns98', 'content1', 'date1');
+
+select * from alarm;
+
+delete alarm where member_id = 'ansqudwns98';
+
+commit;
