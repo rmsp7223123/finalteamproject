@@ -225,7 +225,7 @@ END;
 
 commit;
 
-insert into Alarm (member_id, alarm_content, alarm_date) values ('ansqudwns98', 'content1', 'date1');
+insert into Alarm (member_id, alarm_content, alarm_time) values ('ansqudwns98', 'content1', 'time1');
 
 select * from alarm;
 

@@ -104,4 +104,7 @@ public class MainController {
 		List<AlarmVO>list =  sql.selectList("main.viewAlarm", member_id);
 		return list;
 	}
+	
+	@RequestMapping("/deleteAlarm")
+	
 }
