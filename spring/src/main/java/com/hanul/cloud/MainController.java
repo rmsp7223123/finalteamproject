@@ -106,5 +106,7 @@ public class MainController {
 	}
 	
 	@RequestMapping("/deleteAlarm")
-	
+	public String deleteAlarm(String member_id) {
+		return new Gson().toJson(sql.delete("main.deleteAlarm", member_id));
+	}
 }

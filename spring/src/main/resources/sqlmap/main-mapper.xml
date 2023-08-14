@@ -37,4 +37,8 @@
 	<select id="viewAlarm" resultType="cloud.member.AlarmVO">
 		select alarm_content, alarm_time from alarm where member_id = #{member_id}
 	</select>
+	
+	<delete id="deleteAlarm">
+		delete alarm where member_id = #{member_id}
+	</delete>
 </mapper>
