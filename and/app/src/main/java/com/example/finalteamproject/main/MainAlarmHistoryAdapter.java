@@ -41,7 +41,7 @@ public class MainAlarmHistoryAdapter extends RecyclerView.Adapter<MainAlarmHisto
         CommonConn conn = new CommonConn(context, "main/viewAlarm");
         conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
         conn.onExcute((isResult, data) -> {
-            ArrayList<AlarmVO> list = (ArrayList<AlarmVO>) new TypeToken<ArrayList<AlarmVO>>(){}.getType();
+            ArrayList<AlarmVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<AlarmVO>>(){}.getType());
             holder.binding.tvText.setText(list.get(position).alarm_content);
         });
     }

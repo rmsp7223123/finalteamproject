@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.finalteamproject.HideActionBar;
+import com.example.finalteamproject.common.CommonConn;
+import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.databinding.ActivityMainAlarmHistoryBinding;
 import com.example.finalteamproject.setting.ChangeAlarmActivity;
 
@@ -33,8 +35,12 @@ public class MainAlarmHistoryActivity extends AppCompatActivity {
         });
         binding.imgvAlarmClean.setOnClickListener(view -> {
             // 알람 지웠을 때 알람기록 다 지우기 추가
-            binding.containerLinearAlarm.setVisibility(View.VISIBLE);
-            adapter.notifyDataSetChanged();
+            CommonConn conn = new CommonConn(this, "main/deleteAlarm");
+            conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+            conn.onExcute((isResult, data) -> {
+                binding.containerLinearAlarm.setVisibility(View.VISIBLE);
+                adapter.notifyDataSetChanged();
+            });
         });
         itemCnt = adapter.getItemCount();
         if (itemCnt > 0) {
