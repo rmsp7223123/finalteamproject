@@ -164,9 +164,34 @@ create table alarm(
     constraint alarm_member_fk foreign key(member_id) references member(member_id) on delete cascade
 );
 
+create sequence seq_alarm
+minvalue 1 
+maxvalue 999999
+increment by 1
+start with 1
+nocache;
+
+CREATE OR REPLACE TRIGGER trg_alarm_id
+BEFORE INSERT ON alarm
+FOR EACH ROW
+BEGIN
+    :NEW.alarm_id := seq_alarm.NEXTVAL;
+END;
+/
+
+commit;
+
+drop trigger trg_alarm_id;
+drop sequence seq_alarm;
+drop table alarm;
+
+commit;
+
+rollback;
+
 -- create or replace 
 
-insert into alarm (member_id,alarm_id ,alarm_content, alarm_time) values ('ansqudwns98',seq_alarm.nextval ,'알람내용12', '시간1234');
+insert into alarm (member_id,alarm_content, alarm_time) values ('ansqudwns98','알람내용12', '시간1234');
 
 drop table alarm;
 
