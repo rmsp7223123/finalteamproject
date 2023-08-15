@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.finalteamproject.HideActionBar;
+import com.example.finalteamproject.common.CommonConn;
+import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.databinding.ActivityMainAlarmHistoryBinding;
 import com.example.finalteamproject.setting.ChangeAlarmActivity;
 
@@ -23,7 +25,7 @@ public class MainAlarmHistoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainAlarmHistoryBinding.inflate(getLayoutInflater());
-        MainAlarmHistoryAdapter adapter = new MainAlarmHistoryAdapter(getList());
+        MainAlarmHistoryAdapter adapter = new MainAlarmHistoryAdapter(getList(), this);
         binding.recvAlarmHistory.setAdapter(adapter);
         binding.recvAlarmHistory.setLayoutManager(new LinearLayoutManager(this));
         //new HideActionBar().hideActionBar(this);
@@ -32,10 +34,13 @@ public class MainAlarmHistoryActivity extends AppCompatActivity {
             finish();
         });
         binding.imgvAlarmClean.setOnClickListener(view -> {
-            ArrayList<String> dataList = adapter.getDataList();
-            dataList.clear();
-            binding.containerLinearAlarm.setVisibility(View.VISIBLE);
-            adapter.notifyDataSetChanged();
+            // 알람 지웠을 때 알람기록 다 지우기 추가
+            CommonConn conn = new CommonConn(this, "main/deleteAlarm");
+            conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+            conn.onExcute((isResult, data) -> {
+                binding.containerLinearAlarm.setVisibility(View.VISIBLE);
+                adapter.notifyDataSetChanged();
+            });
         });
         itemCnt = adapter.getItemCount();
         if (itemCnt > 0) {
@@ -44,11 +49,8 @@ public class MainAlarmHistoryActivity extends AppCompatActivity {
         // 알람 기록이 있을때 -- > 어댑터 리턴 사이즈가 0이 아닐 때 프레임 레이아웃안에 linear 안보이게 추가하기
     }
 
-    public ArrayList<String> getList() {
-        ArrayList<String> list  = new ArrayList<>();
-        list.add("ddddd");
-        list.add("dddddff");
-        list.add("dddddaaaa");
+    public ArrayList<AlarmVO> getList() {
+        ArrayList<AlarmVO> list  = new ArrayList<>();
         return list;
     }
 }

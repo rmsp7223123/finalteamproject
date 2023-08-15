@@ -15,9 +15,11 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.finalteamproject.FirebaseMessageReceiver;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.board.BoardCommonVar;
 import com.example.finalteamproject.common.CommonConn;
@@ -84,6 +86,9 @@ public class MainFragment extends Fragment {
 
                     @Override
                     public void onPageSelected(int position) {
+                        binding.imgvAdd.setOnClickListener(view -> {
+                            dialog_friend(position);
+                        });
                         favorChange(position);
                         currentPos = position;
                         int realPosition = position % list.size();
@@ -126,23 +131,7 @@ public class MainFragment extends Fragment {
         });
 
         binding.imgvAdd.setOnClickListener(view -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-            builder.setTitle("친구추가 보내기");
-            builder.setPositiveButton("취소", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            builder.setNegativeButton("확인", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-
-            AlertDialog dialog = builder.create();
-            dialog.show();
+            dialog_friend(0);
         });
 
         BoardMainAdapter adapter2 = new BoardMainAdapter(this, getList(), getActivity());
@@ -163,6 +152,8 @@ public class MainFragment extends Fragment {
 
         binding.imgvMessage.setOnClickListener(view -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+//            CommonConn conn1 = new CommonConn(getContext(),"main/viewpager");
+//            conn1.addParamMap("member_id",CommonVar.logininfo.getMember_id());
             builder.setTitle("메시지 보내기");
             builder.setPositiveButton("취소", new DialogInterface.OnClickListener() {
                 @Override
@@ -288,5 +279,36 @@ public class MainFragment extends Fragment {
         binding.tvCar.setTextColor(Color.parseColor("#000000"));
         binding.tvSports.setTextColor(Color.parseColor("#000000"));
         binding.tvGame.setTextColor(Color.parseColor("#000000"));
+    }
+
+    public void dialog_friend (int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        CommonConn conn1 = new CommonConn(getContext(),"main/viewpager");
+        conn1.addParamMap("member_id",CommonVar.logininfo.getMember_id());
+        conn1.onExcute((isResult, data) -> {
+            list = new Gson().fromJson(data, new TypeToken<ArrayList<MemberVO>>() {
+            }.getType());
+            builder.setTitle("친구추가");
+            builder.setMessage(list.get(position).getMember_nickname() + "님에게 친구추가 보내기");
+            builder.setPositiveButton("취소", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(getContext(), list.get(position).getMember_nickname()+"님에게 친구추가를 보냈습니다.", Toast.LENGTH_SHORT).show();
+                    // 친구추가 보냈을 때 상대방에게 알람이 가게 수정
+                    // 알람 클릭했을 때 친구추가 확인 수정
+                    // FirebaseMessageReceiver.showNotification();
+                    dialog.dismiss();
+                }
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        });
     }
 }

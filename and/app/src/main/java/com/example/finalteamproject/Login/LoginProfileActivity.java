@@ -68,13 +68,13 @@ public class LoginProfileActivity extends AppCompatActivity {
                 api.clientSendFile("login/file", map, filePart).enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
-                        if(response.body().equals("성공")){
+//                        if(response.body().equals("성공")){
                             Toast.makeText(LoginProfileActivity.this, "프로필 이미지 업로드 성공", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(LoginProfileActivity.this, LoginFavorActivity.class);
                             startActivity(intent);
-                        }else {
-                            Toast.makeText(LoginProfileActivity.this, "프로필 이미지 업로드 실패", Toast.LENGTH_SHORT).show();
-                        }
+//                        }else {
+//                            Toast.makeText(LoginProfileActivity.this, "프로필 이미지 업로드 실패", Toast.LENGTH_SHORT).show();
+//                        }
                     }
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {

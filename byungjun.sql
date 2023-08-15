@@ -1,5 +1,5 @@
 insert into member(member_id, member_pw, member_name, member_nickname, member_age, member_gender, member_phone, member_admin)
-values('admin', 'admin', 'admin', 'admin', '999', '≥≤', '010-1234-5678', 1);
+values('admin', 'admin', 'admin', 'admin', '999', 'ÎÇ®', '010-1234-5678', 1);
 
 select * from member;
 
@@ -11,7 +11,7 @@ select * from option_table;
 
 rollback;
 
-insert into dday(member_id, dday_date, dday_content) values('admin', sysdate, 'æÀ∂˜≥ªøÎ');
+insert into dday(member_id, dday_date, dday_content) values('admin', sysdate, 'ÏïåÎûåÎÇ¥Ïö©');
 
 select * from dday;
 
@@ -25,7 +25,7 @@ select * from member where member_nickname = 'ansqudwns';
 
 select * from member;
 
-delete from member where member_name = '»´±Êµø'
+delete from member where member_name = 'ÌôçÍ∏∏Îèô'
 		and member_nickname = 'qrew' and member_id = 'qrew1'
 		and member_pw = 'asdf123!';
         
@@ -50,37 +50,37 @@ WHERE C.CONSTRAINT_TYPE = 'R'
       'SENIOR', 'SENIOR_BMARK', 'SENIOR_LIKE', 'TABLE1', 'TEST'
   );
   
--- CSBOARD ≈◊¿Ã∫Ì
+-- CSBOARD ÌÖåÏù¥Î∏î
 ALTER TABLE CSBOARD DROP CONSTRAINT FK_MEMBER_TO_CSBOARD_1;
 ALTER TABLE CSBOARD ADD CONSTRAINT FK_MEMBER_TO_CSBOARD_1 
 FOREIGN KEY (WRITER) REFERENCES MEMBER (MEMBER_ID) ON DELETE CASCADE;
 
--- CSBOARD_COMMENT ≈◊¿Ã∫Ì
+-- CSBOARD_COMMENT ÌÖåÏù¥Î∏î
 ALTER TABLE CSBOARD_COMMENT DROP CONSTRAINT FK_MEMBER_TO_CSBOARD_COMMENT_1;
 ALTER TABLE CSBOARD_COMMENT ADD CONSTRAINT FK_MEMBER_TO_CSBOARD_COMMENT_1 
 FOREIGN KEY (WRITER) REFERENCES MEMBER (MEMBER_ID) ON DELETE CASCADE;
 
--- DDAY ≈◊¿Ã∫Ì
+-- DDAY ÌÖåÏù¥Î∏î
 ALTER TABLE DDAY DROP CONSTRAINT FK_MEMBER_TO_DDAY_1;
 ALTER TABLE DDAY ADD CONSTRAINT FK_MEMBER_TO_DDAY_1 
 FOREIGN KEY (MEMBER_ID) REFERENCES MEMBER (MEMBER_ID) ON DELETE CASCADE;
 
--- EPHONE ≈◊¿Ã∫Ì
+-- EPHONE ÌÖåÏù¥Î∏î
 ALTER TABLE EPHONE DROP CONSTRAINT FK_MEMBER_TO_EPHONE_1;
 ALTER TABLE EPHONE ADD CONSTRAINT FK_MEMBER_TO_EPHONE_1 
 FOREIGN KEY (MEMBER_ID) REFERENCES MEMBER (MEMBER_ID) ON DELETE CASCADE;
 
--- FAVOR ≈◊¿Ã∫Ì
+-- FAVOR ÌÖåÏù¥Î∏î
 ALTER TABLE FAVOR DROP CONSTRAINT FK_MEMBER_TO_FAVOR_1;
 ALTER TABLE FAVOR ADD CONSTRAINT FK_MEMBER_TO_FAVOR_1 
 FOREIGN KEY (MEMBER_ID) REFERENCES MEMBER (MEMBER_ID) ON DELETE CASCADE;
 
--- FAV_BOARD ≈◊¿Ã∫Ì
+-- FAV_BOARD ÌÖåÏù¥Î∏î
 ALTER TABLE FAV_BOARD DROP CONSTRAINT FK_MEMBER_TO_FAV_BOARD_1;
 ALTER TABLE FAV_BOARD ADD CONSTRAINT FK_MEMBER_TO_FAV_BOARD_1 
 FOREIGN KEY (WRITER) REFERENCES MEMBER (MEMBER_ID) ON DELETE CASCADE;
 
--- FAV_BOARD_COMMENT ≈◊¿Ã∫Ì
+-- FAV_BOARD_COMMENT ÌÖåÏù¥Î∏î
 ALTER TABLE FAV_BOARD_COMMENT DROP CONSTRAINT FK_MEMBER_TO_FAV_BOARD_COMMENT_1;
 ALTER TABLE FAV_BOARD_COMMENT ADD CONSTRAINT FK_MEMBER_TO_FAV_BOARD_COMMENT_1 
 FOREIGN KEY (WRITER) REFERENCES MEMBER (MEMBER_ID) ON DELETE CASCADE;
@@ -88,7 +88,7 @@ ALTER TABLE FAV_BOARD_COMMENT DROP CONSTRAINT FK_FAV_BOARD_TO_FAV_BOARD_COMMENT_
 ALTER TABLE FAV_BOARD_COMMENT ADD CONSTRAINT FK_FAV_BOARD_TO_FAV_BOARD_COMMENT_1 
 FOREIGN KEY (FAV_BOARD_ID) REFERENCES FAV_BOARD (FAV_BOARD_ID) ON DELETE CASCADE;
 
--- FAV_BOARD_LIKE ≈◊¿Ã∫Ì
+-- FAV_BOARD_LIKE ÌÖåÏù¥Î∏î
 ALTER TABLE FAV_BOARD_LIKE DROP CONSTRAINT FK_MEMBER_TO_FAV_BOARD_LIKE_1;
 ALTER TABLE FAV_BOARD_LIKE ADD CONSTRAINT FK_MEMBER_TO_FAV_BOARD_LIKE_1 
 FOREIGN KEY (MEMBER_ID_LIKE) REFERENCES MEMBER (MEMBER_ID) ON DELETE CASCADE;
@@ -96,32 +96,32 @@ ALTER TABLE FAV_BOARD_LIKE DROP CONSTRAINT FK_FAV_BOARD_TO_FAV_BOARD_LIKE_1;
 ALTER TABLE FAV_BOARD_LIKE ADD CONSTRAINT FK_FAV_BOARD_TO_FAV_BOARD_LIKE_1 
 FOREIGN KEY (FAV_BOARD_ID) REFERENCES FAV_BOARD (FAV_BOARD_ID) ON DELETE CASCADE;
 
--- GAME ≈◊¿Ã∫Ì
+-- GAME ÌÖåÏù¥Î∏î
 ALTER TABLE GAME DROP CONSTRAINT FK_MEMBER_TO_GAME_1;
 ALTER TABLE GAME ADD CONSTRAINT FK_MEMBER_TO_GAME_1 
 FOREIGN KEY (MEMBER_ID) REFERENCES MEMBER (MEMBER_ID) ON DELETE CASCADE;
 
--- LOCATION ≈◊¿Ã∫Ì
+-- LOCATION ÌÖåÏù¥Î∏î
 ALTER TABLE LOCATION DROP CONSTRAINT FK_MEMBER_TO_LOCATION_1;
 ALTER TABLE LOCATION ADD CONSTRAINT FK_MEMBER_TO_LOCATION_1 
 FOREIGN KEY (MEMBER_ID) REFERENCES MEMBER (MEMBER_ID) ON DELETE CASCADE;
 
--- MANNER ≈◊¿Ã∫Ì
+-- MANNER ÌÖåÏù¥Î∏î
 ALTER TABLE MANNER DROP CONSTRAINT FK_MEMBER_TO_MANNER_1;
 ALTER TABLE MANNER ADD CONSTRAINT FK_MEMBER_TO_MANNER_1 
 FOREIGN KEY (MEMBER_ID) REFERENCES MEMBER (MEMBER_ID) ON DELETE CASCADE;
 
--- OPTION_TABLE ≈◊¿Ã∫Ì
+-- OPTION_TABLE ÌÖåÏù¥Î∏î
 ALTER TABLE OPTION_TABLE DROP CONSTRAINT FK_MEMBER_TO_OPTION_TABLE_1;
 ALTER TABLE OPTION_TABLE ADD CONSTRAINT FK_MEMBER_TO_OPTION_TABLE_1 
 FOREIGN KEY (MEMBER_ID) REFERENCES MEMBER (MEMBER_ID) ON DELETE CASCADE;
 
--- REGION ≈◊¿Ã∫Ì
+-- REGION ÌÖåÏù¥Î∏î
 ALTER TABLE REGION DROP CONSTRAINT FK_MEMBER_TO_REGION_1;
 ALTER TABLE REGION ADD CONSTRAINT FK_MEMBER_TO_REGION_1 
 FOREIGN KEY (MEMBER_ID) REFERENCES MEMBER (MEMBER_ID) ON DELETE CASCADE;
 
--- SENIOR_LIKE ≈◊¿Ã∫Ì
+-- SENIOR_LIKE ÌÖåÏù¥Î∏î
 ALTER TABLE SENIOR_LIKE DROP CONSTRAINT FK_MEMBER_TO_SENIOR_LIKE_1;
 ALTER TABLE SENIOR_LIKE ADD CONSTRAINT FK_MEMBER_TO_SENIOR_LIKE_1 
 FOREIGN KEY (MEMBER_ID) REFERENCES MEMBER (MEMBER_ID) ON DELETE CASCADE;
@@ -155,3 +155,82 @@ CREATE TABLE FRIEND_LIST(
     constraint friend_member_fk foreign key(member_id) references member(member_id) on delete cascade,
     constraint friend_friend_fk foreign key(friend_id) references member(member_id) on delete cascade
 );
+
+create table alarm(
+    member_id nvarchar2(30),
+    alarm_id number constraint alarm_pk primary key,
+    alarm_content nvarchar2(1000),
+    alarm_time nvarchar2(100),
+    constraint alarm_member_fk foreign key(member_id) references member(member_id) on delete cascade
+);
+
+create sequence seq_alarm
+minvalue 1 
+maxvalue 999999
+increment by 1
+start with 1
+nocache;
+
+CREATE OR REPLACE TRIGGER trg_alarm_id
+BEFORE INSERT ON alarm
+FOR EACH ROW
+BEGIN
+    :NEW.alarm_id := seq_alarm.NEXTVAL;
+END;
+/
+
+commit;
+
+drop trigger trg_alarm_id;
+drop sequence seq_alarm;
+drop table alarm;
+
+commit;
+
+rollback;
+
+-- create or replace 
+
+insert into alarm (member_id,alarm_content, alarm_time) values ('ansqudwns98','ÏïåÎûåÎÇ¥Ïö©12', 'ÏãúÍ∞Ñ1234');
+
+drop table alarm;
+
+select  * from alarm;
+
+select * from member;
+
+rollback;
+
+CREATE OR REPLACE TRIGGER trg_insert_option
+AFTER INSERT ON MEMBER
+FOR EACH ROW
+BEGIN
+   INSERT INTO OPTION_TABLE (
+      MEMBER_ID,
+      OPTION_FONT_SIZE,
+      OPTION_FONT_COLOR,
+      OPTION_ALARM,
+      OPTION_LOCK_PW,
+      OPTION_GODOK_ALARM
+   ) VALUES (
+      :NEW.MEMBER_ID,
+      'ÌÅ¨Í≤å',
+      '#000000',
+      'N', 
+      NULL,
+      'N'
+   );
+END;
+/
+
+commit;
+
+insert into Alarm (member_id, alarm_content, alarm_time) values ('ansqudwns98', 'content1', 'time1');
+
+select * from alarm;
+
+delete alarm where member_id = 'ansqudwns98';
+
+commit;
+
+select alarm_content, alarm_time from alarm where member_id = 'ansqudwns98';

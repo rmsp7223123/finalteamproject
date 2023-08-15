@@ -29,7 +29,6 @@ public class ChatMainFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentChatBinding.inflate(inflater, container, false);
         manager = getActivity().getSupportFragmentManager();
-        binding.fltbtnCall.setVisibility(View.GONE);
         binding.fltbtnFriendList.setVisibility(View.GONE);
         binding.fltbtnMessage.setVisibility(View.GONE);
         isAllFabVisible = false;
@@ -37,13 +36,11 @@ public class ChatMainFragment extends Fragment {
         binding.fltbtnMenu.setOnClickListener(v -> {
             if(!isAllFabVisible) {
                 binding.fltbtnMessage.show();
-                binding.fltbtnCall.show();
                 binding.fltbtnFriendList.show();
                 binding.fltbtnMenu.setImageResource(R.drawable.baseline_close_24);
                 isAllFabVisible = true;
             } else {
                 binding.fltbtnMessage.hide();
-                binding.fltbtnCall.hide();
                 binding.fltbtnFriendList.hide();
                 binding.fltbtnMenu.setImageResource(R.drawable.baseline_add_24);
                 isAllFabVisible = false;
@@ -51,10 +48,6 @@ public class ChatMainFragment extends Fragment {
         });
         binding.fltbtnFriendList.setOnClickListener(v -> {
             fragment = new FriendListFragment();
-            manager.beginTransaction().replace(R.id.container_frame_call_msg, fragment).commit();
-        });
-        binding.fltbtnCall.setOnClickListener(v -> {
-            fragment = new CallFragment();
             manager.beginTransaction().replace(R.id.container_frame_call_msg, fragment).commit();
         });
         binding.fltbtnMessage.setOnClickListener(v -> {

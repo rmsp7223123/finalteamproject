@@ -191,6 +191,8 @@ public class IDCardActivity extends AppCompatActivity {
                         birth = result.substring(result.indexOf("-", 123)-6, result.indexOf("-", 123));
                         gender = Integer.parseInt(result.substring(result.indexOf("-", 123)+1, result.indexOf("-", 123)+2))%2==1 ? "남" : "여";
                         tv_result.setText(result.substring(result.indexOf("-", 123)-6, result.indexOf("-", 123)+2));
+                    }else {
+                        Toast.makeText(activity, "신분증을 선택해주세요", Toast.LENGTH_SHORT).show();
                     }
                 }catch (Exception e) {
                     Toast.makeText(activity, "신분증을 선택해주세요", Toast.LENGTH_SHORT).show();
@@ -315,12 +317,14 @@ public class IDCardActivity extends AppCompatActivity {
 //                Glide.with(IDCardActivity.this).load(camera_uri).into(binding.imgv);
                 File file = new File(getRealPath(camera_uri));
                 try {
-                    BitmapFactory.Options options = new BitmapFactory.Options();
-                    options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-                    Bitmap bitmap = BitmapFactory.decodeStream(new FileInputStream(file), null, options);
+                    if(file!=null){
+                        BitmapFactory.Options options = new BitmapFactory.Options();
+                        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+                        Bitmap bitmap = BitmapFactory.decodeStream(new FileInputStream(file), null, options);
 
-                    LableDetectionTask lableDetectionTask = new LableDetectionTask(IDCardActivity.this ,prepareAnnotationRequest(bitmap) );
-                    lableDetectionTask.execute();
+                        LableDetectionTask lableDetectionTask = new LableDetectionTask(IDCardActivity.this ,prepareAnnotationRequest(bitmap) );
+                        lableDetectionTask.execute();
+                    }
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

@@ -16,6 +16,8 @@ import org.springframework.web.multipart.MultipartRequest;
 
 import com.google.gson.Gson;
 
+import cloud.gps.GpsVO;
+import cloud.member.AlarmVO;
 import cloud.member.FavorVO;
 import cloud.member.MemberVO;
 
@@ -49,7 +51,6 @@ public class MainController {
 
 	@RequestMapping("/changeProfile")
 	public String changeProfile(HttpServletRequest req) {
-
 		MemberVO vo = new Gson().fromJson(req.getParameter("dto"), MemberVO.class);
 		MultipartFile file = ((MultipartRequest) req).getFile("file");
 		// 파일저장, 원본파일 삭제, 새로운 파일경로 DB에 업로드
@@ -77,5 +78,35 @@ public class MainController {
 	public List<FavorVO> favor(String member_id) {
 		List<FavorVO> vo = sql.selectList("main.favor",member_id);
 		return vo;
+	}
+	
+	@RequestMapping("/addFriend")
+	public String addFriend(String member_id, String friend_id) {
+		// 알림으로 보내고 상대방이 확인눌렀을 때 
+		HashMap<String, Object> paramMap = new HashMap<>();
+		paramMap.put("member_id", member_id);
+		paramMap.put("friend_id", friend_id);
+		return new Gson().toJson(sql.insert("main.addFriend", paramMap));
+	}
+	
+	@RequestMapping("/addAlarm")
+	public String addAlarm(String member_id, String alarm_content, String alarm_time) {
+		HashMap<String, Object> paramMap = new HashMap<>();
+		paramMap.put("member_id", member_id);
+		paramMap.put("alarm_content", alarm_content);
+		paramMap.put("alarm_time", alarm_time);
+		
+		return new Gson().toJson(sql.insert("main.addAlarm", paramMap));
+	}
+	
+	@RequestMapping("/viewAlarm")
+	public List<AlarmVO> viewAlarm(String member_id) {
+		List<AlarmVO>list =  sql.selectList("main.viewAlarm", member_id);
+		return list;
+	}
+	
+	@RequestMapping("/deleteAlarm")
+	public String deleteAlarm(String member_id) {
+		return new Gson().toJson(sql.delete("main.deleteAlarm", member_id));
 	}
 }

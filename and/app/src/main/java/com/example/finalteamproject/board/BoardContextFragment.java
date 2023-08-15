@@ -37,6 +37,7 @@ public class BoardContextFragment extends Fragment {
     String[] list = {"최신순", "오래된순"};
     int fav_board_id;
     boolean like;
+    String nickname;
 
     public BoardContextFragment(Activity activity, int fav_board_id) {
         this.activity = (MainActivity) activity;
@@ -69,6 +70,12 @@ public class BoardContextFragment extends Fragment {
                     binding.tvModify.setVisibility(View.GONE);
                     binding.tvDelete.setVisibility(View.GONE);
                 }
+                CommonConn conn1 = new CommonConn(getContext(), "board/nickname");
+                conn1.addParamMap("id", vo.writer);
+                conn1.onExcute((isResult1, data1) -> {
+                    binding.tvWriter.setText("작성자 : "+data1);
+                    nickname = data1;
+                });
                 binding.tvBoardName.setText(BoardCommonVar.board_name);
                 binding.tvTitle.setText(vo.fav_board_title);
                 binding.tvDate.setText(vo.fav_board_writedate);
@@ -108,23 +115,28 @@ public class BoardContextFragment extends Fragment {
 
         binding.imgvRec.setOnClickListener(v -> {
             if(!like){
-                CommonConn conn1 = new CommonConn(getContext(), "board/insertRec");
-                conn1.addParamMap("member_id_like", CommonVar.logininfo.getMember_id());
-                conn1.addParamMap("fav_board_id", fav_board_id);
-                conn1.onExcute((isResult, data) -> {
-                    if(data.equals("성공")){
-                        Toast.makeText(activity, "추천", Toast.LENGTH_SHORT).show();
-                        binding.imgvRec.setImageResource(R.drawable.thumb_select);
-                        like = true;
-                        CommonConn conn2 = new CommonConn(getContext(), "board/rec");
-                        conn2.addParamMap("id", fav_board_id);
-                        conn2.onExcute((isResult1, data1) -> {
-                            binding.tvRec.setText("추천 : "+data1);
-                        });
-                    }else {
-                        Toast.makeText(activity, "추천 실패", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                if(nickname.equals(CommonVar.logininfo.getMember_nickname())){
+                    Toast.makeText(activity, "본인의 글에는 추천할 수 없습니다", Toast.LENGTH_SHORT).show();
+                }else {
+                    CommonConn conn1 = new CommonConn(getContext(), "board/insertRec");
+                    conn1.addParamMap("member_id_like", CommonVar.logininfo.getMember_id());
+                    conn1.addParamMap("fav_board_id", fav_board_id);
+                    conn1.onExcute((isResult, data) -> {
+                        if(data.equals("성공")){
+                            Toast.makeText(activity, "추천", Toast.LENGTH_SHORT).show();
+                            binding.imgvRec.setImageResource(R.drawable.thumb_select);
+                            like = true;
+                            CommonConn conn2 = new CommonConn(getContext(), "board/rec");
+                            conn2.addParamMap("id", fav_board_id);
+                            conn2.onExcute((isResult1, data1) -> {
+                                binding.tvRec.setText("추천 : "+data1);
+                            });
+                        }else {
+                            Toast.makeText(activity, "추천 실패", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+                
             }else {
                 CommonConn conn1 = new CommonConn(getContext(), "board/deleteRec");
                 conn1.addParamMap("member_id_like", CommonVar.logininfo.getMember_id());

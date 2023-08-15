@@ -29,4 +29,16 @@
 	<select id="favor" resultType="cloud.member.FavorVO">
 	select favor from favor where member_id=#{member_id}
 	</select>
+	
+	<insert id="addAlarm">
+		insert into Alarm (member_id, alarm_content, alarm_time) values (#{member_id}, #{alarm_content}, #{alarm_time})
+	</insert>
+	
+	<select id="viewAlarm" resultType="cloud.member.AlarmVO">
+		select alarm_content, alarm_time from alarm where member_id = #{member_id}
+	</select>
+	
+	<delete id="deleteAlarm">
+		delete alarm where member_id = #{member_id}
+	</delete>
 </mapper>
