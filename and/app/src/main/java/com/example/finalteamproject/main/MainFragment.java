@@ -152,6 +152,8 @@ public class MainFragment extends Fragment {
 
         binding.imgvMessage.setOnClickListener(view -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+//            CommonConn conn1 = new CommonConn(getContext(),"main/viewpager");
+//            conn1.addParamMap("member_id",CommonVar.logininfo.getMember_id());
             builder.setTitle("메시지 보내기");
             builder.setPositiveButton("취소", new DialogInterface.OnClickListener() {
                 @Override
