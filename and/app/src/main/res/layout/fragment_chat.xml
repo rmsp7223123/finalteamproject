@@ -45,22 +45,12 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
         app:fabSize="normal"
-        app:layout_constraintBottom_toTopOf="@+id/fltbtn_call"
+        app:layout_constraintBottom_toTopOf="@+id/fltbtn_friendList"
         app:layout_constraintEnd_toEndOf="@+id/fltbtn_friendList"
-        android:layout_marginRight="80dp"
+        app:layout_constraintStart_toStartOf="@+id/fltbtn_friendList"
         app:srcCompat="@drawable/baseline_chat_24" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:backgroundTint="#FFC81E"
-        android:id="@+id/fltbtn_call"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/fltbtn_menu"
-        android:layout_marginEnd="80dp"
-        app:fabSize="normal"
-        app:srcCompat="@drawable/baseline_call_24" />
+
 
 
 
