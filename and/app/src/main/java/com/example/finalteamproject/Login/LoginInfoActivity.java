@@ -63,6 +63,11 @@ public class LoginInfoActivity extends AppCompatActivity {
 
 //        new HideActionBar().hideActionBar(this);
 
+
+        binding.edtName.setClickable(false);
+        binding.edtName.setFocusable(false);
+
+
         binding.imgvBack.setOnClickListener(v -> {
             finish();
         });

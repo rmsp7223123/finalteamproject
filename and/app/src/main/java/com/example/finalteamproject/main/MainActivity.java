@@ -8,6 +8,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -110,4 +112,11 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.remove(fragment1);
         fragmentTransaction.replace(R.id.container_frame, fragment2).commit();
     }
+
+    //어댑터 -> 액티비티 이동
+    public void changeActivity(Context context, Activity activity){
+        Intent intent = new Intent(context, activity.getClass());
+        startActivity(intent);
+    }
+
 }

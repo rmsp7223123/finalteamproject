@@ -121,10 +121,9 @@
 
         <ImageView
             android:id="@+id/imgv_img"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/minji10"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_launcher_background"/>
 
 
 
@@ -278,7 +277,15 @@
 
     </LinearLayout>
 
-
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tv_none"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:text="아직 등록된 댓글이 없습니다"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recv_comment"
         android:layout_marginHorizontal="30dp"

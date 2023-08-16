@@ -33,6 +33,10 @@ public class LoginCheckActivity extends AppCompatActivity {
         binding.imgvBack.setOnClickListener(v -> {
             finish();
         });
+
+        binding.tvFind.setOnClickListener(v -> {
+            Intent intent  = new Intent(this, LoginFindActivity.class);
+        });
         
         InputMethodManager manager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
 

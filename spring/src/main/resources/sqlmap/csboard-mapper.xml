@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="csboard">
+	
+	<select id="list" resultType="cloud.member.CSBoardVO">
+		select csboard_id, csboard_viewcount, writer, csboard_title, csboard_content, 
+		to_char(csboard_writedate, 'YYYY-MM-DD') csboard_writedate
+		from CSBOARD
+		where (writer like '%'||#{context}||'%' or CSBOARD_TITLE like '%'||#{context}||'%' 
+		or CSBOARD_CONTENT like '%'||#{context}||'%')
+		<choose>
+			<when test="align == '최신순'">
+				order by CSBOARD_WRITEDATE desc
+			</when>
+			<when test="align == '조회순'">
+				order by CSBOARD_VIEWCOUNT desc, CSBOARD_ID desc
+			</when>			
+			<when test="align == '오래된순'">
+				order by CSBOARD_WRITEDATE
+			</when>
+		</choose>
+	</select>
+	
+	<select id="info" resultType="cloud.member.CSBoardVO">
+		select * from csboard
+		where csboard_id = #{id}
+	</select>
+	
+	<update id="modify">
+		update csboard set csboard_title = #{csboard_title}, csboard_content = #{csboard_content}
+		, csboard_writedate = sysdate where csboard_id = #{csboard_id}
+	</update>
+	
+	<delete id="delete">
+		delete csboard where csboard_id = #{id}
+	</delete>
+	
+	<select id="comment" resultType="cloud.member.CSBoardCommentVO">
+		select * from csboard_comment where csboard_id = #{id}
+	</select>
+	
+	<insert id="insert">
+		insert into csboard values (5000, #{writer}, #{csboard_title}, #{csboard_content}, 0, sysdate)
+	</insert>
+	
+	<update id="viewCnt">
+		update csboard set CSBOARD_VIEWCOUNT = 100 where csboard_id = #{id}
+	</update>
+	
+	<delete id="deleteComment">
+		delete csboard_comment where csboard_comment_id = #{id}
+	</delete>
+	
+	<insert id="insertComment">
+		insert into csboard_comment values (1000, #{csboard_id}, #{writer}, #{csboard_comment_content}, sysdate)
+	</insert>
+	
+	<select id="commentCheck" resultType="integer">
+		select csboard_comment_id from csboard_comment where csboard_id = #{id}
+	</select>
+	
+	
+</mapper>
