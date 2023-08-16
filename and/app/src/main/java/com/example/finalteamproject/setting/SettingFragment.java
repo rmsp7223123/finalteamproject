@@ -15,8 +15,8 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.example.finalteamproject.Login.LoginActivity;
-import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonVar;
+import com.example.finalteamproject.cs.CSBoardActivity;
 import com.example.finalteamproject.databinding.FragmentSettingBinding;
 
 public class SettingFragment extends Fragment {
@@ -77,6 +77,14 @@ public class SettingFragment extends Fragment {
             Intent intent = new Intent(getContext(), DeleteAccountActivity.class);
             startActivity(intent);
         });
+
+        //고객센터
+        binding.tvCs.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), CSBoardActivity.class);
+            startActivity(intent);
+        });
+        //
+
         return binding.getRoot();
     }
 

@@ -113,19 +113,31 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <RelativeLayout
+            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_find"
+                android:layout_marginBottom="60dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/setting_underline"
+                android:textColor="#595959"
+                android:textSize="13dp"
+                android:textAlignment="center"/>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_next"
+            android:layout_above="@id/tv_find"
             android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="63dp"
             app:cardCornerRadius="10dp"
             android:backgroundTint="#F6DD6D"
             android:layout_marginHorizontal="25dp"
-            android:layout_marginBottom="60dp"
             android:layout_marginTop="40dp">
 
             <TextView

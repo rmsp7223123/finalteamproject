@@ -166,12 +166,12 @@ public class NewBoardFragment extends Fragment {
                             api.clientSendFile("board/insertFile", map, filePart).enqueue(new Callback<String>() {
                                 @Override
                                 public void onResponse(Call<String> call, Response<String> response) {
-//                                    if(response.body().equals("성공")){
+                                    if(response.body().equals("성공")){
                                         Toast.makeText(NewBoardFragment.this.getContext(), "게시글 등록 성공", Toast.LENGTH_SHORT).show();
                                         activity.replaceFragment(NewBoardFragment.this, new BoardFragment(activity));
-//                                    }else {
-//                                        Toast.makeText(NewBoardFragment.this.getContext(), "게시글 등록 실패", Toast.LENGTH_SHORT).show();
-//                                    }
+                                    }else {
+                                        Toast.makeText(NewBoardFragment.this.getContext(), "게시글 등록 실패", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                                 @Override
                                 public void onFailure(Call<String> call, Throwable t) {
@@ -193,8 +193,7 @@ public class NewBoardFragment extends Fragment {
                                 public void onResponse(Call<String> call, Response<String> response) {
                                     if(response.body().equals("성공")){
                                         Toast.makeText(NewBoardFragment.this.getContext(), "게시글 등록 성공", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(NewBoardFragment.this.getContext(), LoginFavorActivity.class);
-                                        startActivity(intent);
+                                        activity.replaceFragment(NewBoardFragment.this, new BoardFragment(activity));
                                     }else {
                                         Toast.makeText(NewBoardFragment.this.getContext(), "게시글 등록 실패", Toast.LENGTH_SHORT).show();
                                     }
