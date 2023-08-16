@@ -150,17 +150,13 @@ SELECT s.KEY, s.SENIOR_NAME,
 FROM SENIOR s
 LEFT JOIN SENIOR_LIKE l ON s.key = l.key
 WHERE (
-    s.SENIOR_NAME LIKE '%광주%'
-    OR s.SENIOR_ROADADDRESS LIKE '%광주%'
+    s.SENIOR_NAME LIKE '%금호%'
+    OR s.SENIOR_ROADADDRESS LIKE '%금호%'
 )
 AND (
-    /* 공백으로 구분된 키워드 문자열을 분할하고 여러 값과 비교합니다 */
-    #{keywords} IS NULL
-    OR s.SENIOR_NAME LIKE '%'||#{keywords[1]}||'%'
-    OR s.SENIOR_ROADADDRESS LIKE '%'||#{keywords[1]}||'%'
-    OR s.SENIOR_NAME LIKE '%'||#{keywords[2]}||'%'
-    OR s.SENIOR_ROADADDRESS LIKE '%'||#{keywords[2]}||'%'
-    /* 필요한만큼 추가적인 키워드에 대한 줄을 더 추가하세요 */
+    ' ' IS NULL
+    OR s.SENIOR_NAME LIKE '%광주%'
+    OR s.SENIOR_ROADADDRESS LIKE '%광주%'
 )
 ORDER BY s.KEY;
 
