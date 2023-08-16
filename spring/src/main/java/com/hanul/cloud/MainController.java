@@ -144,6 +144,7 @@ public class MainController {
 
 	@RequestMapping(value = "/addAlarm")
 	public String send2(MemberVO vo1, AlarmVO vo2) {
+		vo1 = sql.selectOne("main.detail", vo1.getMember_id());
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("member_id", vo1.getMember_id());
 		paramMap.put("alarm_content", vo2.getAlarm_content());

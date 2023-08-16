@@ -284,6 +284,7 @@ public class MainFragment extends Fragment {
 
     public void dialog_friend(int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+
         CommonConn conn1 = new CommonConn(getContext(), "main/viewpager");
         conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
         conn1.onExcute((isResult, data) -> {
@@ -304,15 +305,15 @@ public class MainFragment extends Fragment {
                     // 친구추가 보냈을 때 상대방에게 알람이 가게 수정
                     // 알람 클릭했을 때 친구추가 확인 수정
                     // FirebaseMessageReceiver.showNotification();
-
+                    // 알람이 꺼져있는상태면 안보내기? 보내는데 보이지 않게하기?
                     CommonConn conn = new CommonConn(getContext(), "main/addAlarm");
-                    conn.addParamMap("member_id", list.get(position).getMember_id());
+                    conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
                     conn.addParamMap("alarm_content", CommonVar.logininfo.getMember_nickname() + "님이 친구신청을 보냈습니다.");
                     conn.addParamMap("alarm_time", currentTime);
                     conn.addParamMap("member_phone_id", list.get(position).getMember_phone_id());
                     conn.onExcute((isResult1, data1) -> {
                         if (isResult1) {
-                            Log.d("TAG", "onClick: "+ "확인용");
+                            Log.d("TAG", "onClick: " + "확인용");
                         }
                     });
                     dialog.dismiss();
@@ -322,5 +323,8 @@ public class MainFragment extends Fragment {
             AlertDialog dialog = builder.create();
             dialog.show();
         });
+
     }
+
+
 }
