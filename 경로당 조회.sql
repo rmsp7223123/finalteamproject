@@ -127,6 +127,8 @@ SELECT  CASE WHEN DISTANCE < 1 THEN RTRIM(TO_CHAR(DISTANCE*1000 , 'FM9990D99'),'
         ORDER BY C.DISTANCE ASC
     ) T INNER JOIN SENIOR S ON T.KEY = S.KEY
     WHERE T.NO < 20 ;
+--14 = 10
+--17 =
 
 select * from senior;
 
@@ -140,4 +142,53 @@ WHERE s.SENIOR_NAME LIKE '%광주%' OR s.SENIOR_ROADADDRESS LIKE '%광주%'
 ORDER BY s.KEY;
 
 
+--키워드가 2개 이상인 경우
+SELECT s.KEY, s.SENIOR_NAME,
+       s.SENIOR_ROADADDRESS, s.SENIOR_NUMADDRESS, s.SENIOR_CALL,
+       s.SENIOR_LATITUDE, s.SENIOR_LONGITUDE, s.SIDO, s.SIGUNGU,
+       l.SENIOR_LIKE_NUM
+FROM SENIOR s
+LEFT JOIN SENIOR_LIKE l ON s.key = l.key
+WHERE (
+    s.SENIOR_NAME LIKE '%광주%'
+    OR s.SENIOR_ROADADDRESS LIKE '%광주%'
+)
+AND (
+    /* 공백으로 구분된 키워드 문자열을 분할하고 여러 값과 비교합니다 */
+    #{keywords} IS NULL
+    OR s.SENIOR_NAME LIKE '%'||#{keywords[1]}||'%'
+    OR s.SENIOR_ROADADDRESS LIKE '%'||#{keywords[1]}||'%'
+    OR s.SENIOR_NAME LIKE '%'||#{keywords[2]}||'%'
+    OR s.SENIOR_ROADADDRESS LIKE '%'||#{keywords[2]}||'%'
+    /* 필요한만큼 추가적인 키워드에 대한 줄을 더 추가하세요 */
+)
+ORDER BY s.KEY;
+
+
+
+
+
+
 --'%'||#{keyword}||'%'
+
+
+SELECT ROWNUM no, CASE WHEN DISTANCE < 1 THEN
+		RTRIM(TO_CHAR(DISTANCE*1000 , 'FM9990D99'),'.')||'m' ELSE
+		DISTANCE||'km' END distance,T.*
+		, S.* , (SELECT COUNT(*) FROM
+		SENIOR_BMARK B WHERE B.KEY = S.KEY )
+		SENIOR_LIKE_NUM
+		from
+		(
+		SELECT ROWNUM no ,
+		C.DISTANCE , S.KEY , S.SENIOR_ROADADDRESS
+		FROM SENIOR S LEFT OUTER JOIN
+		(SELECT KEY , DISTNACE_WGS84(35.1534, 126.8880,
+		SENIOR_LATITUDE, SENIOR_LONGITUDE) AS DISTANCE
+		FROM SENIOR S
+		) C ON
+		S.KEY=C.KEY
+		ORDER BY C.DISTANCE ASC
+		) T INNER JOIN SENIOR S ON T.KEY = S.KEY
+		 WHERE ROWNUM < 61
+
