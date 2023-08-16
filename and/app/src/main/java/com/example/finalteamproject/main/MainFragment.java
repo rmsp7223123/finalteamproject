@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,9 +25,6 @@ import com.example.finalteamproject.common.MemberVO;
 import com.example.finalteamproject.databinding.FragmentMainBinding;
 import com.example.finalteamproject.setting.ChangeProfileActivity;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.FirebaseMessagingException;
-import com.google.firebase.messaging.Message;
-import com.google.firebase.messaging.Notification;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -314,18 +312,7 @@ public class MainFragment extends Fragment {
                     conn.addParamMap("member_phone_id", list.get(position).getMember_phone_id());
                     conn.onExcute((isResult1, data1) -> {
                         if (isResult1) {
-                            Message message = Message.builder()
-                                    .setToken(list.get(position).getMember_phone_id())
-                                    .setNotification(Notification.builder()
-                                            .setTitle("친구추가")
-                                            .setBody(CommonVar.logininfo.getMember_nickname() + "님이 친구신청을 보냈습니다.")
-                                            .build())
-                                    .build();
-                            try {
-                               FirebaseMessaging msg = FirebaseMessaging.getInstance();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+                            Log.d("TAG", "onClick: "+ "확인용");
                         }
                     });
                     dialog.dismiss();
