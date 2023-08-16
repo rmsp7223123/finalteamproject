@@ -31,7 +31,7 @@
 	</select>
 	
 	<insert id="addAlarm">
-		insert into Alarm (member_id, alarm_content, alarm_time) values (#{member_id}, #{alarm_content}, #{alarm_time})
+		insert into Alarm (member_id, alarm_content, alarm_time, member_phone_id) values (#{member_id}, #{alarm_content}, #{alarm_time}, #{member_phone_id})
 	</insert>
 	
 	<select id="viewAlarm" resultType="cloud.member.AlarmVO">

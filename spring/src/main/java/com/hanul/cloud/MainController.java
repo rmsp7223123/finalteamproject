@@ -49,7 +49,7 @@ public class MainController {
 		return "";
 	}
 
-	@RequestMapping("/changeProfile")
+	@RequestMapping(value="/changeProfile", produces = "text/html;charset=utf-8")
 	public String changeProfile(HttpServletRequest req) {
 		MemberVO vo = new Gson().fromJson(req.getParameter("dto"), MemberVO.class);
 		MultipartFile file = ((MultipartRequest) req).getFile("file");
@@ -90,11 +90,12 @@ public class MainController {
 	}
 	
 	@RequestMapping("/addAlarm")
-	public String addAlarm(String member_id, String alarm_content, String alarm_time) {
+	public String addAlarm(String member_id, AlarmVO vo) {
 		HashMap<String, Object> paramMap = new HashMap<>();
 		paramMap.put("member_id", member_id);
-		paramMap.put("alarm_content", alarm_content);
-		paramMap.put("alarm_time", alarm_time);
+		paramMap.put("alarm_content", vo.getAlarm_content());
+		paramMap.put("alarm_time", vo.getAlarm_time());
+		paramMap.put("member_phone_id", vo.getMember_phone_id());
 		
 		return new Gson().toJson(sql.insert("main.addAlarm", paramMap));
 	}
