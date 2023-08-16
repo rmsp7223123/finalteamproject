@@ -88,9 +88,15 @@
 		delete fav_board where fav_board_id = #{id}
 	</delete>
 	
-	<update id="modify">
+	<update id="modifyFile">
 		update fav_board set fav_board_title = #{fav_board_title}, fav_board_content = #{fav_board_content}
 		, fav_board_writedate = sysdate, fav_board_img = #{fav_board_img,jdbcType=VARCHAR}
+		where fav_board_id = #{fav_board_id}
+	</update>
+	
+	<update id="modify">
+		update fav_board set fav_board_title = #{fav_board_title}, fav_board_content = #{fav_board_content}
+		, fav_board_writedate = sysdate, fav_board_img = null
 		where fav_board_id = #{fav_board_id}
 	</update>
 	
@@ -125,6 +131,10 @@
 		FAV_BOARD_COMMENT_WRITEDATE = sysdate
 		  where FAV_BOARD_COMMENT_ID = #{fav_board_comment_id}
 	</update>
+	
+	<select id="selectImage" resultType="string">
+		select fav_board_img from fav_board where fav_board_id = #{fav_board_id}
+	</select>
 
 	
 </mapper>

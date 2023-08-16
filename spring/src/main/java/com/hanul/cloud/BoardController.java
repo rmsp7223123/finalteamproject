@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartRequest;
 
 import com.google.gson.Gson;
 
+import cloud.common.CommonUtility;
 import cloud.member.FavorBoardCommentVO;
 import cloud.member.FavorBoardVO;
 
@@ -82,7 +83,7 @@ public class BoardController {
 		paramMap.put("favor", req.getParameter("favor"));
 		paramMap.put("fav_board_img", newImagePath);
 		String result = sql.insert("board.insert",paramMap) ==1 ? "성공" : "실패";
-		return new Gson().toJson(result);
+		return result;
 	}
 	
 	//게시글 아이디로 게시글 불러오기
@@ -155,11 +156,29 @@ public class BoardController {
 		return result;
 	}
 	
-	//게시물 수정
+	//게시물 수정 및 파일 변경
+	@RequestMapping(value="/modifyFile", produces = "text/html;charset=utf-8")
+	public String modifyFile(HttpServletRequest req) { 
+		
+		
+		MultipartRequest mReq = (MultipartRequest) req; //file정보가 없는 req => 있는 mReq
+		MultipartFile file = mReq.getFile("file");
+		String newImagePath = common.uploadAndDeletePreviousImage("boardImage", file, req, 
+				sql.selectOne("board.selectImage", req.getParameter("fav_board_id")));
+		HashMap<String, Object>paramMap = new HashMap<String, Object>();
+		paramMap.put("fav_board_id", Integer.parseInt(req.getParameter("fav_board_id")));
+		paramMap.put("fav_board_title", req.getParameter("fav_board_title"));
+		paramMap.put("fav_board_content", req.getParameter("fav_board_content"));
+		paramMap.put("fav_board_img", newImagePath);
+		String result = sql.update("board.modifyFile",paramMap) ==1 ? "성공" : "실패";
+		return result;
+	}
+	
+	//게시물 수정 및 파일 삭제
 	@RequestMapping(value="/modify", produces = "text/html;charset=utf-8")
-	public String modify(FavorBoardVO vo) {
-		String result = sql.insert("board.modify", vo)== 1 ? "성공" : "실패";
-		return result ;
+	public String modify(FavorBoardVO vo) { 
+		common.deleteFile(sql.selectOne("board.selectImage", vo.getFav_board_id()));
+		return sql.update("board.modify", vo)==1 ? "성공" : "실패";
 	}
 	
 	//댓글 목록 가져오기

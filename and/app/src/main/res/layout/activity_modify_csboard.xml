@@ -72,62 +72,6 @@
 
     </androidx.cardview.widget.CardView>
 
-    <LinearLayout
-        android:layout_marginTop="30dp"
-        android:layout_marginHorizontal="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:id="@+id/ln_image"
-            android:layout_gravity="center_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/camera"/>
-
-            <TextView
-                android:layout_marginStart="5dp"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="사진 첨부하기"/>
-
-        </LinearLayout>
-
-        <RelativeLayout
-            android:visibility="gone"
-            android:id="@+id/rl_pic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/imgv_pic"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/minji10"
-                android:scaleType="centerCrop"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"/>
-
-            <ImageView
-                android:id="@+id/imgv_delete"
-                android:layout_toStartOf="@id/imgv_pic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/baseline_close_24"
-                android:layout_centerVertical="true"/>
-
-
-        </RelativeLayout>
-
-    </LinearLayout>
-
 
     <RelativeLayout
         android:layout_weight="1"

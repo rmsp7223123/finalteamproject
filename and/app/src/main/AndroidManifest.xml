@@ -68,6 +68,21 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".cs.NewCSBoardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".cs.ModifyCSBoardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".cs.CSBoardContextActivity"
+            android:exported="false" />
+        <activity
+            android:name=".cs.CSBoardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Login.LoginFindActivity"
+            android:exported="false" />
+        <activity
             android:name=".chat.ChatPhotoDetailActivity"
             android:exported="false" />
         <activity

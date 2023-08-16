@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
@@ -136,7 +137,7 @@ public class BoardContextFragment extends Fragment {
                         }
                     });
                 }
-                
+
             }else {
                 CommonConn conn1 = new CommonConn(getContext(), "board/deleteRec");
                 conn1.addParamMap("member_id_like", CommonVar.logininfo.getMember_id());
@@ -187,11 +188,14 @@ public class BoardContextFragment extends Fragment {
                 conn1.onExcute((isResult, data) -> {
                     List<FavorBoardCommentVO> list = new Gson().fromJson(data, new TypeToken<List<FavorBoardCommentVO>>(){}.getType());
                     if(list.size()!=0){
+                        binding.recvComment.setVisibility(View.VISIBLE);
+                        binding.tvNone.setVisibility(View.GONE);
                         BoardCommentAdapter adapter = new BoardCommentAdapter(list, getContext(), activity, BoardContextFragment.this, fav_board_id);
                         binding.recvComment.setAdapter(adapter);
                         binding.recvComment.setLayoutManager(new LinearLayoutManager(BoardContextFragment.this.getContext()));
                     }else {
-
+                        binding.recvComment.setVisibility(View.GONE);
+                        binding.tvNone.setVisibility(View.VISIBLE);
                     }
                 });
             }
@@ -221,6 +225,8 @@ public class BoardContextFragment extends Fragment {
                     conn1.addParamMap("fav_board_comment_content", binding.edtCommentContent.getText().toString());
                     conn1.onExcute((isResult, data) -> {
                         if(data.equals("성공")){
+                            binding.tvNone.setVisibility(View.GONE);
+                            binding.recvComment.setVisibility(View.VISIBLE);
                             Toast.makeText(activity, "댓글 등록 성공", Toast.LENGTH_SHORT).show();
                             CommonConn conn2 = new CommonConn(getContext(), "board/commentList");
                             conn2.addParamMap("fav_board_id", fav_board_id);
@@ -228,11 +234,14 @@ public class BoardContextFragment extends Fragment {
                             conn2.onExcute((isResult1, data1) -> {
                                 List<FavorBoardCommentVO> list = new Gson().fromJson(data1, new TypeToken<List<FavorBoardCommentVO>>(){}.getType());
                                 if(list.size()!=0){
+                                    binding.recvComment.setVisibility(View.VISIBLE);
+                                    binding.tvNone.setVisibility(View.GONE);
                                     BoardCommentAdapter adapter = new BoardCommentAdapter(list, getContext(), activity, BoardContextFragment.this, fav_board_id);
                                     binding.recvComment.setAdapter(adapter);
                                     binding.recvComment.setLayoutManager(new LinearLayoutManager(BoardContextFragment.this.getContext()));
                                 }else {
-
+                                    binding.recvComment.setVisibility(View.GONE);
+                                    binding.tvNone.setVisibility(View.VISIBLE);
                                 }
                             });
                         }else{
@@ -248,6 +257,8 @@ public class BoardContextFragment extends Fragment {
 
         return binding.getRoot();
     }
+
+
 
     public void showDialog(){
         String[] dialog_item = {"삭제", "취소"};

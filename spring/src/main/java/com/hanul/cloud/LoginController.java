@@ -106,7 +106,7 @@ public class LoginController {
 		HashMap<String, Object>paramMap = new HashMap<String, Object>();
 		paramMap.put("member_id", id);
 		paramMap.put("member_profileimg", newImagePath);
-		return new Gson().toJson(sql.insert("login.file",paramMap) ==1 ? "성공" : "실패");
+		return sql.insert("login.file",paramMap) ==1 ? "성공" : "실패";
 		
 		
 		//파일이 있는 상태의 요청을 받았는지에 따라서 유동적으로 MultipartRequest로 캐스팅
