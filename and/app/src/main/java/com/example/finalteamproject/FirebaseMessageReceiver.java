@@ -17,6 +17,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.bumptech.glide.Glide;
 import com.example.finalteamproject.main.MainActivity;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -92,6 +93,7 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
 
       /*  remoteViews.setImageViewResource(R.id.icon,
                 R.drawable.haerin2);*/
+
         return remoteViews;
     }
 
@@ -144,4 +146,7 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
         notificationManager.notify(uniqueRandomValue, builder.build());
         uniqueRandomValue++;
     }
+
+
+
 }

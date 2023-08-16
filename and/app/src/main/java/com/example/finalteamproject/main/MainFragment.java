@@ -315,9 +315,10 @@ public class MainFragment extends Fragment {
                     conn.addParamMap("member_id", list.get(position).getMember_id());
                     conn.addParamMap("alarm_content", CommonVar.logininfo.getMember_nickname() + "님이 친구신청을 보냈습니다.");
                     conn.addParamMap("alarm_time", currentTime);
+                    conn.addParamMap("member_phone_id", list.get(position).getMember_phone_id());
                     conn.onExcute((isResult1, data1) -> {
                         if (isResult1) {
-                            FirebaseMessageReceiver.showNotification(getContext(), "친구추가", CommonVar.logininfo.getMember_nickname() + "님이 친구신청을 보냈습니다.");
+//                            FirebaseMessageReceiver.showNotification(getContext(), "친구추가", CommonVar.logininfo.getMember_nickname() + "님이 친구신청을 보냈습니다.");
                         }
                     });
                     dialog.dismiss();
