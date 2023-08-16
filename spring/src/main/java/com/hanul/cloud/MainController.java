@@ -1,6 +1,9 @@
 package com.hanul.cloud;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -14,6 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
+import com.google.auth.oauth2.AccessToken;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingException;
+import com.google.firebase.messaging.Message;
+import com.google.firebase.messaging.Notification;
 import com.google.gson.Gson;
 
 import cloud.gps.GpsVO;
@@ -49,7 +60,7 @@ public class MainController {
 		return "";
 	}
 
-	@RequestMapping(value="/changeProfile", produces = "text/html;charset=utf-8")
+	@RequestMapping(value = "/changeProfile", produces = "text/html;charset=utf-8")
 	public String changeProfile(HttpServletRequest req) {
 		MemberVO vo = new Gson().fromJson(req.getParameter("dto"), MemberVO.class);
 		MultipartFile file = ((MultipartRequest) req).getFile("file");
@@ -73,39 +84,72 @@ public class MainController {
 		List<MemberVO> vo = sql.selectList("main.viewpager", member_id);
 		return vo;
 	}
-	
+
 	@RequestMapping("/favor")
 	public List<FavorVO> favor(String member_id) {
-		List<FavorVO> vo = sql.selectList("main.favor",member_id);
+		List<FavorVO> vo = sql.selectList("main.favor", member_id);
 		return vo;
 	}
-	
+
 	@RequestMapping("/addFriend")
 	public String addFriend(String member_id, String friend_id) {
-		// 알림으로 보내고 상대방이 확인눌렀을 때 
+		// 알림으로 보내고 상대방이 확인눌렀을 때
 		HashMap<String, Object> paramMap = new HashMap<>();
 		paramMap.put("member_id", member_id);
 		paramMap.put("friend_id", friend_id);
 		return new Gson().toJson(sql.insert("main.addFriend", paramMap));
 	}
-	
+
 	@RequestMapping("/addAlarm")
-	public String addAlarm(String member_id, AlarmVO vo) {
-		HashMap<String, Object> paramMap = new HashMap<>();
-		paramMap.put("member_id", member_id);
-		paramMap.put("alarm_content", vo.getAlarm_content());
-		paramMap.put("alarm_time", vo.getAlarm_time());
-		paramMap.put("member_phone_id", vo.getMember_phone_id());
-		
-		return new Gson().toJson(sql.insert("main.addAlarm", paramMap));
+	public String addAlarm(MemberVO vo1, AlarmVO vo2) throws FileNotFoundException, IOException {
+//		HashMap<String, Object> paramMap = new HashMap<>();
+//		paramMap.put("member_id", vo1.getMember_id());
+//		paramMap.put("alarm_content", vo2.getAlarm_content());
+//		paramMap.put("alarm_time", vo2.getAlarm_time());
+//		paramMap.put("member_phone_id", vo2.getMember_phone_id());
+		// const firebaseConfig = {
+//	    apiKey: "AIzaSyCdpqv25vqsCDAypMIg0FRNBi-76U_s92w",
+//	    authDomain: "halmanda-5342f.firebaseapp.com",
+//	    databaseURL: "https://halmanda-5342f-default-rtdb.firebaseio.com",
+//	    projectId: "halmanda-5342f",
+//	    storageBucket: "halmanda-5342f.appspot.com",
+//	    messagingSenderId: "879209864498",
+//	    appId: "1:879209864498:web:1a63c9fc1c4b95452d4b2b",
+//	    measurementId: "G-WKLWMETYNP"
+//	  };
+
+		Message message = Message.builder().setToken(
+				"ecyZAdhBRX2cFVXlw-Pq_-:APA91bFAvfxhMIIDqrLY4dofOK5D1Ahz4-ZQjWrO5YK3Ix7MXdio7vc02fJA6_bfTktltesIm8RBrqFwbWzVsBxrrU0_N9GTzvOWquG_u2oraMunORTb7qQi_Yc_KMREYuQt1pEkm4FU")
+				.setNotification(Notification.builder().setTitle("친구추가")
+						.setBody(vo1.getMember_nickname() + "님이 친구신청을 보냈습니다.").build())
+				.build();
+		try {
+//			FirebaseApp app = FirebaseApp.initializeApp(new FirebaseOptions.Builder()
+//					.setCredentials(GoogleCredentials.fromStream(new FileInputStream(null)))
+//					.setProjectId("halmanda-5342f")
+////					.setServiceAccountId("AIzaSyCdpqv25vqsCDAypMIg0FRNBi-76U_s92w")
+//					.build());
+			FirebaseOptions options = new FirebaseOptions.Builder()
+					.setCredentials(GoogleCredentials.fromStream(new FileInputStream(
+							"‪D:\\finalteamproject\\halmanda-5342f-firebase-adminsdk-wat99-ca82049f64.json")))
+					.setDatabaseUrl("https://halmanda-5342f-default-rtdb.firebaseio.com")
+//					.setProjectId("halmanda-5342f")
+					.build();
+			FirebaseApp.initializeApp(options);
+			FirebaseMessaging.getInstance().send(message);
+		} catch (FirebaseMessagingException e) {
+			e.printStackTrace();
+		}
+		// return new Gson().toJson(sql.insert("main.addAlarm", paramMap));
+		return "";
 	}
-	
+
 	@RequestMapping("/viewAlarm")
 	public List<AlarmVO> viewAlarm(String member_id) {
-		List<AlarmVO>list =  sql.selectList("main.viewAlarm", member_id);
+		List<AlarmVO> list = sql.selectList("main.viewAlarm", member_id);
 		return list;
 	}
-	
+
 	@RequestMapping("/deleteAlarm")
 	public String deleteAlarm(String member_id) {
 		return new Gson().toJson(sql.delete("main.deleteAlarm", member_id));

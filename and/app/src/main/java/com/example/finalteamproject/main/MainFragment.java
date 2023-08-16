@@ -3,8 +3,6 @@ package com.example.finalteamproject.main;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -12,28 +10,26 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.example.finalteamproject.FirebaseMessageReceiver;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.board.BoardCommonVar;
-import com.example.finalteamproject.chat.MessageChatActivity;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.common.MemberVO;
 import com.example.finalteamproject.databinding.FragmentMainBinding;
 import com.example.finalteamproject.setting.ChangeProfileActivity;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingException;
+import com.google.firebase.messaging.Message;
+import com.google.firebase.messaging.Notification;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.File;
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -318,7 +314,18 @@ public class MainFragment extends Fragment {
                     conn.addParamMap("member_phone_id", list.get(position).getMember_phone_id());
                     conn.onExcute((isResult1, data1) -> {
                         if (isResult1) {
-//                            FirebaseMessageReceiver.showNotification(getContext(), "친구추가", CommonVar.logininfo.getMember_nickname() + "님이 친구신청을 보냈습니다.");
+                            Message message = Message.builder()
+                                    .setToken(list.get(position).getMember_phone_id())
+                                    .setNotification(Notification.builder()
+                                            .setTitle("친구추가")
+                                            .setBody(CommonVar.logininfo.getMember_nickname() + "님이 친구신청을 보냈습니다.")
+                                            .build())
+                                    .build();
+                            try {
+                               FirebaseMessaging msg = FirebaseMessaging.getInstance();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                     });
                     dialog.dismiss();
