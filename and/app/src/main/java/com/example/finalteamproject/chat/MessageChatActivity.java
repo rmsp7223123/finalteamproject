@@ -120,7 +120,6 @@ public class MessageChatActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         FirebaseMessageReceiver.showNotification(MessageChatActivity.this, binding.tvNickname.getText().toString(), binding.edtMessage.getText().toString());
-
                     }
                 });
                 binding.edtMessage.setText("");

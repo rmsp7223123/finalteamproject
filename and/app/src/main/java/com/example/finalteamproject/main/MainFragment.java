@@ -22,6 +22,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.finalteamproject.FirebaseMessageReceiver;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.board.BoardCommonVar;
+import com.example.finalteamproject.chat.MessageChatActivity;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.common.MemberVO;
@@ -303,6 +304,7 @@ public class MainFragment extends Fragment {
                     // 친구추가 보냈을 때 상대방에게 알람이 가게 수정
                     // 알람 클릭했을 때 친구추가 확인 수정
                     // FirebaseMessageReceiver.showNotification();
+                    FirebaseMessageReceiver.showNotification(getContext(), binding.tvNickname.getText().toString(), "test");
                     dialog.dismiss();
                 }
             });
