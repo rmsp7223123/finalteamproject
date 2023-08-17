@@ -32,6 +32,7 @@ import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.common.RetrofitClient;
 import com.example.finalteamproject.common.RetrofitInterface;
 import com.example.finalteamproject.databinding.ActivityMessageChatBinding;
+import com.example.finalteamproject.main.FriendVO;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
@@ -129,9 +130,9 @@ public class MessageChatActivity extends AppCompatActivity {
         databaseReference.child("chat").child(messageDTO.getNickname()).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                MessageDTO MessageDTO = dataSnapshot.getValue(MessageDTO.class);
-                MessageDTO.setImgRes(messageDTO.getImgRes());
-                adapter.addData(MessageDTO);
+                FriendVO friendVO = dataSnapshot.getValue(FriendVO.class);
+                friendVO.setMember_profileimg(friendVO.getMember_profileimg());
+                adapter.addData(friendVO);
                 int position = adapter.getItemCount() - 1;
                 if (position >= 0) {
                     binding.recvMessageChat.scrollToPosition(position);
@@ -145,8 +146,8 @@ public class MessageChatActivity extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                MessageDTO messageDTO = dataSnapshot.getValue(MessageDTO.class);
-                adapter.removeData(messageDTO);
+                FriendVO friendVO = dataSnapshot.getValue(FriendVO.class);
+                adapter.removeData(friendVO);
             }
 
             @Override
@@ -191,8 +192,8 @@ public class MessageChatActivity extends AppCompatActivity {
         });
     }
 
-    public ArrayList<MessageDTO> getlist() {
-        ArrayList<MessageDTO> list = new ArrayList<>();
+    public ArrayList<FriendVO> getlist() {
+        ArrayList<FriendVO> list = new ArrayList<>();
         return list;
     }
 
