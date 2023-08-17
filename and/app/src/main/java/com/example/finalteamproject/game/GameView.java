@@ -139,7 +139,7 @@ public class GameView extends View {
                 conn.onExcute((isResult, data) -> {
 
                 }); //onExcute 종료
-                
+
                 builder.setTitle(score+"점 달성!");
                 builder.setMessage("다시 도전 하시겠어요?");
                 builder.setNegativeButton("다시도전", new DialogInterface.OnClickListener() {

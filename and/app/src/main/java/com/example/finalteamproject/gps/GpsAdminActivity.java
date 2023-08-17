@@ -3,6 +3,7 @@ package com.example.finalteamproject.gps;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -22,11 +23,18 @@ public class GpsAdminActivity extends AppCompatActivity {
         binding.btnBack.setOnClickListener(v -> {
             finish();
         });
-        binding.btnSend.setOnClickListener(v -> {
 
-//            Intent intent = new Intent(this, SuccessActivity.class);
-//            startActivity(intent);
+        binding.btnSend.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(GpsAdminActivity.this);
+            builder.setTitle("전송 성공!");
+            builder.setMessage("보내주신 의견은 빠르게 검토하겠습니다.");
+            builder.setPositiveButton("확인", (dialog, which) -> {
+                finish();
+            });
+            builder.create().show();
+
         });
     }
-    
+
+
 }
