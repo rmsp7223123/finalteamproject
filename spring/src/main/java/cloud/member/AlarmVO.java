@@ -5,6 +5,6 @@ import lombok.Setter;
 
 @Getter @Setter
 public class AlarmVO {
-	String member_id, alarm_content, alarm_time, member_phone_id;
+	String member_id, alarm_content, alarm_time, receive_id;
 	int alarm_id;
 }

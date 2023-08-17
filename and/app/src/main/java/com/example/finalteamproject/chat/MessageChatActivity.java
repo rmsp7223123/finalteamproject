@@ -32,6 +32,7 @@ import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.common.RetrofitClient;
 import com.example.finalteamproject.common.RetrofitInterface;
 import com.example.finalteamproject.databinding.ActivityMessageChatBinding;
+import com.example.finalteamproject.main.FriendVO;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
@@ -111,7 +112,7 @@ public class MessageChatActivity extends AppCompatActivity {
                 // String name = getIntent().getStringExtra("nickname");
                 //int imgRes = getIntent().getIntExtra("img",0);
                 messageId = databaseReference.child("chat").child(itemName).push().getKey();
-                MessageDTO temp = new MessageDTO(messageDTO.getImgRes(), messageDTO.getNickname(), messageText, currentTime, true);
+                MessageDTO temp = new MessageDTO(messageDTO.getImgRes(), messageDTO.getNickname(), messageText,"", currentTime, true);
                 // 파이어베이스 경로를 닉네임이 아닌 id로 바꾸기
                 databaseReference.child("chat").child(messageDTO.getNickname()).child(messageId).setValue(temp);
                 binding.recvMessageChat.scrollToPosition(adapter.getItemCount() - 1);
@@ -129,9 +130,9 @@ public class MessageChatActivity extends AppCompatActivity {
         databaseReference.child("chat").child(messageDTO.getNickname()).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                MessageDTO MessageDTO = dataSnapshot.getValue(MessageDTO.class);
-                MessageDTO.setImgRes(messageDTO.getImgRes());
-                adapter.addData(MessageDTO);
+                FriendVO friendVO = dataSnapshot.getValue(FriendVO.class);
+                friendVO.setMember_profileimg(friendVO.getMember_profileimg());
+                adapter.addData(friendVO);
                 int position = adapter.getItemCount() - 1;
                 if (position >= 0) {
                     binding.recvMessageChat.scrollToPosition(position);
@@ -145,8 +146,8 @@ public class MessageChatActivity extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                MessageDTO messageDTO = dataSnapshot.getValue(MessageDTO.class);
-                adapter.removeData(messageDTO);
+                FriendVO friendVO = dataSnapshot.getValue(FriendVO.class);
+                adapter.removeData(friendVO);
             }
 
             @Override
@@ -191,8 +192,8 @@ public class MessageChatActivity extends AppCompatActivity {
         });
     }
 
-    public ArrayList<MessageDTO> getlist() {
-        ArrayList<MessageDTO> list = new ArrayList<>();
+    public ArrayList<FriendVO> getlist() {
+        ArrayList<FriendVO> list = new ArrayList<>();
         return list;
     }
 
@@ -227,7 +228,7 @@ public class MessageChatActivity extends AppCompatActivity {
 
                 // 채팅 메시지에 이미지 URL 추가
                 messageId = databaseReference.child("chat").child(itemName).push().getKey();
-                MessageDTO temp = new MessageDTO(messageDTO.getImgRes(), messageDTO.getNickname(), imageUrl, currentTime, true);
+                MessageDTO temp = new MessageDTO(messageDTO.getImgRes(), messageDTO.getNickname(), imageUrl, currentTime,"" ,true);
                 databaseReference.child("chat").child(messageDTO.getNickname()).child(messageId).setValue(temp);
 
                 // 어댑터 갱신 등의 필요한 작업 수행
@@ -295,7 +296,7 @@ public class MessageChatActivity extends AppCompatActivity {
 
                                 upload.get(tempIdx).getResult().getStorage().getDownloadUrl().addOnCompleteListener(command1 -> {
                                     messageId = databaseReference.child("chat").child(itemName).push().getKey();
-                                    MessageDTO temp = new MessageDTO(messageDTO.getImgRes(), messageDTO.getNickname(), command1.getResult() + "", currentTime, true);
+                                    MessageDTO temp = new MessageDTO(messageDTO.getImgRes(), messageDTO.getNickname(), command1.getResult() + "", currentTime,"" ,true);
                                     databaseReference.child("chat").child(messageDTO.getNickname()).child(messageId).setValue(temp);
                                     adapter = new MessageChatAdapter(getlist(), this, isChatCheck);
                                     binding.recvMessageChat.setAdapter(adapter);

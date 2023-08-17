@@ -5,5 +5,5 @@ import lombok.Setter;
 
 @Getter @Setter
 public class FriendVO {
-	String member_id, friend_id;
+	String member_id, friend_id, member_nickname, member_profileimg;
 }

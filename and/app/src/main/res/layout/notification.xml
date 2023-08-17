@@ -8,12 +8,7 @@
 
 
 
-        <ImageView
-            android:id="@+id/icon"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/baseline_mail_outline_24" />
+
 
     <LinearLayout
         android:layout_width="match_parent"

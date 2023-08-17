@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.databinding.ItemMessageChatBinding;
+import com.example.finalteamproject.main.FriendVO;
 import com.example.finalteamproject.setting.ChangeProfileActivity;
 
 import java.util.ArrayList;
@@ -26,23 +27,23 @@ public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.
 
     ItemMessageChatBinding binding;
 
-    ArrayList<MessageDTO> list;
+    ArrayList<FriendVO> list;
     Context context;
 
     boolean isChatCheck;
 
-    public MessageChatAdapter(ArrayList<MessageDTO> list, Context context,boolean isChatCheck) {
+    public MessageChatAdapter(ArrayList<FriendVO> list, Context context,boolean isChatCheck) {
         this.list = list;
         this.context = context;
         this.isChatCheck = isChatCheck;
     }
 
-    public void addData(MessageDTO dto) {
+    public void addData(FriendVO dto) {
         list.add(dto);
         notifyDataSetChanged();
     }
 
-    public void removeData(MessageDTO dto) {
+    public void removeData(FriendVO dto) {
         list.remove(dto);
         notifyDataSetChanged();
     }
@@ -66,9 +67,9 @@ public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        MessageDTO dto = list.get(position);
-        holder.binding.tvName.setText(dto.getNickname());
-        holder.binding.imgvMain.setImageResource(dto.getImgRes());
+        FriendVO friendVO = list.get(position);
+        holder.binding.tvName.setText(friendVO.getMember_nickname());
+//        holder.binding.imgvMain.setImageResource(friendVO.getImgRes());
 
         holder.binding.containerFrame.removeAllViews();
         ImageView imageView = new ImageView(context);
@@ -78,7 +79,7 @@ public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.
         LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         LinearLayout.LayoutParams params3 = new LinearLayout.LayoutParams(500, 500);
 
-        if (dto.isCheck()) {
+        if (friendVO.isCheck()) {
             holder.binding.containerFrame.setLayoutParams(params2);
             holder.binding.tvName.setVisibility(View.GONE);
             holder.binding.imgvMain.setVisibility(View.GONE);
@@ -91,7 +92,7 @@ public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.
                 Glide.with(context).load(list.get(position).getContent()).into(imageView);
                 holder.binding.containerFrame.addView(imageView);
             } else {
-                tv_msg.setText(dto.getContent());
+                tv_msg.setText(friendVO.getContent());
                 tv_msg.setTextColor(Color.parseColor("#000000"));
                 tv_msg.setTextSize(16f);
                 tv_msg.setBackgroundResource(R.drawable.message_chat_me_background);
@@ -101,7 +102,7 @@ public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.
             params.gravity = Gravity.BOTTOM | Gravity.END;
             params.setMargins(0, 0, 20, 0);
             tv_time.setLayoutParams(params);
-            tv_time.setText(dto.getTime());
+            tv_time.setText(friendVO.getTime());
             tv_time.setTextColor(Color.parseColor("#000000"));
             tv_time.setTextSize(12f);
             holder.binding.containerFrame.addView(tv_msg);
@@ -114,7 +115,7 @@ public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.
                 Glide.with(context).load(list.get(position).getContent()).into(imageView);
                 holder.binding.containerFrame.addView(imageView);
             } else {
-                tv_msg.setText(dto.getContent());
+                tv_msg.setText(friendVO.getContent());
                 tv_msg.setTextColor(Color.parseColor("#000000"));
                 tv_msg.setTextSize(16f);
                 tv_msg.setBackgroundResource(R.drawable.message_chat_me_background);
@@ -122,7 +123,7 @@ public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.
                 tv_msg.setMaxWidth(800);
             }
             tv_time.setLayoutParams(params);
-            tv_time.setText(dto.getTime());
+            tv_time.setText(friendVO.getTime());
             tv_time.setTextColor(Color.parseColor("#000000"));
             tv_time.setTextSize(12f);
             holder.binding.containerFrame.addView(tv_msg);

@@ -132,24 +132,25 @@ public class MainController {
 //	}
 
 	@RequestMapping("/viewAlarm")
-	public List<AlarmVO> viewAlarm(String member_id) {
-		List<AlarmVO> list = sql.selectList("main.viewAlarm", member_id);
+	public List<AlarmVO> viewAlarm(String receive_id) {
+		List<AlarmVO> list = sql.selectList("main.viewAlarm", receive_id);
 		return list;
 	}
 
 	@RequestMapping("/deleteAlarm")
-	public String deleteAlarm(String member_id) {
-		return new Gson().toJson(sql.delete("main.deleteAlarm", member_id));
+	public String deleteAlarm(String receive_id) {
+		return new Gson().toJson(sql.delete("main.deleteAlarm", receive_id));
 	}
 
 	@RequestMapping(value = "/addAlarm")
 	public String send2(MemberVO vo1, AlarmVO vo2) {
 		vo1 = sql.selectOne("main.detail", vo1.getMember_id());
+		MemberVO vo3 = sql.selectOne("main.detail", vo2.getReceive_id());
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("member_id", vo1.getMember_id());
 		paramMap.put("alarm_content", vo2.getAlarm_content());
 		paramMap.put("alarm_time", vo2.getAlarm_time());
-		paramMap.put("member_phone_id", vo2.getMember_phone_id());
+		paramMap.put("receive_id", vo2.getReceive_id());
 		try {
 			FileInputStream refreshToken = new FileInputStream("D:\\Service.json");
 			FirebaseOptions options = FirebaseOptions.builder()
@@ -161,8 +162,8 @@ public class MainController {
 
 			// 메세지 작성
 			Notification noti = Notification.builder().setTitle("친구추가").setBody(vo1.getMember_nickname()+"님이 친구신청을 보냈습니다.").build();
-			Message msg = Message.builder().putData("title", "aaa").putData("name", "aaa").putData("body", "aaa")
-					.putData("color", "#f45342").setNotification(noti).setToken(vo2.getMember_phone_id()).build();
+			Message msg = Message.builder().putData("title", "friend").putData("name", "aaa").putData("body", "aaa").putData("check", "addFriend")
+					.putData("color", "#f45342").setNotification(noti).setToken(vo3.getMember_phone_id()).build();
 
 			// 메세지를 FirebaseMessaging에 보내기
 			String response = FirebaseMessaging.getInstance().send(msg);
@@ -175,5 +176,17 @@ public class MainController {
 		}
 		return new Gson().toJson(sql.insert("main.addAlarm", paramMap));
 	}
-
+	
+	@RequestMapping("/deleteOneAlarm")
+	public String deleteOneAlarm(int alarm_id) {
+		return new Gson().toJson(sql.delete("main.deleteOneAlarm", alarm_id));
+	}
+	
+	@RequestMapping(value = "/viewFriendList" , produces = "text/html;charset=utf-8")
+	public String viewFriendList(String member_id) {
+		return new Gson().toJson(sql.selectList("main.viewFriendList", member_id));
+	}
+	
+	
+//	@RequestMapping("MemberDetailList")
 }
