@@ -87,7 +87,7 @@ public class FriendListFragment extends Fragment {
             adapter = new FriendListAdapter(list, getContext());
             binding.recvFriendList.setAdapter(adapter);
             binding.recvFriendList.setLayoutManager(new LinearLayoutManager(getContext()));
-
+            adapter.notifyDataSetChanged();
         });
     }
 

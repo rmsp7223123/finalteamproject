@@ -60,10 +60,9 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
 //                            remoteMessage.getNotification().getBody());
 
                 } else if (checkValue.equals("msgFriend")) {
-//                    Intent intent = new Intent(this, YourActivity.class);
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                    startActivity(intent);
-                    // 메시지 일경우에 그 채팅방으로 이동하게
+                    String title = remoteMessage.getNotification().getTitle();
+                    String message = remoteMessage.getNotification().getBody();
+                    showNotification(this, title, message);
                 }
             }
         }
