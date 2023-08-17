@@ -182,15 +182,11 @@ public class MainController {
 		return new Gson().toJson(sql.delete("main.deleteOneAlarm", alarm_id));
 	}
 	
-	@RequestMapping("/viewFriendList")
+	@RequestMapping(value = "/viewFriendList" , produces = "text/html;charset=utf-8")
 	public String viewFriendList(String member_id) {
 		return new Gson().toJson(sql.selectList("main.viewFriendList", member_id));
 	}
 	
-	@RequestMapping(value = "/friendDetail" , produces = "text/html;charset=utf-8")
-	public String friendDetail(String member_id) {
-		return new Gson().toJson(sql.selectList("main.friendDetail", member_id));
-	}
 	
 //	@RequestMapping("MemberDetailList")
 }

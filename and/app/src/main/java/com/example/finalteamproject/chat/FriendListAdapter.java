@@ -40,7 +40,8 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        CommonConn conn= new CommonConn(context, "main/friendDetail");
+        holder.binding.tvNickname.setText(list.get(position).getMember_nickname());
+        Glide.with(context).load(list.get(position).getMember_profileimg()).apply(new RequestOptions().circleCrop()).into(holder.binding.imgvProfileImg);
 //        conn.addParamMap("member_id", );
 //        holder.binding.imgvProfileImg.setImageResource(list.get(position).getImgRes());
 //        holder.binding.tvNickname.setText(list.get(position).getNickname());

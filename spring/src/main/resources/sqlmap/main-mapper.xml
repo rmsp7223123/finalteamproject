@@ -29,6 +29,7 @@
 		GROUP BY
 		MEMBER_ID ) F
 		INNER JOIN MEMBER M ON F.MEMBER_ID = M.MEMBER_ID
+		WHERE M.MEMBER_ID NOT IN (SELECT FRIEND_ID FROM FRIEND_LIST WHERE MEMBER_ID = #{MEBMER_ID})
 	</select>
 
 	<select id="favor" resultType="cloud.member.FavorVO">
@@ -57,21 +58,24 @@
 
 	<insert id="addFriend">
 		insert all
-		into friend_list(MEMBER_ID, FRIEND_ID) values (#{member_id},
+		into friend_list(MEMBER_ID, FRIEND_ID)
+		values (#{member_id},
 		#{friend_id})
-		into friend_list(MEMBER_ID, FRIEND_ID) values
+		into friend_list(MEMBER_ID,
+		FRIEND_ID) values
 		(#{friend_id},
 		#{member_id})
 		select * from dual
 	</insert>
 
 	<select id="viewFriendList" resultType="cloud.member.FriendVO">
-		select * from friend_list
-		where member_id = #{member_id}
+		SELECT fl.friend_id,
+		m.MEMBER_NICKNAME,
+		m.MEMBER_PROFILEIMG
+		FROM friend_list fl
+		JOIN member m
+		ON fl.friend_id = m.MEMBER_ID
+		WHERE fl.member_id = #{member_id}
 	</select>
 
-	<select id="friendDetail" resultType="cloud.member.MemberVO">
-		select * from member where
-		member_id = #{member_id}
-	</select>
 </mapper>
