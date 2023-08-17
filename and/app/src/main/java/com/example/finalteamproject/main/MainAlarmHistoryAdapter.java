@@ -18,6 +18,7 @@ import com.example.finalteamproject.databinding.ItemAlarmHistoryBinding;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,8 +80,34 @@ public class MainAlarmHistoryAdapter extends RecyclerView.Adapter<MainAlarmHisto
                     dialog.show();
                 });
             } else if (alarm.getAlarm_content().contains("메시지")) {
-                Intent intent = new Intent(context, MessageChatActivity.class);
-                context.startActivity(intent);
+                CommonConn conn = new CommonConn(context, "main/viewAlarm");
+                conn.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
+                conn.onExcute((isResult, data) -> {
+                    ArrayList<AlarmVO> alarm_list = new Gson().fromJson(data, new TypeToken<ArrayList<AlarmVO>>() {
+                    }.getType());
+                    if(alarm_list.get(idx).alarm_content.contains("메시지")) {
+                        CommonConn conn1 = new CommonConn(context, "main/viewFriendList");
+                        conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                        conn1.onExcute((isResult1, data1) -> {
+                            ArrayList<FriendVO> friendList = new Gson().fromJson(data1, new TypeToken<ArrayList<FriendVO>>(){}.getType());
+                            friendList.get(idx).setMember_id(CommonVar.logininfo.getMember_id());
+                            Intent intent = new Intent(context, MessageChatActivity.class);
+                            intent.putExtra("vo", friendList.get(idx));
+                            CommonConn conn2 = new CommonConn(context, "main/deleteAlarm");
+                            conn2.addParamMap("receive_id", alarm_list.get(position).getReceive_id());
+                            conn2.onExcute((isResult2, data2) -> {
+                                list = new ArrayList<AlarmVO>();
+                                CommonConn conn3 = new CommonConn(context,"main/viewAlarm");
+                                conn3.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
+                                conn3.onExcute((isResult3, data3) -> {
+                                    notifyDataSetChanged();
+                                    list = new Gson().fromJson(data3, new TypeToken<ArrayList<AlarmVO>>(){}.getType());
+                                    context.startActivity(intent);
+                                });
+                            });
+                        });
+                    }
+                });
             } else {
 
             }

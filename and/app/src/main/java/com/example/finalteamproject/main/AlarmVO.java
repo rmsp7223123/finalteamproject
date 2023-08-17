@@ -1,7 +1,7 @@
 package com.example.finalteamproject.main;
 
 public class AlarmVO {
-	String member_id, alarm_content, alarm_time, member_phone_id;
+	String member_id, alarm_content, alarm_time, receive_id;
 	int alarm_id;
 
 	public String getMember_id() {
@@ -28,12 +28,12 @@ public class AlarmVO {
 		this.alarm_time = alarm_time;
 	}
 
-	public String getMember_phone_id() {
-		return member_phone_id;
+	public String getReceive_id() {
+		return receive_id;
 	}
 
-	public void setMember_phone_id(String member_phone_id) {
-		this.member_phone_id = member_phone_id;
+	public void setReceive_id(String receive_id) {
+		this.receive_id = receive_id;
 	}
 
 	public int getAlarm_id() {
