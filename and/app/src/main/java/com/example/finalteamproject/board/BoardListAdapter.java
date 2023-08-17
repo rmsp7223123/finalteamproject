@@ -69,7 +69,7 @@ public class BoardListAdapter extends RecyclerView.Adapter<BoardListAdapter.View
         });
 
         h.binding.lnBoard.setOnClickListener(v -> {
-            activity.replaceFragment(fragment, new BoardContextFragment(activity, list.get(i).fav_board_id));
+            activity.replaceFragment(fragment, new BoardContextFragment(activity, list.get(i)));
         });
     }
 

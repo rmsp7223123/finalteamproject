@@ -40,6 +40,18 @@
 	<update id="file">
 		update member set member_profileimg = #{member_profileimg} where member_id = #{member_id}
 	</update>
+	
+	<select id="findId" resultType="string">
+		select member_id from member where member_phone = #{phoneNumber}
+	</select>
+	
+	<select id="findPw" resultType="string">
+		select member_pw from member where member_phone = #{phoneNumber} and member_id = #{id}
+	</select>
+	
+	<update id="modifyPw">
+		update member set member_pw = #{pw} where member_id = #{id}
+	</update>
 
 
 </mapper>

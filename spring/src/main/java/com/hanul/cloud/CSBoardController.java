@@ -96,6 +96,12 @@ public class CSBoardController {
 		return sql.selectOne("csboard.commentCheck", id)!=null ? "있음" : "없음";
 	}
 	
+	//댓글 수정
+	@RequestMapping(value="/modifyComment", produces = "text/html;charset=utf-8")
+	public String modifyComment(CSBoardCommentVO vo) {
+		return sql.update("csboard.modifyComment", vo)==1 ? "성공" : "실패";
+	}
+	
 	
 	
 	
