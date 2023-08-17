@@ -8,27 +8,35 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 
+import cloud.game.GameDAO;
+import cloud.game.GameVO;
 import cloud.gps.GpsDAO;
 import cloud.gps.GpsVO;
 
 @RestController
 @RequestMapping("/game")
 public class GameController {
-//	@Autowired
-//	private GameDAO dao;
+	@Autowired
+	private GameDAO dao;
 
-//	@RequestMapping(value = "/senior", produces = "text/html;charset=utf-8")
-//	public String senior_list(String senior_latitude, String senior_longitude, String zoom_level) {
-//		List<GpsVO> list = dao.senior_list(senior_latitude, senior_longitude, zoom_level);
-//		return new Gson().toJson(list);
-//	}
-//
-//	@RequestMapping(value = "/likelist", produces = "text/html;charset=utf-8")
-//	public String senior_like(String member_id) {
-//		List<GpsVO> list = dao.senior_like(member_id);
-//		return new Gson().toJson(list);
-//	}
-//
+	@RequestMapping("/rank")
+	public List<GameVO> game_rank(GameVO vo) {
+		return dao.game_rank(vo);
+	}
+
+	@RequestMapping("/score")
+	public void game_score(GameVO vo) {
+		try {
+			dao.game_first(vo);
+		} catch (Exception e) {
+
+		}
+		dao.game_second(vo);
+	}
+	
+	
+	
+	
 //	@RequestMapping("/likebtn")
 //	public void likebtn(int key, String member_id) {
 //		dao.bmark(key, member_id);

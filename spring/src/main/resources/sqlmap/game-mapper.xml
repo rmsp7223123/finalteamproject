@@ -2,4 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="game">
 
+<select id="scorelist" resultType="cloud.game.GameVO">
+select * from game
+order by game_score desc
+</select>
+
+<insert id="scoreinsert">
+insert into game(MEMBER_ID, GAME_SCORE)
+values(#{member_id}, #{game_score})
+</insert>
+
+<update id="scoreupdate">
+UPDATE GAME
+SET GAME_SCORE = 
+CASE WHEN
+(SELECT GAME_SCORE
+    FROM game
+    WHERE MEMBER_ID = #{member_id}) &lt; #{game_score} THEN #{game_score}
+ELSE (SELECT GAME_SCORE
+    FROM game
+    WHERE MEMBER_ID = #{member_id})
+    END
+WHERE MEMBER_ID = #{member_id}
+</update>
+
 </mapper>

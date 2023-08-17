@@ -18,6 +18,8 @@ import android.graphics.Rect;
 import androidx.annotation.NonNull;
 
 import com.example.finalteamproject.R;
+import com.example.finalteamproject.common.CommonConn;
+import com.example.finalteamproject.common.CommonVar;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -131,6 +133,13 @@ public class GameView extends View {
                 handler.sendEmptyMessageDelayed(0, DELAY);
             } else {
                 AlertDialog.Builder builder = new AlertDialog.Builder(mParent);
+                CommonConn conn = new CommonConn(getContext(), "game/score");
+                conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                conn.addParamMap("game_score", score);
+                conn.onExcute((isResult, data) -> {
+
+                }); //onExcute 종료
+                
                 builder.setTitle(score+"점 달성!");
                 builder.setMessage("다시 도전 하시겠어요?");
                 builder.setNegativeButton("다시도전", new DialogInterface.OnClickListener() {
@@ -150,6 +159,7 @@ public class GameView extends View {
                         mParent.finish();
                     }
                 });
+
 
                 builder.setCancelable(false);
                 builder.show();
