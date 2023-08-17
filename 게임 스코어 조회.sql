@@ -1,7 +1,8 @@
 --수정사항
 --game테이블에 rank컬럼 pk삭제, null허용함.
 
-select * from game;
+select * from game
+order by game_score desc;
 
 insert into game(MEMBER_ID, GAME_SCORE)
 values('test', 8);
@@ -38,7 +39,7 @@ SET GAME_SCORE =
 CASE WHEN
 (SELECT GAME_SCORE
     FROM game
-    WHERE MEMBER_ID = 'test') < 3 THEN 3
+    WHERE MEMBER_ID = 'test') < 15 THEN 15
 ELSE (SELECT GAME_SCORE
     FROM game
     WHERE MEMBER_ID = 'test')
@@ -46,7 +47,9 @@ ELSE (SELECT GAME_SCORE
 WHERE MEMBER_ID = 'test'
     ;
 
-
+DELETE 
+  FROM game
+ WHERE MEMBER_ID = 'conan1';
 
 
 
