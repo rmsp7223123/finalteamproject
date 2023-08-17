@@ -36,7 +36,7 @@ public class GameView extends View {
     private Activity mParent;
 
     private int[] animalImages = {
-            R.drawable.animal2, R.drawable.animal2, R.drawable.animal2,
+            R.drawable.animal1, R.drawable.animal2, R.drawable.animal3,
             R.drawable.animal4, R.drawable.animal5, R.drawable.animal6,
             R.drawable.animal7, R.drawable.animal8, R.drawable.animal9,
             R.drawable.animal10, R.drawable.animal11, R.drawable.animal12
