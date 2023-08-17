@@ -111,7 +111,7 @@ public class MessageChatActivity extends AppCompatActivity {
                 // String name = getIntent().getStringExtra("nickname");
                 //int imgRes = getIntent().getIntExtra("img",0);
                 messageId = databaseReference.child("chat").child(itemName).push().getKey();
-                MessageDTO temp = new MessageDTO(messageDTO.getImgRes(), messageDTO.getNickname(), messageText, currentTime, true);
+                MessageDTO temp = new MessageDTO(messageDTO.getImgRes(), messageDTO.getNickname(), messageText,"", currentTime, true);
                 // 파이어베이스 경로를 닉네임이 아닌 id로 바꾸기
                 databaseReference.child("chat").child(messageDTO.getNickname()).child(messageId).setValue(temp);
                 binding.recvMessageChat.scrollToPosition(adapter.getItemCount() - 1);
@@ -227,7 +227,7 @@ public class MessageChatActivity extends AppCompatActivity {
 
                 // 채팅 메시지에 이미지 URL 추가
                 messageId = databaseReference.child("chat").child(itemName).push().getKey();
-                MessageDTO temp = new MessageDTO(messageDTO.getImgRes(), messageDTO.getNickname(), imageUrl, currentTime, true);
+                MessageDTO temp = new MessageDTO(messageDTO.getImgRes(), messageDTO.getNickname(), imageUrl, currentTime,"" ,true);
                 databaseReference.child("chat").child(messageDTO.getNickname()).child(messageId).setValue(temp);
 
                 // 어댑터 갱신 등의 필요한 작업 수행
@@ -295,7 +295,7 @@ public class MessageChatActivity extends AppCompatActivity {
 
                                 upload.get(tempIdx).getResult().getStorage().getDownloadUrl().addOnCompleteListener(command1 -> {
                                     messageId = databaseReference.child("chat").child(itemName).push().getKey();
-                                    MessageDTO temp = new MessageDTO(messageDTO.getImgRes(), messageDTO.getNickname(), command1.getResult() + "", currentTime, true);
+                                    MessageDTO temp = new MessageDTO(messageDTO.getImgRes(), messageDTO.getNickname(), command1.getResult() + "", currentTime,"" ,true);
                                     databaseReference.child("chat").child(messageDTO.getNickname()).child(messageId).setValue(temp);
                                     adapter = new MessageChatAdapter(getlist(), this, isChatCheck);
                                     binding.recvMessageChat.setAdapter(adapter);

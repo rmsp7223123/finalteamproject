@@ -44,7 +44,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             Intent intent = new Intent(context, MessageChatActivity.class);
             //   FriendListDTO dto = (FriendListDTO) getIntent().getSerializableExtra("dto");
             MessageDTO dto = new MessageDTO(list.get(position).getImgRes(),list.get(position).getNickname(),list.get(position).getContent(),
-            list.get(position).getTime(),list.get(position).isCheck());
+            list.get(position).getTime(),"",list.get(position).isCheck());
             intent.putExtra("dto",dto);
             context.startActivity(intent);
         });
