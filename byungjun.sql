@@ -251,4 +251,6 @@ insert all
 select * from dual;
 
 select * from friend_list;
+
+select * from alarm;
 commit;
