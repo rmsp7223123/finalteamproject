@@ -52,6 +52,11 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                              Bundle savedInstanceState) {
         binding = FragmentGpsBinding.inflate(inflater, container, false);
 
+        //스와이프로 새로고침
+//        binding.layoutRefresh.setOnRefreshListener(() -> {
+//            binding.layoutRefresh.setRefreshing(false);
+//        });
+
         //검색 결과 페이지
         binding.lnResult.setVisibility(View.GONE);
         binding.btnSearch.setOnClickListener(v -> {
