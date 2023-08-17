@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +35,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainFragment extends Fragment {
 
@@ -124,11 +128,23 @@ public class MainFragment extends Fragment {
         });
 
         binding.imgvRight.setOnClickListener(v -> {
-            binding.imgViewpager.setCurrentItem(binding.imgViewpager.getCurrentItem() + 1);
+            //마지막 누르면 처음으로 이동
+            if(binding.imgViewpager.getCurrentItem()==list.size()-1){
+                binding.imgViewpager.setCurrentItem(0);
+            }else {
+                binding.imgViewpager.setCurrentItem(binding.imgViewpager.getCurrentItem() + 1);
+            }
+            //
         });
 
         binding.imgvLeft.setOnClickListener(v -> {
-            binding.imgViewpager.setCurrentItem(binding.imgViewpager.getCurrentItem() - 1);
+            //처음 누르면 마지막으로 이동
+            if(binding.imgViewpager.getCurrentItem()==0){
+                binding.imgViewpager.setCurrentItem(list.size()-1);
+            }else {
+                binding.imgViewpager.setCurrentItem(binding.imgViewpager.getCurrentItem() - 1);
+            }
+            //
         });
 
         binding.imgvAdd.setOnClickListener(view -> {
@@ -187,6 +203,23 @@ public class MainFragment extends Fragment {
         }
         //
 
+        //프로필 화면 자동 변환//
+        final Handler handler = new Handler();
+        final Runnable Update = new Runnable() {
+            @Override
+            public void run() {
+                binding.imgvRight.performClick();
+            }
+        };
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(Update);
+            }
+        }, 5000, 5000);
+        //프로필 화면 자동 변환//
 
         return binding.getRoot();
     }

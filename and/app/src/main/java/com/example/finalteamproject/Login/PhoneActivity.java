@@ -121,7 +121,7 @@ public class PhoneActivity extends AppCompatActivity {
 
         binding.cvDone.setOnClickListener(v -> {
             if(binding.tvReissue.getVisibility()==View.VISIBLE){
-                Toast.makeText(this, "제한시간이 초과되었습니다\n 인증번호를 재발급해주세요", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "인증번호 확인을 완료해주세요", Toast.LENGTH_SHORT).show();
             }else if(!binding.edtNumber.getText().toString().equals(result)){
                 Toast.makeText(this, "인증번호와 일치하지 않습니다", Toast.LENGTH_SHORT).show();
             }else {

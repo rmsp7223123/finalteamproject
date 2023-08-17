@@ -31,7 +31,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.finalteamproject.R;
-import com.example.finalteamproject.common.ProgressDialog;
 import com.example.finalteamproject.databinding.ActivityIdcardBinding;
 import com.example.finalteamproject.main.MainActivity;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
@@ -83,6 +82,9 @@ public class IDCardActivity extends AppCompatActivity {
     static String birth = null;
     static String gender = null;
 
+
+//    private com.example.finalteamproject.Login.ProgressDialog customProgressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +92,15 @@ public class IDCardActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         //new HideActionBar().hideActionBar(this);
+
+//        //로딩창 객체 생성
+//        customProgressDialog = new ProgressDialog(this);
+//        customProgressDialog.setCancelable(false); // 로딩창 주변 클릭 시 종료 막기
+//        //로딩창을 투명하게 하는 코드
+//        customProgressDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+//        //getWindow (): 현재 액티비티의 Window 객체를 가져와서 Window 객체를 통해 뷰들의 위치 크기, 색상 조절
+//        //Window는 View 의 상위 개념으로, 뷰들을(버튼, 텍스트뷰, 이미지뷰) 감쌓고 있는 컨테이너 역할을 함
+//        customProgressDialog.show();
 
         binding.edtRgNumber.setClickable(false);
         binding.edtRgNumber.setFocusable(false);
@@ -154,10 +165,12 @@ public class IDCardActivity extends AppCompatActivity {
     private static class LableDetectionTask extends AsyncTask<Object, Void, String> {
         private final WeakReference<IDCardActivity> mActivityWeakReference;
         private Vision.Images.Annotate mRequest;
+        private ProgressDialog dialog;
 
-        LableDetectionTask(IDCardActivity activity, Vision.Images.Annotate annotate) {
+        LableDetectionTask(IDCardActivity activity, Vision.Images.Annotate annotate , ProgressDialog dialog) {
             mActivityWeakReference = new WeakReference<>(activity);
             mRequest = annotate;
+            this.dialog = dialog;
         }
 
         @Override
@@ -198,6 +211,7 @@ public class IDCardActivity extends AppCompatActivity {
                     Toast.makeText(activity, "신분증을 선택해주세요", Toast.LENGTH_SHORT).show();
                 }
             }
+            dialog.dismiss();
         }
     }
 
@@ -207,6 +221,7 @@ public class IDCardActivity extends AppCompatActivity {
         List<EntityAnnotation> labels = response.getResponses().get(0).getTextAnnotations();
         if (labels != null) {
             for (EntityAnnotation label : labels) {
+
                 message.append(String.format(Locale.US, "%.3f: %s", label.getScore(), label.getDescription()));
                 message.append("\n");
             }
@@ -322,7 +337,7 @@ public class IDCardActivity extends AppCompatActivity {
                         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
                         Bitmap bitmap = BitmapFactory.decodeStream(new FileInputStream(file), null, options);
 
-                        LableDetectionTask lableDetectionTask = new LableDetectionTask(IDCardActivity.this ,prepareAnnotationRequest(bitmap) );
+                        LableDetectionTask lableDetectionTask = new LableDetectionTask(IDCardActivity.this ,prepareAnnotationRequest(bitmap) , getDialog() );
                         lableDetectionTask.execute();
                     }
                 } catch (IOException e) {
@@ -351,10 +366,16 @@ public class IDCardActivity extends AppCompatActivity {
         startActivityForResult(intent, REQ_GALLERY);
     }
 
+    public ProgressDialog getDialog(){
+        ProgressDialog dialog = new ProgressDialog(this);
+        dialog.show();
+        return dialog;
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQ_GALLERY && resultCode == RESULT_OK){
+
             //갤러리 액티비티가 종료 되었다. ( 사용자가 사진을 선택했는지?)
             Log.d("갤러리", "onActivityResult: " + data.getData());
             Log.d("갤러리", "onActivityResult: " + data.getData().getPath());
@@ -366,7 +387,7 @@ public class IDCardActivity extends AppCompatActivity {
                 options.inPreferredConfig = Bitmap.Config.ARGB_8888;
                 Bitmap bitmap = BitmapFactory.decodeStream(new FileInputStream(file), null, options);
 
-                LableDetectionTask lableDetectionTask = new LableDetectionTask(this ,prepareAnnotationRequest(bitmap) );
+                LableDetectionTask lableDetectionTask = new LableDetectionTask(this ,prepareAnnotationRequest(bitmap), getDialog() );
                 lableDetectionTask.execute();
             } catch (IOException e) {
                 throw new RuntimeException(e);

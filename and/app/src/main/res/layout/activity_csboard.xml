@@ -42,7 +42,7 @@
             android:paddingVertical="5dp"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/edittext_rounded_corner_rectangle"/>
+            android:background="@drawable/border_radius1"/>
 
         <ImageView
             android:id="@+id/imgv_search"
@@ -82,9 +82,8 @@
             android:layout_toStartOf="@id/cv_new"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/border_radius0"
-            android:paddingHorizontal="2dp"
-            android:paddingVertical="3dp"
+            android:background="@drawable/border_radius1"
+            android:paddingVertical="4dp"
             />
 
         <androidx.cardview.widget.CardView

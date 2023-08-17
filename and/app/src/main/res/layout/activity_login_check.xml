@@ -117,21 +117,37 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tv_find"
-                android:layout_marginBottom="60dp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="20dp"
+            <LinearLayout
+                android:gravity="center_horizontal"
+                android:id="@+id/ln_find"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/setting_underline"
-                android:textColor="#595959"
-                android:textSize="13dp"
-                android:textAlignment="center"/>
+                android:layout_marginBottom="60dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/tv_findId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/findId"
+                    android:textColor="#595959"
+                    android:textSize="13dp"/>
+
+                <TextView
+                    android:id="@+id/tv_findPw"
+                    android:layout_marginStart="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/findPw"
+                    android:textColor="#595959"
+                    android:textSize="13dp"/>
+
+            </LinearLayout>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_next"
-            android:layout_above="@id/tv_find"
+            android:layout_above="@id/ln_find"
             android:layout_centerHorizontal="true"
             android:layout_width="match_parent"
             android:layout_height="63dp"

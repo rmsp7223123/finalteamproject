@@ -59,5 +59,11 @@
 		select csboard_comment_id from csboard_comment where csboard_id = #{id}
 	</select>
 	
+	<update id="modifyComment">
+		update csboard_comment set csboard_comment_content = #{csboard_comment_content},
+		csboard_comment_writedate = sysdate
+		where csboard_comment_id = #{csboard_comment_id}
+	</update>
+	
 	
 </mapper>

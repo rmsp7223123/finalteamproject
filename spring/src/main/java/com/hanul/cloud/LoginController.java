@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,6 +36,10 @@ public class LoginController {
 	private cloud.common.CommonUtility common;
 	
 	@Autowired @Qualifier("project") SqlSession sql;
+	
+
+	final String APIKEY = "NCSIGGEIAAPYSXHO";
+	final String APISECRET = "Q3WAV69X3RISPNBEJLIQ2YN8OCCHGOAY";
 
 	@RequestMapping(value="/sendSms", produces = "text/html;charset=utf-8")
 	public String sendSms(String phoneNumber) {
@@ -48,10 +53,7 @@ public class LoginController {
 			createNum = random.nextInt(9);		//0부터 9까지 올 수 있는 1자리 난수 생성
 			ranNum =  Integer.toString(createNum);  //1자리 난수를 String으로 형변환
 			resultNum += ranNum;			//생성된 난수(문자열)을 원하는 수(letter)만큼 더하며 나열
-		}	
-		
-		final String APIKEY = "NCSIGGEIAAPYSXHO";
-		final String APISECRET = "Q3WAV69X3RISPNBEJLIQ2YN8OCCHGOAY";
+		}
 		
 		Message sms = new Message(APIKEY, APISECRET);
 		
@@ -68,6 +70,51 @@ public class LoginController {
 //			String result = obj.toString().contains("\"success_count\":1")==true ? resultNum : "실패";
 //			return result;
 			return resultNum;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "실패";
+		}
+	}
+	
+	// sms id 전송
+	@RequestMapping(value="/sendId", produces = "text/html;charset=utf-8")
+	public String sendId(String phoneNumber, String id) {
+		Message sms = new Message(APIKEY, APISECRET);
+		HashMap<String, String> params = new HashMap();
+		params.put("to", phoneNumber);
+		params.put("from", "01096024788");
+		params.put("type", "SMS"); //SMS, LMS, MMS ...
+		params.put("text", "할만다 아이디\n["+id+"]");
+		params.put("app_version", "JAVA SDK v1.2");
+		
+		try {
+//			JSONObject obj = sms.send(params);
+//			System.out.println(obj.toString());
+//			String result = obj.toString().contains("\"success_count\":1")==true ? "성공" : "실패";
+//			return result;
+			return "성공";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "실패";
+		}
+	}
+	// sms pw 전송
+	@RequestMapping(value="/sendPw", produces = "text/html;charset=utf-8")
+	public String sendPw(String phoneNumber, String pw) {
+		Message sms = new Message(APIKEY, APISECRET);
+		HashMap<String, String> params = new HashMap();
+		params.put("to", phoneNumber);
+		params.put("from", "01096024788");
+		params.put("type", "SMS"); //SMS, LMS, MMS ...
+		params.put("text", "할만다 비밀번호\n["+pw+"]");
+		params.put("app_version", "JAVA SDK v1.2");
+		
+		try {
+//			JSONObject obj = sms.send(params);
+//			System.out.println(obj.toString());
+//			String result = obj.toString().contains("\"success_count\":1")==true ? "성공" : "실패";
+//			return result;
+			return "성공";
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "실패";
@@ -162,6 +209,48 @@ public class LoginController {
 	public String godok(EphoneVO vo) {
 		return sql.insert("login.godok", vo)==1 ? "성공" : "실패";
 	}
+	
+	//전화번호로 아이디 찾기
+	@RequestMapping(value="/findId", produces = "text/html;charset=utf-8")
+	public String findId(String phoneNumber) {
+		String result = sql.selectOne("login.findId", phoneNumber);
+		return result;
+	}
+	
+	
+	//전화번호, 아이디로 비밀번호 받아오기
+	@RequestMapping(value="/findPw", produces = "text/html;charset=utf-8")
+	public String findPw(String phoneNumber, String id) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("phoneNumber", phoneNumber);
+		map.put("id", id);
+		String result = sql.selectOne("login.findPw", map);
+		return result;
+	}
+	
+	//임시 비밀번호 발급
+	@RequestMapping(value="/modifyPw", produces = "text/html;charset=utf-8")
+	public String modifyPw(String id) {
+		
+        String pw = UUID.randomUUID().toString();
+        pw = pw.substring( pw.lastIndexOf("-")+1 );
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("pw", pw);
+		map.put("id", id);
+		return sql.update("login.modifyPw", map)==1 ? pw : null;
+	}
+	
+	//설정에서 비밀번호 변경
+	@RequestMapping(value="/settingPw", produces = "text/html;charset=utf-8")
+	public String settingPw(String id, String pw) {		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("pw", pw);
+		map.put("id", id);
+		return sql.update("login.modifyPw", map)==1 ? "성공" : "실패";
+	}
+	
+	
 	
 	
 }

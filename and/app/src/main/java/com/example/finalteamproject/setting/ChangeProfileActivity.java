@@ -93,6 +93,12 @@ public class ChangeProfileActivity extends AppCompatActivity {
             AlertDialog dialog = builder.create();
             dialog.show();
         });
+
+        binding.btnChangePw.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ChangePWActivity.class);
+            startActivity(intent);
+        });
+
     }
 
     public void showDialog() {

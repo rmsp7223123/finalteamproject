@@ -185,6 +185,13 @@ public class LoginInfoActivity extends AppCompatActivity {
                 }else {
                     binding.tvPwAlert.setVisibility(View.INVISIBLE);
                 }
+
+
+                if(binding.edtPwCheck.getText().toString().equals(binding.edtPw.getText().toString())){
+                    binding.tvPwCheckAlert.setVisibility(View.INVISIBLE);
+                }else {
+                    binding.tvPwCheckAlert.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
