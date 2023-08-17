@@ -4,18 +4,19 @@ import java.io.Serializable;
 
 public class MessageDTO implements Serializable {
     private int imgRes;
-    private String nickname, content, time;
+    private String nickname, content, time, member_id;
 
     private boolean isCheck;
 
     public MessageDTO( ) {
     }
 
-    public MessageDTO(int imgRes, String nickname, String content, String time, boolean isCheck) {
+    public MessageDTO(int imgRes, String nickname, String content, String time, String member_id, boolean isCheck) {
         this.imgRes = imgRes;
         this.nickname = nickname;
         this.content = content;
         this.time = time;
+        this.member_id = member_id;
         this.isCheck = isCheck;
     }
 
@@ -57,5 +58,13 @@ public class MessageDTO implements Serializable {
 
     public void setCheck(boolean check) {
         isCheck = check;
+    }
+
+    public String getMember_id() {
+        return member_id;
+    }
+
+    public void setMember_id(String member_id) {
+        this.member_id = member_id;
     }
 }

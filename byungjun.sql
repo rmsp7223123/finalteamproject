@@ -161,9 +161,9 @@ create table alarm(
     alarm_id number constraint alarm_pk primary key,
     alarm_content nvarchar2(1000),
     alarm_time nvarchar2(100),
+    receive_id nvarchar2(30),
     constraint alarm_member_fk foreign key(member_id) references member(member_id) on delete cascade
 );
-
 create sequence seq_alarm
 minvalue 1 
 maxvalue 999999
@@ -229,8 +229,26 @@ insert into Alarm (member_id, alarm_content, alarm_time) values ('ansqudwns98', 
 
 select * from alarm;
 
-delete alarm where member_id = 'ansqudwns98';
+delete alarm where member_id = 'alaa1';
 
 commit;
 
 select alarm_content, alarm_time from alarm where member_id = 'ansqudwns98';
+
+
+select alarm_content, alarm_time from alarm where receive_id = 'alaa1';
+
+select * from friend_list where member_id = 'alaa1' ;--or FRIEND_ID = 'alaa1;
+
+INSERT INTO friend_list values ( 'alarm1' , 'admin' );
+
+delete from friend_list;
+
+commit;
+insert all 
+	into friend_list(MEMBER_ID, FRIEND_ID) values ('alarm1', 'admin')
+	into friend_list(MEMBER_ID, FRIEND_ID) values ('admin', 'alarm1')
+select * from dual;
+
+select * from friend_list;
+commit;

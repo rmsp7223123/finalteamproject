@@ -8,9 +8,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -40,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
+
 
         setContentView(binding.getRoot());
         FirebaseMessaging.getInstance().getToken()
@@ -118,5 +123,47 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(context, activity.getClass());
         startActivity(intent);
     }
+
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        if(getIntent().getBooleanExtra("addFriend",false)){
+//            showAddFriendDialogOnMainThread(getIntent().getStringExtra("title") , getIntent().getStringExtra("message"));
+//        }
+//    }
+//
+//    private void showAddFriendDialog(String title, String message) {
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setTitle(title);
+//        builder.setMessage(message);
+//        builder.setPositiveButton("수락", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                // 수락 버튼을 클릭한 경우의 처리
+//                // ...
+//                dialog.dismiss();
+//            }
+//        });
+//        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                // 취소 버튼을 클릭한 경우의 처리
+//                // ...
+//                dialog.dismiss();
+//            }
+//        });
+//
+//        AlertDialog dialog = builder.create();
+//        dialog.show();
+//    }
+//
+//    private void showAddFriendDialogOnMainThread(String title, String message) {
+//        new Handler(Looper.getMainLooper()).post(new Runnable() {
+//            @Override
+//            public void run() {
+//                showAddFriendDialog(title, message);
+//            }
+//        });
+//    }
 
 }
