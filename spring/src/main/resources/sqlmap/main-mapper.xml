@@ -56,10 +56,13 @@
 	</delete>
 
 	<insert id="addFriend">
-		into friend_list(MEMBER_ID, FRIEND_ID) values (#{member_id}, #{friend_id})
-		into friend_list(MEMBER_ID, FRIEND_ID) values (#{friend_id},
+		insert all
+		into friend_list(MEMBER_ID, FRIEND_ID) values (#{member_id},
+		#{friend_id})
+		into friend_list(MEMBER_ID, FRIEND_ID) values
+		(#{friend_id},
 		#{member_id})
-		select * from dual;
+		select * from dual
 	</insert>
 
 	<select id="viewFriendList" resultType="cloud.member.FriendVO">
