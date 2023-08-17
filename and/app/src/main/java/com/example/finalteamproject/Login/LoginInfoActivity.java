@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,12 +27,16 @@ import android.widget.Toast;
 
 
 import com.bumptech.glide.Glide;
+import com.example.finalteamproject.FirebaseMessageReceiver;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.RetrofitClient;
 import com.example.finalteamproject.common.RetrofitInterface;
 import com.example.finalteamproject.databinding.ActivityLoginInfoBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.play.core.integrity.b;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -247,16 +252,33 @@ public class LoginInfoActivity extends AppCompatActivity {
                 conn.addParamMap("member_birth", LoginVar.birth);
                 conn.addParamMap("member_gender", LoginVar.gender);
                 conn.addParamMap("member_phone", LoginVar.phone);
-                conn.addParamMap("member_phone_id", Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID));
-                conn.onExcute((isResult, data) -> {
-                    if(data.equals("성공")){
-                        Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(LoginInfoActivity.this, LoginProfileActivity.class);
-                        startActivity(intent);
-                    }else {
-                        Toast.makeText(this, "회원가입 실패", Toast.LENGTH_SHORT).show();
-                    }
-                });
+//                conn.addParamMap("member_phone_id", Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID));
+                FirebaseMessaging.getInstance().getToken()
+                        .addOnCompleteListener(new OnCompleteListener<String>() {
+                            @Override
+                            public void onComplete(@NonNull Task<String> task) {
+                                if (!task.isSuccessful()) {
+                                    return;
+                                }
+
+                                // Get new FCM registration token
+                                String token = task.getResult();
+
+                                // Log and toast
+                                conn.addParamMap("member_phone_id", token);
+                                conn.onExcute((isResult, data) -> {
+                                    if(data.equals("성공")){
+                                        Toast.makeText(LoginInfoActivity.this, "회원가입 성공", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(LoginInfoActivity.this, LoginProfileActivity.class);
+                                        startActivity(intent);
+                                    }else {
+                                        Toast.makeText(LoginInfoActivity.this, "회원가입 실패", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        });
+
+
             }
         });
 

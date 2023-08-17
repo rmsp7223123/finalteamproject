@@ -3,8 +3,6 @@ package com.example.finalteamproject.main;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -12,14 +10,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.example.finalteamproject.FirebaseMessageReceiver;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.board.BoardCommonVar;
 import com.example.finalteamproject.common.CommonConn;
@@ -27,19 +24,24 @@ import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.common.MemberVO;
 import com.example.finalteamproject.databinding.FragmentMainBinding;
 import com.example.finalteamproject.setting.ChangeProfileActivity;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.File;
-import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class MainFragment extends Fragment {
 
     FragmentMainBinding binding;
 
     public static ArrayList<MemberVO> list;
+
+    SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+    String currentTime = dateFormat.format(new Date());
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,7 +55,7 @@ public class MainFragment extends Fragment {
 
             favorChange(0);
 
-            if(list.size() == 0) {
+            if (list.size() == 0) {
 
             } else {
                 ArrayList<MemberVO> virtualList = new ArrayList<>();
@@ -104,7 +106,6 @@ public class MainFragment extends Fragment {
                 });
 
             }
-
 
 
         });
@@ -179,9 +180,9 @@ public class MainFragment extends Fragment {
         Glide.with(this).load(CommonVar.logininfo.getMember_profileimg()).into(binding.imgvSmallProfile);
 
         //게시판에서 뒤로갔을 때 게시판 메뉴 보여주기
-        if(BoardCommonVar.board){
+        if (BoardCommonVar.board) {
             binding.lnBoard.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             binding.lnBoard.setVisibility(View.GONE);
         }
         //
@@ -217,7 +218,7 @@ public class MainFragment extends Fragment {
     public void favorChange(int position) {
         returnFavorColor();
         CommonConn conn1 = new CommonConn(getContext(), "main/favor");
-        if(list.size() == 0) {
+        if (list.size() == 0) {
 
         } else {
             conn1.addParamMap("member_id", list.get(position).getMember_id());
@@ -281,10 +282,11 @@ public class MainFragment extends Fragment {
         binding.tvGame.setTextColor(Color.parseColor("#000000"));
     }
 
-    public void dialog_friend (int position) {
+    public void dialog_friend(int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        CommonConn conn1 = new CommonConn(getContext(),"main/viewpager");
-        conn1.addParamMap("member_id",CommonVar.logininfo.getMember_id());
+
+        CommonConn conn1 = new CommonConn(getContext(), "main/viewpager");
+        conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
         conn1.onExcute((isResult, data) -> {
             list = new Gson().fromJson(data, new TypeToken<ArrayList<MemberVO>>() {
             }.getType());
@@ -299,10 +301,21 @@ public class MainFragment extends Fragment {
             builder.setNegativeButton("확인", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(getContext(), list.get(position).getMember_nickname()+"님에게 친구추가를 보냈습니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), list.get(position).getMember_nickname() + "님에게 친구추가를 보냈습니다.", Toast.LENGTH_SHORT).show();
                     // 친구추가 보냈을 때 상대방에게 알람이 가게 수정
                     // 알람 클릭했을 때 친구추가 확인 수정
                     // FirebaseMessageReceiver.showNotification();
+                    // 알람이 꺼져있는상태면 안보내기? 보내는데 보이지 않게하기?
+                    CommonConn conn = new CommonConn(getContext(), "main/addAlarm");
+                    conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                    conn.addParamMap("alarm_content", CommonVar.logininfo.getMember_nickname() + "님이 친구신청을 보냈습니다.");
+                    conn.addParamMap("alarm_time", currentTime);
+                    conn.addParamMap("member_phone_id", list.get(position).getMember_phone_id());
+                    conn.onExcute((isResult1, data1) -> {
+                        if (isResult1) {
+                            Log.d("TAG", "onClick: " + "확인용");
+                        }
+                    });
                     dialog.dismiss();
                 }
             });
@@ -310,5 +323,8 @@ public class MainFragment extends Fragment {
             AlertDialog dialog = builder.create();
             dialog.show();
         });
+
     }
+
+
 }
