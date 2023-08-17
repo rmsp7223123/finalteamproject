@@ -6,6 +6,7 @@
     android:layout_marginVertical="10dp">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cv_alarm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardElevation="0dp"
@@ -28,9 +29,8 @@
 
         <TextView
             android:gravity="center|left"
-            android:layout_weight="6"
+            android:layout_weight="9"
             android:id="@+id/tv_text"
-            android:layout_marginLeft="10dp"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:text="알람 내용1111"
@@ -38,15 +38,7 @@
             android:textColor="@color/black"
             android:textSize="18dp"/>
 
-        <TextView
-            android:id="@+id/tv_time"
-            android:textSize="13dp"
-            android:gravity="bottom"
-            android:textColor="@color/black"
-            android:layout_weight="3"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:text="MM-DD hh:mm:ss"/>
+
 
 
 
