@@ -28,12 +28,18 @@ public class FriendListFragment extends Fragment {
     private List<FriendVO> originalList; // 전체 친구 목록
     private ArrayList<FriendVO> filteredList; // 필터링된 친구 목록
 
+    public ArrayList<FriendVO> test;
+
+    ArrayList<FriendVO> list;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentFriendListBinding.inflate(inflater,container,false);
+        binding = FragmentFriendListBinding.inflate(inflater, container, false);
         binding.searchView.setIconifiedByDefault(false);
+        originalList = getList();
+        filteredList = new ArrayList<>(originalList);
         binding.searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -54,32 +60,35 @@ public class FriendListFragment extends Fragment {
         ArrayList<FriendVO> list = new ArrayList<>();
         return list;
     }
+
     private void filterList(String query) {
         filteredList.clear();
         String queryInitialSound = HangulUtils.convertToHangulInitialSound(query);
 
-        for (int i = 0; i < originalList.size(); i++) {
-            FriendVO friend = originalList.get(i);
-//            String nicknameInitialSound = HangulUtils.convertToHangulInitialSound(friend.getNickname());
-
-//            if (nicknameInitialSound.toLowerCase().contains(queryInitialSound.toLowerCase())) {
-//                filteredList.add(friend);
-//            }
+        for (int i = 0; i < list.size(); i++) {
+            FriendVO friend = list.get(i);
+            String nicknameInitialSound = HangulUtils.convertToHangulInitialSound(friend.getMember_nickname());
+            if (nicknameInitialSound.toLowerCase().contains(queryInitialSound.toLowerCase())) {
+                filteredList.add(friend);
+            }
         }
-        adapter.list =  filteredList;
+
+        adapter.list = filteredList;
         adapter.notifyDataSetChanged();
     }
+
 
     public void friendList() {
         CommonConn conn = new CommonConn(getContext(), "main/viewFriendList");
         conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
         conn.onExcute((isResult, data) -> {
-            ArrayList<FriendVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<FriendVO>>(){}.getType());
-            adapter = new FriendListAdapter(list,getContext());
+            list = new Gson().fromJson(data, new TypeToken<ArrayList<FriendVO>>() {
+            }.getType());
+            adapter = new FriendListAdapter(list, getContext());
             binding.recvFriendList.setAdapter(adapter);
             binding.recvFriendList.setLayoutManager(new LinearLayoutManager(getContext()));
-            originalList = getList();
-            filteredList = new ArrayList<>(originalList);
+
         });
     }
+
 }
