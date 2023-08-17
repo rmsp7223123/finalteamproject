@@ -114,16 +114,7 @@ public class MessageChatActivity extends AppCompatActivity {
                 FriendVO vo = new FriendVO(friendVO.getMember_id(),friendVO.getFriend_id(),friendVO.getMember_nickname(),friendVO.getMember_profileimg(),currentTime,binding.edtMessage.getText().toString(),true);
                 sendMsg(friendVO.getMember_id() ,vo , true);
                 sendMsg(friendVO.getFriend_id(),vo , false);
-                CommonConn conn = new CommonConn(this, "main/addAlarm");
-                conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
-                conn.addParamMap("alarm_content", CommonVar.logininfo.getMember_nickname() + "님이 메시지를 보냈습니다.");
-                conn.addParamMap("alarm_time", currentTime);
-                conn.addParamMap("receive_id", vo.getFriend_id());
-                conn.onExcute((isResult1, data1) -> {
-                    if (isResult1) {
-                        Log.d("TAG", "onClick: " + "확인용");
-                    }
-                });
+                sendNotification(vo);
                 binding.edtMessage.setText("");
             }
         });
@@ -247,16 +238,7 @@ public class MessageChatActivity extends AppCompatActivity {
                 FriendVO vo = new FriendVO(friendVO.getMember_id(),friendVO.getFriend_id(),friendVO.getMember_nickname(),friendVO.getMember_profileimg(),currentTime,imageUrl,true);
                 sendMsg(friendVO.getMember_id() ,vo , true);
                 sendMsg(friendVO.getFriend_id(),vo , false);
-                CommonConn conn = new CommonConn(this, "main/addAlarm");
-                conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
-                conn.addParamMap("alarm_content", CommonVar.logininfo.getMember_nickname() + "님이 메시지를 보냈습니다.");
-                conn.addParamMap("alarm_time", currentTime);
-                conn.addParamMap("receive_id", vo.getFriend_id());
-                conn.onExcute((isResult1, data1) -> {
-                    if (isResult1) {
-                        Log.d("TAG", "onClick: " + "확인용");
-                    }
-                });
+                sendNotification(vo);
 //                FriendVO temp = new FriendVO(friendVO.getMember_id(),friendVO.getFriend_id(),friendVO.getMember_nickname(),friendVO.getMember_profileimg(),friendVO.getTime(),imageUrl,true);
 //                MessageDTO temp = new MessageDTO(messageDTO.getImgRes(), messageDTO.getNickname(), imageUrl, currentTime,"" ,true);
 //                databaseReference.child("chat").child(friendVO.getFriend_id()).child(messageId).setValue(temp);
@@ -326,27 +308,13 @@ public class MessageChatActivity extends AppCompatActivity {
                             upload.get(tempIdx).addOnCompleteListener(command -> {
 
                                 upload.get(tempIdx).getResult().getStorage().getDownloadUrl().addOnCompleteListener(command1 -> {
-//                                    messageId = databaseReference.child("chat").child(itemName).push().getKey();
                                     FriendVO vo = new FriendVO(friendVO.getMember_id(),friendVO.getFriend_id(),friendVO.getMember_nickname(),friendVO.getMember_profileimg(),currentTime,command1.getResult()+"",true);
                                     sendMsg(friendVO.getMember_id() ,vo , true);
                                     sendMsg(friendVO.getFriend_id(),vo , false);
-                                    CommonConn conn = new CommonConn(this, "main/addAlarm");
-                                    conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
-                                    conn.addParamMap("alarm_content", CommonVar.logininfo.getMember_nickname() + "님이 메시지를 보냈습니다.");
-                                    conn.addParamMap("alarm_time", currentTime);
-                                    conn.addParamMap("receive_id", vo.getFriend_id());
-                                    conn.onExcute((isResult1, data1) -> {
-                                        if (isResult1) {
-                                            Log.d("TAG", "onClick: " + "확인용");
-                                        }
-                                    });
-//                                    FriendVO temp = new FriendVO(friendVO.getMember_id(),friendVO.getFriend_id(),friendVO.getMember_nickname(),friendVO.getMember_profileimg(),currentTime, command1.getResult()+"",true);
-//                                    MessageDTO temp = new MessageDTO(messageDTO.getImgRes(), messageDTO.getNickname(), command1.getResult() + "", currentTime,"" ,true);
-//                                    databaseReference.child("chat").child(friendVO.getFriend_id()).child(messageId).setValue(friendVO);
-                                    adapter = new MessageChatAdapter(getlist(), this, isChatCheck , friendVO.getMember_profileimg());
-                                    adapter.notifyDataSetChanged();
-                                    binding.recvMessageChat.setAdapter(adapter);
-                                    binding.recvMessageChat.setLayoutManager(new LinearLayoutManager(this));
+                                    sendNotification(vo);
+                                    //adapter = new MessageChatAdapter(getlist(), this, isChatCheck , friendVO.getMember_profileimg());
+                                    //binding.recvMessageChat.setAdapter(adapter);
+                                   // binding.recvMessageChat.setLayoutManager(new LinearLayoutManager(this));
                                 });
 
                             });
@@ -354,6 +322,7 @@ public class MessageChatActivity extends AppCompatActivity {
 
 
                     }
+                    adapter.notifyDataSetChanged();
                 }
             }
         }
@@ -377,5 +346,16 @@ public class MessageChatActivity extends AppCompatActivity {
         startActivityForResult(intent, SPEECH_REQUEST_CODE);
     }
 
-
+    public void sendNotification (FriendVO vo) {
+        CommonConn conn = new CommonConn(this, "main/addAlarm");
+        conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+        conn.addParamMap("alarm_content", CommonVar.logininfo.getMember_nickname() + "님이 메시지를 보냈습니다.");
+        conn.addParamMap("alarm_time", currentTime);
+        conn.addParamMap("receive_id", vo.getFriend_id());
+        conn.onExcute((isResult1, data1) -> {
+            if (isResult1) {
+                Log.d("TAG", "onClick: " + "확인용");
+            }
+        });
+    }
 }
