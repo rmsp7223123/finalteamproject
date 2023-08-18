@@ -11,6 +11,7 @@ import android.view.View;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
+import com.example.finalteamproject.cs.NewCSBoardActivity;
 import com.example.finalteamproject.databinding.ActivityGpsDetailBinding;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -85,7 +86,7 @@ public class GpsDetailActivity extends AppCompatActivity {
             startActivity(intent);
         });
         binding.tvToadmin.setOnClickListener(v -> {
-            Intent intent = new Intent(this, GpsAdminActivity.class);
+            Intent intent = new Intent(this, NewCSBoardActivity.class);
             startActivity(intent);
         });
     }

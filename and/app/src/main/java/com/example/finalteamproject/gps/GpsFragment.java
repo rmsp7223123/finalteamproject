@@ -52,6 +52,11 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                              Bundle savedInstanceState) {
         binding = FragmentGpsBinding.inflate(inflater, container, false);
 
+        //스와이프로 새로고침
+//        binding.layoutRefresh.setOnRefreshListener(() -> {
+//            binding.layoutRefresh.setRefreshing(false);
+//        });
+
         //검색 결과 페이지
         binding.lnResult.setVisibility(View.GONE);
         binding.btnSearch.setOnClickListener(v -> {
@@ -116,72 +121,106 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
         super.onRequestPermissionsResult(
                 requestCode, permissions, grantResults);
     }
-
+    final int DEFAULT_ZOOM_LEVEL = 14;
+    int CURR_ZOOM_LEVEL = 0;
     @Override
     public void onMapReady(@NonNull NaverMap naverMap) {
         this.naverMap = naverMap;
         naverMap.setLocationSource(locationSource); //내 위치
         naverMap.setLocationTrackingMode(LocationTrackingMode.Follow); //위치 추적 모드
 
+
         //내 위치 위도, 경도 이동
         naverMap.addOnLocationChangeListener(new NaverMap.OnLocationChangeListener() {
             @Override
             public void onLocationChange(@NonNull Location location) {
                 //내 위치 위도, 경도
-                lat = location.getLatitude();
-                lon = location.getLongitude();
 
-                CommonConn conn = new CommonConn(getContext(), "gps/senior");
-                conn.addParamMap("senior_latitude", lat);
-                conn.addParamMap("senior_longitude", lon);
-                conn.onExcute((isResult, data) -> {
-                    ArrayList<GpsVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<GpsVO>>() {
-                    }.getType());
-
-                    for (GpsVO gpsVO : list) {
-                        double markerLat = Double.parseDouble(gpsVO.getSenior_latitude());
-                        double markerLon = Double.parseDouble(gpsVO.getSenior_longitude());
-
-                        // 현재 (내)위치에 마커 생성
-                        Marker Imarker = new Marker();
-                        Imarker.setPosition(new LatLng(lat, lon));
-                        Imarker.setMap(naverMap);
-                        //마커 디자인
-                        Imarker.setIcon(MarkerIcons.BLACK); //색상
-                        Imarker.setIconTintColor(Color.parseColor("#FE69B7"));
-                        Imarker.setWidth(70); //마커사이즈
-                        Imarker.setHeight(100);
-
-                        Log.d("위치", "위도, 경도: "+lat+", "+lon);
-
-                        // 각 경로당 마커 위치 정보를 설정하고 지도에 추가
-                        Marker marker = new Marker();
-                        marker.setPosition(new LatLng(markerLat, markerLon));
-                        marker.setMap(naverMap);
-                        marker.setIcon(MarkerIcons.BLACK);
-                        marker.setIconTintColor(Color.parseColor("#4B6EFD")); // 다중 마커 색상
-                        marker.setWidth(70);
-                        marker.setHeight(100);
-
-                        //지도 줌 레벨
-                        UiSettings uiSettings = naverMap.getUiSettings();
-                        float ZoomLevel = (float) naverMap.getCameraPosition().zoom;
-                        uiSettings.setZoomControlEnabled(true); // 줌 컨트롤 활성화
-                        naverMap.addOnCameraChangeListener((i, b) -> {
-                            Log.d("줌", "onMapReady: "+ZoomLevel);
-                        });
-
-                    }
-
-                    //경로당 리스트(리사이클러뷰)
-                    GpsAdapter adapter = new GpsAdapter(list);
-                    binding.recvGps.setAdapter(adapter);
-                    binding.recvGps.setLayoutManager(new LinearLayoutManager(getContext()));
-                });
-
+                if(lat != location.getLatitude() && lon!=location.getLongitude()) {
+                    lat = location.getLatitude();
+                    lon = location.getLongitude();
+                }
             }
+
         });
 
+
+        //지도 줌 레벨
+        naverMap.addOnCameraIdleListener(() -> {
+
+
+            if(lat == 0 || lon == 0) return;
+            float ZoomLevel = (float) naverMap.getCameraPosition().zoom;
+            if(CURR_ZOOM_LEVEL ==ZoomLevel ) return; //줌레벨이 클수록 결과값은 적게 나와야 함
+            CommonConn conn = new CommonConn(getContext(), "gps/senior");
+            conn.addParamMap("senior_latitude", lat);
+            conn.addParamMap("senior_longitude", lon);
+
+            Log.d("줌 카메라", "onCameraChange: " + ZoomLevel);
+
+            int sendZoomLevel = 0 ;
+
+            if(ZoomLevel == DEFAULT_ZOOM_LEVEL){
+                //기본 // 14->
+                sendZoomLevel= DEFAULT_ZOOM_LEVEL ;
+            }else if(DEFAULT_ZOOM_LEVEL - ZoomLevel < 0 ){ //줌 레벨이 큼(적은 결과)
+                sendZoomLevel = (int) (DEFAULT_ZOOM_LEVEL - ((ZoomLevel - DEFAULT_ZOOM_LEVEL) * 5));
+
+            }else if(DEFAULT_ZOOM_LEVEL - ZoomLevel > 0){ //줌 레벨이 작음(많은 결과)
+                sendZoomLevel = (int) (DEFAULT_ZOOM_LEVEL - ((ZoomLevel - DEFAULT_ZOOM_LEVEL) * 5)+2);
+
+            }
+
+            if(sendZoomLevel < 5){
+                sendZoomLevel = 5;
+            }
+
+            conn.addParamMap("zoom_level", sendZoomLevel);
+            Log.d("줌 레벨", "onMapReady: " + sendZoomLevel);
+
+
+            conn.onExcute((isResult, data) -> {
+                ArrayList<GpsVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<GpsVO>>() {
+                }.getType());
+
+                for (GpsVO gpsVO : list) {
+                    double markerLat = Double.parseDouble(gpsVO.getSenior_latitude());
+                    double markerLon = Double.parseDouble(gpsVO.getSenior_longitude());
+
+                    // 현재 (내)위치에 마커 생성
+                    Marker Imarker = new Marker();
+                    Imarker.setPosition(new LatLng(lat, lon));
+                    Imarker.setMap(naverMap);
+                    //마커 디자인
+                    Imarker.setIcon(MarkerIcons.BLACK); //색상
+                    Imarker.setIconTintColor(Color.parseColor("#FE69B7"));
+                    Imarker.setWidth(70); //마커사이즈
+                    Imarker.setHeight(100);
+
+                    Log.d("위치", "위도, 경도: " + lat + ", " + lon);
+
+                    // 각 경로당 마커 위치 정보를 설정하고 지도에 추가
+                    Marker marker = new Marker();
+                    marker.setPosition(new LatLng(markerLat, markerLon));
+                    marker.setMap(naverMap);
+                    marker.setIcon(MarkerIcons.BLACK);
+                    marker.setIconTintColor(Color.parseColor("#4B6EFD")); // 다중 마커 색상
+                    marker.setWidth(70);
+                    marker.setHeight(100);
+                }
+
+
+
+                //경로당 리스트(리사이클러뷰)
+                GpsAdapter adapter = new GpsAdapter(list);
+                binding.recvGps.setAdapter(adapter);
+                binding.recvGps.setLayoutManager(new LinearLayoutManager(getContext()));
+            });
+
+
+
+
+        });
 
     }
 

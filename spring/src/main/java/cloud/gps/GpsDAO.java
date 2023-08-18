@@ -14,8 +14,12 @@ public class GpsDAO {
 	@Qualifier("project")
 	private SqlSession sql;
 
-	public List<GpsVO> senior_list(GpsVO vo) {
-		return sql.selectList("gps.list", vo);
+	public List<GpsVO> senior_list(String senior_latitude, String senior_longitude, String zoom_level) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("senior_latitude", senior_latitude);
+		map.put("senior_longitude", senior_longitude);
+		map.put("zoom_level", zoom_level+"");
+		return sql.selectList("gps.list", map);
 	}
 
 	public List<GpsVO> senior_like(String member_id) {

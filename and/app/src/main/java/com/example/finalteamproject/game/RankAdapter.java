@@ -8,9 +8,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.finalteamproject.databinding.ItemGameRankBinding;
 
+import java.util.ArrayList;
+
 public class RankAdapter extends RecyclerView.Adapter<RankAdapter.ViewHolder> {
 
     ItemGameRankBinding binding;
+    ArrayList<GameVO> list;
+
+    public RankAdapter(ArrayList<GameVO> list) {
+        this.list = list;
+    }
 
     @NonNull
     @Override
@@ -24,13 +31,15 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder h, int i) {
         int rank = i+1;
         h.binding.gameRank.setText(rank+"");
+        h.binding.gameId.setText(list.get(i).getMember_id());
+        h.binding.gameScore.setText(list.get(i).getGame_score()+"");
 
 
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return list.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
