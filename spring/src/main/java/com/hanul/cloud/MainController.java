@@ -26,6 +26,7 @@ import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
 import com.google.gson.Gson;
+import com.google.rpc.context.AttributeContext.Response;
 
 import cloud.gps.GpsVO;
 import cloud.member.AlarmVO;
@@ -162,21 +163,19 @@ public class MainController {
 
 			// 메세지 작성
 			if(vo2.getAlarm_content().contains("친구신청")) {
+				System.out.println(vo3.getMember_phone_id());
 				Notification noti = Notification.builder().setTitle("친구추가").setBody(vo1.getMember_nickname()+"님이 친구신청을 보냈습니다.").build();
 				Message msg = Message.builder().putData("title", "friend").putData("name", "aaa").putData("body", "aaa").putData("check", "addFriend")
 						.putData("color", "#f45342").setNotification(noti).setToken(vo3.getMember_phone_id()).build();
 				String response = FirebaseMessaging.getInstance().send(msg);
+				System.out.println(response);
 			} else if (vo2.getAlarm_content().contains("메시지")) {
 				Notification noti = Notification.builder().setTitle("메시지").setBody(vo1.getMember_nickname()+"님이 메시지를 보냈습니다.").build();
 				Message msg = Message.builder().putData("title", "friend").putData("name", "aaa").putData("body", "aaa").putData("check", "msgFriend")
 						.putData("color", "#f45342").setNotification(noti).setToken(vo3.getMember_phone_id()).build();
 				String response = FirebaseMessaging.getInstance().send(msg);
+				System.out.println(response);
 			}
-			// 메세지를 FirebaseMessaging에 보내기
-			
-//			// 결과출력
-//			System.out.println("Successfully: " + response);
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "false";
@@ -195,5 +194,11 @@ public class MainController {
 	}
 	
 	
-//	@RequestMapping("MemberDetailList")
+	@RequestMapping("/updateToken")
+	public String updateToken(MemberVO vo) {
+		HashMap<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("member_id", vo.getMember_id());
+		paramMap.put("member_phone_id", vo.getMember_phone_id());
+		return new Gson().toJson(sql.update("main.updateToken", paramMap));
+	}
 }

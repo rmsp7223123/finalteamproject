@@ -17,11 +17,19 @@ import android.util.Log;
 import android.widget.RemoteViews;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import com.bumptech.glide.Glide;
+import com.example.finalteamproject.common.CommonVar;
+import com.example.finalteamproject.main.FriendVO;
 import com.example.finalteamproject.main.MainActivity;
 import com.example.finalteamproject.main.MainAlarmHistoryActivity;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -32,6 +40,11 @@ import java.util.concurrent.ExecutionException;
 public class FirebaseMessageReceiver extends FirebaseMessagingService {
     private final String TAG = "확인용";
     private static int uniqueRandomValue = new Random().nextInt();
+
+    private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    private DatabaseReference databaseReference = firebaseDatabase.getReference();
+
+    DatabaseReference def = databaseReference.child("chat").child(CommonVar.logininfo.getMember_id());
     @Override
     public void onNewToken(@NonNull String token)
     {

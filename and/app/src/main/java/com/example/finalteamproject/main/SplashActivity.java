@@ -1,5 +1,6 @@
 package com.example.finalteamproject.main;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -18,6 +19,9 @@ import com.example.finalteamproject.common.MemberVO;
 import com.example.finalteamproject.main.MainActivity;
 import com.example.finalteamproject.Login.LoginActivity;
 import com.example.finalteamproject.databinding.ActivitySplashBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -47,6 +51,7 @@ public class SplashActivity extends AppCompatActivity {
                 conn.onExcute((isResult, data) -> {
                     CommonVar.logininfo = new Gson().fromJson(data, MemberVO.class);
                     if (CommonVar.logininfo != null) {
+                        test();
                         CommonConn conn1 = new CommonConn(this, "setting/inquirePw");
                         conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
                         conn1.onExcute((isResult1, data1) -> {
@@ -96,5 +101,26 @@ public class SplashActivity extends AppCompatActivity {
         }, 2000);
 
 
+    }
+
+    public void test(){
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            return;
+                        }
+                        String token = task.getResult();
+
+                        CommonConn conn = new CommonConn(SplashActivity.this, "main/updateToken");
+                        conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                        conn.addParamMap("member_phone_id", token);
+                        conn.onExcute((isResult, data) -> {
+
+                        });
+
+                    }
+                });
     }
 }
