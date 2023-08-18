@@ -3,6 +3,7 @@ package com.example.finalteamproject.gps;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -51,16 +52,18 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentGpsBinding.inflate(inflater, container, false);
+        binding.lnResult.setVisibility(View.GONE);
+        binding.lnLikelist.setVisibility(View.GONE);
 
         //스와이프로 새로고침
 //        binding.layoutRefresh.setOnRefreshListener(() -> {
 //            binding.layoutRefresh.setRefreshing(false);
 //        });
 
-        //검색 결과 페이지
-        binding.lnResult.setVisibility(View.GONE);
+        //검색 결과
         binding.btnSearch.setOnClickListener(v -> {
             binding.lnResult.setVisibility(View.VISIBLE);
+            binding.lnLikelist.setVisibility(View.GONE);
             //검색 결과 데이터
             CommonConn connresult = new CommonConn(getContext(), "gps/search");
             connresult.addParamMap("keyword", binding.gpsSearch.getText());
@@ -71,11 +74,13 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                 binding.recvSearchResult.setLayoutManager(new LinearLayoutManager(getContext()));
             });
         });
-        binding.btnClose.setOnClickListener(v -> {
-            binding.lnResult.setVisibility(View.GONE);
+
+        //검색결과 닫기
+                binding.btnClose.setOnClickListener(v -> {
+                binding.lnResult.setVisibility(View.GONE);
         });
 
-        //자주 가는 경로당(리사이클러뷰)
+        //자주 가는 경로당(메인화면 상단부)
         CommonConn conn = new CommonConn(getContext(), "gps/likelist");
         conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
         conn.onExcute((isResult, data) -> {
@@ -84,6 +89,28 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
             GpsBmarkAdapter adapter = new GpsBmarkAdapter(list);
             binding.recvBmark.setAdapter(adapter);
             binding.recvBmark.setLayoutManager(new LinearLayoutManager(getContext()));
+        });
+        //(자주가는 경로당)더보기 메뉴
+        binding.tvMore.setOnClickListener(v -> {
+//            Intent intent = new Intent(getContext(), GpsLikeActivity.class);
+//            startActivity(intent);
+            binding.lnResult.setVisibility(View.GONE);
+            binding.lnLikelist.setVisibility(View.VISIBLE);
+            //더보기 닫기
+            binding.btnClose2.setOnClickListener(v1 -> {
+                binding.lnLikelist.setVisibility(View.GONE);
+            });
+            //자주가는 경로당 리스트
+            CommonConn connlike = new CommonConn(getContext(), "gps/likelist");
+            connlike.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+            connlike.onExcute((isResult, data) -> {
+                ArrayList<GpsVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<GpsVO>>(){}.getType());
+                //자주 가는 경로당(리사이클러뷰)
+                GpsLikeAdapter adapter = new GpsLikeAdapter(list);
+                binding.recvLikelist.setAdapter(adapter);
+                binding.recvLikelist.setLayoutManager(new LinearLayoutManager(getContext()));
+
+            });
         });
 
         //지도 객체 생성
@@ -98,12 +125,6 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
         //현재 위치 생성, naverMap에 지정
         locationSource =
                 new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
-
-        //(자주가는 경로당)더보기 메뉴
-        binding.tvMore.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), GpsLikeActivity.class);
-            startActivity(intent);
-        });
 
         return binding.getRoot();
     }
@@ -129,13 +150,11 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
         naverMap.setLocationSource(locationSource); //내 위치
         naverMap.setLocationTrackingMode(LocationTrackingMode.Follow); //위치 추적 모드
 
-
         //내 위치 위도, 경도 이동
         naverMap.addOnLocationChangeListener(new NaverMap.OnLocationChangeListener() {
             @Override
             public void onLocationChange(@NonNull Location location) {
                 //내 위치 위도, 경도
-
                 if(lat != location.getLatitude() && lon!=location.getLongitude()) {
                     lat = location.getLatitude();
                     lon = location.getLongitude();
@@ -179,10 +198,14 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
             Log.d("줌 레벨", "onMapReady: " + sendZoomLevel);
 
 
+            int finalSendZoomLevel = sendZoomLevel;
             conn.onExcute((isResult, data) -> {
                 ArrayList<GpsVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<GpsVO>>() {
                 }.getType());
-
+                if (list == null) {
+                    Log.e("줌 레벨", "error: " + finalSendZoomLevel);
+                    return;
+                }
                 for (GpsVO gpsVO : list) {
                     double markerLat = Double.parseDouble(gpsVO.getSenior_latitude());
                     double markerLon = Double.parseDouble(gpsVO.getSenior_longitude());

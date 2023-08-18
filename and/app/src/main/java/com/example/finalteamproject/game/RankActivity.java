@@ -26,7 +26,7 @@ public class RankActivity extends AppCompatActivity {
         CommonConn conn = new CommonConn(this, "game/rank");
         conn.onExcute((isResult, data) -> {
             ArrayList<GameVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<GameVO>>(){}.getType());
-            RankAdapter adapter = new RankAdapter(list);
+            RankAdapter adapter = new RankAdapter(list, this);
             binding.recvRank.setAdapter(adapter);
             binding.recvRank.setLayoutManager(new LinearLayoutManager(this));
         });

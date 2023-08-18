@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,13 +27,23 @@ public class GpsAdapter extends RecyclerView.Adapter<GpsAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        binding = ItemGpsBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
-        context = parent.getContext();
-        return new ViewHolder(binding);
+        if(list == null || list.size() == 0){
+            TextView tv = new TextView(parent.getContext());
+            tv.setText("검색 결과가 없습니다.");
+            return new ViewHolder(tv);
+        }else{
+            binding = ItemGpsBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+            context = parent.getContext();
+            return new ViewHolder(binding);
+        }
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder h, int i) {
+        if(list == null || list.size() == 0 || h.binding == null){
+
+        }else{
+
         //안보일 정보(키, 전화번호)
         h.binding.seniorKey.setText(list.get(i).getKey()+"");
         h.binding.seniorKey.setVisibility(View.GONE);
@@ -61,11 +72,14 @@ public class GpsAdapter extends RecyclerView.Adapter<GpsAdapter.ViewHolder> {
             intent.putExtra("senior_like", h.binding.seniorLike.getText().toString());
             context.startActivity(intent);
         });
-
+        }
     }
 
     @Override
     public int getItemCount() {
+        if(list == null || list.size() == 0) {
+            return 1;
+        }
         return list.size();
     }
 
@@ -75,6 +89,9 @@ public class GpsAdapter extends RecyclerView.Adapter<GpsAdapter.ViewHolder> {
         public ViewHolder(ItemGpsBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+        }
+        public ViewHolder(View binding) {
+            super(binding);
         }
     }
 }
