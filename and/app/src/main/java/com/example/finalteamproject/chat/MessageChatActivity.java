@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.ClipData;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -23,6 +24,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -159,8 +161,14 @@ public class MessageChatActivity extends AppCompatActivity {
 
             }
         });
+
         binding.containerLinearSendFile.setVisibility(View.GONE);
         binding.imgvSendFile.setOnClickListener(view -> {
+            // 키보드가 올라온 상태에서 + 버튼을 눌렀을때 키보드가 내려가게
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(binding.imgvSendFile.getWindowToken(), 0);
+
+
             if (sendCnt % 2 == 1) {
                 binding.containerLinearSendFile.setVisibility(View.VISIBLE);
             } else {
