@@ -22,12 +22,12 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="35dp">
+            android:layout_height="wrap_content">
 
             <EditText
                 android:id="@+id/gps_search"
-                android:layout_width="310dp"
-                android:layout_height="35dp"
+                android:layout_width="300dp"
+                android:layout_height="45dp"
                 android:background="@drawable/box_radius"
                 android:drawableLeft="@drawable/resize_search"
                 android:drawablePadding="10dp"
@@ -39,8 +39,8 @@
 
             <TextView
                 android:id="@+id/btn_search"
-                android:layout_width="60dp"
-                android:layout_height="35dp"
+                android:layout_width="70dp"
+                android:layout_height="45dp"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/box_fill"
                 android:gravity="center"

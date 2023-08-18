@@ -181,10 +181,14 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
             Log.d("줌 레벨", "onMapReady: " + sendZoomLevel);
 
 
+            int finalSendZoomLevel = sendZoomLevel;
             conn.onExcute((isResult, data) -> {
                 ArrayList<GpsVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<GpsVO>>() {
                 }.getType());
-
+                if (list == null) {
+                    Log.e("줌 레벨", "error: " + finalSendZoomLevel);
+                    return;
+                }
                 for (GpsVO gpsVO : list) {
                     double markerLat = Double.parseDouble(gpsVO.getSenior_latitude());
                     double markerLon = Double.parseDouble(gpsVO.getSenior_longitude());
