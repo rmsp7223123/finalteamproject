@@ -73,6 +73,43 @@
     </androidx.cardview.widget.CardView>
 
 
+
+    <RelativeLayout
+        android:id="@+id/rl_secret"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imgv_secret"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/secret_unchecked"/>
+
+        <TextView
+            android:layout_marginStart="5dp"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="비밀글"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:layout_toEndOf="@id/imgv_secret"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="비밀글은 작성자와 관리자에게만 보여집니다"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:textSize="11dp"/>
+
+
+    </RelativeLayout>
+
+
     <RelativeLayout
         android:layout_weight="1"
         android:layout_width="match_parent"

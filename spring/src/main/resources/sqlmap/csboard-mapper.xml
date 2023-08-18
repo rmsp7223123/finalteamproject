@@ -3,20 +3,27 @@
 <mapper namespace="csboard">
 	
 	<select id="list" resultType="cloud.member.CSBoardVO">
-		select csboard_id, csboard_viewcount, writer, csboard_title, csboard_content, 
-		to_char(csboard_writedate, 'YYYY-MM-DD') csboard_writedate
-		from CSBOARD
-		where (writer like '%'||#{context}||'%' or CSBOARD_TITLE like '%'||#{context}||'%' 
-		or CSBOARD_CONTENT like '%'||#{context}||'%')
+		select c.csboard_id, csboard_viewcount, c.writer, csboard_title, csboard_content, 
+		to_char(csboard_writedate, 'YYYY-MM-DD') csboard_writedate, csboard_secret
+		from CSBOARD c
+		where (c.writer like '%'||#{context}||'%' or c.CSBOARD_TITLE like '%'||#{context}||'%' 
+		or c.CSBOARD_CONTENT like '%'||#{context}||'%')
+		<choose>
+			<when test="comment == '답변필요'">
+				and c.csboard_id not in (select m.csboard_id from csboard_comment m)
+				and c.csboard_secret = 'N'
+			</when>	
+			<when test="comment == '답변완료'">
+				and c.csboard_id in (select m.csboard_id from csboard_comment m)
+				and c.csboard_secret = 'N'
+			</when>
+		</choose>
 		<choose>
 			<when test="align == '최신순'">
-				order by CSBOARD_WRITEDATE desc
-			</when>
-			<when test="align == '조회순'">
-				order by CSBOARD_VIEWCOUNT desc, CSBOARD_ID desc
-			</when>			
+				order by c.CSBOARD_WRITEDATE desc
+			</when>	
 			<when test="align == '오래된순'">
-				order by CSBOARD_WRITEDATE
+				order by c.CSBOARD_WRITEDATE
 			</when>
 		</choose>
 	</select>
@@ -28,7 +35,7 @@
 	
 	<update id="modify">
 		update csboard set csboard_title = #{csboard_title}, csboard_content = #{csboard_content}
-		, csboard_writedate = sysdate where csboard_id = #{csboard_id}
+		, csboard_writedate = sysdate, csboard_secret = #{csboard_secret} where csboard_id = #{csboard_id}
 	</update>
 	
 	<delete id="delete">
@@ -40,7 +47,7 @@
 	</select>
 	
 	<insert id="insert">
-		insert into csboard values (5000, #{writer}, #{csboard_title}, #{csboard_content}, 0, sysdate)
+		insert into csboard values (5000, #{writer}, #{csboard_title}, #{csboard_content}, 0, sysdate, #{csboard_secret})
 	</insert>
 	
 	<update id="viewCnt">

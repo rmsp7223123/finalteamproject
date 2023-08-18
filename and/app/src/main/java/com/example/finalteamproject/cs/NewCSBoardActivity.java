@@ -16,6 +16,7 @@ import com.example.finalteamproject.databinding.ActivityNewCsboardBinding;
 public class NewCSBoardActivity extends AppCompatActivity {
 
     ActivityNewCsboardBinding binding;
+    boolean secret;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,18 @@ public class NewCSBoardActivity extends AppCompatActivity {
 
         binding.imgvBack.setOnClickListener(v -> {
             finish();
+        });
+        
+        binding.rlSecret.setOnClickListener(v -> {
+            if(secret){
+                secret = false;
+                binding.imgvSecret.setImageResource(R.drawable.secret_unchecked);
+                Toast.makeText(this, "비밀글 선택 취소", Toast.LENGTH_SHORT).show();
+            }else {
+                secret = true;
+                binding.imgvSecret.setImageResource(R.drawable.secret_checked);
+                Toast.makeText(this, "비밀글 선택 완료", Toast.LENGTH_SHORT).show();
+            }
         });
 
         InputMethodManager manager = (InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -43,6 +56,7 @@ public class NewCSBoardActivity extends AppCompatActivity {
                 conn.addParamMap("writer", CommonVar.logininfo.getMember_id());
                 conn.addParamMap("csboard_title", binding.edtTitle.getText().toString());
                 conn.addParamMap("csboard_content", binding.edtContent.getText().toString());
+                conn.addParamMap("csboard_secret", secret ? "Y" : "N");
                 conn.onExcute((isResult, data) -> {
                     if(data.equals("성공")){
                         Toast.makeText(this, "게시글 등록 성공", Toast.LENGTH_SHORT).show();

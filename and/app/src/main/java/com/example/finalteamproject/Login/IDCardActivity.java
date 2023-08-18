@@ -132,7 +132,8 @@ public class IDCardActivity extends AppCompatActivity {
 
         binding.cvNext.setOnClickListener(v -> {
             Log.d("edtRgNumber", "onCreate: "+binding.edtRgNumber.getText().toString());
-            int month, date;
+            int year, month, date;
+            year = Integer.parseInt(birth.substring(0,2));
             if(birth.charAt(2) == '0'){
                 month = Integer.parseInt(birth.substring(2,4));
             }else {
@@ -148,13 +149,15 @@ public class IDCardActivity extends AppCompatActivity {
                 Toast.makeText(this, "주민등록증 인증을 완료해주세요", Toast.LENGTH_SHORT).show();
             }else  if(month<1||month>12||date<1||date>31){
                 Toast.makeText(this, "잘못된 형식입니다 \n신분증을 다시 촬영해주세요", Toast.LENGTH_SHORT).show();
+            }else if(year>=80||Integer.parseInt(gender)>2){
+                Toast.makeText(this, "45세 이상부터 가입이 가능합니다", Toast.LENGTH_SHORT).show();
             }else {
                 Intent intent = new Intent(this, LoginInfoActivity.class);
                 LoginVar.name = name;
                 LoginVar.birth = birth;
-                LoginVar.gender = gender;
+                LoginVar.gender = Integer.parseInt(gender)%2==1 ? "남" : "여";
                 Log.d("result name", "onCreate: "+name);
-                Log.d("result gender", "onCreate: "+gender);
+                Log.d("result gender", "onCreate: "+LoginVar.gender);
                 Log.d("result birth", "onCreate: "+birth);
                 startActivity(intent);
             }
@@ -197,12 +200,12 @@ public class IDCardActivity extends AppCompatActivity {
                     if(result.contains("주민등록증")){
                         name = result.substring(result.indexOf("증")+2, result.indexOf("("));
                         birth = result.substring(result.indexOf("-")-6, result.indexOf("-"));
-                        gender = Integer.parseInt(result.substring(result.indexOf("-")+1, result.indexOf("-")+2))%2==1 ? "남" : "여";
+                        gender = result.substring(result.indexOf("-")+1, result.indexOf("-")+2);
                         tv_result.setText(result.substring(result.indexOf("-")-6, result.indexOf("-")+2));
                     }else if(result.contains("자동차운전면허증")){
                         name = result.substring(result.indexOf("-", 115)+3, result.indexOf("-", 123)-6);
                         birth = result.substring(result.indexOf("-", 123)-6, result.indexOf("-", 123));
-                        gender = Integer.parseInt(result.substring(result.indexOf("-", 123)+1, result.indexOf("-", 123)+2))%2==1 ? "남" : "여";
+                        gender = result.substring(result.indexOf("-", 123)+1, result.indexOf("-", 123)+2);
                         tv_result.setText(result.substring(result.indexOf("-", 123)-6, result.indexOf("-", 123)+2));
                     }else {
                         Toast.makeText(activity, "신분증을 선택해주세요", Toast.LENGTH_SHORT).show();

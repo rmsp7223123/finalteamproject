@@ -69,8 +69,21 @@
             android:layout_alignParentStart="true"
             android:text="고객센터"
             android:textColor="@color/black"
-            android:textSize="30dp"
+            android:textSize="25dp"
             android:textStyle="bold" />
+
+
+        <Spinner
+            android:id="@+id/spn_board"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/spn_board2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_radius1"
+            android:paddingVertical="4dp"
+            />
 
 
 
@@ -79,6 +92,7 @@
             android:gravity="center"
             android:textAlignment="center"
             android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
             android:layout_toStartOf="@id/cv_new"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

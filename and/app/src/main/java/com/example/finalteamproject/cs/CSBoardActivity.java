@@ -5,6 +5,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,10 +14,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.example.finalteamproject.board.BoardCommonVar;
+import com.example.finalteamproject.board.BoardFragment;
 import com.example.finalteamproject.board.BoardListAdapter;
 import com.example.finalteamproject.board.FavorBoardVO;
 import com.example.finalteamproject.board.NewBoardFragment;
 import com.example.finalteamproject.common.CommonConn;
+import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.databinding.ActivityCsboardBinding;
 import com.example.finalteamproject.main.MainActivity;
 import com.google.gson.Gson;
@@ -26,8 +30,8 @@ import java.util.List;
 public class CSBoardActivity extends AppCompatActivity {
 
     ActivityCsboardBinding binding;
-
-    String[] list2 = {"최신순", "조회순", "오래된순"};
+    String[] list = {"전체", "답변필요", "답변완료"};
+    String[] list2 = {"최신순", "오래된순"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,45 @@ public class CSBoardActivity extends AppCompatActivity {
 
         binding = ActivityCsboardBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+
+
+        //게시판 조건 변경 스피너
+        binding.spnBoard.getSelectedItem();
+        Spinner favorSpinner = binding.spnBoard;
+        ArrayAdapter favorAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, list);
+        favorSpinner.setAdapter(favorAdapter);
+        binding.spnBoard.setSelection(0);
+        binding.spnBoard.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int i, long id) {
+                BoardCommonVar.cs_board_name = list[i];
+                CommonConn conn = new CommonConn(CSBoardActivity.this, "csboard/list");
+                conn.addParamMap("context", binding.edtSearch.getText().toString());
+                conn.addParamMap("align", BoardCommonVar.cs_board_align);
+                conn.addParamMap("comment", BoardCommonVar.cs_board_name);
+                conn.onExcute((isResult, data) -> {
+                    List<CSBoardVO> list = new Gson().fromJson(data, new TypeToken<List<CSBoardVO>>(){}.getType());
+                    Log.d("list", "onItemSelected: "+list.size());
+                    if(list.size()!=0){
+                        binding.recvBoard.setVisibility(View.VISIBLE);
+                        binding.tvNone.setVisibility(View.GONE);
+                        CSBoardListAdapter adapter = new CSBoardListAdapter(list, CSBoardActivity.this);
+                        binding.recvBoard.setAdapter(adapter);
+                        binding.recvBoard.setLayoutManager(new LinearLayoutManager(CSBoardActivity.this));
+                    }else {
+                        binding.recvBoard.setVisibility(View.GONE);
+                        binding.tvNone.setVisibility(View.VISIBLE);
+                    }
+                });
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        //
 
         //게시판 글 정렬 스피너
         binding.spnBoard2.getSelectedItem();
@@ -62,8 +105,10 @@ public class CSBoardActivity extends AppCompatActivity {
                 CommonConn conn = new CommonConn(CSBoardActivity.this, "csboard/list");
                 conn.addParamMap("context", binding.edtSearch.getText().toString());
                 conn.addParamMap("align", BoardCommonVar.cs_board_align);
+                conn.addParamMap("comment", BoardCommonVar.cs_board_name);
                 conn.onExcute((isResult, data) -> {
                     List<CSBoardVO> list = new Gson().fromJson(data, new TypeToken<List<CSBoardVO>>(){}.getType());
+                    Log.d("list", "onItemSelected: "+list.size());
                     if(list.size()!=0){
                         binding.recvBoard.setVisibility(View.VISIBLE);
                         binding.tvNone.setVisibility(View.GONE);
@@ -87,8 +132,10 @@ public class CSBoardActivity extends AppCompatActivity {
             CommonConn conn = new CommonConn(CSBoardActivity.this, "csboard/list");
             conn.addParamMap("context", binding.edtSearch.getText().toString());
             conn.addParamMap("align", BoardCommonVar.cs_board_align);
+            conn.addParamMap("comment", BoardCommonVar.cs_board_name);
             conn.onExcute((isResult, data) -> {
                 List<CSBoardVO> list = new Gson().fromJson(data, new TypeToken<List<CSBoardVO>>(){}.getType());
+                Log.d("list", "onItemSelected: "+list.size());
                 if(list.size()!=0){
                     binding.recvBoard.setVisibility(View.VISIBLE);
                     binding.tvNone.setVisibility(View.GONE);

@@ -4,17 +4,15 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.ClipData;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -23,21 +21,16 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.finalteamproject.FirebaseMessageReceiver;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
-import com.example.finalteamproject.common.RetrofitClient;
-import com.example.finalteamproject.common.RetrofitInterface;
 import com.example.finalteamproject.databinding.ActivityMessageChatBinding;
 import com.example.finalteamproject.main.FriendVO;
-import com.google.android.gms.common.internal.service.Common;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -47,23 +40,11 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.File;
-import java.io.InputStream;
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
-
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MessageChatActivity extends AppCompatActivity {
     ActivityMessageChatBinding binding;
@@ -83,7 +64,7 @@ public class MessageChatActivity extends AppCompatActivity {
 
     MessageChatAdapter adapter;
 
-    ArrayList<Uri> uriList = new ArrayList<>();
+    ArrayList<String> uriList = new ArrayList<>();
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
     String currentTime = dateFormat.format(new Date());
@@ -116,7 +97,12 @@ public class MessageChatActivity extends AppCompatActivity {
                 FriendVO vo = new FriendVO(friendVO.getMember_id(), friendVO.getFriend_id(), friendVO.getMember_nickname(), friendVO.getMember_profileimg(), currentTime, binding.edtMessage.getText().toString(), true);
                 sendMsg(friendVO.getMember_id(), friendVO.getFriend_id() ,vo, true);
                 sendMsg(friendVO.getFriend_id(), friendVO.getMember_id() ,vo, false);
-                sendNotification(vo);
+                if(true) {
+                    sendNotification(vo);
+                } else {
+
+                }
+
                 binding.edtMessage.setText("");
             }
         });
@@ -125,11 +111,14 @@ public class MessageChatActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 FriendVO friendVO = dataSnapshot.getValue(FriendVO.class);
-                //   friendVO.setMember_profileimg(friendVO.getMember_profileimg());
                 adapter.addData(friendVO);
                 int position = adapter.getItemCount() - 1;
                 if (position >= 0) {
                     binding.recvMessageChat.scrollToPosition(position);
+                }
+                String imageText = friendVO.getContent();
+                if (imageText.contains("https://firebasestorage.googleapis.com/")) {
+                    uriList.add(imageText);
                 }
             }
 
@@ -154,8 +143,14 @@ public class MessageChatActivity extends AppCompatActivity {
 
             }
         });
+
         binding.containerLinearSendFile.setVisibility(View.GONE);
         binding.imgvSendFile.setOnClickListener(view -> {
+            // 키보드가 올라온 상태에서 + 버튼을 눌렀을때 키보드가 내려가게
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(binding.imgvSendFile.getWindowToken(), 0);
+
+
             if (sendCnt % 2 == 1) {
                 binding.containerLinearSendFile.setVisibility(View.VISIBLE);
             } else {
@@ -183,6 +178,11 @@ public class MessageChatActivity extends AppCompatActivity {
         });
         binding.cvVoice.setOnClickListener(v -> {
             displaySpeechRecognizer();
+        });
+        binding.imgvGallary.setOnClickListener(v -> {
+            Intent intent = new Intent(MessageChatActivity.this, ChatPhotoGalleryActivity.class);
+            intent.putExtra("img", uriList);
+            startActivity(intent);
         });
     }
 
@@ -234,20 +234,10 @@ public class MessageChatActivity extends AppCompatActivity {
             riversRef.getDownloadUrl().addOnSuccessListener(uri -> {
                 String imageUrl = uri.toString();
                 String currentTime = dateFormat.format(new Date());
-
-                // 채팅 메시지에 이미지 URL 추가
-//                messageId = databaseReference.child("chat").child(itemName).push().getKey();
                 FriendVO vo = new FriendVO(friendVO.getMember_id(), friendVO.getFriend_id(), friendVO.getMember_nickname(), friendVO.getMember_profileimg(), currentTime, imageUrl, true);
                 sendMsg(friendVO.getMember_id(), friendVO.getFriend_id() ,vo, true);
                 sendMsg(friendVO.getFriend_id(), friendVO.getMember_id() ,vo, false);
                 sendNotification(vo);
-//                FriendVO temp = new FriendVO(friendVO.getMember_id(),friendVO.getFriend_id(),friendVO.getMember_nickname(),friendVO.getMember_profileimg(),friendVO.getTime(),imageUrl,true);
-//                MessageDTO temp = new MessageDTO(messageDTO.getImgRes(), messageDTO.getNickname(), imageUrl, currentTime,"" ,true);
-//                databaseReference.child("chat").child(friendVO.getFriend_id()).child(messageId).setValue(temp);
-
-                // 어댑터 갱신 등의 필요한 작업 수행
-//                adapter.addData(temp);
-//                binding.recvMessageChat.scrollToPosition(adapter.getItemCount() - 1);
                 adapter.notifyDataSetChanged();
             });
         });
@@ -308,15 +298,11 @@ public class MessageChatActivity extends AppCompatActivity {
                             final int tempIdx = i;
                             upload.add(riversRef.putFile(imageUri));
                             upload.get(tempIdx).addOnCompleteListener(command -> {
-
                                 upload.get(tempIdx).getResult().getStorage().getDownloadUrl().addOnCompleteListener(command1 -> {
                                     FriendVO vo = new FriendVO(friendVO.getMember_id(), friendVO.getFriend_id(), friendVO.getMember_nickname(), friendVO.getMember_profileimg(), currentTime, command1.getResult() + "", true);
                                     sendMsg(friendVO.getMember_id(), friendVO.getFriend_id() ,vo, true);
                                     sendMsg(friendVO.getFriend_id(), friendVO.getMember_id() ,vo, false);
                                     sendNotification(vo);
-                                    //adapter = new MessageChatAdapter(getlist(), this, isChatCheck , friendVO.getMember_profileimg());
-                                    //binding.recvMessageChat.setAdapter(adapter);
-                                    // binding.recvMessageChat.setLayoutManager(new LinearLayoutManager(this));
                                 });
 
                             });
@@ -331,9 +317,6 @@ public class MessageChatActivity extends AppCompatActivity {
     }
 
     public void showCamera() {
-        //ContentResolver(). 앱 ---> 컨텐트리졸버(작업자) ---> 미디어 저장소
-//        ContentValues values = new ContentValues();
-//        values.describeContents()
         camera_uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new ContentValues());
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, camera_uri);

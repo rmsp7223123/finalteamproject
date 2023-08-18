@@ -100,7 +100,7 @@ public class LoginInfoActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (Pattern.compile("[A-Z$@$!%*#?&가-힣]").matcher(binding.edtId.getText().toString()).find()){
+                if (Pattern.compile("[A-Z$@$!%*#?&/가-힣ㄱ-ㅎㅏ-ㅣ\\x20]").matcher(binding.edtId.getText().toString()).find()){
                     binding.tvIdAlert.setVisibility(View.VISIBLE);
                     binding.tvIdAlert.setText("영문, 숫자 외의 다른 문자 미포함");
                 }else if(!Pattern.compile("[0-9]").matcher(binding.edtId.getText().toString()).find()){
