@@ -161,14 +161,21 @@ public class MainController {
 			}
 
 			// 메세지 작성
-			Notification noti = Notification.builder().setTitle("친구추가").setBody(vo1.getMember_nickname()+"님이 친구신청을 보냈습니다.").build();
-			Message msg = Message.builder().putData("title", "friend").putData("name", "aaa").putData("body", "aaa").putData("check", "addFriend")
-					.putData("color", "#f45342").setNotification(noti).setToken(vo3.getMember_phone_id()).build();
-
+			if(vo2.getAlarm_content().contains("친구신청")) {
+				Notification noti = Notification.builder().setTitle("친구추가").setBody(vo1.getMember_nickname()+"님이 친구신청을 보냈습니다.").build();
+				Message msg = Message.builder().putData("title", "friend").putData("name", "aaa").putData("body", "aaa").putData("check", "addFriend")
+						.putData("color", "#f45342").setNotification(noti).setToken(vo3.getMember_phone_id()).build();
+				String response = FirebaseMessaging.getInstance().send(msg);
+			} else if (vo2.getAlarm_content().contains("메시지")) {
+				Notification noti = Notification.builder().setTitle("메시지").setBody(vo1.getMember_nickname()+"님이 메시지를 보냈습니다.").build();
+				Message msg = Message.builder().putData("title", "friend").putData("name", "aaa").putData("body", "aaa").putData("check", "msgFriend")
+						.putData("color", "#f45342").setNotification(noti).setToken(vo3.getMember_phone_id()).build();
+				String response = FirebaseMessaging.getInstance().send(msg);
+			}
 			// 메세지를 FirebaseMessaging에 보내기
-			String response = FirebaseMessaging.getInstance().send(msg);
-			// 결과출력
-			System.out.println("Successfully: " + response);
+			
+//			// 결과출력
+//			System.out.println("Successfully: " + response);
 
 		} catch (Exception e) {
 			e.printStackTrace();

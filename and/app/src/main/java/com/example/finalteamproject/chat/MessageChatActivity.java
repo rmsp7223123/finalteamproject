@@ -26,13 +26,16 @@ import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.finalteamproject.FirebaseMessageReceiver;
 import com.example.finalteamproject.R;
+import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.common.RetrofitClient;
 import com.example.finalteamproject.common.RetrofitInterface;
 import com.example.finalteamproject.databinding.ActivityMessageChatBinding;
 import com.example.finalteamproject.main.FriendVO;
+import com.google.android.gms.common.internal.service.Common;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
@@ -86,52 +89,43 @@ public class MessageChatActivity extends AppCompatActivity {
     String currentTime = dateFormat.format(new Date());
 
     private FirebaseStorage storage;
+    FriendVO friendVO;
 
+    boolean isOpponentInActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMessageChatBinding.inflate(getLayoutInflater());
-        adapter = new MessageChatAdapter(getlist(), this, isChatCheck);
+
         setContentView(binding.getRoot());
         binding.imgvBack.setOnClickListener(v -> {
             finish();
         });
 
-        MessageDTO messageDTO = (MessageDTO) getIntent().getSerializableExtra("dto");
+        friendVO = (FriendVO) getIntent().getSerializableExtra("vo");
 
-        String itemName = messageDTO.getNickname();
-
-        binding.tvNickname.setText(messageDTO.getNickname());
-        binding.imgvProfileImg.setImageResource(messageDTO.getImgRes());
+        adapter = new MessageChatAdapter(getlist(), this, isChatCheck, friendVO.getMember_profileimg());
+        binding.tvNickname.setText(friendVO.getMember_nickname());
+        Glide.with(this).load(friendVO.getMember_profileimg()).apply(new RequestOptions().circleCrop()).into(binding.imgvProfileImg);
         binding.recvMessageChat.setAdapter(adapter);
         binding.recvMessageChat.setLayoutManager(new LinearLayoutManager(this));
         binding.imgvSend.setOnClickListener(v -> {
             String messageText = binding.edtMessage.getText().toString();
             if (!messageText.isEmpty()) {
-                // String name = getIntent().getStringExtra("nickname");
-                //int imgRes = getIntent().getIntExtra("img",0);
-                messageId = databaseReference.child("chat").child(itemName).push().getKey();
-                MessageDTO temp = new MessageDTO(messageDTO.getImgRes(), messageDTO.getNickname(), messageText,"", currentTime, true);
-                // 파이어베이스 경로를 닉네임이 아닌 id로 바꾸기
-                databaseReference.child("chat").child(messageDTO.getNickname()).child(messageId).setValue(temp);
-                binding.recvMessageChat.scrollToPosition(adapter.getItemCount() - 1);
-                adapter.notifyDataSetChanged();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        FirebaseMessageReceiver.showNotification(MessageChatActivity.this, binding.tvNickname.getText().toString(), binding.edtMessage.getText().toString());
-                    }
-                });
+                FriendVO vo = new FriendVO(friendVO.getMember_id(), friendVO.getFriend_id(), friendVO.getMember_nickname(), friendVO.getMember_profileimg(), currentTime, binding.edtMessage.getText().toString(), true);
+                sendMsg(friendVO.getMember_id(), friendVO.getFriend_id() ,vo, true);
+                sendMsg(friendVO.getFriend_id(), friendVO.getMember_id() ,vo, false);
+                sendNotification(vo);
                 binding.edtMessage.setText("");
             }
         });
 
-        databaseReference.child("chat").child(messageDTO.getNickname()).addChildEventListener(new ChildEventListener() {
+        databaseReference.child("chat").child(friendVO.getMember_id()).child(friendVO.getFriend_id()).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 FriendVO friendVO = dataSnapshot.getValue(FriendVO.class);
-                friendVO.setMember_profileimg(friendVO.getMember_profileimg());
+                //   friendVO.setMember_profileimg(friendVO.getMember_profileimg());
                 adapter.addData(friendVO);
                 int position = adapter.getItemCount() - 1;
                 if (position >= 0) {
@@ -200,23 +194,38 @@ public class MessageChatActivity extends AppCompatActivity {
     Uri camera_uri = null;
 
 
+    //param1 =friendVO.getFriend_id()
+    public void sendMsg(String mainId , String subId , FriendVO vo, boolean isChatCheck) {
+        DatabaseReference def = databaseReference.child("chat").child(mainId).child(subId);
+        messageId =def.push().getKey();
+
+//        FriendVO temp = new FriendVO(friendVO.getMember_id(),friendVO.getFriend_id(),friendVO.getMember_nickname(),friendVO.getMember_profileimg(),currentTime,binding.edtMessage.getText().toString(),true);
+//                FriendVO temp = new FriendVO(messageDTO.getImgRes(), messageDTO.getNickname(), messageText,"", currentTime, true);
+        // 파이어베이스 경로를 닉네임이 아닌 id로 바꾸기
+        vo.setCheck(isChatCheck);
+        def.child(messageId).setValue(vo);
+        binding.recvMessageChat.scrollToPosition(adapter.getItemCount() - 1);
+        adapter.notifyDataSetChanged();
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
-                MessageDTO messageDTO = (MessageDTO) getIntent().getSerializableExtra("dto");
-                handleCameraImage(camera_uri, messageDTO);
+                FriendVO friendVO = (FriendVO) getIntent().getSerializableExtra("vo");
+//                MessageDTO messageDTO = (MessageDTO) getIntent().getSerializableExtra("dto");
+                handleCameraImage(camera_uri, friendVO);
             }
         });
     }
 
-    private void handleCameraImage(Uri cameraImageUri, MessageDTO messageDTO) {
+    private void handleCameraImage(Uri cameraImageUri, FriendVO friendVO) {
         storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
 
-        String itemName = messageDTO.getNickname();
+        String itemName = friendVO.getMember_nickname();
         String uuid = UUID.randomUUID().toString();
         StorageReference riversRef = storageRef.child(CommonVar.logininfo.getMember_id() + "/" + uuid + ".jpg");
 
@@ -227,9 +236,14 @@ public class MessageChatActivity extends AppCompatActivity {
                 String currentTime = dateFormat.format(new Date());
 
                 // 채팅 메시지에 이미지 URL 추가
-                messageId = databaseReference.child("chat").child(itemName).push().getKey();
-                MessageDTO temp = new MessageDTO(messageDTO.getImgRes(), messageDTO.getNickname(), imageUrl, currentTime,"" ,true);
-                databaseReference.child("chat").child(messageDTO.getNickname()).child(messageId).setValue(temp);
+//                messageId = databaseReference.child("chat").child(itemName).push().getKey();
+                FriendVO vo = new FriendVO(friendVO.getMember_id(), friendVO.getFriend_id(), friendVO.getMember_nickname(), friendVO.getMember_profileimg(), currentTime, imageUrl, true);
+                sendMsg(friendVO.getMember_id(), friendVO.getFriend_id() ,vo, true);
+                sendMsg(friendVO.getFriend_id(), friendVO.getMember_id() ,vo, false);
+                sendNotification(vo);
+//                FriendVO temp = new FriendVO(friendVO.getMember_id(),friendVO.getFriend_id(),friendVO.getMember_nickname(),friendVO.getMember_profileimg(),friendVO.getTime(),imageUrl,true);
+//                MessageDTO temp = new MessageDTO(messageDTO.getImgRes(), messageDTO.getNickname(), imageUrl, currentTime,"" ,true);
+//                databaseReference.child("chat").child(friendVO.getFriend_id()).child(messageId).setValue(temp);
 
                 // 어댑터 갱신 등의 필요한 작업 수행
 //                adapter.addData(temp);
@@ -264,7 +278,8 @@ public class MessageChatActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        MessageDTO messageDTO = (MessageDTO) getIntent().getSerializableExtra("dto");
+//        MessageDTO messageDTO = (MessageDTO) getIntent().getSerializableExtra("dto");
+        FriendVO friendVO = (FriendVO) getIntent().getSerializableExtra("vo");
         if (requestCode == REQ_GALLERY) {
             if (data == null) {   // 어떤 이미지도 선택하지 않은 경우
                 Toast.makeText(getApplicationContext(), "이미지를 선택하지 않았습니다.", Toast.LENGTH_LONG).show();
@@ -283,7 +298,7 @@ public class MessageChatActivity extends AppCompatActivity {
                         storage = FirebaseStorage.getInstance();
                         StorageReference storageRef = storage.getReference();
                         for (int i = 0; i < clipData.getItemCount(); i++) {
-                            String itemName = messageDTO.getNickname();
+                            String itemName = friendVO.getMember_nickname();
                             String uuid = UUID.randomUUID().toString();
 
 
@@ -295,12 +310,13 @@ public class MessageChatActivity extends AppCompatActivity {
                             upload.get(tempIdx).addOnCompleteListener(command -> {
 
                                 upload.get(tempIdx).getResult().getStorage().getDownloadUrl().addOnCompleteListener(command1 -> {
-                                    messageId = databaseReference.child("chat").child(itemName).push().getKey();
-                                    MessageDTO temp = new MessageDTO(messageDTO.getImgRes(), messageDTO.getNickname(), command1.getResult() + "", currentTime,"" ,true);
-                                    databaseReference.child("chat").child(messageDTO.getNickname()).child(messageId).setValue(temp);
-                                    adapter = new MessageChatAdapter(getlist(), this, isChatCheck);
-                                    binding.recvMessageChat.setAdapter(adapter);
-                                    binding.recvMessageChat.setLayoutManager(new LinearLayoutManager(this));
+                                    FriendVO vo = new FriendVO(friendVO.getMember_id(), friendVO.getFriend_id(), friendVO.getMember_nickname(), friendVO.getMember_profileimg(), currentTime, command1.getResult() + "", true);
+                                    sendMsg(friendVO.getMember_id(), friendVO.getFriend_id() ,vo, true);
+                                    sendMsg(friendVO.getFriend_id(), friendVO.getMember_id() ,vo, false);
+                                    sendNotification(vo);
+                                    //adapter = new MessageChatAdapter(getlist(), this, isChatCheck , friendVO.getMember_profileimg());
+                                    //binding.recvMessageChat.setAdapter(adapter);
+                                    // binding.recvMessageChat.setLayoutManager(new LinearLayoutManager(this));
                                 });
 
                             });
@@ -308,6 +324,7 @@ public class MessageChatActivity extends AppCompatActivity {
 
 
                     }
+                    adapter.notifyDataSetChanged();
                 }
             }
         }
@@ -329,6 +346,20 @@ public class MessageChatActivity extends AppCompatActivity {
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
 // This starts the activity and populates the intent with the speech text.
         startActivityForResult(intent, SPEECH_REQUEST_CODE);
+    }
+
+    public void sendNotification(FriendVO vo) {
+            CommonConn conn = new CommonConn(this, "main/addAlarm");
+            conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+            conn.addParamMap("alarm_content", CommonVar.logininfo.getMember_nickname() + "님이 메시지를 보냈습니다.");
+            conn.addParamMap("alarm_time", currentTime);
+            conn.addParamMap("receive_id", vo.getFriend_id());
+
+            conn.onExcute((isResult1, data1) -> {
+                if (isResult1) {
+                    Log.d("TAG", "onClick: " + "확인용");
+                }
+            });
     }
 
 

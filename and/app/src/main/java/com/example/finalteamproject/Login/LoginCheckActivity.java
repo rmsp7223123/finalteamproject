@@ -34,8 +34,16 @@ public class LoginCheckActivity extends AppCompatActivity {
             finish();
         });
 
-        binding.tvFind.setOnClickListener(v -> {
-            Intent intent  = new Intent(this, LoginFindActivity.class);
+        binding.tvFindId.setOnClickListener(v -> {
+            Intent intent  = new Intent(this, LoginFindIdActivity.class);
+            intent.putExtra("phoneNumber", getIntent().getStringExtra("member_phone"));
+            startActivity(intent);
+        });
+
+        binding.tvFindPw.setOnClickListener(v -> {
+            Intent intent  = new Intent(this, LoginFindPwActivity.class);
+            intent.putExtra("phoneNumber", getIntent().getStringExtra("member_phone"));
+            startActivity(intent);
         });
         
         InputMethodManager manager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);

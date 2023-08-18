@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
+import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.databinding.ItemFriendListBinding;
 import com.example.finalteamproject.main.FriendVO;
 
@@ -44,6 +45,8 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
         Glide.with(context).load(list.get(position).getMember_profileimg()).apply(new RequestOptions().circleCrop()).into(holder.binding.imgvProfileImg);
         holder.binding.containerFrameMessage.setOnClickListener(v -> {
             Intent intent = new Intent(context, MessageChatActivity.class);
+            list.get(position).setMember_id(CommonVar.logininfo.getMember_id());
+            intent.putExtra("vo",list.get(position));
             intent.putExtra("id", list.get(position).getFriend_id());
             intent.putExtra("img",list.get(position).getMember_profileimg());
             intent.putExtra("nickname",list.get(position).getMember_nickname());

@@ -15,7 +15,10 @@
     <string name="msg_subscribe_failed">Failed to subscribe to weather topic</string>
     <string name="fcm_message">FCM Message</string>
 
-    <string name="setting_underline"><u>아이디 / 비밀번호 찾기</u></string>
+    <string name="findId"><u>아이디 찾기</u></string>
+    <string name="findIdMessage"><u>전체 아이디 문자로 전송받기</u></string>
+    <string name="findPw"><u>비밀번호 찾기</u></string>
+    <string name="findPwMessage"><u>임시 비밀번호 문자로 전송받기</u></string>
     <string name="setting_underline2"><u>고객센터</u></string>
 
 </resources>

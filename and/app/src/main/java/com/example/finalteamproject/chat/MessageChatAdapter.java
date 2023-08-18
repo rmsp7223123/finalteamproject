@@ -31,6 +31,13 @@ public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.
     Context context;
 
     boolean isChatCheck;
+    String profile_img;
+    public MessageChatAdapter(ArrayList<FriendVO> list, Context context,boolean isChatCheck ,String profile_img) {
+        this.list = list;
+        this.context = context;
+        this.isChatCheck = isChatCheck;
+        this.profile_img = profile_img;
+    }
 
     public MessageChatAdapter(ArrayList<FriendVO> list, Context context,boolean isChatCheck) {
         this.list = list;
@@ -69,6 +76,7 @@ public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         FriendVO friendVO = list.get(position);
         holder.binding.tvName.setText(friendVO.getMember_nickname());
+        Glide.with(context).load(profile_img).into(holder.binding.imgvMain);
 //        holder.binding.imgvMain.setImageResource(friendVO.getImgRes());
 
         holder.binding.containerFrame.removeAllViews();
@@ -118,7 +126,7 @@ public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.
                 tv_msg.setText(friendVO.getContent());
                 tv_msg.setTextColor(Color.parseColor("#000000"));
                 tv_msg.setTextSize(16f);
-                tv_msg.setBackgroundResource(R.drawable.message_chat_me_background);
+                tv_msg.setBackgroundResource(R.drawable.message_chat_background);
                 tv_msg.setPadding(30, 20, 70, 20);
                 tv_msg.setMaxWidth(800);
             }

@@ -61,7 +61,7 @@ public class ModifyBoardFragment extends Fragment {
 
     FragmentModifyBoardBinding binding;
     MainActivity activity;
-    int fav_board_id;
+    FavorBoardVO vo;
 
     String board_name;
     String align;
@@ -71,9 +71,9 @@ public class ModifyBoardFragment extends Fragment {
     static Uri camera_uri = null;
     File file = null;
 
-    public ModifyBoardFragment(MainActivity activity, int fav_board_id) {
+    public ModifyBoardFragment(MainActivity activity, FavorBoardVO vo) {
         this.activity = activity;
-        this.fav_board_id = fav_board_id;
+        this.vo = vo;
     }
 
     @Override
@@ -82,7 +82,7 @@ public class ModifyBoardFragment extends Fragment {
         binding = FragmentModifyBoardBinding.inflate(inflater, container, false);
 
         CommonConn conn2 = new CommonConn(this.getContext(), "board/select");
-        conn2.addParamMap("fav_board_id", fav_board_id);
+        conn2.addParamMap("fav_board_id", vo.fav_board_id);
         conn2.onExcute((isResult, data) -> {
             FavorBoardVO vo = new Gson().fromJson(data, FavorBoardVO.class);
             if(vo!=null){
@@ -115,7 +115,7 @@ public class ModifyBoardFragment extends Fragment {
                     MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", "gallery.jpg", fileBody);
                     RetrofitInterface api = new RetrofitClient().retrofitLogin().create(RetrofitInterface.class);
                     HashMap<String, RequestBody> map = new HashMap<>();
-                    map.put("fav_board_id", RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(fav_board_id)));
+                    map.put("fav_board_id", RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(vo.fav_board_id)));
                     map.put("fav_board_title", RequestBody.create(MediaType.parse("multipart/form-data"), binding.edtTitle.getText().toString()));
                     map.put("fav_board_content", RequestBody.create(MediaType.parse("multipart/form-data"), binding.edtContent.getText().toString()));
                     api.clientSendFile("board/modifyFile", map, filePart).enqueue(new Callback<String>() {
@@ -123,7 +123,7 @@ public class ModifyBoardFragment extends Fragment {
                         public void onResponse(Call<String> call, Response<String> response) {
                             if(response.body().equals("성공")){
                                 Toast.makeText(ModifyBoardFragment.this.getContext(), "게시글 수정 성공", Toast.LENGTH_SHORT).show();
-                                activity.replaceFragment(ModifyBoardFragment.this, new BoardContextFragment(activity, fav_board_id));
+                                activity.replaceFragment(ModifyBoardFragment.this, new BoardContextFragment(activity, vo));
                             }else {
                                 Toast.makeText(ModifyBoardFragment.this.getContext(), "게시글 수정 실패", Toast.LENGTH_SHORT).show();
                             }
@@ -139,7 +139,7 @@ public class ModifyBoardFragment extends Fragment {
                     MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", "camera.jpg", fileBody);
                     RetrofitInterface api = new RetrofitClient().retrofitLogin().create(RetrofitInterface.class);
                     HashMap<String, RequestBody> map = new HashMap<>();
-                    map.put("fav_board_id", RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(fav_board_id)));
+                    map.put("fav_board_id", RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(vo.fav_board_id)));
                     map.put("fav_board_title", RequestBody.create(MediaType.parse("multipart/form-data"), binding.edtTitle.getText().toString()));
                     map.put("fav_board_content", RequestBody.create(MediaType.parse("multipart/form-data"), binding.edtContent.getText().toString()));
                     api.clientSendFile("board/modifyFile", map, filePart).enqueue(new Callback<String>() {
@@ -147,7 +147,7 @@ public class ModifyBoardFragment extends Fragment {
                         public void onResponse(Call<String> call, Response<String> response) {
                             if(response.body().equals("성공")){
                                 Toast.makeText(ModifyBoardFragment.this.getContext(), "게시글 수정 성공", Toast.LENGTH_SHORT).show();
-                                activity.replaceFragment(ModifyBoardFragment.this, new BoardContextFragment(activity, fav_board_id));
+                                activity.replaceFragment(ModifyBoardFragment.this, new BoardContextFragment(activity, vo));
                             }else {
                                 Toast.makeText(ModifyBoardFragment.this.getContext(), "게시글 수정 실패", Toast.LENGTH_SHORT).show();
                             }
@@ -161,11 +161,11 @@ public class ModifyBoardFragment extends Fragment {
                     CommonConn conn1 = new CommonConn(this.getContext(), "board/modify");
                     conn1.addParamMap("fav_board_title", binding.edtTitle.getText().toString());
                     conn1.addParamMap("fav_board_content", binding.edtContent.getText().toString());
-                    conn1.addParamMap("fav_board_id", fav_board_id);
+                    conn1.addParamMap("fav_board_id", vo.fav_board_id);
                     conn1.onExcute((isResult1, data1) -> {
                         if (data1.equals("성공")) {
                             Toast.makeText(ModifyBoardFragment.this.getContext(), "게시글 수정 성공", Toast.LENGTH_SHORT).show();
-                            activity.replaceFragment(ModifyBoardFragment.this, new BoardContextFragment(activity, fav_board_id));
+                            activity.replaceFragment(ModifyBoardFragment.this, new BoardContextFragment(activity, vo));
                         } else {
                             Toast.makeText(activity, "게시글 수정 실패", Toast.LENGTH_SHORT).show();
                         }
@@ -176,7 +176,7 @@ public class ModifyBoardFragment extends Fragment {
 
 
         binding.imgvBack.setOnClickListener(v -> {
-            activity.replaceFragment(this, new BoardContextFragment(activity, fav_board_id));
+            activity.replaceFragment(this, new BoardContextFragment(activity, vo));
         });
 
         binding.imgvDelete.setOnClickListener(v -> {

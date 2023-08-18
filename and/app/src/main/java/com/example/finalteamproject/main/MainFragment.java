@@ -6,10 +6,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.board.BoardCommonVar;
+import com.example.finalteamproject.chat.MessageChatActivity;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.common.MemberVO;
@@ -33,6 +36,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainFragment extends Fragment {
 
@@ -91,6 +96,51 @@ public class MainFragment extends Fragment {
                         binding.imgvAdd.setOnClickListener(view -> {
                             dialog_friend(position);
                         });
+                        binding.imgvMessage.setOnClickListener(view -> {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+//            CommonConn conn1 = new CommonConn(getContext(),"main/viewpager");
+//            conn1.addParamMap("member_id",CommonVar.logininfo.getMember_id());
+                            builder.setTitle("메시지 보내기");
+                            builder.setPositiveButton("취소", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                   // new FriendVO(friendVO.getMember_id(), friendVO.getFriend_id(), friendVO.getMember_nickname(), friendVO.getMember_profileimg(), currentTime, binding.edtMessage.getText().toString(), true);
+                                   // friendVO = (FriendVO) getIntent().getSerializableExtra("vo");
+
+                                    FriendVO vo = new FriendVO(CommonVar.logininfo.getMember_id(), list.get(position).getMember_id() , list.get(position).getMember_nickname() , list.get(position).getMember_profileimg(),"","",false );
+                                    Intent intent = new Intent(getContext() , MessageChatActivity.class);
+                                    intent.putExtra("vo",vo);
+                                    getContext().startActivity(intent);
+
+                                    //메시지 보내기
+//                                    CommonConn conn1 = new CommonConn(getContext(), "main/viewpager");
+//                                    conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+//                                    conn1.onExcute((isResult, data) -> {
+//                                        ArrayList<FriendVO> friend_list = new Gson().fromJson(data, new TypeToken<ArrayList<FriendVO>>() {
+//                                        }.getType());
+//                                        CommonConn conn2 = new CommonConn(getContext(), "main/viewFriendList");
+//                                        conn2.addParamMap("member_id", friend_list.get(position).getMember_id());
+//                                        conn2.onExcute((isResult1, data1) -> {
+//                                            Intent intent = new Intent(getContext(), MessageChatActivity.class);
+//                                            friend_list.get(position).setMember_id(CommonVar.logininfo.getMember_id());
+//                                            intent.putExtra("vo", friend_list.get(position));
+//                                            startActivity(intent);
+//                                        });
+//                                    });
+//                                    dialog.dismiss();
+                                }
+                            });
+
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                        });
+
                         favorChange(position);
                         currentPos = position;
                         int realPosition = position % list.size();
@@ -124,11 +174,23 @@ public class MainFragment extends Fragment {
         });
 
         binding.imgvRight.setOnClickListener(v -> {
-            binding.imgViewpager.setCurrentItem(binding.imgViewpager.getCurrentItem() + 1);
+            //마지막 누르면 처음으로 이동
+            if (binding.imgViewpager.getCurrentItem() == list.size() - 1) {
+                binding.imgViewpager.setCurrentItem(0);
+            } else {
+                binding.imgViewpager.setCurrentItem(binding.imgViewpager.getCurrentItem() + 1);
+            }
+            //
         });
 
         binding.imgvLeft.setOnClickListener(v -> {
-            binding.imgViewpager.setCurrentItem(binding.imgViewpager.getCurrentItem() - 1);
+            //처음 누르면 마지막으로 이동
+            if (binding.imgViewpager.getCurrentItem() == 0) {
+                binding.imgViewpager.setCurrentItem(list.size() - 1);
+            } else {
+                binding.imgViewpager.setCurrentItem(binding.imgViewpager.getCurrentItem() - 1);
+            }
+            //
         });
 
         binding.imgvAdd.setOnClickListener(view -> {
@@ -151,28 +213,6 @@ public class MainFragment extends Fragment {
         });
         //
 
-        binding.imgvMessage.setOnClickListener(view -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-//            CommonConn conn1 = new CommonConn(getContext(),"main/viewpager");
-//            conn1.addParamMap("member_id",CommonVar.logininfo.getMember_id());
-            builder.setTitle("메시지 보내기");
-            builder.setPositiveButton("취소", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            builder.setNegativeButton("확인", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-
-            AlertDialog dialog = builder.create();
-            dialog.show();
-        });
-
 //        CommonConn conn = new CommonConn(getContext(),"main/test");
 //        conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
 
@@ -187,6 +227,23 @@ public class MainFragment extends Fragment {
         }
         //
 
+        //프로필 화면 자동 변환//
+        final Handler handler = new Handler();
+        final Runnable Update = new Runnable() {
+            @Override
+            public void run() {
+                binding.imgvRight.performClick();
+            }
+        };
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(Update);
+            }
+        }, 5000, 5000);
+        //프로필 화면 자동 변환//
 
         return binding.getRoot();
     }
