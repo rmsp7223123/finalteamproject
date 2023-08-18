@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".chat.FriendListFragment"
     android:orientation="vertical"
     android:layout_marginHorizontal="20dp">
 
     <LinearLayout
+        android:id="@+id/container_search"
         android:background="@drawable/searchview_border"
         android:layout_marginTop="40dp"
         android:layout_width="match_parent"
@@ -22,11 +24,26 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginTop="20dp"
+        android:layout_alignTop="@+id/container_search"
+        android:layout_marginTop="60dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/recv_friend_list"/>
 
 
 
-</LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/container_frame_profile"
+        android:layout_marginTop="400dp"
+        android:layout_width="match_parent"
+        android:layout_height="330dp">
+
+
+
+
+    </FrameLayout>
+
+
+
+</RelativeLayout>
