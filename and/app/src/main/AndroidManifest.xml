@@ -68,7 +68,10 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".chat.ChatPhotoGallaryActivity"
+            android:name=".chat.ChatPhotoGalleryDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".chat.ChatPhotoGalleryActivity"
             android:exported="false" />
         <activity
             android:name=".setting.ChangePWActivity"

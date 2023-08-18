@@ -2,13 +2,13 @@ package com.example.finalteamproject.chat;
 
 import java.io.Serializable;
 
-public class ChatPhotoGallaryDTO implements Serializable {
+public class ChatPhotoGalleryDTO implements Serializable {
 
     String img;
 
     String[] imgSubs;
 
-    public ChatPhotoGallaryDTO(String img) {
+    public ChatPhotoGalleryDTO(String img) {
         this.img = img;
     }
 

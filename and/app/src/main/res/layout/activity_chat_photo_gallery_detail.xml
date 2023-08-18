@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".chat.ChatPhotoGallaryActivity"
+    tools:context=".chat.ChatPhotoGalleryDetailActivity"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_marginTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <ImageView
             android:id="@+id/imgv_back"
             android:layout_marginStart="20dp"
@@ -21,22 +20,14 @@
             android:layout_height="30dp"
             android:src="@drawable/back"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="사진"
-            android:textColor="@color/black"
-            android:textSize="27sp" />
-
     </RelativeLayout>
 
-    <GridView
-        android:id="@+id/gridv_photo"
+    <ImageView
+
+        android:id="@+id/imgv_image"
+        android:src="@drawable/haerin2"
         android:layout_margin="20dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:numColumns="3"/>
-
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

@@ -1,5 +1,6 @@
 package com.example.finalteamproject.chat;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +15,11 @@ public class PhotoGridvAdapter extends BaseAdapter {
 
     LayoutInflater inflater;
 
-    ChatPhotoGallaryActivity context;
+    ChatPhotoGalleryActivity context;
 
     ArrayList<String> list;
 
-    public PhotoGridvAdapter(LayoutInflater inflater, ChatPhotoGallaryActivity context, ArrayList<String> list) {
+    public PhotoGridvAdapter(LayoutInflater inflater, ChatPhotoGalleryActivity context, ArrayList<String> list) {
         this.inflater = inflater;
         this.context = context;
         this.list = list;
@@ -43,6 +44,11 @@ public class PhotoGridvAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ItemGridvPhotoBinding binding = ItemGridvPhotoBinding.inflate(inflater, parent, false);
         Glide.with(context).load(list.get(position)).into(binding.imgvMain);
+        binding.imgvMain.setOnClickListener(v -> {
+            Intent intent = new Intent(context, ChatPhotoDetailActivity.class);
+            intent.putExtra("image", list.get(position));
+            context.startActivity(intent);
+        });
         return binding.getRoot();
     }
 }
