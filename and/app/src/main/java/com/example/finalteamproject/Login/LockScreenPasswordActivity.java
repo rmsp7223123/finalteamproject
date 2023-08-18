@@ -25,12 +25,19 @@ public class LockScreenPasswordActivity extends AppCompatActivity {
     ActivityLockScreenPasswordBinding binding;
 
     String pw = "";
+    int count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityLockScreenPasswordBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        //비밀번호 찾기
+        binding.tvFindPw.setOnClickListener(v -> {
+            Intent intent = new Intent(this, FindLockPWActivity.class);
+            startActivity(intent);
+        });
 
 
         binding.containerFrameTv0.setOnClickListener(v -> {
@@ -125,16 +132,25 @@ public class LockScreenPasswordActivity extends AppCompatActivity {
                 HashMap<String, String> paramMap = new Gson().fromJson(data, new TypeToken<HashMap<String, String>>() {
                 }.getType()); // 가져온 비밀번호
                 String storedPw = paramMap.get("option_lock_pw");
+                    if (pw.equals(storedPw)) {
+                        Intent intent = new Intent(this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        // 비밀번호 불일치하는 경우의 처리
+                        count++;
+                        if(count<5){
+                            Toast.makeText(this, "비밀번호가 틀렸습니다. ("+count+"회)", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(this, "비밀번호 입력 시도 5회 초과", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(this, FindLockPWActivity.class);
+                            startActivity(intent);
+                        }
+                    }
+                    pw ="";
 
-                if (pw.equals(storedPw)) {
-                    Intent intent = new Intent(this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    // 비밀번호 불일치하는 경우의 처리
-                    Toast.makeText(this, "비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT).show();
-                }
-                pw ="";
+
+
             });
 
             binding.imgvPw1.setImageResource(R.drawable.baseline_circle_24_white);

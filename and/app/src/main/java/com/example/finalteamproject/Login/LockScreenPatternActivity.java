@@ -25,12 +25,19 @@ import java.util.List;
 public class LockScreenPatternActivity extends AppCompatActivity {
 
     ActivityLockScreenPatternBinding binding;
+    int count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityLockScreenPatternBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        //비밀번호 찾기
+        binding.tvFindPw.setOnClickListener(v -> {
+            Intent intent = new Intent(this, FindLockPWActivity.class);
+            startActivity(intent);
+        });
 
         binding.patternLockView.addPatternLockListener(new PatternLockViewListener() {
             @Override
@@ -52,14 +59,22 @@ public class LockScreenPatternActivity extends AppCompatActivity {
                     HashMap<String, String> paramMap = new Gson().fromJson(data, new TypeToken<HashMap<String, String>>() {
                     }.getType());
                     String storedPattern = paramMap.get("option_lock_pattern_pw");
-                    if(pw.equals(storedPattern)) {
-                        Intent intent = new Intent(LockScreenPatternActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        binding.patternLockView.clearPattern();
-                        Toast.makeText(LockScreenPatternActivity.this, "패턴이 틀렸습니다.", Toast.LENGTH_SHORT).show();
-                    }
+                        if(pw.equals(storedPattern)) {
+                            Intent intent = new Intent(LockScreenPatternActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            binding.patternLockView.clearPattern();
+                            count++;
+                            if(count<5){
+                                Toast.makeText(LockScreenPatternActivity.this, "패턴이 틀렸습니다. ("+count+"회)", Toast.LENGTH_SHORT).show();
+                            }else {
+                                Toast.makeText(LockScreenPatternActivity.this, "패턴 시도 5회 초과", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(LockScreenPatternActivity.this, FindLockPWActivity.class);
+                                startActivity(intent);
+                            }
+                        }
+
                 });
             }
 
