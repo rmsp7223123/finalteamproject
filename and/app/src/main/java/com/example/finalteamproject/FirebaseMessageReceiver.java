@@ -45,6 +45,8 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
 
     DatabaseReference def = databaseReference.child("chat").child(CommonVar.logininfo.getMember_id());
+
+    public static String friend_id = "";
     @Override
     public void onNewToken(@NonNull String token)
     {
@@ -73,9 +75,14 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
 //                            remoteMessage.getNotification().getBody());
 
                 } else if (checkValue.equals("msgFriend")) {
-                    String title = remoteMessage.getNotification().getTitle();
-                    String message = remoteMessage.getNotification().getBody();
-                    showNotification(this, title, message);
+                    if(friend_id.equals(CommonVar.logininfo.getMember_id())) {
+
+                    } else {
+                        String title = remoteMessage.getNotification().getTitle();
+                        String message = remoteMessage.getNotification().getBody();
+                        showNotification(this, title, message);
+                    }
+
                 }
             }
         }
