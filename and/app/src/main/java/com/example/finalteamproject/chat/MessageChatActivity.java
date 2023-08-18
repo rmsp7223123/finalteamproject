@@ -85,7 +85,7 @@ public class MessageChatActivity extends AppCompatActivity {
 
     MessageChatAdapter adapter;
 
-    ArrayList<Uri> uriList = new ArrayList<>();
+    ArrayList<String> uriList = new ArrayList<>();
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
     String currentTime = dateFormat.format(new Date());
@@ -132,11 +132,14 @@ public class MessageChatActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 FriendVO friendVO = dataSnapshot.getValue(FriendVO.class);
-                //   friendVO.setMember_profileimg(friendVO.getMember_profileimg());
                 adapter.addData(friendVO);
                 int position = adapter.getItemCount() - 1;
                 if (position >= 0) {
                     binding.recvMessageChat.scrollToPosition(position);
+                }
+                String imageText = friendVO.getContent();
+                if (imageText.contains("https://firebasestorage.googleapis.com/")) {
+                    uriList.add(imageText);
                 }
             }
 
@@ -196,6 +199,11 @@ public class MessageChatActivity extends AppCompatActivity {
         });
         binding.cvVoice.setOnClickListener(v -> {
             displaySpeechRecognizer();
+        });
+        binding.imgvGallary.setOnClickListener(v -> {
+            Intent intent = new Intent(MessageChatActivity.this, ChatPhotoGallaryActivity.class);
+            intent.putExtra("img", uriList);
+            startActivity(intent);
         });
     }
 
