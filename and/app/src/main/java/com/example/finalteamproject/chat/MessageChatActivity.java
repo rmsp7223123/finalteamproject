@@ -4,17 +4,15 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.ClipData;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -23,21 +21,16 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.finalteamproject.FirebaseMessageReceiver;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
-import com.example.finalteamproject.common.RetrofitClient;
-import com.example.finalteamproject.common.RetrofitInterface;
 import com.example.finalteamproject.databinding.ActivityMessageChatBinding;
 import com.example.finalteamproject.main.FriendVO;
-import com.google.android.gms.common.internal.service.Common;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -47,23 +40,11 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.File;
-import java.io.InputStream;
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
-
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MessageChatActivity extends AppCompatActivity {
     ActivityMessageChatBinding binding;
@@ -83,7 +64,7 @@ public class MessageChatActivity extends AppCompatActivity {
 
     MessageChatAdapter adapter;
 
-    ArrayList<Uri> uriList = new ArrayList<>();
+    ArrayList<String> uriList = new ArrayList<>();
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
     String currentTime = dateFormat.format(new Date());
@@ -130,11 +111,14 @@ public class MessageChatActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 FriendVO friendVO = dataSnapshot.getValue(FriendVO.class);
-                //   friendVO.setMember_profileimg(friendVO.getMember_profileimg());
                 adapter.addData(friendVO);
                 int position = adapter.getItemCount() - 1;
                 if (position >= 0) {
                     binding.recvMessageChat.scrollToPosition(position);
+                }
+                String imageText = friendVO.getContent();
+                if (imageText.contains("https://firebasestorage.googleapis.com/")) {
+                    uriList.add(imageText);
                 }
             }
 
@@ -159,8 +143,14 @@ public class MessageChatActivity extends AppCompatActivity {
 
             }
         });
+
         binding.containerLinearSendFile.setVisibility(View.GONE);
         binding.imgvSendFile.setOnClickListener(view -> {
+            // 키보드가 올라온 상태에서 + 버튼을 눌렀을때 키보드가 내려가게
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(binding.imgvSendFile.getWindowToken(), 0);
+
+
             if (sendCnt % 2 == 1) {
                 binding.containerLinearSendFile.setVisibility(View.VISIBLE);
             } else {
@@ -188,6 +178,11 @@ public class MessageChatActivity extends AppCompatActivity {
         });
         binding.cvVoice.setOnClickListener(v -> {
             displaySpeechRecognizer();
+        });
+        binding.imgvGallary.setOnClickListener(v -> {
+            Intent intent = new Intent(MessageChatActivity.this, ChatPhotoGalleryActivity.class);
+            intent.putExtra("img", uriList);
+            startActivity(intent);
         });
     }
 

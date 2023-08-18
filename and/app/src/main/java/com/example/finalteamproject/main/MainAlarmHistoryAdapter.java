@@ -56,7 +56,7 @@ public class MainAlarmHistoryAdapter extends RecyclerView.Adapter<MainAlarmHisto
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     builder.setTitle("친구 추가 요청");
                     builder.setMessage(list2.get(holder.getAdapterPosition()).getMember_id() + "님의 친구 추가 요청을 수락하시겠습니까?");
-                    builder.setPositiveButton("취소", new DialogInterface.OnClickListener() {
+                    builder.setPositiveButton("거절", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             deleteAlarm(idx);
