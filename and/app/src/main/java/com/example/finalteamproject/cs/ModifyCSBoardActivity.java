@@ -15,6 +15,7 @@ public class ModifyCSBoardActivity extends AppCompatActivity {
 
     ActivityModifyCsboardBinding binding;
     CSBoardVO vo;
+    boolean secret;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,23 @@ public class ModifyCSBoardActivity extends AppCompatActivity {
 
         binding.edtTitle.setText(vo.csboard_title);
         binding.edtContent.setText(vo.csboard_content);
+        if(vo.csboard_secret.equals("Y")){
+            binding.imgvSecret.setImageResource(R.drawable.secret_checked);
+            secret = true;
+        }
+
+        binding.rlSecret.setOnClickListener(v -> {
+            if(secret){
+                secret = false;
+                binding.imgvSecret.setImageResource(R.drawable.secret_unchecked);
+                Toast.makeText(this, "비밀글 선택 취소", Toast.LENGTH_SHORT).show();
+            }else {
+                secret = true;
+                binding.imgvSecret.setImageResource(R.drawable.secret_checked);
+                Toast.makeText(this, "비밀글 선택 완료", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         InputMethodManager manager = (InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE);
 
@@ -46,6 +64,7 @@ public class ModifyCSBoardActivity extends AppCompatActivity {
                 conn.addParamMap("csboard_id", vo.csboard_id);
                 conn.addParamMap("csboard_title", binding.edtTitle.getText().toString());
                 conn.addParamMap("csboard_content", binding.edtContent.getText().toString());
+                conn.addParamMap("csboard_secret", secret ? "Y" : "N");
                 conn.onExcute((isResult, data) -> {
                     if(data.equals("성공")){
                         Toast.makeText(this, "문의글 수정 성공", Toast.LENGTH_SHORT).show();

@@ -57,6 +57,9 @@ public class CSBoardContextActivity extends AppCompatActivity {
         conn.onExcute((isResult, data) -> {
             vo = new Gson().fromJson(data, CSBoardVO.class);
             if(vo!=null){
+                if(vo.csboard_secret.equals("Y")){
+                    binding.imgvSecret.setVisibility(View.VISIBLE);
+                }
                 binding.tvTitle.setText(vo.csboard_title);
                 binding.tvDate.setText(vo.csboard_writedate);
                 CommonConn conn1 = new CommonConn(this, "board/nickname");
