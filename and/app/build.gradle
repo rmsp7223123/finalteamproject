@@ -37,6 +37,10 @@ android {
         enabled = true
     }
 
+    dataBinding {
+        enabled = true
+    }
+
     packagingOptions{
         exclude 'META-INF/DEPENDENCIES'
     }
@@ -65,7 +69,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:21.0.1' //현재 위치 표시
     implementation 'com.naver.maps:map-sdk:3.17.0'
 
-    //새로고침
+    //스와이프로 새로고침
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
     // https://mvnrepository.com/artifact/com.github.bumptech.glide/glide

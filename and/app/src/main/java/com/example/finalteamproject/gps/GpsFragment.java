@@ -6,6 +6,7 @@ import android.location.Location;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -50,7 +51,8 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentGpsBinding.inflate(inflater, container, false);
+//        binding = FragmentGpsBinding.inflate(inflater, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_gps, container, false);
 
         //스와이프로 새로고침
 //        binding.layoutRefresh.setOnRefreshListener(() -> {

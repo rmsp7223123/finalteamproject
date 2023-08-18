@@ -66,6 +66,9 @@ public class GpsAdapter extends RecyclerView.Adapter<GpsAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
+        if(list == null) {
+            return 0;
+        }
         return list.size();
     }
 
