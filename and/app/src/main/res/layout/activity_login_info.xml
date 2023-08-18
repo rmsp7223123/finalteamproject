@@ -203,6 +203,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <EditText
+                android:maxLength="15"
             android:id="@+id/edt_id"
             android:textColor="#AEAEAE"
             android:layout_width="match_parent"
@@ -236,6 +237,7 @@
             android:layout_height="wrap_content"
             app:passwordToggleEnabled="true">
         <EditText
+            android:maxLength="20"
             android:id="@+id/edt_pw"
             android:inputType="textPassword"
             android:textColor="#AEAEAE"

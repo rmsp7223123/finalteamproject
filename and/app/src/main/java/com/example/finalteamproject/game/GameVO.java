@@ -1,4 +1,4 @@
-package cloud.game;
+package com.example.finalteamproject.game;
 
 public class GameVO {
 	private int game_rank, game_score;

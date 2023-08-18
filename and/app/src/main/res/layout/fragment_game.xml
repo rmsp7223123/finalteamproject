@@ -15,7 +15,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1.5"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <LinearLayout
@@ -23,24 +23,36 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
-                <TextView
-                    android:layout_marginTop="20dp"
-                    android:layout_marginLeft="50dp"
+
+                <ImageView
+                    android:layout_marginTop="40dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="&lt;기억력 게임&gt;"
-                    android:textSize="20sp" />
+                    android:src="@drawable/memory_game"/>
 
                 <TextView
-                    android:layout_marginLeft="50dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="모라모라 설명이 있음"
+                    android:text="1. 귀여운 동물이 등장합니다."
+                    android:textSize="20sp" />
+                <TextView
+                    android:layout_marginLeft="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2. 등장 순서를 잘 기억해주세요."
+                    android:textSize="20sp" />
+                <TextView
+                    android:layout_marginLeft="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3. 새로 등장한 동물을 눌러주세요."
                     android:textSize="20sp" />
             </LinearLayout>
 
             <TextView
-                android:layout_marginBottom="20dp"
                 android:id="@+id/btn_gameStart"
                 android:layout_width="150dp"
                 android:layout_height="50dp"
@@ -71,7 +83,7 @@
             </LinearLayout>
 
             <TextView
-                android:layout_margin="20dp"
+                android:layout_margin="40dp"
                 android:id="@+id/btn_gameRank"
                 android:layout_width="150dp"
                 android:layout_height="50dp"

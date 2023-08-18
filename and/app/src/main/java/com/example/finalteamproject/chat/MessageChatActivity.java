@@ -116,7 +116,12 @@ public class MessageChatActivity extends AppCompatActivity {
                 FriendVO vo = new FriendVO(friendVO.getMember_id(), friendVO.getFriend_id(), friendVO.getMember_nickname(), friendVO.getMember_profileimg(), currentTime, binding.edtMessage.getText().toString(), true);
                 sendMsg(friendVO.getMember_id(), friendVO.getFriend_id() ,vo, true);
                 sendMsg(friendVO.getFriend_id(), friendVO.getMember_id() ,vo, false);
-                sendNotification(vo);
+                if(true) {
+                    sendNotification(vo);
+                } else {
+
+                }
+
                 binding.edtMessage.setText("");
             }
         });
@@ -234,20 +239,10 @@ public class MessageChatActivity extends AppCompatActivity {
             riversRef.getDownloadUrl().addOnSuccessListener(uri -> {
                 String imageUrl = uri.toString();
                 String currentTime = dateFormat.format(new Date());
-
-                // 채팅 메시지에 이미지 URL 추가
-//                messageId = databaseReference.child("chat").child(itemName).push().getKey();
                 FriendVO vo = new FriendVO(friendVO.getMember_id(), friendVO.getFriend_id(), friendVO.getMember_nickname(), friendVO.getMember_profileimg(), currentTime, imageUrl, true);
                 sendMsg(friendVO.getMember_id(), friendVO.getFriend_id() ,vo, true);
                 sendMsg(friendVO.getFriend_id(), friendVO.getMember_id() ,vo, false);
                 sendNotification(vo);
-//                FriendVO temp = new FriendVO(friendVO.getMember_id(),friendVO.getFriend_id(),friendVO.getMember_nickname(),friendVO.getMember_profileimg(),friendVO.getTime(),imageUrl,true);
-//                MessageDTO temp = new MessageDTO(messageDTO.getImgRes(), messageDTO.getNickname(), imageUrl, currentTime,"" ,true);
-//                databaseReference.child("chat").child(friendVO.getFriend_id()).child(messageId).setValue(temp);
-
-                // 어댑터 갱신 등의 필요한 작업 수행
-//                adapter.addData(temp);
-//                binding.recvMessageChat.scrollToPosition(adapter.getItemCount() - 1);
                 adapter.notifyDataSetChanged();
             });
         });
@@ -308,15 +303,11 @@ public class MessageChatActivity extends AppCompatActivity {
                             final int tempIdx = i;
                             upload.add(riversRef.putFile(imageUri));
                             upload.get(tempIdx).addOnCompleteListener(command -> {
-
                                 upload.get(tempIdx).getResult().getStorage().getDownloadUrl().addOnCompleteListener(command1 -> {
                                     FriendVO vo = new FriendVO(friendVO.getMember_id(), friendVO.getFriend_id(), friendVO.getMember_nickname(), friendVO.getMember_profileimg(), currentTime, command1.getResult() + "", true);
                                     sendMsg(friendVO.getMember_id(), friendVO.getFriend_id() ,vo, true);
                                     sendMsg(friendVO.getFriend_id(), friendVO.getMember_id() ,vo, false);
                                     sendNotification(vo);
-                                    //adapter = new MessageChatAdapter(getlist(), this, isChatCheck , friendVO.getMember_profileimg());
-                                    //binding.recvMessageChat.setAdapter(adapter);
-                                    // binding.recvMessageChat.setLayoutManager(new LinearLayoutManager(this));
                                 });
 
                             });
@@ -331,9 +322,6 @@ public class MessageChatActivity extends AppCompatActivity {
     }
 
     public void showCamera() {
-        //ContentResolver(). 앱 ---> 컨텐트리졸버(작업자) ---> 미디어 저장소
-//        ContentValues values = new ContentValues();
-//        values.describeContents()
         camera_uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, new ContentValues());
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, camera_uri);
