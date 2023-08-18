@@ -65,11 +65,11 @@ public class LoginController {
 		params.put("app_version", "JAVA SDK v1.2");
 		
 		try {
-			JSONObject obj = sms.send(params);
-			System.out.println(obj.toString());
-			String result = obj.toString().contains("\"success_count\":1")==true ? resultNum : "실패";
-			return result;
-//			return resultNum;
+//			JSONObject obj = sms.send(params);
+//			System.out.println(obj.toString());
+//			String result = obj.toString().contains("\"success_count\":1")==true ? resultNum : "실패";
+//			return result;
+			return resultNum;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "실패";
@@ -88,11 +88,11 @@ public class LoginController {
 		params.put("app_version", "JAVA SDK v1.2");
 		
 		try {
-			JSONObject obj = sms.send(params);
-			System.out.println(obj.toString());
-			String result = obj.toString().contains("\"success_count\":1")==true ? "성공" : "실패";
-			return result;
-//			return "성공";
+//			JSONObject obj = sms.send(params);
+//			System.out.println(obj.toString());
+//			String result = obj.toString().contains("\"success_count\":1")==true ? "성공" : "실패";
+//			return result;
+			return "성공";
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "실패";
@@ -110,11 +110,11 @@ public class LoginController {
 		params.put("app_version", "JAVA SDK v1.2");
 		
 		try {
-			JSONObject obj = sms.send(params);
-			System.out.println(obj.toString());
-			String result = obj.toString().contains("\"success_count\":1")==true ? "성공" : "실패";
-			return result;
-//			return "성공";
+//			JSONObject obj = sms.send(params);
+//			System.out.println(obj.toString());
+//			String result = obj.toString().contains("\"success_count\":1")==true ? "성공" : "실패";
+//			return result;
+			return "성공";
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "실패";
