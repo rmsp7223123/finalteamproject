@@ -1,11 +1,13 @@
 package com.example.finalteamproject.game;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.databinding.ItemGameRankBinding;
 
 import java.util.ArrayList;
@@ -14,9 +16,12 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.ViewHolder> {
 
     ItemGameRankBinding binding;
     ArrayList<GameVO> list;
+    Context context;
 
-    public RankAdapter(ArrayList<GameVO> list) {
+
+    public RankAdapter(ArrayList<GameVO> list, Context context) {
         this.list = list;
+        this.context = context;
     }
 
     @NonNull
@@ -31,7 +36,11 @@ public class RankAdapter extends RecyclerView.Adapter<RankAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder h, int i) {
         int rank = i+1;
         h.binding.gameRank.setText(rank+"");
-        h.binding.gameId.setText(list.get(i).getMember_id());
+        CommonConn conn = new CommonConn(context, "board/nickname");
+        conn.addParamMap("id", list.get(i).getMember_id());
+        conn.onExcute((isResult, data) -> {
+        h.binding.gameId.setText(data);
+        });
         h.binding.gameScore.setText(list.get(i).getGame_score()+"");
 
 

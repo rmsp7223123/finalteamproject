@@ -150,6 +150,7 @@ public class BoardFragment extends Fragment {
 
             }
         });
+        //
 
         binding.imgvSearch.setOnClickListener(v -> {
             CommonConn conn = new CommonConn(getContext(), "board/list");

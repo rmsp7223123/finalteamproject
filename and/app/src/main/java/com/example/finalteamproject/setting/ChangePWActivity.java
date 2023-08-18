@@ -111,6 +111,10 @@ public class ChangePWActivity extends AppCompatActivity {
                 Toast.makeText(this, "현재 비밀번호와 일치하지 않습니다", Toast.LENGTH_SHORT).show();
                 binding.edtCurPw.requestFocus();
                 manager.showSoftInput(binding.edtCurPw, InputMethodManager.SHOW_IMPLICIT);
+            }else if(binding.edtPw.getText().toString().equals(CommonVar.logininfo.getMember_pw())){
+                Toast.makeText(this, "현재 비밀번호와 일치합니다", Toast.LENGTH_SHORT).show();
+                binding.edtPw.requestFocus();
+                manager.showSoftInput(binding.edtPw, InputMethodManager.SHOW_IMPLICIT);
             }else {
                 CommonConn conn = new CommonConn(this, "login/settingPw");
                 conn.addParamMap("id", CommonVar.logininfo.getMember_id());

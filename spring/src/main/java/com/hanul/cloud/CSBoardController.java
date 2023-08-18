@@ -30,10 +30,11 @@ public class CSBoardController {
 	
 	//게시물 검색
 	@RequestMapping(value="/list", produces = "text/html;charset=utf-8")
-	public String list(String context, String align) {		
+	public String list(String context, String align, String comment) {		
 		HashMap<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("context", context);
 		paramMap.put("align", align);
+		paramMap.put("comment", comment);
 		List<CSBoardVO> list = sql.selectList("csboard.list", paramMap);
 		return new Gson().toJson(list);
 	}

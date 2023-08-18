@@ -89,9 +89,8 @@ public class GpsDetailActivity extends AppCompatActivity {
             Intent intent = new Intent(this, NewCSBoardActivity.class);
             startActivity(intent);
         });
+
     }
-
-
 
 
 

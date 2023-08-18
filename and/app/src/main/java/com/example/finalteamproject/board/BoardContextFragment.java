@@ -249,6 +249,7 @@ public class BoardContextFragment extends Fragment {
                                     BoardCommentAdapter adapter = new BoardCommentAdapter(list, getContext(), activity, BoardContextFragment.this, vo);
                                     binding.recvComment.setAdapter(adapter);
                                     binding.recvComment.setLayoutManager(new LinearLayoutManager(BoardContextFragment.this.getContext()));
+                                    binding.tvComment.setText("댓글 ("+list.size()+")");
                                 }else {
                                     binding.recvComment.setVisibility(View.GONE);
                                     binding.tvNone.setVisibility(View.VISIBLE);
