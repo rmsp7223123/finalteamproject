@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <data>
-        <variable
-            name="gps"
-            type="com.example.finalteamproject.gps.GpsFragment" />
-    </data>
-<RelativeLayout
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -125,11 +119,11 @@
 
         </ScrollView>
     </LinearLayout>
-
+    <!-- 검색결과 -->
     <LinearLayout
         android:id="@+id/ln_result"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="350dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/box_search_result"
         android:orientation="vertical">
@@ -154,13 +148,60 @@
                 android:src="@drawable/baseline_close_24" />
         </RelativeLayout>
 
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recv_search_result"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="2dp"
+                android:background="@color/white" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <!-- 자주가는 경로당 리스트 -->
+    <LinearLayout
+        android:id="@+id/ln_likelist"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/box_search_result"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="자주가는 경로당"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/btn_close2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/baseline_close_24" />
+        </RelativeLayout>
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recv_search_result"
+            android:id="@+id/recv_likelist"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="2dp"
             android:background="@color/white" />
 
     </LinearLayout>
+
 </RelativeLayout>
-</layout>
