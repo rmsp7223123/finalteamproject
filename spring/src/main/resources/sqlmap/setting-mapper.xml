@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="setting">
 	<select id="checkAlarm" resultType="String">
-		select option_alarm from option_table where member_id = #{member_id}
+		select option_alarm from
+		option_table where member_id = #{member_id}
 	</select>
 
 	<select id="checkNickname" resultType="cloud.member.MemberVO">
@@ -75,5 +76,24 @@
 	<update id="deletePattern">
 		update option_table set option_lock_pattern_pw = null
 		where member_id = #{member_id}
+	</update>
+	<update id="updatePw">
+		UPDATE option_table
+		SET option_lock_pw = null,
+		option_lock_pattern_pw = null
+		WHERE member_id = #{member_id}
+	</update>
+
+	<select id="viewOption" resultType="cloud.setting.OptionVO">
+		select * from option_table
+		where member_id = #{member_id}
+	</select>
+	<update id="updateAlarm">
+		UPDATE option_table
+		SET option_alarm = CASE
+		WHEN option_alarm = 'N' THEN 'Y'
+		WHEN option_alarm = 'Y' THEN 'N'
+		END
+		WHERE member_id = #{member_id}
 	</update>
 </mapper>

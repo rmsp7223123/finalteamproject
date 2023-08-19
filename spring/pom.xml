@@ -237,6 +237,13 @@
 			<version>1.5</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.apache.tiles/tiles-jsp -->
+		<dependency>
+		    <groupId>org.apache.tiles</groupId>
+		    <artifactId>tiles-jsp</artifactId>
+		    <version>3.0.8</version>
+		</dependency>
+
 	</dependencies>
 	<build>
 		<plugins>

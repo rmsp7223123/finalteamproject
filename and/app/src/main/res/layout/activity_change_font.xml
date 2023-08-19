@@ -58,30 +58,5 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
-
-        <TextView
-            android:layout_weight="2"
-            android:textColor="@color/black"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:text="글씨 색깔"
-            android:textSize="35dp"/>
-
-        <TextView
-            android:id="@+id/tv_font_color"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:text="검은색"
-            android:textSize="35dp"
-            android:textColor="@color/black"
-            android:gravity="right|center"/>
-
-    </LinearLayout>
 
 </LinearLayout>

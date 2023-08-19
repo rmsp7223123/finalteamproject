@@ -7,14 +7,10 @@
     tools:context=".chat.MessageChatActivity"
     android:orientation="vertical"
     >
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
     <RelativeLayout
         android:background="#FFC81E"
-        android:layout_marginTop="30dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="60dp">
 
         <ImageView
             android:id="@+id/imgv_back"
@@ -58,7 +54,6 @@
             android:layout_marginRight="20dp"/>
 
     </RelativeLayout>
-    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_margin="10dp"

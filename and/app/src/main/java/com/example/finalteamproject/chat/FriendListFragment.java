@@ -53,6 +53,7 @@ public class FriendListFragment extends Fragment {
             }
         });
         friendList();
+//        binding.containerFrameProfile.setVisibility(View.GONE);
         return binding.getRoot();
     }
 

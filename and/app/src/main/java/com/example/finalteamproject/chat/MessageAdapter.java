@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.databinding.ItemMessageBinding;
 import com.example.finalteamproject.main.FriendVO;
 
@@ -36,16 +37,24 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.binding.tvNickname.setText(list.get(position).getMember_nickname());
-        holder.binding.tvContent.setText(list.get(position).getContent());
+        String nickname = list.get(position).getMember_nickname();
+        String content = list.get(position).getContent();
+        if (nickname.length() > 7) {
+            holder.binding.tvNickname.setText(nickname.substring(0, 7) + "...");
+        } else {
+            holder.binding.tvNickname.setText(nickname);
+        }
+        if(content.length() > 10) {
+            holder.binding.tvContent.setText(content.substring(0, 10) + "...");
+        } else {
+            holder.binding.tvContent.setText(list.get(position).getContent());
+        }
         holder.binding.tvTime.setText(list.get(position).getTime());
         Glide.with(context).load(list.get(position).getMember_profileimg()).apply(new RequestOptions().circleCrop()).into(holder.binding.imgvProfileImg);
         holder.binding.containerLinearMessageChat.setOnClickListener(v -> {
             Intent intent = new Intent(context, MessageChatActivity.class);
-            //   FriendListDTO dto = (FriendListDTO) getIntent().getSerializableExtra("dto");
-//            MessageDTO dto = new MessageDTO(list.get(position).getImgRes(),list.get(position).getNickname(),list.get(position).getContent(),
-//            list.get(position).getTime(),"",list.get(position).isCheck());
-//            intent.putExtra("dto",dto);
+            list.get(position).setMember_id(CommonVar.logininfo.getMember_id());
+            intent.putExtra("vo",list.get(position));
             context.startActivity(intent);
         });
     }

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".chat.FriendDetailFragment">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_detail_profile"
+        android:layout_centerHorizontal="true"
+        android:layout_alignTop="@+id/container_frame_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardElevation="0dp"
+        app:cardCornerRadius="50dp"
+        android:layout_gravity="top|center_horizontal"
+        android:translationY="-50dp">
+
+        <ImageView
+            android:id="@+id/imgv_profile_img"
+            android:scaleType="centerCrop"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/haerin2"
+            android:layout_gravity="center"/>
+
+    </androidx.cardview.widget.CardView>
+
+
+    <FrameLayout
+        android:id="@+id/container_frame_profile"
+        android:background="@drawable/border_black"
+        android:layout_marginTop="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="280dp">
+
+        <LinearLayout
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_detail_nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="닉네임"
+                android:textColor="@color/black"
+                android:textSize="26dp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardElevation="0dp"
+            app:cardCornerRadius="30dp">
+
+            <FrameLayout
+                android:id="@+id/container_frame_message"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="#3B7CFF">
+
+                <ImageView
+                    android:id="@+id/imgv_message"
+                    android:layout_gravity="center"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/baseline_mail_outline_24_white"/>
+
+            </FrameLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <ImageView
+            android:id="@+id/imgv_detail_close"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/baseline_close_24"
+            android:layout_gravity="top|right"
+            android:layout_margin="3dp"/>
+
+
+
+    </FrameLayout>
+
+</RelativeLayout>

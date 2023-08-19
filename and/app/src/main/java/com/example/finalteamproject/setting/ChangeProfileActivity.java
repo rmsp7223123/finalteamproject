@@ -9,6 +9,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -16,6 +17,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -48,6 +50,7 @@ public class ChangeProfileActivity extends AppCompatActivity {
     private final int REQ_GALLERY = 1000;
 
     ActivityResultLauncher<Intent> launcher;
+    boolean dismiss;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,34 +67,49 @@ public class ChangeProfileActivity extends AppCompatActivity {
             showDialog();
         });
         binding.btnChangeNickname.setOnClickListener(v -> {
+
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("닉네임 변경");
             final View customLayout = getLayoutInflater().inflate(R.layout.dialog_change_nickname, null);
+            EditText edt_nickname = customLayout.findViewById(R.id.edt_nickname);
+            edt_nickname.setText(CommonVar.logininfo.getMember_nickname());
             builder.setView(customLayout);
             builder.setPositiveButton("취소", (dialog, which) -> {
             });
             builder.setNegativeButton("확인", (dialog, which) -> {
-                EditText edt_nickname = customLayout.findViewById(R.id.edt_nickname);
-                // 중복확인 검사 추가하기
-                CommonConn conn = new CommonConn(this,"setting/checkNickname");
-                conn.addParamMap("member_nickname", edt_nickname.getText().toString());
-                conn.onExcute((isResult, data) -> {
-                    if(data.equals("null") && edt_nickname.length() > 0) {
-                        CommonConn conn2 = new CommonConn(this, "setting/changeNickname");
-                        conn2.addParamMap("member_nickname", edt_nickname.getText().toString());
-                        conn2.addParamMap("member_id", CommonVar.logininfo.getMember_id());
-                        conn2.onExcute((isResult1, data1) -> {
-                            binding.tvNickname.setText(edt_nickname.getText().toString());
-                            Toast.makeText(this, edt_nickname.getText().toString() + "으로 변경되었습니다.", Toast.LENGTH_SHORT).show();
-                            CommonVar.logininfo.setMember_nickname(edt_nickname.getText().toString());
-                        });
-                    } else {
-                        Toast.makeText(this, "이미 존재하는 닉네임이거나 길이가 너무 짧습니다.", Toast.LENGTH_SHORT).show();
-                    }
-                });
+
+                
             });
             AlertDialog dialog = builder.create();
             dialog.show();
+
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(edt_nickname.getText().toString().equals(CommonVar.logininfo.getMember_nickname())){
+                        Toast.makeText(ChangeProfileActivity.this, "현재 닉네임과 동일합니다", Toast.LENGTH_SHORT).show();
+                    }else {
+                        CommonConn conn = new CommonConn(ChangeProfileActivity.this,"setting/checkNickname");
+                        conn.addParamMap("member_nickname", edt_nickname.getText().toString());
+                        conn.onExcute((isResult, data) -> {
+                            if(data.equals("null") && edt_nickname.length() > 0) {
+                                CommonConn conn2 = new CommonConn(ChangeProfileActivity.this, "setting/changeNickname");
+                                conn2.addParamMap("member_nickname", edt_nickname.getText().toString());
+                                conn2.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                                conn2.onExcute((isResult1, data1) -> {
+                                    binding.tvNickname.setText(edt_nickname.getText().toString());
+                                    Toast.makeText(ChangeProfileActivity.this, edt_nickname.getText().toString() + "으로 변경되었습니다.", Toast.LENGTH_SHORT).show();
+                                    CommonVar.logininfo.setMember_nickname(edt_nickname.getText().toString());
+                                    dialog.dismiss();
+                                });
+                            } else {
+                                Toast.makeText(ChangeProfileActivity.this, "이미 존재하는 닉네임이거나 길이가 너무 짧습니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }
+            });
+
         });
 
         binding.btnChangePw.setOnClickListener(v -> {

@@ -20,6 +20,17 @@
 
             android:src="@drawable/baseline_lock_24_white" />
 
+        <TextView
+            android:id="@+id/tv_find_pw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="패턴을 잊어 버리셨나요?"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="30dp"/>
+
 
 
     </FrameLayout>

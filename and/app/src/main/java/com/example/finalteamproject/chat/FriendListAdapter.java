@@ -8,6 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -43,14 +47,17 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.binding.tvNickname.setText(list.get(position).getMember_nickname());
         Glide.with(context).load(list.get(position).getMember_profileimg()).apply(new RequestOptions().circleCrop()).into(holder.binding.imgvProfileImg);
-        holder.binding.containerFrameMessage.setOnClickListener(v -> {
-            Intent intent = new Intent(context, MessageChatActivity.class);
-            list.get(position).setMember_id(CommonVar.logininfo.getMember_id());
-            intent.putExtra("vo",list.get(position));
-            intent.putExtra("id", list.get(position).getFriend_id());
-            intent.putExtra("img",list.get(position).getMember_profileimg());
-            intent.putExtra("nickname",list.get(position).getMember_nickname());
-            context.startActivity(intent);
+        holder.binding.containerLinearProfile.setOnClickListener(v -> {
+            FriendDetailFragment friendDetailFragment = new FriendDetailFragment();
+
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("friend_detail", list.get(position));
+            friendDetailFragment.setArguments(bundle);
+            FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.container_frame_profile, friendDetailFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
         });
 //        conn.addParamMap("member_id", );
 //        holder.binding.imgvProfileImg.setImageResource(list.get(position).getImgRes());

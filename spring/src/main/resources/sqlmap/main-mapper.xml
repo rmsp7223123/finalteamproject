@@ -30,6 +30,7 @@
 		MEMBER_ID ) F
 		INNER JOIN MEMBER M ON F.MEMBER_ID = M.MEMBER_ID
 		WHERE M.MEMBER_ID NOT IN (SELECT FRIEND_ID FROM FRIEND_LIST WHERE MEMBER_ID = #{MEBMER_ID})
+		AND M.MEMBER_ADMIN != 1
 	</select>
 
 	<select id="favor" resultType="cloud.member.FavorVO">
@@ -76,6 +77,14 @@
 		JOIN member m
 		ON fl.friend_id = m.MEMBER_ID
 		WHERE fl.member_id = #{member_id}
+	</select>
+	
+	<update id="updateToken">
+		update member set member_phone_id = #{member_phone_id} where member_id = #{member_id} 
+	</update>
+	
+	<select id="viewAlarmCnt" resultType="Integer">
+		select count(alarm_content) as content_cnt from alarm where receive_id = #{receive_id}
 	</select>
 
 </mapper>

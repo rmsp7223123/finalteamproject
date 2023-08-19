@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.finalteamproject.FirebaseMessageReceiver;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
@@ -83,7 +84,6 @@ public class MessageChatActivity extends AppCompatActivity {
         binding.imgvBack.setOnClickListener(v -> {
             finish();
         });
-
         friendVO = (FriendVO) getIntent().getSerializableExtra("vo");
 
         adapter = new MessageChatAdapter(getlist(), this, isChatCheck, friendVO.getMember_profileimg());
@@ -97,15 +97,12 @@ public class MessageChatActivity extends AppCompatActivity {
                 FriendVO vo = new FriendVO(friendVO.getMember_id(), friendVO.getFriend_id(), friendVO.getMember_nickname(), friendVO.getMember_profileimg(), currentTime, binding.edtMessage.getText().toString(), true);
                 sendMsg(friendVO.getMember_id(), friendVO.getFriend_id() ,vo, true);
                 sendMsg(friendVO.getFriend_id(), friendVO.getMember_id() ,vo, false);
-                if(true) {
                     sendNotification(vo);
-                } else {
-
-                }
 
                 binding.edtMessage.setText("");
             }
         });
+        FirebaseMessageReceiver.friend_id = friendVO.getMember_id();
 
         databaseReference.child("chat").child(friendVO.getMember_id()).child(friendVO.getFriend_id()).addChildEventListener(new ChildEventListener() {
             @Override
@@ -184,6 +181,12 @@ public class MessageChatActivity extends AppCompatActivity {
             intent.putExtra("img", uriList);
             startActivity(intent);
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        FirebaseMessageReceiver.friend_id = "";
+        super.onDestroy();
     }
 
     public ArrayList<FriendVO> getlist() {
@@ -344,6 +347,7 @@ public class MessageChatActivity extends AppCompatActivity {
                 }
             });
     }
+
 
 
 }
