@@ -53,6 +53,8 @@ public class MainFragment extends Fragment {
     SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
     String currentTime = dateFormat.format(new Date());
 
+    Viewpager_main_adapter adapter;
+
 
 
     @Override
@@ -76,7 +78,7 @@ public class MainFragment extends Fragment {
                     virtualList.add(member);
                 }
 
-                Viewpager_main_adapter adapter = new Viewpager_main_adapter(getContext(), virtualList);
+                adapter = new Viewpager_main_adapter(getContext(), virtualList);
                 binding.imgViewpager.setAdapter(adapter);
 
 

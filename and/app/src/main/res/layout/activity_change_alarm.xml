@@ -44,7 +44,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:text="고독사 알람"
-            android:textSize="35dp"/>
+            android:textSize="30dp"/>
 
         <TextView
             android:id="@+id/tv_godok_alarm_change"
@@ -52,7 +52,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:text="꺼짐"
-            android:textSize="35dp"
+            android:textSize="30dp"
             android:textColor="@color/black"
             android:gravity="right|center"/>
 
@@ -69,8 +69,8 @@
             android:textColor="@color/black"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:text="전화, 문자 알람"
-            android:textSize="35dp"/>
+            android:text="기본 알람"
+            android:textSize="30dp"/>
 
         <TextView
             android:id="@+id/tv_call_message_alarm_change"
@@ -78,7 +78,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:text="꺼짐"
-            android:textSize="35dp"
+            android:textSize="30dp"
             android:textColor="@color/black"
             android:gravity="right|center"/>
 
