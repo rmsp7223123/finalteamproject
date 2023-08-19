@@ -269,4 +269,5 @@ UPDATE option_table
 		WHEN option_alarm = 'Y' THEN 'N'
 		END
 		WHERE member_id = '00000a';        
-        select * from option_table;
+        select * from option_table where member_id = 'aaatest1';
+select * from alarm;
