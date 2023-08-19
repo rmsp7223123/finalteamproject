@@ -48,16 +48,23 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
 
     public static String friend_id = "";
 
-    public static String alarm_check = "";
+    private static boolean isEnabled = true;
+
+    public static boolean isIsEnabled() {
+        return isEnabled;
+    }
+
+    public static void setIsEnabled(boolean value) {
+        isEnabled = value;
+    }
+
     @Override
-    public void onNewToken(@NonNull String token)
-    {
+    public void onNewToken(@NonNull String token) {
         Log.d(TAG, "Refreshed token: " + token);
     }
     // Override onMessageReceived() method to extract the
     // title and
     // body from the message passed in FCM
-
 
 
     @Override
@@ -66,25 +73,27 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
 
         if (remoteMessage.getData() != null) {
             String checkValue = remoteMessage.getData().get("check");
+            if (isEnabled) {
 
-            if (checkValue != null) {
-                if (checkValue.equals("addFriend")) {
-                    String title = remoteMessage.getNotification().getTitle();
-                    String message = remoteMessage.getNotification().getBody();
-                    showNotification(this, title, message);
+                if (checkValue != null) {
+                    if (checkValue.equals("addFriend")) {
+                        String title = remoteMessage.getNotification().getTitle();
+                        String message = remoteMessage.getNotification().getBody();
+                        showNotification(this, title, message);
 //                    showAddFriendDialogOnMainThread(
 //                            remoteMessage.getNotification().getTitle(),
 //                            remoteMessage.getNotification().getBody());
 
-                } else if (checkValue.equals("msgFriend")) {
-                    if(friend_id.equals(CommonVar.logininfo.getMember_id())) {
+                    } else if (checkValue.equals("msgFriend")) {
+                        if (friend_id.equals(CommonVar.logininfo.getMember_id())) {
 
-                    } else {
-                        String title = remoteMessage.getNotification().getTitle();
-                        String message = remoteMessage.getNotification().getBody();
-                        showNotification(this, title, message);
+                        } else {
+                            String title = remoteMessage.getNotification().getTitle();
+                            String message = remoteMessage.getNotification().getBody();
+                            showNotification(this, title, message);
+                        }
+
                     }
-
                 }
             }
         }
@@ -101,8 +110,7 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
     // Method to get the custom Design for the display of
     // notification.
     private static RemoteViews getCustomDesign(Context context, String title,
-                                        String message)
-    {
+                                               String message) {
         RemoteViews remoteViews = new RemoteViews(
                 context.getPackageName(),
                 R.layout.notification);
@@ -133,15 +141,14 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
     }
 
     // Method to display the notifications
-    public static void showNotification(Context context,String title,
-                                 String message)
-    {
+    public static void showNotification(Context context, String title,
+                                        String message) {
         // Pass the intent to switch to the MainActivity
         Intent intent
                 = new Intent(context, MainAlarmHistoryActivity.class);
-        intent.putExtra("addFriend" , true);
-        intent.putExtra("title" , title);
-        intent.putExtra("message",message);
+        intent.putExtra("addFriend", true);
+        intent.putExtra("title", title);
+        intent.putExtra("message", message);
         // Assign channel ID
         String channel_id = "notification_channel";
         // Here FLAG_ACTIVITY_CLEAR_TOP flag is set to clear
@@ -162,13 +169,13 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
                 channel_id)
                 .setSmallIcon(R.drawable.baseline_mail_outline_24)
                 .setAutoCancel(true)
-                .setVibrate(new long[] { 1000, 1000, 1000,
-                        1000, 1000 })
+                .setVibrate(new long[]{1000, 1000, 1000,
+                        1000, 1000})
                 .setOnlyAlertOnce(true)
                 .setContentIntent(pendingIntent)
-                .setCustomContentView(getCustomDesign(context,title,message));
+                .setCustomContentView(getCustomDesign(context, title, message));
         NotificationManager notificationManager
-                = (NotificationManager)context.getSystemService(
+                = (NotificationManager) context.getSystemService(
                 Context.NOTIFICATION_SERVICE);
         // Check if the Android Version is greater than Oreo
         if (Build.VERSION.SDK_INT
