@@ -99,5 +99,9 @@ public class SettingController {
 		List<OptionVO> option = sql.selectList("setting.viewOption", member_id);
 		return option;
 	}
+	@RequestMapping("/updateAlarm")
+	public String updateAlarm (String member_id) {
+		return new Gson().toJson(sql.update("setting.updateAlarm", member_id));
+	}
 
 }

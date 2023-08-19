@@ -83,8 +83,17 @@
 		option_lock_pattern_pw = null
 		WHERE member_id = #{member_id}
 	</update>
-	
+
 	<select id="viewOption" resultType="cloud.setting.OptionVO">
-		select * from option_table where member_id = #{member_id}
+		select * from option_table
+		where member_id = #{member_id}
 	</select>
+	<update id="updateAlarm">
+		UPDATE option_table
+		SET option_alarm = CASE
+		WHEN option_alarm = 'N' THEN 'Y'
+		WHEN option_alarm = 'Y' THEN 'N'
+		END
+		WHERE member_id = #{member_id}
+	</update>
 </mapper>

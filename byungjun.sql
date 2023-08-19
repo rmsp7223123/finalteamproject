@@ -258,3 +258,15 @@ commit;
 select count(alarm_content) as content_cnt from alarm where member_id = '000a';
 
 select count(alarm_content) as content_cnt from alarm where receive_id = '00000a';
+
+select * from alarm where receive_id = '00000a';
+
+select * from option_table where member_id = '00000a';
+
+UPDATE option_table
+		SET option_alarm = CASE
+		WHEN option_alarm = 'N' THEN 'Y'
+		WHEN option_alarm = 'Y' THEN 'N'
+		END
+		WHERE member_id = '00000a';        
+        select * from option_table;
