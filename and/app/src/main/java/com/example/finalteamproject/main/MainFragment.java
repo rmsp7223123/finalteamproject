@@ -60,8 +60,6 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentMainBinding.inflate(inflater, container, false);
 
-        binding.cvAlarmCnt.setVisibility(View.GONE);
-
         CommonConn conn = new CommonConn(getContext(), "main/viewpager");
         conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
         conn.onExcute((isResult, data) -> {
@@ -168,6 +166,16 @@ public class MainFragment extends Fragment {
             }
 
 
+        });
+        CommonConn conn1 = new CommonConn(getContext(), "main/viewAlarmCnt");
+        conn1.addParamMap("receive_id" , CommonVar.logininfo.getMember_id());
+        conn1.onExcute((isResult, data) -> {
+            if(data.equals("0")) {
+                binding.cvAlarmCnt.setVisibility(View.GONE);
+            } else {
+                binding.cvAlarmCnt.setVisibility(View.VISIBLE);
+                binding.tvAlarmCnt.setText(data);
+            }
         });
         MainBoardAdapter adapter1 = new MainBoardAdapter();
         binding.recvBoard.setAdapter(adapter1);

@@ -254,3 +254,7 @@ select * from friend_list;
 
 select * from alarm;
 commit;
+
+select count(alarm_content) as content_cnt from alarm where member_id = '000a';
+
+select count(alarm_content) as content_cnt from alarm where receive_id = '00000a';
