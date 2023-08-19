@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="로그인하기"
+            android:text="잠금화면 삭제"
             android:textColor="@color/black"
             android:textSize="27sp" />
 
@@ -43,7 +43,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="비밀번호 재설정을 위해 로그인해주세요"
+        android:text="비밀번호 삭제를 위해 로그인해주세요"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="10dp"
         android:textSize="20sp"/>

@@ -14,6 +14,7 @@ import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.common.MemberVO;
 import com.example.finalteamproject.databinding.ActivityFindLockPwactivityBinding;
 import com.example.finalteamproject.main.MainActivity;
+import com.example.finalteamproject.main.SplashActivity;
 import com.example.finalteamproject.setting.ChangePasswordActivity;
 import com.google.gson.Gson;
 
@@ -63,14 +64,20 @@ public class FindLockPWActivity extends AppCompatActivity {
                 conn.onExcute((isResult, data) -> {
                     CommonVar.logininfo = new Gson().fromJson(data, MemberVO.class);
                     if(CommonVar.logininfo!=null){
-                        Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show();
-                        SharedPreferences pref = getSharedPreferences("loginInfo", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = pref.edit();
-                        editor.putString("loginInfo", binding.edtId.getText().toString());
-                        editor.commit();
-                        Intent intent = new Intent(this, ChangePasswordActivity.class);
-                        intent.putExtra("delete", 1000);
-                        startActivity(intent);
+                        CommonConn conn1 = new CommonConn(this, "setting/updatePw");
+                        conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                        conn1.onExcute((isResult1, data1) -> {
+                            Intent intent = new Intent(this, SplashActivity.class);
+                            Toast.makeText(this, "잠금화면이 초기화 되었습니다.", Toast.LENGTH_SHORT).show();
+                            startActivity(intent);
+                        });
+//                        SharedPreferences pref = getSharedPreferences("loginInfo", MODE_PRIVATE);
+////                        SharedPreferences.Editor editor = pref.edit();
+////                        editor.putString("loginInfo", binding.edtId.getText().toString());
+////                        editor.commit();
+////                        Intent intent = new Intent(this, ChangePasswordActivity.class);
+////                        intent.putExtra("delete", 1000);
+////                        startActivity(intent);
                     }else {
                         Toast.makeText(this, "로그인 실패\n아이디나 비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show();
                     }

@@ -90,5 +90,9 @@ public class SettingController {
 		String alarm = sql.selectOne("setting.checkAlarm", member_id);
 		return alarm;
 	}
+	@RequestMapping("/updatePw")
+	public String updatePw (String member_id) {
+		return new Gson().toJson(sql.update("setting.updatePw",member_id));
+	}
 
 }
