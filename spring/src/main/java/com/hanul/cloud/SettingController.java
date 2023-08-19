@@ -94,5 +94,10 @@ public class SettingController {
 	public String updatePw (String member_id) {
 		return new Gson().toJson(sql.update("setting.updatePw",member_id));
 	}
+	@RequestMapping("/viewOption")
+	public List<OptionVO> viewOption (String member_id) {
+		List<OptionVO> option = sql.selectList("setting.viewOption", member_id);
+		return option;
+	}
 
 }

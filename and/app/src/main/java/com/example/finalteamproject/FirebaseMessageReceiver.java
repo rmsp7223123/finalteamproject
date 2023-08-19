@@ -47,6 +47,8 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
     DatabaseReference def = databaseReference.child("chat").child(CommonVar.logininfo.getMember_id());
 
     public static String friend_id = "";
+
+    public static String alarm_check = "";
     @Override
     public void onNewToken(@NonNull String token)
     {
