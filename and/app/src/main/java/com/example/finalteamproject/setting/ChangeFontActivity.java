@@ -28,34 +28,6 @@ public class ChangeFontActivity extends AppCompatActivity {
         binding.imgvBack.setOnClickListener(v -> {
             finish();
         });
-        binding.tvFontColor.setOnClickListener(v -> {
-            String[] dialog_item = {"검은색", "파란색", "빨간색", "노란색", "초록색"};
-            int[] colors = {Color.BLACK, Color.BLUE, Color.RED, Color.YELLOW, Color.GREEN};
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("글씨 색상 변경");
-
-            FontColorArrayAdapter adapter = new FontColorArrayAdapter(this, dialog_item, colors);
-            builder.setSingleChoiceItems(adapter, 3, (dialog, i) -> {
-                binding.tvFontColor.setText(dialog_item[i]);
-                binding.tvFontColor.setTextColor(colors[i]);
-            });
-            builder.setPositiveButton("취소", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    binding.tvFontColor.setText(dialog_item[3]);
-                    dialog.dismiss();
-                }
-            });
-            builder.setNegativeButton("확인", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-
-            AlertDialog dialog = builder.create();
-            dialog.show();
-        });
         binding.tvFontSize.setOnClickListener(view -> {
             String[] dialog_item = {"작게", "중간", "크게"};
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
