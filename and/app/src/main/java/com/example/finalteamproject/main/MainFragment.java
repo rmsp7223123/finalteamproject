@@ -59,6 +59,9 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentMainBinding.inflate(inflater, container, false);
+
+        binding.cvAlarmCnt.setVisibility(View.GONE);
+
         CommonConn conn = new CommonConn(getContext(), "main/viewpager");
         conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
         conn.onExcute((isResult, data) -> {

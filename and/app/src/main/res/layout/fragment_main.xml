@@ -41,6 +41,7 @@
             android:layout_marginRight="20dp"/>
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/cv_alarm_cnt"
             android:layout_toStartOf="@id/cv_small_profile"
             android:layout_marginRight="8dp"
             android:layout_width="26dp"
@@ -54,6 +55,7 @@
                     android:background="@drawable/red_border">
 
                     <TextView
+                        android:id="@+id/tv_alarm_cnt"
                         android:gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

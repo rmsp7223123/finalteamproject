@@ -201,4 +201,10 @@ public class MainController {
 		paramMap.put("member_phone_id", vo.getMember_phone_id());
 		return new Gson().toJson(sql.update("main.updateToken", paramMap));
 	}
+	
+	@RequestMapping("/viewAlarmCnt")
+	public Integer ViewAlarmCnt(String receive_id) {
+		Integer cnt = sql.selectOne("main.viewAlarmCnt", receive_id);
+		return cnt;
+	}
 }

@@ -81,5 +81,9 @@
 	<update id="updateToken">
 		update member set member_phone_id = #{member_phone_id} where member_id = #{member_id} 
 	</update>
+	
+	<select id="viewAlarmCnt" resultType="Integer">
+		select count(alarm_content) as content_cnt from alarm where receive_id = #{receive_id}
+	</select>
 
 </mapper>
