@@ -30,6 +30,7 @@
 		MEMBER_ID ) F
 		INNER JOIN MEMBER M ON F.MEMBER_ID = M.MEMBER_ID
 		WHERE M.MEMBER_ID NOT IN (SELECT FRIEND_ID FROM FRIEND_LIST WHERE MEMBER_ID = #{MEBMER_ID})
+		AND M.MEMBER_ADMIN != 1
 	</select>
 
 	<select id="favor" resultType="cloud.member.FavorVO">
