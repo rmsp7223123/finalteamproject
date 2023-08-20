@@ -45,17 +45,17 @@ public class ChangeAlarmActivity extends AppCompatActivity {
             if(list.get(0).getOption_alarm().equals("N")) {
                 binding.tvCallMessageAlarmChange.setText("꺼짐");
                 // 기본 알람을 껐을때 알람창 데이터 삭제 추가
-                CommonConn conn1 = new CommonConn(this, "delete/Alarm");
+                CommonConn conn1 = new CommonConn(this, "main/deleteAlarm");
                 conn1.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
                 conn1.onExcute((isResult1, data1) -> {
                     // 알람을 보냈을때 받는사람의 id가 알람이 N인 상태이면 보낼때 받는사람의 알람상태를 조회후 Y인 경우에만 보내게?
-                    FirebaseMessageReceiver.setIsEnabled(false);
+                    FirebaseMessageReceiver.setIsEnabled(this,false);
                     editor.putBoolean("notificationEnabled", isEnabled);
                     editor.apply();
                 });
             } else {
                 binding.tvCallMessageAlarmChange.setText("켜짐");
-                FirebaseMessageReceiver.setIsEnabled(true);
+                FirebaseMessageReceiver.setIsEnabled(this,true);
                 editor.putBoolean("notificationEnabled", isEnabled);
                 editor.apply();
             }

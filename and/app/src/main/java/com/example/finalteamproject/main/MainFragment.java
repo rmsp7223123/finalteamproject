@@ -1,14 +1,18 @@
 package com.example.finalteamproject.main;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -179,6 +183,7 @@ public class MainFragment extends Fragment {
                 binding.tvAlarmCnt.setText(data);
             }
         });
+
         MainBoardAdapter adapter1 = new MainBoardAdapter();
         binding.recvBoard.setAdapter(adapter1);
         binding.recvBoard.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -401,6 +406,45 @@ public class MainFragment extends Fragment {
             dialog.show();
         });
 
+    }
+
+    // 알람을 받았을때 알람개수가 바로 늘어나게 추가
+    private BroadcastReceiver updateAlarmCountReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if ("update-alarm-count".equals(intent.getAction())) {
+                String alarmCount = intent.getStringExtra("alarmCount");
+                updateAlarmCount(alarmCount); // 데이터 변경 메서드 호출
+            }
+        }
+    };
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // ...
+
+        // 브로드캐스트 리시버 등록
+        IntentFilter filter = new IntentFilter("update-alarm-count");
+        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(updateAlarmCountReceiver, filter);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        // 브로드캐스트 리시버 해제
+        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(updateAlarmCountReceiver);
+    }
+
+    public void updateAlarmCount(String alarmCount) {
+        if (alarmCount.equals("0")) {
+            binding.cvAlarmCnt.setVisibility(View.GONE);
+        } else {
+            binding.cvAlarmCnt.setVisibility(View.VISIBLE);
+            binding.tvAlarmCnt.setText(alarmCount);
+        }
     }
 
 

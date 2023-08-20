@@ -1,9 +1,11 @@
 package com.hanul.cloud;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.List;
 
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,6 +35,7 @@ import cloud.gps.GpsVO;
 import cloud.member.AlarmVO;
 import cloud.member.FavorVO;
 import cloud.member.MemberVO;
+import cloud.setting.OptionVO;
 
 @RestController
 @RequestMapping("main")
@@ -147,13 +151,21 @@ public class MainController {
 	public String send2(MemberVO vo1, AlarmVO vo2) {
 		vo1 = sql.selectOne("main.detail", vo1.getMember_id());
 		MemberVO vo3 = sql.selectOne("main.detail", vo2.getReceive_id());
+		List<OptionVO> vo4 = sql.selectList("setting.viewOption",vo3.getMember_id());
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("member_id", vo1.getMember_id());
 		paramMap.put("alarm_content", vo2.getAlarm_content());
 		paramMap.put("alarm_time", vo2.getAlarm_time());
 		paramMap.put("receive_id", vo2.getReceive_id());
 		try {
-			FileInputStream refreshToken = new FileInputStream("D:\\Service.json");
+//			ClassPathResource resource = new ClassPathResource("Service.json");
+//			BufferedReader br = new BufferedReader(new InputStreamReader(resource.getInputStream()));
+//			String s = "";
+//			while((s == br.readLine())) {
+//				System.out.println(s);
+//			}
+			//File test = File.createTempFile(String.valueOf(""), ".json");
+			FileInputStream refreshToken = new FileInputStream("D:\\Service.json"); 
 			FirebaseOptions options = FirebaseOptions.builder()
 					.setCredentials(GoogleCredentials.fromStream(refreshToken)).build();
 
@@ -167,20 +179,28 @@ public class MainController {
 				Notification noti = Notification.builder().setTitle("친구추가").setBody(vo1.getMember_nickname()+"님이 친구신청을 보냈습니다.").build();
 				Message msg = Message.builder().putData("title", "friend").putData("name", "aaa").putData("body", "aaa").putData("check", "addFriend")
 						.putData("color", "#f45342").setNotification(noti).setToken(vo3.getMember_phone_id()).build();
-				String response = FirebaseMessaging.getInstance().send(msg);
-				System.out.println(response);
+				if(vo4.get(0).getOption_alarm().equals("Y")) {
+					FirebaseMessaging.getInstance().send(msg);
+				}
 			} else if (vo2.getAlarm_content().contains("메시지")) {
 				Notification noti = Notification.builder().setTitle("메시지").setBody(vo1.getMember_nickname()+"님이 메시지를 보냈습니다.").build();
 				Message msg = Message.builder().putData("title", "friend").putData("name", "aaa").putData("body", "aaa").putData("check", "msgFriend")
 						.putData("color", "#f45342").setNotification(noti).setToken(vo3.getMember_phone_id()).build();
-				String response = FirebaseMessaging.getInstance().send(msg);
-				System.out.println(response);
+				if(vo4.get(0).getOption_alarm().equals("Y")) {
+					FirebaseMessaging.getInstance().send(msg);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "false";
 		}
-		return new Gson().toJson(sql.insert("main.addAlarm", paramMap));
+		if(vo4.get(0).getOption_alarm().equals("Y")) {
+			return new Gson().toJson(sql.insert("main.addAlarm", paramMap));
+		}
+		else {
+			return "";
+		}
+		
 	}
 	
 	@RequestMapping("/deleteOneAlarm")
