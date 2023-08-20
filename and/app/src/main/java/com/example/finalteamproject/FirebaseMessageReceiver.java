@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -54,8 +55,11 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
         return isEnabled;
     }
 
-    public static void setIsEnabled(boolean value) {
-        isEnabled = value;
+    public static void setIsEnabled(Context context, boolean value) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("NotificationPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("notificationEnabled", value);
+        editor.apply();
     }
 
     @Override
@@ -70,6 +74,8 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
     @Override
     public void
     onMessageReceived(RemoteMessage remoteMessage) {
+
+        boolean isEnabled = FirebaseMessageReceiver.isIsEnabled(this);
 
         if (remoteMessage.getData() != null) {
             String checkValue = remoteMessage.getData().get("check");
@@ -190,6 +196,11 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
 
         notificationManager.notify(uniqueRandomValue, builder.build());
         uniqueRandomValue++;
+    }
+
+    public static boolean isIsEnabled(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("NotificationPrefs", Context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean("notificationEnabled", true);
     }
 
 }
