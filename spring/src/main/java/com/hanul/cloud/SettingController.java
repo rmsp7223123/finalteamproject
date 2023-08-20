@@ -103,5 +103,12 @@ public class SettingController {
 	public String updateAlarm (String member_id) {
 		return new Gson().toJson(sql.update("setting.updateAlarm", member_id));
 	}
+	@RequestMapping("/updateFont")
+	public String updateFont(OptionVO vo) {
+		HashMap<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("member_id", vo.getMember_id());
+		paramMap.put("option_font_size", vo.getOption_font_size());
+		return new Gson().toJson(sql.update("setting.updateFont", paramMap));
+	}
 
 }
