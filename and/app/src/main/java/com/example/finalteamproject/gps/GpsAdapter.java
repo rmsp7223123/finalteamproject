@@ -5,11 +5,15 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.manager.SupportRequestManagerFragment;
 import com.example.finalteamproject.databinding.ItemGpsBinding;
 
 import java.util.ArrayList;
@@ -55,9 +59,10 @@ public class GpsAdapter extends RecyclerView.Adapter<GpsAdapter.ViewHolder> {
         //경로당 이름
         h.binding.seniorName.setText(list.get(i).getSenior_name()+"");
         //경로당 주소
-        h.binding.seniorRoadaddress.setText(list.get(i).getSenior_roadaddress()+"");
         if (list.get(i).getSenior_roadaddress() == null){
             h.binding.seniorRoadaddress.setText("주소 정보 없음");
+        }else {
+            h.binding.seniorRoadaddress.setText(list.get(i).getSenior_roadaddress()+"");
         }
         //좋아요 수
         h.binding.seniorLike.setText(list.get(i).getSenior_like_num()+"");
@@ -94,4 +99,5 @@ public class GpsAdapter extends RecyclerView.Adapter<GpsAdapter.ViewHolder> {
             super(binding);
         }
     }
+
 }

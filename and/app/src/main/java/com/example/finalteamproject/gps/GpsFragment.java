@@ -1,5 +1,6 @@
 package com.example.finalteamproject.gps;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
@@ -53,7 +54,7 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                              Bundle savedInstanceState) {
         binding = FragmentGpsBinding.inflate(inflater, container, false);
         binding.lnResult.setVisibility(View.GONE);
-        binding.lnLikelist.setVisibility(View.GONE);
+        binding.lnDetail.setVisibility(View.GONE);
 
         //스와이프로 새로고침
 //        binding.layoutRefresh.setOnRefreshListener(() -> {
@@ -63,7 +64,8 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
         //검색 결과
         binding.btnSearch.setOnClickListener(v -> {
             binding.lnResult.setVisibility(View.VISIBLE);
-            binding.lnLikelist.setVisibility(View.GONE);
+            binding.tvSearchResult.setText("검색결과");
+
             //검색 결과 데이터
             CommonConn connresult = new CommonConn(getContext(), "gps/search");
             connresult.addParamMap("keyword", binding.gpsSearch.getText());
@@ -94,12 +96,9 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
         binding.tvMore.setOnClickListener(v -> {
 //            Intent intent = new Intent(getContext(), GpsLikeActivity.class);
 //            startActivity(intent);
-            binding.lnResult.setVisibility(View.GONE);
-            binding.lnLikelist.setVisibility(View.VISIBLE);
-            //더보기 닫기
-            binding.btnClose2.setOnClickListener(v1 -> {
-                binding.lnLikelist.setVisibility(View.GONE);
-            });
+            binding.lnResult.setVisibility(View.VISIBLE);
+            binding.tvSearchResult.setText("자주 가는 경로당");
+
             //자주가는 경로당 리스트
             CommonConn connlike = new CommonConn(getContext(), "gps/likelist");
             connlike.addParamMap("member_id", CommonVar.logininfo.getMember_id());
@@ -107,8 +106,8 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                 ArrayList<GpsVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<GpsVO>>(){}.getType());
                 //자주 가는 경로당(리사이클러뷰)
                 GpsLikeAdapter adapter = new GpsLikeAdapter(list);
-                binding.recvLikelist.setAdapter(adapter);
-                binding.recvLikelist.setLayoutManager(new LinearLayoutManager(getContext()));
+                binding.recvSearchResult.setAdapter(adapter);
+                binding.recvSearchResult.setLayoutManager(new LinearLayoutManager(getContext()));
 
             });
         });
@@ -232,12 +231,14 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                     marker.setHeight(100);
                 }
 
-
-
                 //경로당 리스트(리사이클러뷰)
                 GpsAdapter adapter = new GpsAdapter(list);
                 binding.recvGps.setAdapter(adapter);
                 binding.recvGps.setLayoutManager(new LinearLayoutManager(getContext()));
+
+                binding.btnClose2.setOnClickListener(v -> {
+                    binding.lnDetail.setVisibility(View.GONE);
+                });
             });
 
 
