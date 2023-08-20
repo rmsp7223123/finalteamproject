@@ -271,6 +271,13 @@ public class MessageChatActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == SPEECH_REQUEST_CODE && resultCode == RESULT_OK) {
+            ArrayList<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            if (!results.isEmpty()) {
+                String spokenText = results.get(0);
+                binding.edtMessage.setText(spokenText);
+            }
+        }
 //        MessageDTO messageDTO = (MessageDTO) getIntent().getSerializableExtra("dto");
         FriendVO friendVO = (FriendVO) getIntent().getSerializableExtra("vo");
         if (requestCode == REQ_GALLERY) {

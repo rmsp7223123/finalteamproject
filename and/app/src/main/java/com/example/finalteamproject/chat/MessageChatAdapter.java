@@ -3,6 +3,7 @@ package com.example.finalteamproject.chat;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.speech.tts.TextToSpeech;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +24,7 @@ import com.example.finalteamproject.setting.ChangeProfileActivity;
 
 import java.util.ArrayList;
 
-public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.ViewHolder>{
+public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.ViewHolder> implements TextToSpeech.OnInitListener{
 
     ItemMessageChatBinding binding;
 
@@ -31,6 +32,8 @@ public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.
     Context context;
 
     boolean isChatCheck;
+
+    private TextToSpeech tts;
     String profile_img;
     public MessageChatAdapter(ArrayList<FriendVO> list, Context context,boolean isChatCheck ,String profile_img) {
         this.list = list;
@@ -69,6 +72,7 @@ public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         binding = ItemMessageChatBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false);
+        tts = new TextToSpeech(context, this);
         return new ViewHolder(binding);
     }
 
@@ -86,6 +90,14 @@ public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         LinearLayout.LayoutParams params3 = new LinearLayout.LayoutParams(500, 500);
+        ImageView imageView2 = new ImageView(context);
+        LinearLayout.LayoutParams paramsImg2 = new LinearLayout.LayoutParams(100, 100);
+        imageView2.setLayoutParams(paramsImg2);
+        imageView2.setImageResource(R.drawable.baseline_volume_up_24);
+        imageView2.setOnClickListener(view -> {
+            String messageText = tv_msg.getText().toString();
+            speak(messageText);
+        });
 
         if (friendVO.isCheck()) {
             holder.binding.containerFrame.setLayoutParams(params2);
@@ -93,6 +105,12 @@ public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.
             holder.binding.imgvMain.setVisibility(View.GONE);
             holder.binding.cvMain.setVisibility(View.GONE);
             params2.gravity = Gravity.END;
+            params.gravity = Gravity.BOTTOM | Gravity.END;
+            params.setMargins(0, 0, 20, 0);
+            tv_time.setLayoutParams(params);
+            tv_time.setText(friendVO.getTime());
+            tv_time.setTextColor(Color.parseColor("#000000"));
+            tv_time.setTextSize(12f);
 
             if(list.get(position).getContent().contains("https://firebasestorage.googleapis.com/")) {
                 imageView.setLayoutParams(params3);
@@ -106,17 +124,19 @@ public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.
                 tv_msg.setBackgroundResource(R.drawable.message_chat_me_background);
                 tv_msg.setPadding(30, 20, 70, 20);
                 tv_msg.setMaxWidth(800);
+                holder.binding.containerFrame.addView(imageView2);
             }
-            params.gravity = Gravity.BOTTOM | Gravity.END;
-            params.setMargins(0, 0, 20, 0);
+            holder.binding.containerFrame.addView(tv_time);
+            holder.binding.containerFrame.addView(tv_msg);
+        } else {
+            params.gravity = Gravity.BOTTOM | Gravity.START;
+
             tv_time.setLayoutParams(params);
             tv_time.setText(friendVO.getTime());
             tv_time.setTextColor(Color.parseColor("#000000"));
             tv_time.setTextSize(12f);
             holder.binding.containerFrame.addView(tv_msg);
             holder.binding.containerFrame.addView(tv_time);
-        } else {
-            params.gravity = Gravity.BOTTOM | Gravity.START;
             if(list.get(position).getContent().contains("https://firebasestorage.googleapis.com/")) {
                 imageView.setLayoutParams(params3);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -130,12 +150,7 @@ public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.
                 tv_msg.setPadding(30, 20, 70, 20);
                 tv_msg.setMaxWidth(800);
             }
-            tv_time.setLayoutParams(params);
-            tv_time.setText(friendVO.getTime());
-            tv_time.setTextColor(Color.parseColor("#000000"));
-            tv_time.setTextSize(12f);
-            holder.binding.containerFrame.addView(tv_msg);
-            holder.binding.containerFrame.addView(tv_time);
+            holder.binding.containerFrame.addView(imageView2);
         }
 
         holder.binding.containerLinearMessageChat.setOnClickListener(v -> {
@@ -158,6 +173,16 @@ public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.
         return list.size();
     }
 
+    @Override
+    public void onInit(int i) {
+        if (i == TextToSpeech.SUCCESS) {
+            // TTS 초기화 성공 시, 사용 가능
+        } else {
+            // TTS 초기화 실패 시, 처리
+        }
+
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder{
         ItemMessageChatBinding binding;
         public ViewHolder(@NonNull ItemMessageChatBinding binding) {
@@ -165,4 +190,12 @@ public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.
             this.binding = binding;
         }
     }
+
+    private void speak(String text) {
+        if (tts != null) {
+            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null);
+        }
+    }
+
+
 }
