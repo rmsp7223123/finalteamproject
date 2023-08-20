@@ -16,12 +16,15 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.widget.RemoteViews;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.bumptech.glide.Glide;
+import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.main.FriendVO;
 import com.example.finalteamproject.main.MainActivity;
@@ -100,6 +103,13 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
                         }
 
                     }
+                    CommonConn conn1 = new CommonConn(this, "main/viewAlarmCnt");
+                    conn1.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
+                    conn1.onExcute((isResult1, data1) -> {
+                        Intent intent = new Intent("update-alarm-count");
+                        intent.putExtra("alarmCount", data1);
+                        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+                    });
                 }
             }
         }

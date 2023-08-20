@@ -111,6 +111,11 @@ public class MainAlarmHistoryAdapter extends RecyclerView.Adapter<MainAlarmHisto
             } else {
 
             }
+            CommonConn conn1 = new CommonConn(context, "main/viewAlarmCnt");
+            conn1.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
+            conn1.onExcute((isResult1, data1) -> {
+
+            });
         });
     }
 
