@@ -30,6 +30,9 @@ public class MainAlarmHistoryAdapter extends RecyclerView.Adapter<MainAlarmHisto
 
     Context context;
 
+    ArrayList<AlarmVO> list2;
+    ArrayList<FriendVO> friendList;
+
     public MainAlarmHistoryAdapter(ArrayList<AlarmVO> list, Context context) {
         this.list = list;
         this.context = context;
@@ -52,7 +55,7 @@ public class MainAlarmHistoryAdapter extends RecyclerView.Adapter<MainAlarmHisto
                 CommonConn conn = new CommonConn(context, "main/viewAlarm");
                 conn.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
                 conn.onExcute((isResult, data) -> {
-                    ArrayList<AlarmVO> list2 = new Gson().fromJson(data, new TypeToken<ArrayList<AlarmVO>>() {
+                    list2 = new Gson().fromJson(data, new TypeToken<ArrayList<AlarmVO>>() {
                     }.getType());
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     builder.setTitle("친구 추가 요청");
@@ -92,22 +95,16 @@ public class MainAlarmHistoryAdapter extends RecyclerView.Adapter<MainAlarmHisto
                         CommonConn conn1 = new CommonConn(context, "main/viewFriendList");
                         conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
                         conn1.onExcute((isResult1, data1) -> {
-                            ArrayList<FriendVO> friendList = new Gson().fromJson(data1, new TypeToken<ArrayList<FriendVO>>(){}.getType());
+                            friendList = new Gson().fromJson(data1, new TypeToken<ArrayList<FriendVO>>(){}.getType());
                             friendList.get(idx).setMember_id(CommonVar.logininfo.getMember_id());
                             Intent intent = new Intent(context, MessageChatActivity.class);
                             intent.putExtra("vo", friendList.get(idx));
                             CommonConn conn2 = new CommonConn(context, "main/deleteAlarm");
                             conn2.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
+                            conn2.addParamMap("nickname", friendList.get(idx).getMember_nickname());
+                            conn2.addParamMap("alarm_content2", "메시지를");
                             conn2.onExcute((isResult2, data2) -> {
-                                list = new ArrayList<>();
-                                CommonConn conn3 = new CommonConn(context,"main/viewAlarm");
-                                conn3.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
-                                conn3.onExcute((isResult3, data3) -> {
-                                    list = new Gson().fromJson(data3, new TypeToken<ArrayList<AlarmVO>>(){}.getType());
-                                    context.startActivity(intent);
-                                    updateAlarm();
-                                    notifyDataSetChanged();
-                                });
+                                context.startActivity(intent);
                             });
                         });
                     }
@@ -133,8 +130,10 @@ public class MainAlarmHistoryAdapter extends RecyclerView.Adapter<MainAlarmHisto
     }
 
     private void deleteAlarm(int position) {
-        CommonConn conn = new CommonConn(context, "main/deleteOneAlarm");
-        conn.addParamMap("alarm_id", list.get(position).getAlarm_id());
+        CommonConn conn = new CommonConn(context, "main/deleteAlarm");
+        conn.addParamMap("receive_id" , CommonVar.logininfo.getMember_id());
+        conn.addParamMap("nickname" , friendList.get(position).getMember_nickname());
+        conn.addParamMap("alarm_content2" , "친구신청을");
         conn.onExcute((isResult, data) -> {
 
         });

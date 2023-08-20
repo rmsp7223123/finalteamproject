@@ -271,3 +271,13 @@ UPDATE option_table
 		WHERE member_id = '00000a';        
         select * from option_table where member_id = 'aaatest1';
 select * from alarm;
+select * from option_table;
+
+delete alarm where receive_id = '00000a' AND alarm_content LIKE '000001' AND alarm_content LIKE '메시지를';
+delete alarm where receive_id = 'aaatest1' AND alarm_content LIKE '%000001%' AND alarm_content LIKE '%메시지를%';
+select * from alarm;
+
+commit;
+rollback;
+
+DELETE FROM alarm WHERE receive_id = 'aaatest1' AND alarm_content LIKE CONCAT('%', '000001', '%') AND alarm_content LIKE CONCAT('%', '메시지를', '%');
