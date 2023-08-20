@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.finalteamproject.chat.MessageChatActivity;
@@ -61,6 +62,7 @@ public class MainAlarmHistoryAdapter extends RecyclerView.Adapter<MainAlarmHisto
                         public void onClick(DialogInterface dialog, int which) {
                             deleteAlarm(idx);
                             list.remove(idx);
+                            updateAlarm();
                             notifyDataSetChanged();
                         }
                     });
@@ -71,6 +73,7 @@ public class MainAlarmHistoryAdapter extends RecyclerView.Adapter<MainAlarmHisto
                         conn1.onExcute((isResult1, data1) -> {
                             deleteAlarm(idx);
                             list.remove(idx);
+                            updateAlarm();
                             notifyDataSetChanged();
                         });
 
@@ -94,15 +97,16 @@ public class MainAlarmHistoryAdapter extends RecyclerView.Adapter<MainAlarmHisto
                             Intent intent = new Intent(context, MessageChatActivity.class);
                             intent.putExtra("vo", friendList.get(idx));
                             CommonConn conn2 = new CommonConn(context, "main/deleteAlarm");
-                            conn2.addParamMap("receive_id", alarm_list.get(position).getReceive_id());
+                            conn2.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
                             conn2.onExcute((isResult2, data2) -> {
-                                list = new ArrayList<AlarmVO>();
+                                list = new ArrayList<>();
                                 CommonConn conn3 = new CommonConn(context,"main/viewAlarm");
                                 conn3.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
                                 conn3.onExcute((isResult3, data3) -> {
-                                    notifyDataSetChanged();
                                     list = new Gson().fromJson(data3, new TypeToken<ArrayList<AlarmVO>>(){}.getType());
                                     context.startActivity(intent);
+                                    updateAlarm();
+                                    notifyDataSetChanged();
                                 });
                             });
                         });
@@ -111,11 +115,6 @@ public class MainAlarmHistoryAdapter extends RecyclerView.Adapter<MainAlarmHisto
             } else {
 
             }
-            CommonConn conn1 = new CommonConn(context, "main/viewAlarmCnt");
-            conn1.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
-            conn1.onExcute((isResult1, data1) -> {
-
-            });
         });
     }
 
@@ -138,6 +137,15 @@ public class MainAlarmHistoryAdapter extends RecyclerView.Adapter<MainAlarmHisto
         conn.addParamMap("alarm_id", list.get(position).getAlarm_id());
         conn.onExcute((isResult, data) -> {
 
+        });
+    }
+    private void updateAlarm() {
+        CommonConn conn1 = new CommonConn(context, "main/viewAlarmCnt");
+        conn1.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
+        conn1.onExcute((isResult1, data1) -> {
+            Intent intent = new Intent("update-alarm-count");
+            intent.putExtra("alarmCount", data1);
+            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
         });
     }
 }
