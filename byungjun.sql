@@ -283,3 +283,8 @@ rollback;
 DELETE FROM alarm WHERE receive_id = 'aaatest1' AND alarm_content LIKE CONCAT('%', '000001', '%') AND alarm_content LIKE CONCAT('%', '메시지를', '%');
 
 select * from friend_list;
+
+select * from member where
+		member_id = 'ansqudwns98' and member_pw = '123qwe!@';
+        
+        select * from member;

@@ -39,7 +39,7 @@
 			value="/WEB-INF/views/tiles/config.xml" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.hanul.cloud" />
+	<context:component-scan base-package="com.hanul.cloudWeb" />
 	
 	
 	

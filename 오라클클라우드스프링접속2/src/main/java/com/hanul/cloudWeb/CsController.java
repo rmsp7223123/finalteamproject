@@ -1,4 +1,4 @@
-package com.hanul.cloud;
+package com.hanul.cloudWeb;
 
 import javax.servlet.http.HttpSession;
 
@@ -6,13 +6,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/vi")
-public class ViController {
+@RequestMapping("/cs")
+public class CsController {
 	
 	@RequestMapping("/home")
 	public String home(HttpSession session) {
-		session.setAttribute("category", "vi");
-		return "vi/home";
+		session.setAttribute("category", "cs");
+		return "cs/home";
 	}
 
 }

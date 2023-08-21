@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="login">
+	<select id="loginCheck" resultType="Integer">
+		select count(member_admin) cnt from member where
+		member_id = #{member_id} and member_pw = #{member_pw} and member_admin = 1
+	</select>
+
+</mapper>

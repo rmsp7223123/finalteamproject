@@ -36,8 +36,8 @@
 <title>우동탑 <c:if test="${not empty title}">- ${title} </c:if></title>
 
 <!-- Custom fonts for this template-->
-<link href="<c:url value = '/vendor/fontawesome-free/css/all.min.css'/>" rel="stylesheet"
-	type="text/css">
+<link href="<c:url value = '/vendor/fontawesome-free/css/all.min.css'/>"
+	rel="stylesheet" type="text/css">
 <link
 	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
 	rel="stylesheet">
@@ -70,22 +70,26 @@
 			<!-- Divider -->
 			<hr class="sidebar-divider my-0">
 			<!-- Nav Item - Pages Collapse Menu -->
-			<li class="${category eq 'cu' ? 'active':''} nav-item"><a class="nav-link" href="<c:url value = '/cu/home'/>"> <i
+			<li class="${category eq 'cu' ? 'active':''} nav-item"><a
+				class="nav-link" href="<c:url value = '/cu/home'/>"> <i
 					class="fas fa-fw fa-cog"></i> <span>회원 관리</span>
 			</a></li>
-			<li class="${category eq 'cs' ? 'active':''} nav-item"><a class="nav-link" href="<c:url value = '/cs/home'/>"><i
+			<li class="${category eq 'cs' ? 'active':''} nav-item"><a
+				class="nav-link" href="<c:url value = '/cs/home'/>"><i
 					class="fas fa-fw fa-wrench"></i> <span>고객센터 관리</span> </a></li>
 			<!-- Nav Item - Pages Collapse Menu -->
-			<li class="${category eq 'go' ? 'active':''} nav-item"><a class="nav-link" href="<c:url value = '/go/home'/>"> <i
+			<li class="${category eq 'go' ? 'active':''} nav-item"><a
+				class="nav-link" href="<c:url value = '/go/home'/>"> <i
 					class="fas fa-fw fa-folder"></i> <span>고독사 관리</span>
 			</a></li>
-			<li class="${category eq 'vi' ? 'active':''} nav-item"><a class="nav-link" href="<c:url value = '/vi/home'/>"> <i
+			<li class="${category eq 'vi' ? 'active':''} nav-item"><a
+				class="nav-link" href="<c:url value = '/vi/home'/>"> <i
 					class="fas fa-fw fa-chart-area"></i> <span>시각화</span>
 			</a></li>
 
 			<!-- Nav Item - Tables -->
-			<li class="${category eq 'test' ? 'active':''} nav-item"><a class="nav-link" href="#"> <i
-					class="fas fa-fw fa-table"></i> <span>보류</span>
+			<li class="${category eq 'test' ? 'active':''} nav-item"><a
+				class="nav-link" href="#"> <i class="fas fa-fw fa-table"></i> <span>보류</span>
 			</a></li>
 
 		</ul>
@@ -140,7 +144,8 @@
 							role="button" data-toggle="dropdown" aria-haspopup="true"
 							aria-expanded="false"> <span
 								class="mr-2 d-none d-lg-inline text-gray-600 small">관리자</span> <img
-								class="img-profile rounded-circle" src="<c:url value = '/img/undraw_profile.svg'/>">
+								class="img-profile rounded-circle"
+								src="<c:url value = '/img/undraw_profile.svg'/>">
 						</a> <!-- Dropdown - User Information -->
 							<div
 								class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -168,18 +173,17 @@
 				<div class="container-fluid">
 					<tiles:insertAttribute name="container" />
 				</div>
-
-				<!-- Footer -->
-				<footer class="sticky-footer bg-white">
-					<div class="container my-auto">
-						<div class="copyright text-center my-auto">
-							<span>Copyright &copy; Your Website 2021</span>
-						</div>
-					</div>
-				</footer>
 			</div>
-
+			<!-- Footer -->
+			<footer class="sticky-footer bg-white">
+				<div class="container my-auto">
+					<div class="copyright text-center my-auto">
+						<span>Copyright &copy; Your Website 2021</span>
+					</div>
+				</div>
+			</footer>
 		</div>
+
 	</div>
 	</div>
 	<!-- Scroll to Top Button-->
@@ -189,10 +193,12 @@
 
 	<!-- Bootstrap core JavaScript-->
 	<script src="<c:url value = '/vendor/jquery/jquery.min.js'/>"></script>
-	<script src="<c:url value = '/vendor/bootstrap/js/bootstrap.bundle.min.js'/>"></script>
+	<script
+		src="<c:url value = '/vendor/bootstrap/js/bootstrap.bundle.min.js'/>"></script>
 
 	<!-- Core plugin JavaScript-->
-	<script src="<c:url value = '/vendor/jquery-easing/jquery.easing.min.js'/>"></script>
+	<script
+		src="<c:url value = '/vendor/jquery-easing/jquery.easing.min.js'/>"></script>
 
 	<!-- Custom scripts for all pages-->
 	<script src="<c:url value = '/js/sb-admin-2.min.js'/>"></script>
