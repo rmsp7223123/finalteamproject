@@ -124,4 +124,8 @@
 		LIKE '%'||#{keyword}||'%'
 		ORDER BY s.KEY
 	</select>
+	
+	<select id="like_count" resultType="string"> 
+		select senior_like_num from senior_like where key = #{key} 
+	</select>
 </mapper>

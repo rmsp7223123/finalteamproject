@@ -58,7 +58,7 @@ public class GameView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawColor(Color.BLACK);
+        canvas.drawColor(Color.WHITE);
 
         if (status == BLANK) {
             return;

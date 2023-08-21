@@ -3,6 +3,7 @@ package com.example.finalteamproject.gps;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,6 +45,7 @@ public class GpsLikeAdapter extends RecyclerView.Adapter<GpsLikeAdapter.ViewHold
             conn.onExcute((isResult, data) -> {
                 h.binding.like.setVisibility(View.GONE);
                 h.binding.unlike.setVisibility(View.VISIBLE);
+                Toast.makeText(v.getContext(), "자주가는 경로당이 삭제되었습니다", Toast.LENGTH_SHORT).show();
             });
         });
 
@@ -54,6 +56,7 @@ public class GpsLikeAdapter extends RecyclerView.Adapter<GpsLikeAdapter.ViewHold
             conn.onExcute((isResult, data) -> {
                 h.binding.unlike.setVisibility(View.GONE);
                 h.binding.like.setVisibility(View.VISIBLE);
+                Toast.makeText(v.getContext(), "자주가는 경로당이 추가되었습니다", Toast.LENGTH_SHORT).show();
             });
         });
     }

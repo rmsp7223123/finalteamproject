@@ -278,7 +278,7 @@ public void moveCamera(String lat , String log){
     marker.setPosition(new LatLng(latitude, longitude));
     marker.setMap(naverMap);
     marker.setIcon(MarkerIcons.BLACK);
-    marker.setIconTintColor(Color.parseColor("#4B6EFD")); //마커 색상
+    marker.setIconTintColor(Color.parseColor("#27D829")); //마커 색상
     marker.setWidth(70);
     marker.setHeight(100);
 
