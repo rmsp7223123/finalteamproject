@@ -47,3 +47,6 @@ BEGIN
     END IF;
 END;
 /
+
+
+이름 주소 전화 좋아요

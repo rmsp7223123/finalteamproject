@@ -121,6 +121,7 @@
     </LinearLayout>
     <!-- 검색결과 -->
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/ln_result"
         android:layout_width="match_parent"
         android:layout_height="350dp"
@@ -166,6 +167,7 @@
 
     <!-- 상세정보 -->
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/ln_detail"
         android:layout_width="match_parent"
         android:layout_height="350dp"
@@ -196,20 +198,18 @@
                 android:layout_alignParentRight="true"
                 android:src="@drawable/baseline_close_24" />
         </RelativeLayout>
-
-        <!--<LinearLayout
-            android:id="@+id/item_detail"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
             android:layout_marginHorizontal="2dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@color/white">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -304,15 +304,6 @@
                 android:text="관리자에게 알려주기"/>
 
             </LinearLayout>
-
-        </LinearLayout>-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginHorizontal="2dp">
-        <include
-            layout="@layout/activity_gps_detail"
-            />
         </LinearLayout>
 
     </LinearLayout>

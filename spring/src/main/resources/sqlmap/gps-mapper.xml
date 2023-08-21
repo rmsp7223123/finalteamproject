@@ -49,6 +49,12 @@
 
 	</select>
 
+	<!-- 경로당 상세정보 조회 -->
+	<select id="detail" resultType="cloud.gps.GpsVO">
+	select * from senior
+	where key = #{key}
+	</select>
+	
 	<!-- 자주가는 경로당 목록 -->
 	<select id="likelist" resultType="cloud.gps.GpsVO">
 		select b.member_id, b.KEY,
@@ -114,7 +120,12 @@
 		FROM SENIOR s
 		LEFT JOIN SENIOR_LIKE l
 		ON s.key = l.key
-		WHERE s.SENIOR_NAME LIKE '%'||#{keyword}||'%' OR s.SENIOR_ROADADDRESS LIKE '%'||#{keyword}||'%'
+		WHERE s.SENIOR_NAME LIKE '%'||#{keyword}||'%' OR s.SENIOR_ROADADDRESS
+		LIKE '%'||#{keyword}||'%'
 		ORDER BY s.KEY
+	</select>
+	
+	<select id="like_count" resultType="string"> 
+		select senior_like_num from senior_like where key = #{key} 
 	</select>
 </mapper>

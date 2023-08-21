@@ -2,7 +2,9 @@ package com.hanul.cloud;
 
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,11 +18,25 @@ import cloud.gps.GpsVO;
 public class GpsController {
 	@Autowired
 	private GpsDAO dao;
+	@Autowired @Qualifier("project") SqlSession sql;
 
 	@RequestMapping(value = "/senior", produces = "text/html;charset=utf-8")
 	public String senior_list(String senior_latitude, String senior_longitude, String zoom_level) {
 		List<GpsVO> list = dao.senior_list(senior_latitude, senior_longitude, zoom_level);
 		return new Gson().toJson(list);
+	}
+	
+	@RequestMapping(value = "/detail", produces = "text/html;charset=utf-8")
+	public String senior_detail(int key) {
+		List<GpsVO> list = dao.senior_detail(key);
+		return new Gson().toJson(list);
+	}
+	
+	//좋아요 개수 조회
+	@RequestMapping(value = "/like_count", produces = "text/html;charset=utf-8")
+	public String like_count(int key) {
+		
+		return sql.selectOne("gps.like_count",key);
 	}
 
 	@RequestMapping(value = "/likelist", produces = "text/html;charset=utf-8")

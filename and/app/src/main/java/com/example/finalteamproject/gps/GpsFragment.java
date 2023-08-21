@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
@@ -20,10 +22,12 @@ import android.view.ViewGroup;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
+import com.example.finalteamproject.cs.NewCSBoardActivity;
 import com.example.finalteamproject.databinding.FragmentGpsBinding;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.naver.maps.geometry.LatLng;
+import com.naver.maps.map.CameraAnimation;
 import com.naver.maps.map.CameraPosition;
 import com.naver.maps.map.CameraUpdate;
 import com.naver.maps.map.CameraUpdateParams;
@@ -71,7 +75,7 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
             connresult.addParamMap("keyword", binding.gpsSearch.getText());
             connresult.onExcute((isResult, data) -> {
                 ArrayList<GpsVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<GpsVO>>(){}.getType());
-                GpsAdapter adapter = new GpsAdapter(list);
+                GpsAdapter adapter = new GpsAdapter(list, this);
                 binding.recvSearchResult.setAdapter(adapter);
                 binding.recvSearchResult.setLayoutManager(new LinearLayoutManager(getContext()));
             });
@@ -83,33 +87,23 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
         });
 
         //자주 가는 경로당(메인화면 상단부)
-        CommonConn conn = new CommonConn(getContext(), "gps/likelist");
-        conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
-        conn.onExcute((isResult, data) -> {
-            ArrayList<GpsVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<GpsVO>>(){}.getType());
-
-            GpsBmarkAdapter adapter = new GpsBmarkAdapter(list);
-            binding.recvBmark.setAdapter(adapter);
-            binding.recvBmark.setLayoutManager(new LinearLayoutManager(getContext()));
-        });
+        likelist();
         //(자주가는 경로당)더보기 메뉴
         binding.tvMore.setOnClickListener(v -> {
-//            Intent intent = new Intent(getContext(), GpsLikeActivity.class);
-//            startActivity(intent);
             binding.lnResult.setVisibility(View.VISIBLE);
             binding.tvSearchResult.setText("자주 가는 경로당");
 
-            //자주가는 경로당 리스트
-            CommonConn connlike = new CommonConn(getContext(), "gps/likelist");
-            connlike.addParamMap("member_id", CommonVar.logininfo.getMember_id());
-            connlike.onExcute((isResult, data) -> {
-                ArrayList<GpsVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<GpsVO>>(){}.getType());
-                //자주 가는 경로당(리사이클러뷰)
-                GpsLikeAdapter adapter = new GpsLikeAdapter(list);
-                binding.recvSearchResult.setAdapter(adapter);
-                binding.recvSearchResult.setLayoutManager(new LinearLayoutManager(getContext()));
-
-            });
+            //자주가는 경로당 리스트(하단 박스)
+//            CommonConn connlike = new CommonConn(getContext(), "gps/likelist");
+//            connlike.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+//            connlike.onExcute((isResult, data) -> {
+//                ArrayList<GpsVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<GpsVO>>(){}.getType());
+//                //자주 가는 경로당(리사이클러뷰)
+//                GpsLikeAdapter adapter = new GpsLikeAdapter(list);
+//                binding.recvSearchResult.setAdapter(adapter);
+//                binding.recvSearchResult.setLayoutManager(new LinearLayoutManager(getContext()));
+//
+//            });
         });
 
         //지도 객체 생성
@@ -231,14 +225,25 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                     marker.setHeight(100);
                 }
 
+
                 //경로당 리스트(리사이클러뷰)
-                GpsAdapter adapter = new GpsAdapter(list);
+                GpsAdapter adapter = new GpsAdapter(list, this);
                 binding.recvGps.setAdapter(adapter);
                 binding.recvGps.setLayoutManager(new LinearLayoutManager(getContext()));
 
                 binding.btnClose2.setOnClickListener(v -> {
                     binding.lnDetail.setVisibility(View.GONE);
                 });
+                binding.phoneNumber.setOnClickListener(v -> {
+                    Intent intent = new Intent(Intent.ACTION_DIAL,
+                            Uri.parse("tel:/"+binding.phoneNumber.getText().toString()));
+                    startActivity(intent);
+                });
+                binding.tvToadmin.setOnClickListener(v -> {
+                    Intent intent = new Intent(getContext(), NewCSBoardActivity.class);
+                    startActivity(intent);
+                });
+
             });
 
 
@@ -248,8 +253,36 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
 
     }
 
+    public void likelist(){
+        CommonConn conn = new CommonConn(getContext(), "gps/likelist");
+        conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+        conn.onExcute((isResult, data) -> {
+            ArrayList<GpsVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<GpsVO>>(){}.getType());
 
+            GpsBmarkAdapter adapter = new GpsBmarkAdapter(list);
+            binding.recvBmark.setAdapter(adapter);
+            binding.recvBmark.setLayoutManager(new LinearLayoutManager(getContext()));
 
+            GpsLikeAdapter likeadapter = new GpsLikeAdapter(list);
+            binding.recvSearchResult.setAdapter(likeadapter);
+            binding.recvSearchResult.setLayoutManager(new LinearLayoutManager(getContext()));
+        });
+    }
+
+public void moveCamera(String lat , String log){
+        double latitude = Double.parseDouble(lat);
+        double longitude = Double.parseDouble(log);
+    CameraUpdate cameraUpdate = CameraUpdate.scrollTo(new LatLng(latitude, longitude));
+    naverMap.moveCamera(cameraUpdate);
+    Marker marker = new Marker();
+    marker.setPosition(new LatLng(latitude, longitude));
+    marker.setMap(naverMap);
+    marker.setIcon(MarkerIcons.BLACK);
+    marker.setIconTintColor(Color.parseColor("#27D829")); //마커 색상
+    marker.setWidth(70);
+    marker.setHeight(100);
+
+}
 
 
 }

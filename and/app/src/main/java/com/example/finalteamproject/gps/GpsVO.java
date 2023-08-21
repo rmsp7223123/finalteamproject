@@ -1,6 +1,8 @@
 package com.example.finalteamproject.gps;
 
-public class GpsVO {
+import java.io.Serializable;
+
+public class GpsVO implements Serializable {
 	private int key, senior_like_num;
 	private String senior_name, senior_roadaddress, senior_numaddress
 	, senior_call, senior_latitude, senior_longitude, sido, sigungu, member_id, distance;
