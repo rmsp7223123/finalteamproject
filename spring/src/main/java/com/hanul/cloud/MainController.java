@@ -147,7 +147,8 @@ public class MainController {
 	public String deleteAlarm(String receive_id, String nickname,  String alarm_content2) {
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("receive_id", receive_id);
-		paramMap.put("alarm_content", nickname +  alarm_content2 );
+		paramMap.put("nickname", nickname  );
+		paramMap.put("alarm_content2",  alarm_content2  );
 		
 		
 		return new Gson().toJson(sql.delete("main.deleteAlarm", paramMap));
