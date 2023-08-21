@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.finalteamproject.chat.MessageChatActivity;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
+import com.example.finalteamproject.common.MemberVO;
 import com.example.finalteamproject.databinding.ItemAlarmHistoryBinding;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -64,8 +65,8 @@ public class MainAlarmHistoryAdapter extends RecyclerView.Adapter<MainAlarmHisto
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             deleteAlarm(idx);
-                            list.remove(idx);
-                            updateAlarm();
+                           // selectAlarmList();//?
+                           // updateAlarm();//?
                             notifyDataSetChanged();
                         }
                     });
@@ -75,9 +76,9 @@ public class MainAlarmHistoryAdapter extends RecyclerView.Adapter<MainAlarmHisto
                         conn1.addParamMap("friend_id", CommonVar.logininfo.getMember_id());
                         conn1.onExcute((isResult1, data1) -> {
                             deleteAlarm(idx);
-                            list.remove(idx);
-                            updateAlarm();
-                            notifyDataSetChanged();
+                          //  selectAlarmList();
+                          //  updateAlarm();
+                           // notifyDataSetChanged();
                         });
 
 
@@ -86,28 +87,22 @@ public class MainAlarmHistoryAdapter extends RecyclerView.Adapter<MainAlarmHisto
                     dialog.show();
                 });
             } else if (alarm.getAlarm_content().contains("메시지")) {
-                CommonConn conn = new CommonConn(context, "main/viewAlarm");
-                conn.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
+                Intent intent = new Intent(context, MessageChatActivity.class);
+                CommonConn conn2 = new CommonConn(context, "main/deleteAlarm");
+                conn2.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
+                conn2.addParamMap("nickname", list.get(idx).getAlarm_content().substring(0, list.get(idx).getAlarm_content().indexOf("님")));
+                conn2.addParamMap("alarm_content2", "메시지를");
+                CommonConn conn = new CommonConn(context, "main/detail");
+                conn.addParamMap("member_id", list.get(idx).getMember_id());
                 conn.onExcute((isResult, data) -> {
-                    ArrayList<AlarmVO> alarm_list = new Gson().fromJson(data, new TypeToken<ArrayList<AlarmVO>>() {
-                    }.getType());
-                    if(alarm_list.get(idx).alarm_content.contains("메시지")) {
-                        CommonConn conn1 = new CommonConn(context, "main/viewFriendList");
-                        conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
-                        conn1.onExcute((isResult1, data1) -> {
-                            friendList = new Gson().fromJson(data1, new TypeToken<ArrayList<FriendVO>>(){}.getType());
-                            friendList.get(idx).setMember_id(CommonVar.logininfo.getMember_id());
-                            Intent intent = new Intent(context, MessageChatActivity.class);
-                            intent.putExtra("vo", friendList.get(idx));
-                            CommonConn conn2 = new CommonConn(context, "main/deleteAlarm");
-                            conn2.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
-                            conn2.addParamMap("nickname", friendList.get(idx).getMember_nickname());
-                            conn2.addParamMap("alarm_content2", "메시지를");
-                            conn2.onExcute((isResult2, data2) -> {
-                                context.startActivity(intent);
-                            });
-                        });
-                    }
+                    ArrayList<MemberVO> member_list = new Gson().fromJson(data, new TypeToken<ArrayList<MemberVO>>(){}.getType());
+                    FriendVO vo =new FriendVO(CommonVar.logininfo.getMember_id(), list.get(idx).getMember_id(), member_list.get(0).getMember_nickname(),member_list.get(0).getMember_profileimg(),"","",false);
+                    intent.putExtra("vo", vo);
+                    conn2.onExcute((isResult2, data2) -> {
+                       // selectAlarmList();
+                        notifyDataSetChanged();
+                        context.startActivity(intent);
+                    });
                 });
             } else {
 
@@ -131,20 +126,33 @@ public class MainAlarmHistoryAdapter extends RecyclerView.Adapter<MainAlarmHisto
 
     private void deleteAlarm(int position) {
         CommonConn conn = new CommonConn(context, "main/deleteAlarm");
-        conn.addParamMap("receive_id" , CommonVar.logininfo.getMember_id());
-        conn.addParamMap("nickname" , friendList.get(position).getMember_nickname());
-        conn.addParamMap("alarm_content2" , "친구신청을");
+        conn.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
+        conn.addParamMap("nickname", list.get(position).getAlarm_content().substring(0, list.get(position).getAlarm_content().indexOf("님")));
+        conn.addParamMap("alarm_content2", "친구신청을");
         conn.onExcute((isResult, data) -> {
-
-        });
-    }
-    private void updateAlarm() {
-        CommonConn conn1 = new CommonConn(context, "main/viewAlarmCnt");
-        conn1.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
-        conn1.onExcute((isResult1, data1) -> {
+            list = new Gson().fromJson(data, new TypeToken<ArrayList<AlarmVO>>(){}.getType());
             Intent intent = new Intent("update-alarm-count");
-            intent.putExtra("alarmCount", data1);
+            intent.putExtra("alarmCount", list.size());
             LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+            notifyDataSetChanged();
         });
     }
+
+//    private void updateAlarm() {
+//        CommonConn conn1 = new CommonConn(context, "main/viewAlarmCnt");
+//        conn1.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
+//        conn1.onExcute((isResult1, data1) -> {
+//            Intent intent = new Intent("update-alarm-count");
+//            intent.putExtra("alarmCount", data1);
+//            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+//        });
+//    }
+
+//    private void selectAlarmList() {
+//        CommonConn conn = new CommonConn(context, "main/viewAlarm");
+//        conn.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
+//        conn.onExcute((isResult, data) -> {
+//            list = new Gson().fromJson(data, new TypeToken<ArrayList<AlarmVO>>(){}.getType());
+//        });
+//    }
 }
