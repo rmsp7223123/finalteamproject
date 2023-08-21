@@ -69,6 +69,7 @@ public class FindLockPWActivity extends AppCompatActivity {
                         conn1.onExcute((isResult1, data1) -> {
                             Intent intent = new Intent(this, SplashActivity.class);
                             Toast.makeText(this, "잠금화면이 초기화 되었습니다.", Toast.LENGTH_SHORT).show();
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
                         });
 //                        SharedPreferences pref = getSharedPreferences("loginInfo", MODE_PRIVATE);

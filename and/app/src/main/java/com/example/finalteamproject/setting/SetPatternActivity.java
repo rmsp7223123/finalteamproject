@@ -46,6 +46,7 @@ public class SetPatternActivity extends AppCompatActivity {
                     Toast.makeText(SetPatternActivity.this, "패턴이 너무 짧습니다. 다시 입력해주세요.", Toast.LENGTH_SHORT).show();
                     binding.patternLockView.clearPattern();
                 } else {
+                    Toast.makeText(SetPatternActivity.this, "패턴을 한번 더 입력해주세요", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(SetPatternActivity.this, CheckPatternActivity.class);
                     intent.putExtra("pw",pw);
                     startActivity(intent);
