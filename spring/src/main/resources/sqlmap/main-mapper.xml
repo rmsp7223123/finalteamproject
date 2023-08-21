@@ -50,7 +50,7 @@
 	</select>
 
 	<delete id="deleteAlarm">
-		delete alarm where receive_id = #{receive_id}
+		delete alarm where receive_id = #{receive_id} AND alarm_content LIKE '%'||#{nickname}||'%' AND alarm_content LIKE '%'||#{alarm_content2}||'%'
 	</delete>
 
 	<delete id="deleteOneAlarm">

@@ -34,6 +34,7 @@ import com.google.rpc.context.AttributeContext.Response;
 import cloud.gps.GpsVO;
 import cloud.member.AlarmVO;
 import cloud.member.FavorVO;
+import cloud.member.FriendVO;
 import cloud.member.MemberVO;
 import cloud.setting.OptionVO;
 
@@ -142,9 +143,19 @@ public class MainController {
 		return list;
 	}
 
-	@RequestMapping("/deleteAlarm")
-	public String deleteAlarm(String receive_id) {
-		return new Gson().toJson(sql.delete("main.deleteAlarm", receive_id));
+
+	@RequestMapping(value = "/deleteAlarm", produces = "text/html;charset=utf-8")
+	public String deleteAlarm(String receive_id, String nickname,  String alarm_content2) {
+		HashMap<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("receive_id", receive_id);
+		paramMap.put("nickname", nickname  );
+		paramMap.put("alarm_content2",  alarm_content2  );
+		
+		int result = sql.delete("main.deleteAlarm", paramMap);
+		System.out.println(result);
+		List<AlarmVO> list = sql.selectList("main.viewAlarm", receive_id);
+		return new Gson().toJson(list);
+		//./return new Gson().toJson(sql.delete("main.deleteAlarm", paramMap));
 	}
 
 	@RequestMapping(value = "/addAlarm")
@@ -226,5 +237,11 @@ public class MainController {
 	public Integer ViewAlarmCnt(String receive_id) {
 		Integer cnt = sql.selectOne("main.viewAlarmCnt", receive_id);
 		return cnt;
+	}
+	
+	@RequestMapping(value = "/detail", produces = "text/html;charset=utf-8")
+	public String detail(String member_id) {
+		List<MemberVO> list = sql.selectList("main.detail", member_id);
+		return new Gson().toJson(list);
 	}
 }

@@ -422,10 +422,6 @@ public class MainFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        // ...
-
-        // 브로드캐스트 리시버 등록
         IntentFilter filter = new IntentFilter("update-alarm-count");
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(updateAlarmCountReceiver, filter);
     }
@@ -433,8 +429,6 @@ public class MainFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
-        // 브로드캐스트 리시버 해제
         LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(updateAlarmCountReceiver);
     }
 

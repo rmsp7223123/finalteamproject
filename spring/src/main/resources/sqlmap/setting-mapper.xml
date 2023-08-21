@@ -96,4 +96,7 @@
 		END
 		WHERE member_id = #{member_id}
 	</update>
+	<update id="updateFont">
+		UPDATE option_table set option_font_size = #{option_font_size} where member_id = #{member_id}
+	</update>
 </mapper>

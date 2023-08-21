@@ -51,7 +51,8 @@ public class SplashActivity extends AppCompatActivity {
                 conn.onExcute((isResult, data) -> {
                     CommonVar.logininfo = new Gson().fromJson(data, MemberVO.class);
                     if (CommonVar.logininfo != null) {
-                        test();
+                        getToken();
+                        checkOption();
                         CommonConn conn1 = new CommonConn(this, "setting/inquirePw");
                         conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
                         conn1.onExcute((isResult1, data1) -> {
@@ -103,7 +104,7 @@ public class SplashActivity extends AppCompatActivity {
 
     }
 
-    public void test(){
+    public void getToken(){
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(new OnCompleteListener<String>() {
                     @Override
@@ -122,5 +123,13 @@ public class SplashActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+
+    public void checkOption() {
+        CommonConn conn1 = new CommonConn(this, "setting/viewOption");
+        conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+        conn1.onExcute((isResult, data) -> {
+
+        });
     }
 }

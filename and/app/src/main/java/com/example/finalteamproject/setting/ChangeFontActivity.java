@@ -12,13 +12,22 @@ import android.preference.PreferenceManager;
 import android.util.TypedValue;
 
 import com.example.finalteamproject.R;
+import com.example.finalteamproject.common.CommonConn;
+import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.databinding.ActivityChangeFontBinding;
+import com.example.finalteamproject.main.OptionVO;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.ArrayList;
 
 public class ChangeFontActivity extends AppCompatActivity {
 
     ActivityChangeFontBinding binding;
 
     int themeResId = R.style.FontSmall; // 기본값은 작게
+
+    int savedItem = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +37,7 @@ public class ChangeFontActivity extends AppCompatActivity {
         binding.imgvBack.setOnClickListener(v -> {
             finish();
         });
+        changeFontSize();
         binding.tvFontSize.setOnClickListener(view -> {
             String[] dialog_item = {"작게", "중간", "크게"};
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -42,6 +52,7 @@ public class ChangeFontActivity extends AppCompatActivity {
                 } else if (i == 2) {
                     themeResId = R.style.FontLarge;
                 }
+                savedItem = i;
 
             });
             builder.setPositiveButton("취소", new DialogInterface.OnClickListener() {
@@ -54,9 +65,15 @@ public class ChangeFontActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     // 테마 변경 및 액티비티 재시작
-                    setTheme(themeResId);
-                    recreate();
-                    dialog.dismiss();
+                    CommonConn conn = new CommonConn(ChangeFontActivity.this, "setting/updateFont");
+                    conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                    conn.addParamMap("option_font_size", dialog_item[savedItem]);
+                    conn.onExcute((isResult, data) -> {
+                        setTheme(themeResId);
+                        recreate();
+                        dialog.dismiss();
+                        changeFontSize();
+                    });
                 }
             });
 
@@ -64,6 +81,15 @@ public class ChangeFontActivity extends AppCompatActivity {
             dialog.show();
         });
         // 글씨 크기 조절, 글씨 색깔 변경 dialog로 띄워서 처리 하기
+    }
+
+    public void changeFontSize() {
+        CommonConn conn1 = new CommonConn(this, "setting/viewOption");
+        conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+        conn1.onExcute((isResult, data) -> {
+            ArrayList<OptionVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<OptionVO>>(){}.getType());
+            binding.tvFontSize.setText(list.get(0).getOption_font_size());
+        });
     }
 
 }
