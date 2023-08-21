@@ -22,6 +22,12 @@ public class GpsController {
 		List<GpsVO> list = dao.senior_list(senior_latitude, senior_longitude, zoom_level);
 		return new Gson().toJson(list);
 	}
+	
+	@RequestMapping(value = "/detail", produces = "text/html;charset=utf-8")
+	public String senior_detail(int key) {
+		List<GpsVO> list = dao.senior_detail(key);
+		return new Gson().toJson(list);
+	}
 
 	@RequestMapping(value = "/likelist", produces = "text/html;charset=utf-8")
 	public String senior_like(String member_id) {

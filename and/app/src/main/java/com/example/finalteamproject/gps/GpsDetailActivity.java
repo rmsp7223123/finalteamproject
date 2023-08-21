@@ -28,9 +28,9 @@ public class GpsDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(binding.getRoot());
 
-        binding.btnBack.setOnClickListener(v -> {
-            finish();
-        });
+//        binding.btnBack.setOnClickListener(v -> {
+//            finish();
+//        });
 
         //fragment의 리사이클러뷰에서 받아온 정보를 상세하게 보여줌
         //상세화면 구성

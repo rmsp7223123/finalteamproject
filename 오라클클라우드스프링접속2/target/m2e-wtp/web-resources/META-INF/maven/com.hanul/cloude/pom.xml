@@ -117,12 +117,12 @@
 			<scope>test</scope>
 		</dependency>    
 		
-		
-		<!-- DBCP(DataBase Connection Pool) -->
+
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2 -->
 		<dependency>
-			<groupId>commons-dbcp</groupId>
-			<artifactId>commons-dbcp</artifactId>
-			<version>1.4</version>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-dbcp2</artifactId>
+			<version>2.9.0</version>
 		</dependency>
 
 		<!-- 오라클용 jdbc -->

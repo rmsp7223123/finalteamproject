@@ -22,6 +22,10 @@ public class GpsDAO {
 		return sql.selectList("gps.list", map);
 	}
 
+	public List<GpsVO> senior_detail(int key) {
+		return sql.selectList("gps.detail", key);
+	}
+	
 	public List<GpsVO> senior_like(String member_id) {
 		return sql.selectList("gps.likelist", member_id);
 	}

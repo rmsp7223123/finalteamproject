@@ -2,6 +2,7 @@ package com.example.finalteamproject.gps;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,11 +10,14 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.manager.SupportRequestManagerFragment;
+import com.example.finalteamproject.common.CommonConn;
+import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.databinding.ItemGpsBinding;
 
 import java.util.ArrayList;
@@ -23,10 +27,13 @@ public class GpsAdapter extends RecyclerView.Adapter<GpsAdapter.ViewHolder> {
     ItemGpsBinding binding;
     ArrayList<GpsVO> list;
     Context context;
+    GpsFragment gpsFragment;
 
-    public GpsAdapter(ArrayList<GpsVO> list) {
+    public GpsAdapter(ArrayList<GpsVO> list, GpsFragment gpsFragment) {
         this.list = list;
+        this.gpsFragment = gpsFragment;
     }
+
 
     @NonNull
     @Override
@@ -44,6 +51,7 @@ public class GpsAdapter extends RecyclerView.Adapter<GpsAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder h, int i) {
+
         if(list == null || list.size() == 0 || h.binding == null){
 
         }else{
@@ -67,15 +75,63 @@ public class GpsAdapter extends RecyclerView.Adapter<GpsAdapter.ViewHolder> {
         //좋아요 수
         h.binding.seniorLike.setText(list.get(i).getSenior_like_num()+"");
 
-        //상세페이지로 전달할 값
+        //상세페이지(프래그먼트)
         h.binding.itemSenior.setOnClickListener(v -> {
-            Intent intent = new Intent(context, GpsDetailActivity.class);
-            intent.putExtra("senior_key", list.get(i).getKey());
-            intent.putExtra("senior_name", h.binding.seniorName.getText().toString());
-            intent.putExtra("senior_address", h.binding.seniorRoadaddress.getText().toString());
-            intent.putExtra("senior_phone", h.binding.seniorPhone.getText().toString());
-            intent.putExtra("senior_like", h.binding.seniorLike.getText().toString());
-            context.startActivity(intent);
+            gpsFragment.binding.lnDetail.setVisibility(View.VISIBLE);
+            CommonConn conn = new CommonConn(v.getContext(), "gps/detail");
+            conn.addParamMap("key", list.get(i).getKey());
+            gpsFragment.binding.seniorName.setText(list.get(i).getSenior_name()+"");
+            if (list.get(i).getSenior_roadaddress() == null){
+                gpsFragment.binding.seniorAddress.setText("주소 정보 없음");
+            }else {
+                gpsFragment.binding.seniorAddress.setText(list.get(i).getSenior_roadaddress()+"");
+            }
+            if(list.get(i).getSenior_call() == null){
+                gpsFragment.binding.phoneNumber.setText("전화번호 정보 없음");
+            }else {
+                gpsFragment.binding.phoneNumber.setText(list.get(i).getSenior_call()+"");
+            }
+            gpsFragment.binding.seniorLike.setText("좋아요 "+list.get(i).getSenior_like_num()+"");
+
+            //좋아요 버튼 활성/비활성화
+            gpsFragment.binding.like.setVisibility(View.INVISIBLE);
+            CommonConn connlike = new CommonConn(v.getContext(), "gps/likeyet");
+            connlike.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+            connlike.addParamMap("key", list.get(i).getKey());
+            connlike.onExcute((isResult, data) -> {
+                if (data.equals(list.get(i).getKey()+"")){
+                    gpsFragment.binding.like.setVisibility(View.VISIBLE);
+                }
+            });
+
+            //좋아요 : 회색버튼 누르면 빨간색으로 변함
+            gpsFragment.binding.unlike.setOnClickListener(v1 -> {
+                CommonConn connl = new CommonConn(v1.getContext(), "gps/likebtn");
+                connl.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                connl.addParamMap("key", list.get(i).getKey());
+                connl.onExcute((isResult, data) -> {
+                    gpsFragment.binding.unlike.setVisibility(View.GONE);
+                    gpsFragment.binding.like.setVisibility(View.VISIBLE);
+                    gpsFragment.likelist();
+                });
+            });
+
+            //좋아요 취소 : 빨간 버튼 누르면 회색으로 변함
+            gpsFragment.binding.like.setOnClickListener(v1 -> {
+                CommonConn connul = new CommonConn(v1.getContext(), "gps/unlikebtn");
+                connul.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                connul.addParamMap("key", list.get(i).getKey());
+                connul.onExcute((isResult, data) -> {
+                    gpsFragment.binding.like.setVisibility(View.GONE);
+                    gpsFragment.binding.unlike.setVisibility(View.VISIBLE);
+                    gpsFragment.likelist();
+                });
+            });
+
+
+            gpsFragment.moveCamera(list.get(i).getSenior_latitude() , list.get(i).getSenior_longitude());
+
+
         });
         }
     }
