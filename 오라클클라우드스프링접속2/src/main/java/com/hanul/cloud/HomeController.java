@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -32,8 +33,9 @@ public class HomeController {
 	
 	@Autowired @Qualifier("test") SqlSession sql;
 	
-	@RequestMapping("/test1")
-	public String test1() {
+	@RequestMapping({"/home", "/"})
+	public String home(HttpSession session) {
+		session.setAttribute("category", null);
 		return "home";
 	}
 	
