@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+<beans:beans
+	xmlns="http://www.springframework.org/schema/mvc"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
@@ -7,13 +8,14 @@
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
-	
+	<!-- DispatcherServlet Context: defines this servlet's request-processing 
+		infrastructure -->
+
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
-	
-	
-	
+
+
+
 
 	<resources location="/resources/css/" mapping="/css/**" />
 	<resources location="/resources/js/" mapping="/js/**" />
@@ -22,13 +24,15 @@
 	<resources location="/resources/vendor/" mapping="/vendor/**" />
 	<resources mapping="/resources/**" location="/resources/" />
 
-	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
-	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
+		in the /WEB-INF/views directory -->
+	<beans:bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 		<beans:property name="order" value="2" />
 	</beans:bean>
-	
+
 	<beans:bean
 		class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
 		<beans:property name="order" value="1" />
@@ -38,9 +42,23 @@
 		<beans:property name="definitions"
 			value="/WEB-INF/views/tiles/config.xml" />
 	</beans:bean>
+
+	<context:component-scan
+		base-package="com.hanul.cloudWeb" />
+
+	<beans:bean id="LoginInterceptor"
+		class="cloudWeb.Common.LoginInterceptor">
+	</beans:bean>
+	<interceptors>
+		<interceptor>
+			<mapping path="/**/**" />
+			<mapping path="/**" />
+			<beans:ref bean="LoginInterceptor" />
+		</interceptor>
+	</interceptors>
 	
-	<context:component-scan base-package="com.hanul.cloudWeb" />
-	
-	
-	
+	<context:component-scan base-package="cloudWeb" />
+
+
+
 </beans:beans>
