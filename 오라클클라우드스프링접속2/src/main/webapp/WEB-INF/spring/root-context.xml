@@ -9,4 +9,5 @@
 					<!-- <context:component-scan 
 			base-package="customer,member,common"/> -->
 			<import resource="classpath:data/default.xml"/>
+			<context:component-scan base-package="cloudWeb"></context:component-scan>
 </beans>
