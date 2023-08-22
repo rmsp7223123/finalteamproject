@@ -51,8 +51,8 @@
 	</beans:bean>
 	<interceptors>
 		<interceptor>
-			<mapping path="/**/**" />
-			<mapping path="/**" />
+			<mapping path="/home" />
+			<exclude-mapping path="/"/>
 			<beans:ref bean="LoginInterceptor" />
 		</interceptor>
 	</interceptors>

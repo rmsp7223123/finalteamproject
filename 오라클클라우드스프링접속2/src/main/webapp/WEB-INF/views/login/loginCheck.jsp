@@ -8,18 +8,19 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<input type="hidden" name="url" value="<c:url value ="/"/>" />
-	<form method="post"></form>
+<%-- 	<input type="hidden" name="url" value="<c:url value ="/"/>" /> --%>
+<!-- 	<form method="post"></form> -->
 
 	<script>
-	
-	if(${admin} != 1) {
-		alert('없는 계정입니다.')
-	} else {		
-	$("[name=url]").val("home");
-	}
-	$("form").attr("action", $("[name=url]").val());
-	$("form").submit();
-</script>
+		// 	if(${admin} != 1) {
+		alert('없는 계정입니다.');
+		location.href = "<c:url value='/' />";
+
+		// 	} else {		
+		// 	$("[name=url]").val("home");
+		// 	}
+		// 	$("form").attr("action", $("[name=url]").val());
+		// 	$("form").submit();
+	</script>
 </body>
 </html>

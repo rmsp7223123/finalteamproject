@@ -10,13 +10,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import cloudWeb.member.MemberVO;
 
 @Controller
-public class HomeController implements HandlerInterceptor{
+public class HomeController {
 
 	@Autowired
 	@Qualifier("project")
@@ -33,38 +34,28 @@ public class HomeController implements HandlerInterceptor{
 		return "default/login/login";
 	}
 
-	@RequestMapping(value = "/loginCheck")
-	public String loginCheck(MemberVO vo, Model model) {
+	@RequestMapping(value = "/loginCheck", method = RequestMethod.POST)
+	public String loginCheck(MemberVO vo, Model model, HttpSession session, HttpServletRequest request) {
+		String returnUrl = "";
+
+		if (session.getAttribute("id") != null) {
+			session.removeAttribute("id");
+		}
 		int admin = sql.selectOne("login.loginCheck", vo);
 		model.addAttribute("admin", admin);
-		return "default/login/loginCheck";
-	}
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
-		return false;
-	}
-
-	@Override
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-			ModelAndView modelAndView) throws Exception {
-		
-	}
-
-	@Override
-	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
-			throws Exception {
-		
+		session.setAttribute("admin", admin);
+		if (admin == 1) {
+			String priorUrl = (String) session.getAttribute("url_prior_login");
+			if (priorUrl != null) {
+				returnUrl = "redirect:" +  priorUrl;
+				session.removeAttribute("url_prior_login");
+			} else {
+				returnUrl = "redirect:/home";
+			}
+		} else {
+			returnUrl = "redirect:default/login/loginCheck";
+		}
+		return returnUrl;
 	}
 
 }
