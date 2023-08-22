@@ -110,5 +110,9 @@ public class SettingController {
 		paramMap.put("option_font_size", vo.getOption_font_size());
 		return new Gson().toJson(sql.update("setting.updateFont", paramMap));
 	}
+	@RequestMapping("/updateGodokAlarm")
+	public String updateGodokAlarm(String member_id) {
+		return new Gson().toJson(sql.update("setting.updateGodokAlarm", member_id));
+	}
 
 }
