@@ -1,5 +1,6 @@
 package com.hanul.cloudWeb;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -57,6 +58,11 @@ public class HomeController implements HandlerInterceptor {
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:/";
+	}
+	
+	@RequestMapping("/error")
+	public String handleError(HttpServletRequest req) {
+		return "default/error/error";
 	}
 
 }
