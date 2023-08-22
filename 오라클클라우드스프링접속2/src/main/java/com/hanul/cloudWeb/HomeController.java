@@ -10,14 +10,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import cloudWeb.member.MemberVO;
 
 @Controller
-public class HomeController {
+public class HomeController implements HandlerInterceptor {
 
 	@Autowired
 	@Qualifier("project")
@@ -34,28 +34,29 @@ public class HomeController {
 		return "default/login/login";
 	}
 
-	@RequestMapping(value = "/loginCheck", method = RequestMethod.POST)
-	public String loginCheck(MemberVO vo, Model model, HttpSession session, HttpServletRequest request) {
+	@RequestMapping(value = "/loginCheck")
+	@ResponseBody
+	public int loginCheck(MemberVO vo, Model model, HttpSession session) {
 		String returnUrl = "";
-
-		if (session.getAttribute("id") != null) {
-			session.removeAttribute("id");
+		if (session.getAttribute("admin") != null) {
+			session.removeAttribute("admin");
 		}
 		int admin = sql.selectOne("login.loginCheck", vo);
 		model.addAttribute("admin", admin);
-		session.setAttribute("admin", admin);
-		if (admin == 1) {
-			String priorUrl = (String) session.getAttribute("url_prior_login");
-			if (priorUrl != null) {
-				returnUrl = "redirect:" +  priorUrl;
-				session.removeAttribute("url_prior_login");
-			} else {
-				returnUrl = "redirect:/home";
-			}
-		} else {
-			returnUrl = "redirect:default/login/loginCheck";
+		if (admin == 1) { // 로그인 성공
+			session.setAttribute("admin", admin);
+			returnUrl = "redirect:/";
+		} else { // 로그인 실패
+			returnUrl = "redirect:/";
 		}
-		return returnUrl;
+		return admin;
+//		return "redirect:/default/login/loginCheck";
+	}
+
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/";
 	}
 
 }

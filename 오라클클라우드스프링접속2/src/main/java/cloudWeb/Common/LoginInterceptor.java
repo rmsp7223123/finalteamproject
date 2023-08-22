@@ -13,18 +13,14 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		// 컨트롤러보다 먼저 수행되는 메소드
+		
 		HttpSession session = request.getSession();
-		Integer admin = (Integer) session.getAttribute("admin");
-
-		if (admin != 1 || admin == null) {
-			String urlPrior = request.getRequestURL().toString() + "?" + request.getQueryString();
-			request.getSession().setAttribute("url_prior_login", urlPrior);
-
+		Object obj = session.getAttribute("admin");
+		
+		if(obj == null ) {
 			response.sendRedirect(request.getContextPath());
 			return false;
-
 		}
-		
 		return true;
 	}
 

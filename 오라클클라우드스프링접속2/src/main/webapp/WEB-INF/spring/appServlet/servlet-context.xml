@@ -51,12 +51,17 @@
 	</beans:bean>
 	<interceptors>
 		<interceptor>
+			<mapping path="/cs/**" />
+			<mapping path="/cu/**" />
+			<mapping path="/go/**" />
+			<mapping path="/vi/**" />
 			<mapping path="/home" />
-			<exclude-mapping path="/"/>
+			<exclude-mapping path="/" />
+<!-- 			<exclude-mapping path="/loginCheck" /> -->
 			<beans:ref bean="LoginInterceptor" />
 		</interceptor>
 	</interceptors>
-	
+
 	<context:component-scan base-package="cloudWeb" />
 
 
