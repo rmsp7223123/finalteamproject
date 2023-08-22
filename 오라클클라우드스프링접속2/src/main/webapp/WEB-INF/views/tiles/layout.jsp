@@ -44,6 +44,7 @@
 
 <!-- Custom styles for this template-->
 <link href="<c:url value = '/css/sb-admin-2.min.css'/>" rel="stylesheet">
+<link href="<c:url value='/css/common.css?${now }'/>" rel="stylesheet" />
 
 </head>
 
@@ -71,7 +72,7 @@
 			<hr class="sidebar-divider my-0">
 			<!-- Nav Item - Pages Collapse Menu -->
 			<li class="${category eq 'cu' ? 'active':''} nav-item"><a
-				class="nav-link" href="<c:url value = '/cu/home'/>"> <i
+				class="nav-link" href="<c:url value = '/cu/list'/>"> <i
 					class="fas fa-fw fa-cog"></i> <span>회원 관리</span>
 			</a></li>
 			<li class="${category eq 'cs' ? 'active':''} nav-item"><a
@@ -198,6 +199,12 @@
 	<!-- Page level custom scripts -->
 	<script src="<c:url value = '/js/demo/chart-area-demo.js'/>"></script>
 	<script src="<c:url value = '/js/demo/chart-pie-demo.js'/>"></script>
+	<script type="text/javascript" src="<c:url value = '/js/common.js'/>"></script>
+	
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="<c:url value='/js/scripts.js'/>"></script>
 
 </body>
 
