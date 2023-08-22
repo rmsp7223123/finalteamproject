@@ -37,9 +37,9 @@ public class GpsLikeActivity extends AppCompatActivity {
         conn.onExcute((isResult, data) -> {
             ArrayList<GpsVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<GpsVO>>(){}.getType());
             //자주 가는 경로당(리사이클러뷰)
-            GpsLikeAdapter adapter = new GpsLikeAdapter(list);
-            binding.recvGpsLike.setAdapter(adapter);
-            binding.recvGpsLike.setLayoutManager(new LinearLayoutManager(this));
+          //  GpsLikeAdapter adapter = new GpsLikeAdapter(list);
+           // binding.recvGpsLike.setAdapter(adapter);
+          //  binding.recvGpsLike.setLayoutManager(new LinearLayoutManager(this));
 
         });
     }

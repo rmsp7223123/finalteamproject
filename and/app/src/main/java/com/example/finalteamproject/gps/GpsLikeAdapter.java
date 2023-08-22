@@ -19,9 +19,13 @@ public class GpsLikeAdapter extends RecyclerView.Adapter<GpsLikeAdapter.ViewHold
     ItemGpslikeBinding binding;
     ArrayList<GpsVO> list;
 
-    public GpsLikeAdapter(ArrayList<GpsVO> list) {
+    GpsFragment gpsFragment;
+
+    public GpsLikeAdapter(ArrayList<GpsVO> list, GpsFragment gpsFragment) {
         this.list = list;
+        this.gpsFragment = gpsFragment;
     }
+
 
     @NonNull
     @Override
@@ -46,6 +50,7 @@ public class GpsLikeAdapter extends RecyclerView.Adapter<GpsLikeAdapter.ViewHold
                 h.binding.like.setVisibility(View.GONE);
                 h.binding.unlike.setVisibility(View.VISIBLE);
                 Toast.makeText(v.getContext(), "자주가는 경로당이 삭제되었습니다", Toast.LENGTH_SHORT).show();
+                gpsFragment.likelist();
             });
         });
 
@@ -57,7 +62,12 @@ public class GpsLikeAdapter extends RecyclerView.Adapter<GpsLikeAdapter.ViewHold
                 h.binding.unlike.setVisibility(View.GONE);
                 h.binding.like.setVisibility(View.VISIBLE);
                 Toast.makeText(v.getContext(), "자주가는 경로당이 추가되었습니다", Toast.LENGTH_SHORT).show();
+                gpsFragment.likelist();
             });
+        });
+
+        h.binding.senoirLikeinfo.setOnClickListener(v -> {
+            gpsFragment.selectDetail(list.get(i));
         });
     }
 

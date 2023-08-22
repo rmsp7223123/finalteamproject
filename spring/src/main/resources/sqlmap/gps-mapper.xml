@@ -24,8 +24,8 @@
 		 ]]>
 		RTRIM(TO_CHAR(DISTANCE*1000 , 'FM9990D99'),'.')||'m' ELSE
 		DISTANCE||'km' END distance,T.*
-		, S.* , (SELECT COUNT(*) FROM
-		SENIOR_BMARK B WHERE B.KEY = S.KEY )
+		, S.* , (SELECT SENIOR_LIKE_NUM FROM
+		SENIOR_LIKE B WHERE B.KEY = S.KEY )
 		SENIOR_LIKE_NUM
 		from
 		(
@@ -51,19 +51,20 @@
 
 	<!-- 경로당 상세정보 조회 -->
 	<select id="detail" resultType="cloud.gps.GpsVO">
-	select * from senior
-	where key = #{key}
+		select s.*, l.senior_like_num
+		from senior s, senior_like l
+		where s.key = l.key and s.key=#{key}
 	</select>
-	
+
 	<!-- 자주가는 경로당 목록 -->
 	<select id="likelist" resultType="cloud.gps.GpsVO">
 		select b.member_id, b.KEY,
-		s.SENIOR_NAME, s.SENIOR_ROADADDRESS
-		from senior_bmark b
-		left join senior
-		s
-		on b.key=s.key
-		where member_id=#{member_id}
+		s.SENIOR_NAME, s.SENIOR_ROADADDRESS, s.SENIOR_LATITUDE,
+		s.SENIOR_LONGITUDE, l.SENIOR_LIKE_NUM
+		from senior_bmark b, senior s,
+		SENIOR_LIKE l
+		where b.key=s.key and s.key=l.key and
+		b.member_id=#{member_id}
 	</select>
 
 	<!-- 좋아요 버튼 선택시 자주가는 경로당 등록 -->
@@ -124,8 +125,27 @@
 		LIKE '%'||#{keyword}||'%'
 		ORDER BY s.KEY
 	</select>
-	
-	<select id="like_count" resultType="string"> 
-		select senior_like_num from senior_like where key = #{key} 
+
+	<select id="like_count" resultType="string">
+		select senior_like_num from
+		senior_like where key = #{key}
 	</select>
+
+	<insert id="location">
+		insert into LOCATION (MEMBER_ID, LOCATION_LATITUDE,
+		LOCATION_LONGITUDE,
+		LOCATION_TIME)
+		values (#{member_id},
+		#{senior_latitude},
+		#{senior_longitude}, sysdate)
+	</insert>
+
+	<update id="locationupdate">
+		UPDATE LOCATION
+		SET MEMBER_ID = #{member_id}, LOCATION_LATITUDE=#{senior_latitude},
+		LOCATION_LONGITUDE=#{senior_longitude},
+		LOCATION_TIME=sysdate
+		WHERE member_id=#{member_id}
+	</update>
+
 </mapper>

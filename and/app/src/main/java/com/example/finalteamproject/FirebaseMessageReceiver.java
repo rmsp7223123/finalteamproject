@@ -48,7 +48,7 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
 
-//  DatabaseReference def = databaseReference.child("chat").child(CommonVar.logininfo.getMember_id());
+//    DatabaseReference def = databaseReference.child("chat").child(CommonVar.logininfo.getMember_id());
 
     public static String friend_id = "";
 
