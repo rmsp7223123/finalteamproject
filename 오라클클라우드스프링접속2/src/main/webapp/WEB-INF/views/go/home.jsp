@@ -8,6 +8,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>고독사확인용</h1>
+
 </body>
 </html>
