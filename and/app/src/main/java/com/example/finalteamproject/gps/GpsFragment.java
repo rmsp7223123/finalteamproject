@@ -329,8 +329,8 @@ public void moveCamera(String lat , String log){
         //좋아요 : 회색버튼 누르면 빨간색으로 변함
         binding.unlike.setOnClickListener(v1 -> {
             CommonConn connl = new CommonConn(v1.getContext(), "gps/likebtn");
-            connl.addParamMap("member_id", CommonVar.logininfo.getMember_id());
             connl.addParamMap("key", vo.getKey());
+            connl.addParamMap("member_id", CommonVar.logininfo.getMember_id());
             connl.onExcute((isResult, data) -> {
                 binding.unlike.setVisibility(View.GONE);
                 binding.like.setVisibility(View.VISIBLE);
@@ -343,8 +343,8 @@ public void moveCamera(String lat , String log){
         //좋아요 취소 : 빨간 버튼 누르면 회색으로 변함
         binding.like.setOnClickListener(v1 -> {
             CommonConn connul = new CommonConn(v1.getContext(), "gps/unlikebtn");
-            connul.addParamMap("member_id", CommonVar.logininfo.getMember_id());
             connul.addParamMap("key", vo.getKey());
+            connul.addParamMap("member_id", CommonVar.logininfo.getMember_id());
             connul.onExcute((isResult, data) -> {
                 binding.like.setVisibility(View.GONE);
                 binding.unlike.setVisibility(View.VISIBLE);
