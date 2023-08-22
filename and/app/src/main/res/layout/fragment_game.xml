@@ -25,8 +25,8 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:layout_gravity="center"
                     android:layout_marginTop="40dp"
-                    android:layout_marginLeft="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/memory_game"/>
@@ -48,7 +48,7 @@
                     android:layout_marginLeft="30dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="3. 새로 등장한 동물을 눌러주세요."
+                    android:text="3. 마지막에 등장한 동물을 눌러주세요."
                     android:textSize="20sp" />
             </LinearLayout>
 

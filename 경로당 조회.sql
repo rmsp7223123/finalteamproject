@@ -39,11 +39,17 @@ select * from SENIOR_BMARK
 where member_id='admin';
 
 --Á¶È¸ Äõ¸® mapper
-select b.member_id, b.KEY, s.SENIOR_NAME, s.SENIOR_ROADADDRESS
+select b.member_id, b.KEY, s.SENIOR_NAME, s.SENIOR_ROADADDRESS, s.SENIOR_LATITUDE, s.SENIOR_LONGITUDE
 from senior_bmark b
 left join senior s
 on b.key=s.key
 where member_id='test';
+
+--¼öÁ¤
+select b.member_id, b.KEY, s.SENIOR_NAME, s.SENIOR_ROADADDRESS, s.SENIOR_LATITUDE, s.SENIOR_LONGITUDE, l.SENIOR_LIKE_NUM
+from senior_bmark b, senior s, SENIOR_LIKE l
+where b.key=s.key and s.key=l.key and b.member_id='test'
+;
 
 
 --mapper
@@ -88,6 +94,16 @@ select * from senior where SENIOR_ROADADDRESS like '%±¤ÁÖ±¤¿ª½Ã%';
 
 select * from senior where key=12;
 
+select s.*, l.senior_like_num
+from senior s, senior_like l
+where s.key = l.key and s.key=6911;
+
+
+select b.member_id, b.KEY, s.SENIOR_NAME, s.SENIOR_ROADADDRESS, s.SENIOR_LATITUDE, s.SENIOR_LONGITUDE, l.SENIOR_LIKE_NUM
+from senior_bmark b, senior s, SENIOR_LIKE l
+where b.key=s.key and s.key=l.key and b.member_id='test'
+;
+
 
 rollback;
 commit;
@@ -113,20 +129,28 @@ SELECT  CASE WHEN DISTANCE < 1 THEN RTRIM(TO_CHAR(DISTANCE*1000 , 'FM9990D99'),'
     WHERE T.NO < 20 ;
 
 --¼öÁ¤ 1
-SELECT  CASE WHEN DISTANCE < 1 THEN RTRIM(TO_CHAR(DISTANCE*1000 , 'FM9990D99'),'.')||'m' ELSE DISTANCE||'km' END distance,T.*
-        , S.* ,  (SELECT COUNT(*) FROM SENIOR_BMARK B WHERE B.KEY = S.KEY ) SENIOR_LIKE_NUM
-    from 
-     (
-        SELECT ROWNUM no, C.DISTANCE , S.KEY 
-        FROM SENIOR S LEFT OUTER JOIN 
-        (SELECT  KEY , DISTNACE_WGS84(35.1535583, 126.8879957, SENIOR_LATITUDE, SENIOR_LONGITUDE) AS DISTANCE
-           FROM SENIOR S
-      
-        ) C ON S.KEY=C.KEY
-        WHERE S.SENIOR_ROADADDRESS LIKE '%±¤ÁÖ%'
-        ORDER BY C.DISTANCE ASC
-    ) T INNER JOIN SENIOR S ON T.KEY = S.KEY
-    WHERE T.NO < 20 ;
+SELECT ROWNUM no, CASE WHEN DISTANCE < 1 THEN
+		RTRIM(TO_CHAR(DISTANCE*1000 , 'FM9990D99'),'.')||'m' ELSE
+		DISTANCE||'km' END distance,T.*
+		, S.* , (SELECT SENIOR_LIKE_NUM FROM
+		SENIOR_LIKE B WHERE B.KEY = S.KEY )
+		SENIOR_LIKE_NUM
+		from
+		(
+		SELECT ROWNUM
+		no ,
+		C.DISTANCE , S.KEY , S.SENIOR_ROADADDRESS
+		FROM SENIOR S LEFT OUTER
+		JOIN
+		(SELECT KEY , DISTNACE_WGS84(35.1535583,
+		 126.8879957,
+		SENIOR_LATITUDE, SENIOR_LONGITUDE) AS DISTANCE
+		FROM SENIOR S
+		) C ON
+		S.KEY=C.KEY
+		ORDER BY C.DISTANCE ASC
+		) T INNER JOIN
+		SENIOR S ON T.KEY = S.KEY
 --14 = 10
 --17 =
 
@@ -186,5 +210,18 @@ SELECT ROWNUM no, CASE WHEN DISTANCE < 1 THEN
 		S.KEY=C.KEY
 		ORDER BY C.DISTANCE ASC
 		) T INNER JOIN SENIOR S ON T.KEY = S.KEY
-		 WHERE ROWNUM < 61
+		 WHERE ROWNUM < 61;
 
+
+select *
+from location;
+
+
+UPDATE LOCATION
+SET MEMBER_ID = 'conan1', LOCATION_LATITUDE=11, LOCATION_LONGITUDE=11, LOCATION_TIME=sysdate
+WHERE member_id='conan1';
+
+rollback;
+
+select to_char(sysdate, 'YYYY-MM-DD HH24:MI:SS')
+FROM DUAL;

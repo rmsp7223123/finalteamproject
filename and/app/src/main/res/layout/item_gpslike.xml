@@ -7,6 +7,7 @@
     android:layout_margin="5dp">
 
     <LinearLayout
+        android:id="@+id/senoir_likeinfo"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="7"
@@ -42,5 +43,6 @@
             android:src="@drawable/ic_unlike"/>
 
     </RelativeLayout>
+
 
 </LinearLayout>
