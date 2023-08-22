@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Repository
 public class GpsDAO {
@@ -67,4 +68,20 @@ public class GpsDAO {
 		return sql.selectList("gps.search", keyword);
 	}
 
+	public void location(String senior_latitude, String senior_longitude, String member_id) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("senior_latitude", senior_latitude);
+		map.put("senior_longitude", senior_longitude);
+		map.put("member_id", member_id);
+		sql.insert("gps.location", map);
+	}
+	
+	public void locationupdate(String senior_latitude, String senior_longitude, String member_id) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("senior_latitude", senior_latitude);
+		map.put("senior_longitude", senior_longitude);
+		map.put("member_id", member_id);
+		sql.insert("gps.locationupdate", map);
+	}
+	
 }

@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
@@ -151,6 +152,14 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                 if(lat != location.getLatitude() && lon!=location.getLongitude()) {
                     lat = location.getLatitude();
                     lon = location.getLongitude();
+
+                    CommonConn conn = new CommonConn(getContext(), "gps/location");
+                    conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                    conn.addParamMap("senior_latitude", lat);
+                    conn.addParamMap("senior_longitude", lon);
+                    conn.onExcute((isResult, data) -> {
+
+                    });
                 }
             }
 
@@ -160,14 +169,13 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
         //지도 줌 레벨
         naverMap.addOnCameraIdleListener(() -> {
 
-
             if(lat == 0 || lon == 0) return;
             float ZoomLevel = (float) naverMap.getCameraPosition().zoom;
             if(CURR_ZOOM_LEVEL ==ZoomLevel ) return; //줌레벨이 클수록 결과값은 적게 나와야 함
             CommonConn conn = new CommonConn(getContext(), "gps/senior");
             conn.addParamMap("senior_latitude", lat);
             conn.addParamMap("senior_longitude", lon);
-
+            CURR_ZOOM_LEVEL = (int) ZoomLevel;
             Log.d("줌 카메라", "onCameraChange: " + ZoomLevel);
 
             int sendZoomLevel = 0 ;
@@ -253,6 +261,8 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
 
     }
 
+
+
     public void likelist(){
         CommonConn conn = new CommonConn(getContext(), "gps/likelist");
         conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
@@ -263,7 +273,7 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
             binding.recvBmark.setAdapter(adapter);
             binding.recvBmark.setLayoutManager(new LinearLayoutManager(getContext()));
 
-            GpsLikeAdapter likeadapter = new GpsLikeAdapter(list);
+            GpsLikeAdapter likeadapter = new GpsLikeAdapter(list,this);
             binding.recvSearchResult.setAdapter(likeadapter);
             binding.recvSearchResult.setLayoutManager(new LinearLayoutManager(getContext()));
         });
@@ -285,5 +295,67 @@ public void moveCamera(String lat , String log){
 }
 
 
+    public void selectDetail(GpsVO vo) {
+        binding.lnDetail.setVisibility(View.VISIBLE);
+        CommonConn conn = new CommonConn(getContext(), "gps/detail");
+        conn.addParamMap("key", vo.getKey());
+        binding.seniorName.setText(vo.getSenior_name()+"");
+        if (vo.getSenior_roadaddress() == null){
+            binding.seniorAddress.setText("주소 정보 없음");
+        }else {
+            binding.seniorAddress.setText(vo.getSenior_roadaddress()+"");
+        }
+        if(vo.getSenior_call() == null){
+            binding.phoneNumber.setText("전화번호 정보 없음");
+        }else {
+            binding.phoneNumber.setText(vo.getSenior_call()+"");
+        }
+        binding.seniorLike.setText("좋아요 "+vo.getSenior_like_num()+"");
+        //     if(vo.getSenior_call() == null){ => select nvl(adress , '주소 정보 없음')
+
+        //좋아요 버튼 활성/비활성화
+        binding.like.setVisibility(View.GONE);
+        binding.unlike.setVisibility(View.VISIBLE);
+        CommonConn connlike = new CommonConn(getContext(), "gps/likeyet");
+        connlike.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+        connlike.addParamMap("key", vo.getKey());
+        connlike.onExcute((isResult, data) -> {
+            if (data.equals(vo.getKey()+"")){
+                binding.like.setVisibility(View.VISIBLE);
+                binding.unlike.setVisibility(View.GONE);
+            }
+        });
+
+        //좋아요 : 회색버튼 누르면 빨간색으로 변함
+        binding.unlike.setOnClickListener(v1 -> {
+            CommonConn connl = new CommonConn(v1.getContext(), "gps/likebtn");
+            connl.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+            connl.addParamMap("key", vo.getKey());
+            connl.onExcute((isResult, data) -> {
+                binding.unlike.setVisibility(View.GONE);
+                binding.like.setVisibility(View.VISIBLE);
+                Toast.makeText(getContext(), "자주가는 경로당이 추가되었습니다.", Toast.LENGTH_SHORT).show();
+
+                likelist();
+            });
+        });
+
+        //좋아요 취소 : 빨간 버튼 누르면 회색으로 변함
+        binding.like.setOnClickListener(v1 -> {
+            CommonConn connul = new CommonConn(v1.getContext(), "gps/unlikebtn");
+            connul.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+            connul.addParamMap("key", vo.getKey());
+            connul.onExcute((isResult, data) -> {
+                binding.like.setVisibility(View.GONE);
+                binding.unlike.setVisibility(View.VISIBLE);
+                Toast.makeText(getContext(), "자주가는 경로당이 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+
+                likelist();
+            });
+        });
+
+        //카메라 이동
+        moveCamera(vo.getSenior_latitude() , vo.getSenior_longitude());
+    }
 }
 

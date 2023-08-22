@@ -1,5 +1,6 @@
 package com.hanul.cloud;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -70,5 +71,15 @@ public class GpsController {
 	@RequestMapping("/search")
 	public List<GpsVO> search_result(String keyword) {
 		return dao.search_result(keyword);
+	}
+	
+	@RequestMapping("/location")
+	public void location(String senior_latitude, String senior_longitude, String member_id) {
+		try {
+			dao.location(senior_latitude, senior_longitude, member_id);
+		} catch (Exception e) {
+		}
+		
+		dao.locationupdate(senior_latitude, senior_longitude, member_id);
 	}
 }
