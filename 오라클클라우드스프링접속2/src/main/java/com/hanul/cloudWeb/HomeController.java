@@ -1,5 +1,6 @@
 package com.hanul.cloudWeb;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -10,13 +11,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import cloudWeb.member.MemberVO;
 
 @Controller
-public class HomeController implements HandlerInterceptor{
+public class HomeController implements HandlerInterceptor {
 
 	@Autowired
 	@Qualifier("project")
@@ -34,37 +36,33 @@ public class HomeController implements HandlerInterceptor{
 	}
 
 	@RequestMapping(value = "/loginCheck")
-	public String loginCheck(MemberVO vo, Model model) {
+	@ResponseBody
+	public int loginCheck(MemberVO vo, Model model, HttpSession session) {
+		String returnUrl = "";
+		if (session.getAttribute("admin") != null) {
+			session.removeAttribute("admin");
+		}
 		int admin = sql.selectOne("login.loginCheck", vo);
 		model.addAttribute("admin", admin);
-		return "default/login/loginCheck";
+		if (admin == 1) { // 로그인 성공
+			session.setAttribute("admin", admin);
+			returnUrl = "redirect:/";
+		} else { // 로그인 실패
+			returnUrl = "redirect:/";
+		}
+		return admin;
+//		return "redirect:/default/login/loginCheck";
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
-		return false;
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/";
 	}
-
-	@Override
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-			ModelAndView modelAndView) throws Exception {
-		
-	}
-
-	@Override
-	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
-			throws Exception {
-		
+	
+	@RequestMapping("/error")
+	public String handleError(HttpServletRequest req) {
+		return "default/error/error";
 	}
 
 }

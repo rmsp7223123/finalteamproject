@@ -27,12 +27,32 @@
 							<input type="password" class="form-control form-control-user"
 								name="member_pw" id="member_pw" placeholder="비밀번호를 입력해주세요.">
 						</div>
-						<button class="btn btn-primary btn-user btn-block form-control">
+						<button id="btn-login" type="button"
+							class="btn btn-primary btn-user btn-block form-control">
 							Login</button>
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
+
+	<script>
+ 	$('#btn-login').on('click',  function() {
+		$.ajax({
+			url : "loginCheck", 
+			data : {member_id:$("#member_id").val(), member_pw:$("#member_pw").val()},
+			type : 'post',
+		}).done(function(admin){
+			if(admin == 1) {
+				location = "home";
+			} else {
+				alert('없는 계정이거나 관리자가 아닙니다.')
+			}
+		})
+		
+	})
+
+	</script>
+
 </body>
 </html>

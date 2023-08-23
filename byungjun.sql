@@ -288,3 +288,10 @@ select * from member where
 		member_id = 'ansqudwns98' and member_pw = '123qwe!@';
         
         select * from member;
+        
+        
+select * from alarm;
+
+select * from location;
+
+select * from location where member_id = 'ansqudwns98';

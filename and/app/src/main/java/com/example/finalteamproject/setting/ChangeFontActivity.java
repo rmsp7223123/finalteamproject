@@ -25,8 +25,6 @@ public class ChangeFontActivity extends AppCompatActivity {
 
     ActivityChangeFontBinding binding;
 
-    int themeResId = R.style.FontSmall; // 기본값은 작게
-
     int savedItem = 0;
 
     @Override
@@ -44,14 +42,6 @@ public class ChangeFontActivity extends AppCompatActivity {
             builder.setTitle("글씨 크기 변경");
             builder.setSingleChoiceItems(dialog_item, -1, (dialog, i) -> {
                 binding.tvFontSize.setText(dialog_item[i]);
-                // 글씨 크기 변경 추가하기
-                if (i == 0) {
-                    themeResId = R.style.FontSmall;
-                } else if (i == 1) {
-                    themeResId = R.style.FontMiddle;
-                } else if (i == 2) {
-                    themeResId = R.style.FontLarge;
-                }
                 savedItem = i;
 
             });
@@ -69,7 +59,13 @@ public class ChangeFontActivity extends AppCompatActivity {
                     conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
                     conn.addParamMap("option_font_size", dialog_item[savedItem]);
                     conn.onExcute((isResult, data) -> {
-                        setTheme(themeResId);
+                        if(savedItem == 0) {
+                            // 작게
+                        } else if (savedItem == 1) {
+                            // 중간
+                        } else {
+                            // 크게
+                        }
                         recreate();
                         dialog.dismiss();
                         changeFontSize();
