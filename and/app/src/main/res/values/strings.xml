@@ -3,6 +3,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <!--location-->
+    <string name="start_location_update">Start_Location_Updates</string>
+    <string name="stop_location_updates">Stop_Location_Updates</string>
 
     <!--firebase-->
     <string name="subscribe_to_weather">Subscribe To Weather</string>

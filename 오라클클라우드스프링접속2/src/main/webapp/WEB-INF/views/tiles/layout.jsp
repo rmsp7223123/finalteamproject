@@ -34,6 +34,7 @@
 <!-- Main Stylesheet -->
 <link rel="stylesheet" href="<c:url value = '/theme/css/style.css'/>">
 <link href="<c:url value='/css/common.css?${now }'/>" rel="stylesheet" />
+	<script src="<c:url value = '/vendor/jquery/jquery.min.js'/>"></script>
 
 <!-- Theme Stylesheet -->
 <link rel="stylesheet" href="#" id="color-changer">

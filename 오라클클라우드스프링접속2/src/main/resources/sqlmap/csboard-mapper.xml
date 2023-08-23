@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="csboard">
+
+<sql id="searchWhere">
+	<choose>
+		<when test=" search == 's1' "> <!-- 전체 -->
+		where csboard_title like '%' || #{keyword} || '%'
+		or  csboard_content like '%' || #{keyword} || '%'
+		or  writer  in (select member_id from member where member_nickname like '%' || #{keyword} || '%' )			 
+		</when> 
+		<when test=" search == 's2' "> <!-- 제목-->
+		where csboard_title like '%' || #{keyword} || '%'
+		</when> 
+		<when test=" search == 's3' "> <!-- 내용-->
+		where csboard_content like '%' || #{keyword} || '%'
+		</when> 
+		<when test=" search == 's4' "> <!-- 작성자-->
+		where writer  in (select member_id from member where member_nickname like '%' || #{keyword} || '%' )		
+		</when> 
+		<when test=" search == 's5' "> <!-- 제목+내용 -->
+		where csboard_title like '%' || #{keyword} || '%'
+		or  csboard_content like '%' || #{keyword} || '%'
+		</when>
+	</choose>
+</sql>
+
+<!-- 목록 조회 -->
+<select id="list" resultType="cloudWeb.csboard.CSBoardVO">
+select csboard_id, writer, csboard_title, csboard_content, csboard_viewcount, 
+	to_char(csboard_writedate, 'YYYY-MM-DD') csboard_writedate, no, nickname, comment_exist
+from (select row_number() over(order by csboard_id) no, c.*, m.member_nickname nickname,
+		(case when c.csboard_id in (select csboard_id from csboard_comment) then 'Y'
+		 else 'N'
+		 end) as comment_exist
+		from csboard c inner join member m on c.writer = m.member_id
+					   inner join csboard_comment b on b.csboard_id = c.csboard_id
+      <include refid="searchWhere"/>) n
+	where no between #{beginList} and #{endList} 
+	order by no desc
+</select>
+
+<!-- 선택한 방명록 글 조회 -->
+<select id="info" resultType="cloudWeb.csboard.CSBoardVO">
+select c.*, member_nickname nickname 
+from csboard c inner join member m on writer = member_id 
+where csboard_id = #{csboard_id}
+</select>
+
+<!-- 총 글의 건수 조회 -->
+<select id="totalList" resultType="integer">
+select count(*) from csboard <include refid="searchWhere"/>
+</select>
+
+<!-- 선택한 회원 정보 삭제 -->
+<delete id="delete">
+	delete csboard where csboard_id = #{csboard_id}
+</delete>
+
+<!-- 회원 정보 수정 -->
+<update id="update">
+	update csboard set csboard_title = #{csboard_title}, csboard_content = #{csboard_content},
+						csboard_writedate = sysdate
+	where csboard_id = #{csboard_id}
+</update>
+
+
+
+
+
+<!-- 방명록 댓글목록 조회 -->
+<select id="commentList" resultType="cloudWeb.csboard.CSBoardCommentVO">
+	select c.*, member_nickname nickname
+	from csboard_comment c inner join member m on m.member_id = c.writer
+	where csboard_id = #{csboard_id}
+</select>
+
+
+<!-- 방명록 댓글신규저장처리 -->
+<insert id="commentRegister">
+	insert into csboard_comment
+	values (100, #{csboard_id}, 'admin', #{csboard_comment_content}, sysdate)
+</insert>
+
+<update id="commentUpdate">
+	update csboard_comment set csboard_comment_content = #{csboard_comment_content}, 
+		   csboard_comment_writedate = sysdate
+	where csboard_comment_id = #{csboard_comment_id}
+</update>
+
+<delete id="commentDelete">
+	delete csboard_comment where csboard_comment_id = #{csboard_comment_id}
+</delete>
+
+
+</mapper>

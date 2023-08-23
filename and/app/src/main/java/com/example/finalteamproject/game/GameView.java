@@ -31,6 +31,8 @@ public class GameView extends View {
 
     private int status;
 
+
+
     private ArrayList<Animal> arAnimal = new ArrayList<>();
     private Random rnd = new Random();
     private Activity mParent;

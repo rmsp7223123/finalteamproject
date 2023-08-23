@@ -61,11 +61,6 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
         binding.lnResult.setVisibility(View.GONE);
         binding.lnDetail.setVisibility(View.GONE);
 
-        //스와이프로 새로고침
-//        binding.layoutRefresh.setOnRefreshListener(() -> {
-//            binding.layoutRefresh.setRefreshing(false);
-//        });
-
         //검색 결과
         binding.btnSearch.setOnClickListener(v -> {
             binding.lnResult.setVisibility(View.VISIBLE);
@@ -89,22 +84,12 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
 
         //자주 가는 경로당(메인화면 상단부)
         likelist();
+
         //(자주가는 경로당)더보기 메뉴
         binding.tvMore.setOnClickListener(v -> {
             binding.lnResult.setVisibility(View.VISIBLE);
             binding.tvSearchResult.setText("자주 가는 경로당");
 
-            //자주가는 경로당 리스트(하단 박스)
-//            CommonConn connlike = new CommonConn(getContext(), "gps/likelist");
-//            connlike.addParamMap("member_id", CommonVar.logininfo.getMember_id());
-//            connlike.onExcute((isResult, data) -> {
-//                ArrayList<GpsVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<GpsVO>>(){}.getType());
-//                //자주 가는 경로당(리사이클러뷰)
-//                GpsLikeAdapter adapter = new GpsLikeAdapter(list);
-//                binding.recvSearchResult.setAdapter(adapter);
-//                binding.recvSearchResult.setLayoutManager(new LinearLayoutManager(getContext()));
-//
-//            });
         });
 
         //지도 객체 생성
@@ -314,8 +299,6 @@ public void moveCamera(String lat , String log){
         //     if(vo.getSenior_call() == null){ => select nvl(adress , '주소 정보 없음')
 
         //좋아요 버튼 활성/비활성화
-        binding.like.setVisibility(View.GONE);
-        binding.unlike.setVisibility(View.VISIBLE);
         CommonConn connlike = new CommonConn(getContext(), "gps/likeyet");
         connlike.addParamMap("member_id", CommonVar.logininfo.getMember_id());
         connlike.addParamMap("key", vo.getKey());
@@ -323,6 +306,9 @@ public void moveCamera(String lat , String log){
             if (data.equals(vo.getKey()+"")){
                 binding.like.setVisibility(View.VISIBLE);
                 binding.unlike.setVisibility(View.GONE);
+            }else {
+                binding.like.setVisibility(View.GONE);
+                binding.unlike.setVisibility(View.VISIBLE);
             }
         });
 
@@ -337,6 +323,7 @@ public void moveCamera(String lat , String log){
                 Toast.makeText(getContext(), "자주가는 경로당이 추가되었습니다.", Toast.LENGTH_SHORT).show();
 
                 likelist();
+                selectDetail(vo);
             });
         });
 
@@ -351,11 +338,13 @@ public void moveCamera(String lat , String log){
                 Toast.makeText(getContext(), "자주가는 경로당이 삭제되었습니다.", Toast.LENGTH_SHORT).show();
 
                 likelist();
+                selectDetail(vo);
             });
         });
 
         //카메라 이동
         moveCamera(vo.getSenior_latitude() , vo.getSenior_longitude());
     }
+
 }
 

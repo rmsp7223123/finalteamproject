@@ -59,14 +59,7 @@ public class GpsAdapter extends RecyclerView.Adapter<GpsAdapter.ViewHolder> {
 
         }else{
 
-        //안보일 정보(키, 전화번호)
-//        h.binding.seniorKey.setText(list.get(i).getKey()+"");
-//        h.binding.seniorKey.setVisibility(View.GONE);
-//        h.binding.seniorPhone.setText(list.get(i).getSenior_call()+"");
-//        h.binding.seniorPhone.setVisibility(View.GONE);
-//        if(list.get(i).getSenior_call() == null){
-//            h.binding.seniorPhone.setText("전화번호 정보 없음");
-//        }
+
         //경로당 이름
         h.binding.seniorName.setText(list.get(i).getSenior_name()+"");
         //경로당 주소
