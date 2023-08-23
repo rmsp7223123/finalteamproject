@@ -33,6 +33,7 @@ body {
 
 #calendar {
 	max-width: 1100px;
+	max-width: 950px;
 	margin: 0 auto;
 }
 </style>

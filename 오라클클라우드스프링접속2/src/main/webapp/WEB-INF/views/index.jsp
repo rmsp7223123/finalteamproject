@@ -11,8 +11,6 @@
 <title>home</title>
 </head>
 <body>
-	<!-- set class="dark" on body tag for DARK-THEME -->
-
 	<div class="preloader">
 		<div class="loading-mask"></div>
 		<div class="loading-mask"></div>
@@ -20,24 +18,6 @@
 		<div class="loading-mask"></div>
 		<div class="loading-mask"></div>
 	</div>
-
-<!-- 	<div class="preview-wrapper"> -->
-<!-- 		<div class="switcher-head"> -->
-<!-- 			<span>Style Switcher</span> -->
-<!-- 			<div class="switcher-trigger tf-tools"></div> -->
-<!-- 		</div> -->
-
-<!-- 		<div class="switcher-body"> -->
-<!-- 			<h4>Choose Color:</h4> -->
-<!-- 			<ul class="color-options list-none"> -->
-<!-- 				<li class="c0" data-color="red" title="Default">Default</li> -->
-<!-- 				<li class="c1" data-color="blue" title="Red">Red</li> -->
-<!-- 				<li class="c2" data-color="green" title="Green">Green</li> -->
-<!-- 				<li class="c3" data-color="yellow" title="Blue">Blue</li> -->
-<!-- 			</ul> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-
 	<main class="site-wrapper">
 		<div class="pt-table">
 			<div class="pt-tablecell page-home relative"
@@ -67,9 +47,9 @@
 										<div></div>
 										<div></div>
 									</div>
-									<a href="<c:url value='/cu/list' />" id="memberManage" class="hex-content"> <span
-										class="hex-content-inner"> <span class="icon"> <i
-												class="tf-dial"></i>
+									<a href="<c:url value='/cu/list' />" id="memberManage"
+										class="hex-content"> <span class="hex-content-inner">
+											<span class="icon"> <i class="tf-dial"></i>
 										</span> <span class="title">회원 관리</span>
 									</span> <svg viewbox="0 0 173.20508075688772 200" height="200"
 											width="174" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -233,14 +213,6 @@
 		</div>
 		<!-- /.pt-table -->
 	</main>
-	<!-- /.site-wrapper -->
-
-
-	<!-- 
-Essential Scripts
-=====================================-->
-	
-
 </body>
 
 </html>
