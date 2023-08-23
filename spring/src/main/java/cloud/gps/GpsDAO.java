@@ -37,6 +37,10 @@ public class GpsDAO {
 		map.put("member_id", member_id);
 		sql.insert("gps.bmark", map);
 	}
+	
+	public void likebtn(int key) {
+		sql.insert("gps.likebtn", key);
+	}
 
 	public void addlike(int key) {
 		sql.insert("gps.addlike", key);

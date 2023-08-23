@@ -67,6 +67,19 @@
 		b.member_id=#{member_id}
 	</select>
 
+	<!-- 좋아요 버튼 클릭시 insert + update 동시 진행 -->
+	<insert id="likebtn">
+		MERGE INTO SENIOR_LIKE L
+		USING DUAL
+		ON (L.KEY = #{key})
+		WHEN MATCHED THEN
+		UPDATE
+		SET L.SENIOR_LIKE_NUM = L.SENIOR_LIKE_NUM + 1
+		WHEN NOT MATCHED THEN
+		INSERT (MEMBER_ID, KEY, SENIOR_LIKE_NUM)
+		VALUES ('admin', #{key}, 1)
+	</insert>
+
 	<!-- 좋아요 버튼 선택시 자주가는 경로당 등록 -->
 	<insert id="bmark">
 		insert into SENIOR_BMARK (KEY, MEMBER_ID)
@@ -142,10 +155,12 @@
 
 	<update id="locationupdate">
 		UPDATE LOCATION
-		SET MEMBER_ID = #{member_id}, LOCATION_LATITUDE=#{senior_latitude},
+		SET MEMBER_ID = #{member_id},
+		LOCATION_LATITUDE=#{senior_latitude},
 		LOCATION_LONGITUDE=#{senior_longitude},
 		LOCATION_TIME=sysdate
-		WHERE member_id=#{member_id}
+		WHERE
+		member_id=#{member_id}
 	</update>
 
 </mapper>
