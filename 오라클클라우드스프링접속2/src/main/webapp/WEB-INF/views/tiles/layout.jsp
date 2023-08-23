@@ -45,6 +45,7 @@
 <!-- Custom styles for this template-->
 <link href="<c:url value = '/css/sb-admin-2.min.css'/>" rel="stylesheet">
 <link href="<c:url value='/css/common.css?${now }'/>" rel="stylesheet" />
+	<script src="<c:url value = '/vendor/jquery/jquery.min.js'/>"></script>
 
 </head>
 
@@ -76,7 +77,7 @@
 					class="fas fa-fw fa-cog"></i> <span>회원 관리</span>
 			</a></li>
 			<li class="${category eq 'cs' ? 'active':''} nav-item"><a
-				class="nav-link" href="<c:url value = '/cs/home'/>"><i
+				class="nav-link" href="<c:url value = '/cs/list'/>"><i
 					class="fas fa-fw fa-wrench"></i> <span>고객센터 관리</span> </a></li>
 			<!-- Nav Item - Pages Collapse Menu -->
 			<li class="${category eq 'go' ? 'active':''} nav-item"><a
@@ -182,7 +183,6 @@
 	</a>
 
 	<!-- Bootstrap core JavaScript-->
-	<script src="<c:url value = '/vendor/jquery/jquery.min.js'/>"></script>
 	<script
 		src="<c:url value = '/vendor/bootstrap/js/bootstrap.bundle.min.js'/>"></script>
 

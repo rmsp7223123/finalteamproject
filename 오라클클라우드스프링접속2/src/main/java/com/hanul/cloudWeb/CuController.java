@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import cloudWeb.Common.PageVO;
@@ -107,6 +108,12 @@ public class CuController {
 		return "redirect:info?id="+vo.getMember_id()+"&curPage="+page.getCurPage()+
 				"&search="+page.getSearch()+
 				"&keyword="+URLEncoder.encode(page.getKeyword(), "utf-8") ;
+	}
+	
+	//아이디 중복확인 처리 요청
+	@ResponseBody @RequestMapping("/memberNicknameCheck")
+	public boolean memberNicknameCheck(String member_nickname) {
+		return sql.selectOne("member.info", member_nickname)==null ? false : true;
 	}
 	
 
