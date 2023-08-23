@@ -340,4 +340,12 @@ BEGIN
 END;
 /
 
+CREATE OR REPLACE TRIGGER trigger_delete_godok_alarm
+AFTER DELETE ON member
+FOR EACH ROW
+BEGIN
+    DELETE FROM godok_alarm
+    WHERE member_id = :OLD.member_id;
+END;
+/
 commit;

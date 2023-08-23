@@ -53,6 +53,7 @@
   </div>
 	<div class="container" style = "width:100%; padding-left : 0; padding-right : 0;">
 	<div style= "padding : 80px 100px 0px 100px;">
+	<a href="<c:url value ='/home'/>" class="page-close" id = "page-close"><i class="tf-ion-close"></i></a>
 <!-- 		<div style= "margin : 80px 100px 0px 100px;"> -->
 		<tiles:insertAttribute name ="container"/>
 		</div>
@@ -76,6 +77,24 @@
 	<script src="<c:url value = '/theme/js/script.js'/>"></script>
 	<script>
 		
+	 function getCurrentUrl() {
+	        return window.location.href;
+	    }
+
+	    function toggleButtonVisibility() {
+	        var button = document.getElementById("page-close");
+	        var currentUrl = getCurrentUrl();
+	        var homeUrl = "http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/home";
+	        if (currentUrl === homeUrl) {
+	            button.style.display = "none";
+	        } else {
+	            button.style.display = "block";
+	        }
+	    }
+
+	    window.onload = function () {
+	        toggleButtonVisibility();
+	    }
 	</script>
 </body>
 </html>
