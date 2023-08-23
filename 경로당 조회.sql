@@ -53,6 +53,30 @@ where b.key=s.key and s.key=l.key and b.member_id='test'
 
 
 --mapper
+--좋아요 버튼기능
+MERGE 
+ INTO SENIOR_BMARK B --테이블, 뷰
+USING SENIOR_LIKE L --테이블, 뷰, 서브쿼리
+   ON (L.KEY = B.KEY) --조건절
+ WHEN MATCHED THEN  --일치하는 경우(UPDATE/DELETE)
+      UPDATE
+         SET a.deptno = 20
+ WHEN NOT MATCHED THEN  --불일치하는 경우(INSERT)
+      INSERT (a.empno, a.ename, a.deptno)
+      VALUES (7788, 'SCOTT', 20);
+
+--
+    
+MERGE INTO SENIOR_LIKE SL
+USING (SELECT 1 FROM DUAL) DUMMY
+ON (SL.KEY = 2)
+WHEN MATCHED THEN
+  UPDATE SET SL.SENIOR_LIKE_NUM = SL.SENIOR_LIKE_NUM + 1
+WHEN NOT MATCHED THEN
+  INSERT (MEMBER_ID, KEY, SENIOR_LIKE_NUM)
+  VALUES ('admin', 2, 1);
+
+
 --좋아요 누름
 --자주가는 경로당(즐겨찾기) 추가
 insert into SENIOR_BMARK (KEY, MEMBER_ID)
@@ -66,7 +90,7 @@ values ('admin', 1, 0);
 --카운트 +1
 UPDATE SENIOR_LIKE
 SET SENIOR_LIKE_NUM = SENIOR_LIKE_NUM + 1
-WHERE KEY = 6910;
+WHERE KEY = 2;
 
 
 --좋아요 취소
