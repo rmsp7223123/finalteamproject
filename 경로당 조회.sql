@@ -52,7 +52,46 @@ where b.key=s.key and s.key=l.key and b.member_id='test'
 ;
 
 
+
+select * from senior where key = 6978;
 --mapper
+--좋아요 버튼기능
+select * from senior_like
+WHERE KEY=96;
+
+
+DECLARE
+    like_count NUMBER;
+BEGIN
+    SELECT COUNT(*) INTO like_count
+    FROM SENIOR_LIKE
+    WHERE KEY = 96;
+
+    IF like_count = 0 THEN
+        INSERT INTO SENIOR_LIKE (MEMBER_ID, KEY, SENIOR_LIKE_NUM)
+        VALUES ('admin', 96, 1);
+        --컬럼은 관리자로만 생성
+    ELSE
+        UPDATE SENIOR_LIKE
+        SET SENIOR_LIKE_NUM = SENIOR_LIKE_NUM + 1
+        WHERE KEY = 96;
+    END IF;
+    COMMIT;
+    END;
+/
+    
+    
+--    
+--    DBMS_OUTPUT.PUT_LINE('작업이 완료되었습니다.');
+--EXCEPTION
+--    WHEN OTHERS THEN
+--        DBMS_OUTPUT.PUT_LINE('오류 발생: ' || SQLERRM);
+--        ROLLBACK;
+--END;
+--/
+
+
+
 --좋아요 누름
 --자주가는 경로당(즐겨찾기) 추가
 insert into SENIOR_BMARK (KEY, MEMBER_ID)
@@ -66,7 +105,7 @@ values ('admin', 1, 0);
 --카운트 +1
 UPDATE SENIOR_LIKE
 SET SENIOR_LIKE_NUM = SENIOR_LIKE_NUM + 1
-WHERE KEY = 6910;
+WHERE KEY = 2;
 
 
 --좋아요 취소

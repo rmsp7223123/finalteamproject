@@ -60,6 +60,8 @@ dependencies {
     implementation 'io.github.itsxtt:pattern-lock:0.2.0'
     implementation 'com.andrognito.patternlockview:patternlockview:1.0.0'
 
+    //location service
+    implementation('com.google.android.gms:play-services-location:18.0.0')
     //naver maps api
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'com.google.android.gms:play-services-location:21.0.1' //현재 위치 표시
