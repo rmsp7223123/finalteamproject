@@ -1,5 +1,8 @@
 package com.hanul.cloud;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -34,5 +37,25 @@ public class GodokController {
 	public String viewEPhone(String member_id) {
 		List<EphoneVO> list = sql.selectList("godok.viewEphone", member_id);
 		return new Gson().toJson(list);
+	}
+	
+	@RequestMapping("/sendGodokMsg")
+	public String sendGodokMsg(String member_id) {
+		List<LocationVO> list =sql.selectList("godok.viewLocationList", member_id);
+		LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        for (int i = 0; i < list.size(); i++) {
+            LocationVO location = list.get(i);
+            String locationTimeString = location.getLocation_time();
+            LocalDateTime locationTime = LocalDateTime.parse(locationTimeString, formatter);
+
+            long daysDifference = ChronoUnit.DAYS.between(locationTime, now);
+            System.out.println("test");
+            if (daysDifference == 3) {
+                // 보호자에게 문자 전송
+            }
+        }	
+		return "";
 	}
 }

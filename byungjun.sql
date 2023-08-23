@@ -294,4 +294,8 @@ select * from alarm;
 
 select * from location;
 
+select * from member where member_id = 'testaaa1';
+
+commit;
+
 select * from location where member_id = 'ansqudwns98';

@@ -25,9 +25,8 @@ public class HomeController implements HandlerInterceptor {
 	SqlSession sql;
 
 	@RequestMapping({ "/home" })
-	public String home(HttpSession session) {
-		session.setAttribute("category", null);
-		return "home";
+	public String home() {
+		return "index";
 	}
 
 	@RequestMapping("/")

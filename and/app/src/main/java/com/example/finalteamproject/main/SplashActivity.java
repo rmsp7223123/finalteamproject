@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.finalteamproject.HideActionBar;
@@ -113,7 +114,7 @@ public class SplashActivity extends AppCompatActivity {
                             return;
                         }
                         String token = task.getResult();
-
+                        Log.d("토큰", "onComplete: " + token);
                         CommonConn conn = new CommonConn(SplashActivity.this, "main/updateToken");
                         conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
                         conn.addParamMap("member_phone_id", token);
