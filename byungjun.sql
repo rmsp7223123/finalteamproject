@@ -349,3 +349,17 @@ BEGIN
 END;
 /
 commit;
+
+select * from godok_alarm;
+
+insert into godok_alarm(member_id, alarm_time) values ('ansqudwns98', TO_DATE(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'));
+insert into godok_alarm(member_id, alarm_time) values ('ansqudwns98', sysdate);
+
+select to_char(sysdate, 'YYYY-MM-DD HH24:MI:SS') from dual;
+
+select * from godok_alarm;
+
+SELECT member_id, TO_CHAR(alarm_time, 'YYYY-MM-DD HH24:MI:SS') AS alarm_time
+FROM godok_alarm;
+
+commit;

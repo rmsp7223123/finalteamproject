@@ -25,6 +25,11 @@ public class GoController {
 		
 		return "go/home";
 	}
+	
+	@RequestMapping("list")
+	public String list() {
+		return "go/list";
+	}
 
 	@RequestMapping("/events")
 	@ResponseBody

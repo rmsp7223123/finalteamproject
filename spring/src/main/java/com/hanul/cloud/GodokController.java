@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 
 import cloud.member.EphoneVO;
+import cloud.member.GodokVO;
 import cloud.member.LocationVO;
 
 @RestController
@@ -57,5 +58,11 @@ public class GodokController {
             }
         }	
 		return "";
+	}
+	
+	@RequestMapping("viewGodokAlarmList")
+	public String viewGodokAlarmList(GodokVO vo) {
+		List<GodokVO> list = sql.selectList("godok.viewGodokAlarmList", vo);
+		return new Gson().toJson(list);
 	}
 }

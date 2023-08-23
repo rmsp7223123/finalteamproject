@@ -104,7 +104,7 @@
 										<div></div>
 										<div></div>
 									</div>
-									<a href="<c:url value='/cs/home' />" class="hex-content"> <span
+									<a href="<c:url value='/cs/list' />" class="hex-content"> <span
 										class="hex-content-inner"> <span class="icon"> <i
 												class="tf-profile-male"></i>
 										</span> <span class="title">고객센터 관리</span>
