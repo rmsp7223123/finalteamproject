@@ -150,6 +150,7 @@ public class GameView extends View {
                         status = BLANK;
                         invalidate();
                         handler.sendEmptyMessageDelayed(0, DELAY);
+                        GameActivity activity = new GameActivity();
                     }
                 });
 
