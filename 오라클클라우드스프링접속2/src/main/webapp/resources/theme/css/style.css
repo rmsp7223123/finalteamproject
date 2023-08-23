@@ -204,7 +204,7 @@ label {
 }
 
 .loading-mask {
-  background-color: #fa6862;
+  background-color: #F7DE6D;
   height: 100%;
   left: 0;
   position: absolute;
@@ -240,7 +240,7 @@ label {
 	Start Styling
 -------------------------------------------------*/
 .site-wrapper {
-  border-top: 4px solid #fa6862;
+  border-top: 4px solid #F7DE6D;
 }
 
 .page-close {

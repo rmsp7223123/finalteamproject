@@ -39,7 +39,7 @@
 <link rel="stylesheet" href="#" id="color-changer">
 
 <!--Favicon-->
-<link rel="icon" href="<c:url value = '/theme/images/favicon.png'/>"
+<link rel="icon" href="<c:url value = '/theme/images/logo.png'/>"
 	type="image/x-icon">
 
 </head>
@@ -51,10 +51,9 @@
     <div class="loading-mask"></div>
     <div class="loading-mask"></div>
   </div>
-	<div class="container" style = "width:100%; padding-left : 0; padding-right : 0;">
+	<div class="container site-wrapper" style = "width:100%; padding-left : 0; padding-right : 0;">
 	<div style= "padding : 80px 100px 0px 100px;">
 	<a href="<c:url value ='/home'/>" class="page-close" id = "page-close"><i class="tf-ion-close"></i></a>
-<!-- 		<div style= "margin : 80px 100px 0px 100px;"> -->
 		<tiles:insertAttribute name ="container"/>
 		</div>
 	</div>
@@ -62,9 +61,9 @@
 	<nav class="page-nav clear" >
   <div class="container">
     <div class="flex flex-middle space-between">
-      <span class="prev-page"><a href="services.html" class="link">← Prev Page</a></span>
-      <span class="copyright">Copyright © 2021, Designed &amp; Developed by <a href="https://themefisher.com/">Themefisher</a>.</span>
-      <span class="next-page"><a href="works.html" class="link">Next Page →</a></span>
+      <span class="prev-page"><a href="#" class="link">← Prev Page</a></span>
+      <span class="copyright">Copyright © 2021, Designed &amp; Developed by Themefisher.</span>
+      <span class="next-page"><a href="#" class="link">Next Page →</a></span>
     </div>
   </div>
 </nav>
@@ -95,6 +94,10 @@
 	    window.onload = function () {
 	        toggleButtonVisibility();
 	    }
+	    $(function(){
+	    	$('.container').css('z-index', 9999);
+	    	setTimeout(() => $('.preloader').remove(), 2000);
+	    })
 	</script>
 </body>
 </html>

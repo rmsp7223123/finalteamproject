@@ -26,7 +26,7 @@ public class HomeController implements HandlerInterceptor {
 
 	@RequestMapping({ "/home" })
 	public String home() {
-		return "home";
+		return "default_home";
 	}
 
 	@RequestMapping("/")

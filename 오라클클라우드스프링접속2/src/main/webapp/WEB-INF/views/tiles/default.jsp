@@ -9,7 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<div class="container">
+<div class="container" style = "width:100%;">
 		<tiles:insertAttribute name ="container"/>
 	</div>
 </body>
