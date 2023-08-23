@@ -299,3 +299,45 @@ select * from member where member_id = 'testaaa1';
 commit;
 
 select * from location where member_id = 'ansqudwns98';
+
+create table godok_alarm(
+    alarm_id number primary key,
+    member_id nvarchar2(30) not null,
+    alarm_time date not null,
+    ephone_name nvarchar2(100) not null,
+    ephone_phone nvarchar2(20) not null
+);
+
+create sequence seq_godok_alarm
+minvalue 1 
+maxvalue 999999
+increment by 1
+start with 1
+nocache;
+
+CREATE OR REPLACE TRIGGER trigger_alarm_id
+BEFORE INSERT ON godok_alarm
+FOR EACH ROW
+BEGIN
+    :NEW.alarm_id := seq_godok_alarm.NEXTVAL;
+END;
+/
+
+CREATE OR REPLACE TRIGGER trigger_insert_ephone_data
+BEFORE INSERT ON godok_alarm
+FOR EACH ROW
+DECLARE
+    ephone_name_var nvarchar2(100);
+    ephone_phone_var nvarchar2(20);
+BEGIN
+    SELECT ephone_name, ephone_phone
+    INTO ephone_name_var, ephone_phone_var
+    FROM ephone
+    WHERE member_id = :NEW.member_id;
+    
+    :NEW.ephone_name := ephone_name_var;
+    :NEW.ephone_phone := ephone_phone_var;
+END;
+/
+
+commit;
