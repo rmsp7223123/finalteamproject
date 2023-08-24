@@ -30,10 +30,14 @@
 	href="<c:url value = '/theme/plugins/slick/slick-theme.css'/>">
 <link rel="stylesheet"
 	href="<c:url value = '/theme/plugins/themefisher-fonts/css/themefisher-fonts.min.css'/>">
-
+<!--  cdnjs.com > fontawesome 검색 > styling, javascript 선언문 복사해서 넣기 -->        
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" ></script>
+<!--  //fontawesome -->
 <!-- Main Stylesheet -->
 <link rel="stylesheet" href="<c:url value = '/theme/css/style.css'/>">
 <link href="<c:url value='/css/common.css?${now }'/>" rel="stylesheet" />
+<link href="<c:url value='/css/table.css?${now }'/>" rel="stylesheet" />
 
 <!-- Theme Stylesheet -->
 <link rel="stylesheet" href="#" id="color-changer">
@@ -41,6 +45,8 @@
 <!--Favicon-->
 <link rel="icon" href="<c:url value = '/theme/images/logo.png'/>"
 	type="image/x-icon">
+	
+	
 
 </head>
 <body>
@@ -51,7 +57,8 @@
     <div class="loading-mask"></div>
     <div class="loading-mask"></div>
   </div>
-	<div class="container site-wrapper" style = "width:100%; padding-left : 0; padding-right : 0;">
+	<div class="container" style = "width:100%; padding-left : 0; padding-right : 0;">
+<!-- 	<div class="container site-wrapper" style = "width:100%; padding-left : 0; padding-right : 0;"> -->
 	<div style= "padding : 80px 100px 0px 100px;">
 	<a href="<c:url value ='/home'/>" class="page-close" id = "page-close"><i class="tf-ion-close"></i></a>
 		<tiles:insertAttribute name ="container"/>
@@ -61,9 +68,9 @@
 	<nav class="page-nav clear" >
   <div class="container">
     <div class="flex flex-middle space-between">
-      <span class="prev-page"><a href="#" class="link">← Prev Page</a></span>
+<!--       <span class="prev-page"><a href="#" class="link">← Prev Page</a></span> -->
       <span class="copyright">Copyright © 2021, Designed &amp; Developed by Themefisher.</span>
-      <span class="next-page"><a href="#" class="link">Next Page →</a></span>
+<!--       <span class="next-page"><a href="#" class="link">Next Page →</a></span> -->
     </div>
   </div>
 </nav>
@@ -74,6 +81,10 @@
 	<script src="<c:url value = '/theme/plugins/slick/slick.min.js'/>"></script>
 
 	<script src="<c:url value = '/theme/js/script.js'/>"></script>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="<c:url value='/js/common.js?${now }'/>"></script>
+	
 	<script>
 		
 	 function getCurrentUrl() {
@@ -95,7 +106,7 @@
 	        toggleButtonVisibility();
 	    }
 	    $(function(){
-	    	$('.container').css('z-index', 9999);
+// 	    	$('.container').css('z-index', 9999);
 	    	setTimeout(() => $('.preloader').remove(), 2000);
 	    })
 	</script>

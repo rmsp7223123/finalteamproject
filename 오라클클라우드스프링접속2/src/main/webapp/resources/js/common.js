@@ -172,6 +172,7 @@ $(document)
 .on('click', '.file-preview img', function(){
 	// 미리보기 이미지 클릭시 크게 보이게
 	if( $('#modal-image').length == 1 ){
+		$('.modal').removeClass('fade');
 		$('.modal-body').html( $(this).clone() );
 		$('#modal-image .modal-body img').removeAttr('style');
 		new bootstrap.Modal( $('#modal-image') ).show()
