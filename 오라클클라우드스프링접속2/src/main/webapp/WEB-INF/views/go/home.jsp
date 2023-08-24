@@ -19,7 +19,20 @@
 			selectable : true,
 			businessHours : true,
 			dayMaxEvents : true,
-			events: '<c:url value = "/go/addEvents"/>'
+			events: '<c:url value = "/go/addEvents"/>',
+			customButtons: {
+				myCustomButton: {
+					text: '전체보기', // 버튼 텍스트
+					click: function() {
+						
+					}
+				}
+			},
+			headerToolbar: {
+				left: 'prev,next today myCustomButton', // 버튼 추가
+				center: 'title',
+				right: 'dayGridMonth,timeGridWeek,timeGridDay'
+			}
 // 				dataClick : function() {
 // 			    	alert('확인');	
 // 			    },
