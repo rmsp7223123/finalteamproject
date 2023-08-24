@@ -17,8 +17,7 @@ from senior_like
 order by senior_like_num desc)
 where rownum <= 10;
 
---빠밤~!!
---mapper 조회 쿼리
+--빠밤~!! mapper 조회 쿼리
 select *
 from(
 select *
@@ -30,9 +29,13 @@ where rownum <= 10;
 
 
 --회원-성별 조회
-select count(*)
-from member
-where member_gender = '남';
+--빠밤~!! mapper 조회 쿼리
+select
+(select count(*)
+from member where member_gender = '여') as 여자,
+(select count(*)
+from member where member_gender = '남') as 남자
+from dual;
 
 --회원-나이별 조회
 select *

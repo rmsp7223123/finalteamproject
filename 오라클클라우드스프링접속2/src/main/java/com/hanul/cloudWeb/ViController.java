@@ -1,18 +1,36 @@
 package com.hanul.cloudWeb;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import cloudWeb.visual.MemberVO;
+
 
 @Controller
 @RequestMapping("/vi")
 public class ViController {
+	@Autowired @Qualifier("project") SqlSession sql;
 	
-	@RequestMapping("/home")
+	@RequestMapping("/member")
 	public String home(HttpSession session) {
 		session.setAttribute("category", "vi");
-		return "vi/home";
+		return "vi/member";
+	}
+	
+	@RequestMapping("/memchart")
+	@ResponseBody
+	public List<MemberVO> memchart() {
+	    List<MemberVO> result = sql.selectList("vi.gender");
+	    return result;
 	}
 
 }
