@@ -1,5 +1,6 @@
 package com.example.finalteamproject;
 
+import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -8,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.util.Log;
@@ -32,6 +34,16 @@ public class LocationService extends Service {
                 double latitude = locationResult.getLastLocation().getLatitude();
                 double longitude = locationResult.getLastLocation().getLongitude();
                 Log.v("LOCATION_UPDATE", latitude + ", " + longitude);
+                new Handler().postDelayed(()->{
+                    onStartCommand(new Intent(Constants.ACTION_START_LOCATION_SERVICE) , Service.START_FLAG_REDELIVERY , 0);
+
+                } , 4000);
+
+            }else{
+                new Handler().postDelayed(()->{
+                    onStartCommand(new Intent(Constants.ACTION_START_LOCATION_SERVICE) , Service.START_FLAG_REDELIVERY , 0);
+
+                } , 4000);
             }
         }
     };
@@ -43,33 +55,33 @@ public class LocationService extends Service {
     }
 
     private void startLocationService() {
-        String channelId = "location_notification_channel";
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        Intent resultIntent = new Intent();
-        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), channelId);
-        builder.setSmallIcon(R.mipmap.ic_launcher);
-        builder.setContentTitle("Location Service");
-        builder.setDefaults(NotificationCompat.DEFAULT_ALL);
-        builder.setContentText("Running");
-        builder.setContentIntent(pendingIntent);
-        builder.setAutoCancel(false);
-        builder.setPriority(NotificationCompat.PRIORITY_MAX);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            if (notificationManager != null && notificationManager.getNotificationChannel(channelId) == null) {
-                NotificationChannel notificationChannel = new NotificationChannel(channelId, "Location Service", NotificationManager.IMPORTANCE_HIGH);
-                notificationChannel.setDescription("This channel is used by location service");
-                notificationManager.createNotificationChannel(notificationChannel);
-            }
-        }
-
+//        String channelId = "location_notification_channel";
+//        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//        Intent resultIntent = new Intent();
+//        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, resultIntent, PendingIntent.FLAG_MUTABLE);
+//        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), channelId);
+//        builder.setSmallIcon(R.mipmap.ic_launcher);
+//        builder.setContentTitle("Location Service");
+//        builder.setDefaults(NotificationCompat.DEFAULT_ALL);
+//        builder.setContentText("Running");
+//        builder.setContentIntent(pendingIntent);
+//        builder.setAutoCancel(false);
+//        builder.setPriority(NotificationCompat.PRIORITY_MAX);
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            if (notificationManager != null && notificationManager.getNotificationChannel(channelId) == null) {
+//                NotificationChannel notificationChannel = new NotificationChannel(channelId, "Location Service", NotificationManager.IMPORTANCE_HIGH);
+//                notificationChannel.setDescription("This channel is used by location service");
+//                notificationManager.createNotificationChannel(notificationChannel);
+//            }
+//        }
+//
         LocationRequest locationRequest = LocationRequest.create();
         locationRequest.setInterval(4000);
-        locationRequest.setFastestInterval(2000);
+        locationRequest.setFastestInterval(200);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -80,17 +92,18 @@ public class LocationService extends Service {
             return;
         }
         LocationServices.getFusedLocationProviderClient(this).requestLocationUpdates(locationRequest, mLocationCallback, Looper.getMainLooper());
-        startForeground(Constants.LOCATION_SERVICE_ID, builder.build());
+
     }
 
     private void stopLocationService() {
         LocationServices.getFusedLocationProviderClient(this).removeLocationUpdates(mLocationCallback);
         stopForeground(true);
-        stopSelf();
+    //    stopSelf();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        super.onStartCommand(intent, Service.START_FLAG_REDELIVERY, startId);
         if (intent != null) {
             String action = intent.getAction();
             if (action != null) {
@@ -101,6 +114,6 @@ public class LocationService extends Service {
                 }
             }
         }
-        return super.onStartCommand(intent, flags, startId);
+        return START_STICKY;
     }
 }
