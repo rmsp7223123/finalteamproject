@@ -5,22 +5,22 @@
 <sql id="searchWhere">
 	<choose>
 		<when test=" search == 's1' "> <!-- 전체 -->
-		where csboard_title like '%' || #{keyword} || '%'
-		or  csboard_content like '%' || #{keyword} || '%'
-		or  writer  in (select member_id from member where member_nickname like '%' || #{keyword} || '%' )			 
+		where c.csboard_title like '%' || #{keyword} || '%'
+		or  c.csboard_content like '%' || #{keyword} || '%'
+		or  c.writer  in (select member_id from member where member_nickname like '%' || #{keyword} || '%' )			 
 		</when> 
 		<when test=" search == 's2' "> <!-- 제목-->
-		where csboard_title like '%' || #{keyword} || '%'
+		where c.csboard_title like '%' || #{keyword} || '%'
 		</when> 
 		<when test=" search == 's3' "> <!-- 내용-->
-		where csboard_content like '%' || #{keyword} || '%'
+		where c.csboard_content like '%' || #{keyword} || '%'
 		</when> 
 		<when test=" search == 's4' "> <!-- 작성자-->
-		where writer  in (select member_id from member where member_nickname like '%' || #{keyword} || '%' )		
+		where c.writer  in (select member_id from member where member_nickname like '%' || #{keyword} || '%' )		
 		</when> 
 		<when test=" search == 's5' "> <!-- 제목+내용 -->
-		where csboard_title like '%' || #{keyword} || '%'
-		or  csboard_content like '%' || #{keyword} || '%'
+		where c.csboard_title like '%' || #{keyword} || '%'
+		or  c.csboard_content like '%' || #{keyword} || '%'
 		</when>
 	</choose>
 </sql>
@@ -29,15 +29,21 @@
 <select id="list" resultType="cloudWeb.csboard.CSBoardVO">
 select csboard_id, writer, csboard_title, csboard_content, csboard_viewcount, 
 	to_char(csboard_writedate, 'YYYY-MM-DD') csboard_writedate, no, nickname, comment_exist
-from (select row_number() over(order by csboard_id) no, c.*, m.member_nickname nickname,
+from (select row_number() over(order by c.csboard_id) no, c.*, m.member_nickname nickname,
 		(case when c.csboard_id in (select csboard_id from csboard_comment) then 'Y'
-		 else 'N'
+		 	  else 'N'
 		 end) as comment_exist
 		from csboard c inner join member m on c.writer = m.member_id
-					   inner join csboard_comment b on b.csboard_id = c.csboard_id
+					   left outer join csboard_comment b on b.csboard_id = c.csboard_id
       <include refid="searchWhere"/>) n
 	where no between #{beginList} and #{endList} 
 	order by no desc
+</select>
+
+
+<!-- 총 글의 건수 조회 -->
+<select id="totalList" resultType="integer">
+select count(*) from csboard c <include refid="searchWhere"/>
 </select>
 
 <!-- 선택한 방명록 글 조회 -->
@@ -47,10 +53,6 @@ from csboard c inner join member m on writer = member_id
 where csboard_id = #{csboard_id}
 </select>
 
-<!-- 총 글의 건수 조회 -->
-<select id="totalList" resultType="integer">
-select count(*) from csboard <include refid="searchWhere"/>
-</select>
 
 <!-- 선택한 회원 정보 삭제 -->
 <delete id="delete">
