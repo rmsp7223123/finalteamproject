@@ -54,6 +54,7 @@
 		});
 		calendar.render();
 	});
+   
 	
 </script>
 <style>

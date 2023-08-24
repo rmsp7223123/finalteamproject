@@ -4,3 +4,8 @@ $(function(){
 			$("#listModal").modal("hide");
 		})
 	})
+	 $(document).ready(function() {
+        $("#listModal").on('show.bs.modal', function() {
+            $(this).data('bs.modal')._config.backdrop = false;
+        });
+    });
