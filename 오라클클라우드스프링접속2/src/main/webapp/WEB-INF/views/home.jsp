@@ -150,7 +150,7 @@
 										<div></div>
 										<div></div>
 									</div>
-									<a href="<c:url value='/vi/home' />" class="hex-content"> <span
+									<a href="<c:url value='/vi/member' />" class="hex-content"> <span
 										class="hex-content-inner"> <span class="icon"> <i
 												class="tf-tools"></i>
 										</span> <span class="title">회원 통계</span>

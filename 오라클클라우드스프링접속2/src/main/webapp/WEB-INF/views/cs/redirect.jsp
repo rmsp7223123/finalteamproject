@@ -7,6 +7,7 @@
 <input type="hidden" name="viewType" value="${page.viewType }">
 <input type="hidden" name="pageList" value="${page.pageList }">
 <input type="hidden" name="board_id" value="${board_id}">
+<input type="hidden" name="comment_exist" value="${page.comment_exist}">
 </form>
 <script>
 $('form').submit()

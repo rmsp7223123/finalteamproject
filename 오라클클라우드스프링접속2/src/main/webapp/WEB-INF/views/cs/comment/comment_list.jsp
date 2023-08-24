@@ -11,7 +11,7 @@
 	
 	<c:forEach items="${list }" var="vo">
 	
-	<!-- 댓글이 있는 경우 -->
+<!-- 	댓글이 있는 경우 -->
 	<div class="col-md-10 content border-bottom py-3" data-id="${vo.csboard_comment_id }">
 		<div class="d-flex align-items-center mb-2 justify-content-between">
 		
@@ -27,6 +27,9 @@
 		<div class="comment">${fn:replace(fn:replace(vo.csboard_comment_content, lf, '<br>'), crlf, '<br>') }</div>
 		<div class="d-none hidden"></div>
 	</div>
+
+		
+
 	
 	</c:forEach>
 	
@@ -112,4 +115,7 @@ function stayStatus(_content){
 	_content.find('.title').addClass('d-none'); //글자수부분 안보이게
 	_content.find('.hidden').empty();
 }
+
+
+
 </script>

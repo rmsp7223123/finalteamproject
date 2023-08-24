@@ -37,6 +37,7 @@
 		<col width="200px">
 		<col width="200px">
 	</colgroup>
+		<thead>
 		<tr>
 		<th>번호</th>
 			<th>이름</th>
@@ -46,6 +47,7 @@
 			<th>생일</th>
 			<th>전화번호</th>
 		</tr>
+		</thead>
 		<!-- 회원정보가 없는 경우 -->
 		<c:if test="${empty page.list }">
 			<tr>
@@ -53,6 +55,7 @@
 			</tr>
 		</c:if>
 		<!-- 사원정보가 있는 경우 -->
+		<tbody>
 		<c:forEach items="${page.list }" var="vo">
 		<tr><td>${vo.no }</td>
 			<td class="text-start">
@@ -68,6 +71,7 @@
 			<td>${vo.member_phone }</td>
 		</tr>
 		</c:forEach>
+		</tbody>
 	</table>
 	
 	</form>

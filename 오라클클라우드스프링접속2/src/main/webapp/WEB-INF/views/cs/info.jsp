@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://code.jquery.com/jquery-3.7.0.js" ></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
@@ -28,7 +29,7 @@
 </table>
 
 	<div class="btn-toolbar my-3 justify-content-center">
-	<c:set var="params" value="curPage=${page.curPage}&search=${page.search}&keyword=${page.keyword }&pagelist=${page.pageList }"/>
+	<c:set var="params" value="curPage=${page.curPage}&search=${page.search}&keyword=${page.keyword }&pagelist=${page.pageList }&comment_exist=${page.comment_exist}"/>
 		<button class="btn btn-warning" onclick="location='list?${params}'">목록</button>
 		<button class="btn btn-warning ml-3" onclick="location='modify?csboard_id=${vo.csboard_id}&${params}'">수정</button>
 		<button class="btn btn-warning ml-3"
@@ -83,12 +84,12 @@ $('.btn-register').click(function(){
 	}).done(function( response ){
 		console.log( response )
 		if( response ){
-			alert("댓글 등록 성공");
+			alert("답변 등록 성공");
 			initRegisterContent();
 			commentList();
 			history.go(0);
 		}else{
-			alert("댓글 등록 실패");
+			alert("답변 등록 실패");
 		}
 	});
 	
