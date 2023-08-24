@@ -38,10 +38,12 @@
 				dayGridMonth: { buttonText: '월간' },
 				timeGridWeek: { buttonText: '주간' },
 				timeGridDay: { buttonText: '일간' }
-			}
-// 				dataClick : function() {
-// 			    	alert('확인');	
-// 			    },
+			},
+			eventClick: function(info) {
+	            var eventTitle = info.event.title;
+	            var eventStart = info.event.start;
+	            alert('이벤트 제목: ' + eventTitle + '\n시작 시간: ' + eventStart);
+	        }
 		});
 		calendar.render();
 	});

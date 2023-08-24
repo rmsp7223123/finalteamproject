@@ -35,6 +35,13 @@ public class GoController {
 		return "go/list";
 	}
 	
+	@RequestMapping("/detail")
+	public String detail(GodokVO vo, Model model) {
+		GodokVO result = sql.selectOne("godok.viewGodokAlarmOne", vo);
+		model.addAttribute("vo", result);
+		return "go/detail";
+	}
+	
 	@RequestMapping("/addEvents")
 	@ResponseBody
 	public List<CalendarEvents> addEvents() {

@@ -15,6 +15,7 @@
     </div>
 	<div class="row mb-3 justify-content-between">
 		<div class="col-auto">
+		<div style ="display : flex; justify-content : space-between;">
 		<div class="input-group">
 			<select name="search" class="form-select">
 				<option value="all" ${page.search eq 'all' ? 'selected' : '' }>전체</option>
@@ -23,7 +24,8 @@
 			</select>
 			<input type="text" name="keyword" value="${page.keyword }" class="form-control">
 			<button class="btn btn-warning px-3"><i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i></button>
-			<span class="prev-page ml-auto"><a href="<c:url value='/go/home'/>"><i class="fa-solid fa-arrow-rotate-left" style="font-size: 1.5rem;"></i></a></span>
+		</div>
+		<span class="prev-page ml-auto"><a href="<c:url value='/go/home'/>"><i class="fa-solid fa-arrow-rotate-left" style="font-size: 3rem;"></i></a></span>
 		</div>
 		</div>
 	</div>

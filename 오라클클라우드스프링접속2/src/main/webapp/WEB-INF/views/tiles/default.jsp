@@ -6,7 +6,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>우동탑</title>
+<link rel="icon" href="<c:url value = '/theme/images/logo.png'/>"
+	type="image/x-icon">
 </head>
 <body>
 <div class="container" style = "width:100%;">
