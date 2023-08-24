@@ -46,7 +46,7 @@
 	</select>
 	<select id="viewGodokAlarmOne"
 		resultType="cloudWeb.godok.GodokVO">
-		select * from godok_alarm where member_id = #{member_id} and alarm_id = #{alarm_id}
+		select * from godok_alarm where alarm_id = #{alarm_id}
 	</select>
 
 

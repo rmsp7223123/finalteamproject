@@ -39,7 +39,7 @@ public class GoController {
 	public String detail(GodokVO vo, Model model) {
 		GodokVO result = sql.selectOne("godok.viewGodokAlarmOne", vo);
 		model.addAttribute("vo", result);
-		return "go/detail";
+		return "modal/go/detail";
 	}
 	
 	@RequestMapping("/addEvents")

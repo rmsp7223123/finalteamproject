@@ -40,9 +40,20 @@
 				timeGridDay: { buttonText: '일간' }
 			},
 			eventClick: function(info) {
-	            var eventTitle = info.event.title;
-	            var eventStart = info.event.start;
-	            alert('이벤트 제목: ' + eventTitle + '\n시작 시간: ' + eventStart);
+				console.log("확인1",info)
+				console.log("확인2",info.event._def.title)
+				console.log("확인2",info.event._def.publicId)
+				$.ajax({
+					url: '<c:url value="/go/detail" />',
+					method: 'GET',
+					data : {"alarm_id" : info.event._def.publicId},
+					success: function(data) {
+						console.log(data)
+						$("#listModal .modal-body").html(data); // 모달 내용 설정
+						$("#listModal").removeClass("fade").addClass("show");
+						$("#listModal").modal('show'); // 모달 열기
+					}
+				});
 	        }
 		});
 		calendar.render();
