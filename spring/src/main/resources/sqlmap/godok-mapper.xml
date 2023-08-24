@@ -10,7 +10,7 @@
 		member_id = #{member_id}
 	</select>
 	<select id="viewGodokAlarmList" resultType="cloud.member.GodokVO">
-		select * from godok_alarm
+		select * from godok_alarm where location_time &lt;= SYSDATE -3
 	</select>
 
 </mapper>

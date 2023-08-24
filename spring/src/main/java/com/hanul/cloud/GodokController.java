@@ -3,9 +3,11 @@ package com.hanul.cloud;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,7 @@ import com.google.gson.Gson;
 import cloud.member.EphoneVO;
 import cloud.member.GodokVO;
 import cloud.member.LocationVO;
+import net.nurigo.java_sdk.api.Message;
 
 @RestController
 @RequestMapping("/godok")
@@ -27,6 +30,9 @@ public class GodokController {
 	@Autowired
 	@Qualifier("project")
 	SqlSession sql;
+	
+	final String APIKEY = "NCSIGGEIAAPYSXHO";
+	final String APISECRET = "Q3WAV69X3RISPNBEJLIQ2YN8OCCHGOAY";
 
 	@RequestMapping(value = "/viewLocationList", produces = "text/html;charset=utf-8")
 	public String viewLocationList(String member_id) {
@@ -41,21 +47,29 @@ public class GodokController {
 	}
 	
 	@RequestMapping("/sendGodokMsg")
-	public String sendGodokMsg(String member_id) {
-		List<LocationVO> list =sql.selectList("godok.viewLocationList", member_id);
-		LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-        for (int i = 0; i < list.size(); i++) {
-            LocationVO location = list.get(i);
-            String locationTimeString = location.getLocation_time();
-            LocalDateTime locationTime = LocalDateTime.parse(locationTimeString, formatter);
-
-            long daysDifference = ChronoUnit.DAYS.between(locationTime, now);
-            System.out.println("test");
-            if (daysDifference == 3) {
-                // 보호자에게 문자 전송
-            }
+	public String sendGodokMsg(LocationVO vo) {
+		List<LocationVO> location_list =sql.selectList("godok.viewLocationList", vo);
+		List<EphoneVO> ephone_list = sql.selectList("godok.viewEphone", vo);
+		Message sms = new Message(APIKEY, APISECRET);
+        for (int i = 0; i < location_list.size(); i++) {
+            LocationVO location = location_list.get(i);
+            EphoneVO ephone = ephone_list.get(i);
+    		HashMap<String, String> params = new HashMap();
+    		params.put("to", ephone.getEphone_phone());
+    		params.put("from", "01096024788");
+    		params.put("type", "SMS"); //SMS, LMS, MMS ...
+    		params.put("text", "고독사 문자 내용 담을곳");
+    		params.put("app_version", "JAVA SDK v1.2");
+    		
+    		try {
+//    			JSONObject obj = sms.send(params);
+//    			System.out.println(obj.toString()) ;
+    			return "";
+    		} catch (Exception e) {
+    			e.printStackTrace();
+    			return "실패";
+    		}
+            
         }	
 		return "";
 	}

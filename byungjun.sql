@@ -303,6 +303,7 @@ select * from location where member_id = 'ansqudwns98';
 create table godok_alarm(
     alarm_id number primary key,
     member_id nvarchar2(30) not null,
+    member_name nvarchar2(30) not null,
     alarm_time date not null,
     ephone_name nvarchar2(100) not null,
     ephone_phone nvarchar2(20) not null
