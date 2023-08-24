@@ -29,9 +29,10 @@
 							url: '<c:url value="/go/list" />',
 							method: 'GET',
 							success: function(data) {
-								console.log(data);
 								$("#listModal .modal-body").html(data);
-								$("#listModal").modal('show');
+								$("#listModal").addClass("show").removeClass("fade");
+								$("#listModal").modal("show");
+// 								new bootstrap.Modal( $('#listModal') ).show();
 							}
 						});
 					}
@@ -53,6 +54,7 @@
 		});
 		calendar.render();
 	});
+	
 </script>
 <style>
 body {
@@ -71,9 +73,9 @@ body {
 </head>
 <body>
 	<div id="calendar"></div>
-	<div class="modal fade" id="listModal" tabindex="-1" role="dialog" aria-labelledby="listModalLabel" aria-hidden="true">
+<!-- 	<div class="modal fade" id="listModal" tabindex="-1" role="dialog" aria-labelledby="listModalLabel" aria-hidden="true"> -->
 		<jsp:include page="/WEB-INF/views/include/modal-list.jsp"/>
-	</div>
+<!-- 	</div> -->
 
 </body>
 </html>

@@ -74,6 +74,7 @@
 	<script src="<c:url value = '/theme/plugins/slick/slick.min.js'/>"></script>
 
 	<script src="<c:url value = '/theme/js/script.js'/>"></script>
+	<script src="<c:url value = '/theme/js/common.js'/>"></script>
 	<script>
 		
 	 function getCurrentUrl() {

@@ -367,5 +367,12 @@ function emptyCheck(){
 	return ok;
 }
 
+$(function(){
+		$('#listModal button.close').click(function(){
+			console.log("asdsad");
+			$('#listModal').addClass("fade").removeClass("show");
+		})
+	})
+
 
 

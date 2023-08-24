@@ -33,7 +33,7 @@ public class GoController {
 		page.setTotalList(sql.selectOne("godok.totalViewGodokAlarmList", page));
 		page.setList( sql.selectList("godok.viewGodokAlarmList", page));
 		model.addAttribute("page", page);
-		return "go/list";
+		return "modal/go/list";
 	}
 	
 	@RequestMapping("/addEvents")
