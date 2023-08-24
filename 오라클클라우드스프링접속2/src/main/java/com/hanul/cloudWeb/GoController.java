@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,11 +39,9 @@ public class GoController {
 	@RequestMapping("/addEvents")
 	@ResponseBody
 	public List<CalendarEvents> addEvents() {
-		System.out.println("test1");
 		List<GodokVO> alarmList =  sql.selectList("godok.viewGodokAlarmList");
 		eventsList = new ArrayList<>();
 		for (GodokVO alarm : alarmList) {
-			System.out.println("test2");
 		    CalendarEvents event = new CalendarEvents();
 		    event.setId(String.valueOf(alarm.getAlarm_id())); // 예시, 이벤트 고유 ID
 		    event.setTitle(alarm.getMember_name());

@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
+
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -24,7 +25,15 @@
 				myCustomButton: {
 					text: '전체보기', // 버튼 텍스트
 					click: function() {
-						
+						$.ajax({
+							url: '<c:url value="/go/list" />',
+							method: 'GET',
+							success: function(data) {
+								console.log(data);
+								$("#listModal .modal-body").html(data);
+								$("#listModal").modal('show');
+							}
+						});
 					}
 				}
 			},
@@ -32,6 +41,11 @@
 				left: 'prev,next today myCustomButton', // 버튼 추가
 				center: 'title',
 				right: 'dayGridMonth,timeGridWeek,timeGridDay'
+			},
+			views: {
+				dayGridMonth: { buttonText: '월간' },
+				timeGridWeek: { buttonText: '주간' },
+				timeGridDay: { buttonText: '일간' }
 			}
 // 				dataClick : function() {
 // 			    	alert('확인');	
@@ -57,6 +71,9 @@ body {
 </head>
 <body>
 	<div id="calendar"></div>
+	<div class="modal fade" id="listModal" tabindex="-1" role="dialog" aria-labelledby="listModalLabel" aria-hidden="true">
+		<jsp:include page="/WEB-INF/views/include/modal-list.jsp"/>
+	</div>
 
 </body>
 </html>
