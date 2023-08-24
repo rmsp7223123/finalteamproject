@@ -16,10 +16,13 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
+import com.example.finalteamproject.common.CommonConn;
+import com.example.finalteamproject.common.CommonVar;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.Priority;
 
 import java.security.Permission;
 
@@ -32,6 +35,15 @@ public class LocationService extends Service {
                 double latitude = locationResult.getLastLocation().getLatitude();
                 double longitude = locationResult.getLastLocation().getLongitude();
                 Log.v("LOCATION_UPDATE", latitude + ", " + longitude);
+
+                CommonConn conn = new CommonConn(getApplicationContext(), "gps/location");
+                conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                conn.addParamMap("senior_latitude", latitude);
+                conn.addParamMap("senior_longitude", longitude);
+                conn.onExcute((isResult, data) -> {
+
+                });
+
             }
         }
     };
@@ -46,10 +58,10 @@ public class LocationService extends Service {
         String channelId = "location_notification_channel";
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         Intent resultIntent = new Intent();
-        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, resultIntent, PendingIntent.FLAG_MUTABLE);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), channelId);
         builder.setSmallIcon(R.mipmap.ic_launcher);
-        builder.setContentTitle("Location Service");
+        builder.setContentTitle("위치 정보를 받아옵니다.");
         builder.setDefaults(NotificationCompat.DEFAULT_ALL);
         builder.setContentText("Running");
         builder.setContentIntent(pendingIntent);
@@ -64,10 +76,18 @@ public class LocationService extends Service {
             }
         }
 
-        LocationRequest locationRequest = LocationRequest.create();
-        locationRequest.setInterval(4000);
-        locationRequest.setFastestInterval(2000);
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+        // 1시간 간격으로 위치정보를 전송함.
+        LocationRequest.Builder locationBuilder = new LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY , 3600000);
+        locationBuilder.setMinUpdateIntervalMillis(3600000);
+        locationBuilder.setIntervalMillis(3600000);
+        locationBuilder.setMaxUpdateDelayMillis(10000);
+
+     //   LocationRequest req =()
+        LocationRequest locationRequest = locationBuilder.build();
+//        locationRequest.setInterval(4000);
+//        locationRequest.setFastestInterval(2000);
+//        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling

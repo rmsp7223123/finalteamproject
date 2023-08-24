@@ -138,13 +138,7 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                     lat = location.getLatitude();
                     lon = location.getLongitude();
 
-                    CommonConn conn = new CommonConn(getContext(), "gps/location");
-                    conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
-                    conn.addParamMap("senior_latitude", lat);
-                    conn.addParamMap("senior_longitude", lon);
-                    conn.onExcute((isResult, data) -> {
 
-                    });
                 }
             }
 
