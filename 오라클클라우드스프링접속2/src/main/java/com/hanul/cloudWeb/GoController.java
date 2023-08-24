@@ -1,9 +1,6 @@
 package com.hanul.cloudWeb;
 
-import java.time.LocalDateTime;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cloudWeb.member.LocationVO;
+import cloudWeb.Common.PageVO;
+import cloudWeb.member.GodokVO;
 
 @Controller
 @RequestMapping("/go")
@@ -26,8 +24,11 @@ public class GoController {
 		return "go/home";
 	}
 	
-	@RequestMapping("list")
-	public String list() {
+	@RequestMapping("/list")
+	public String list(PageVO page, Model model) {
+		page.setTotalList(sql.selectOne("godok.totalViewGodokAlarmList", page));
+		page.setList( sql.selectList("godok.viewGodokAlarmList", page));
+		model.addAttribute("page", page);
 		return "go/list";
 	}
 

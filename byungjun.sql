@@ -300,6 +300,7 @@ commit;
 
 select * from location where member_id = 'ansqudwns98';
 
+commit;
 create table godok_alarm(
     alarm_id number primary key,
     member_id nvarchar2(30) not null,
@@ -341,6 +342,21 @@ BEGIN
 END;
 /
 
+CREATE OR REPLACE TRIGGER trigger_insert_member_name
+BEFORE INSERT ON godok_alarm
+FOR EACH ROW
+DECLARE
+    member_name_var nvarchar2(30);
+BEGIN
+    SELECT member_name
+    INTO member_name_var
+    FROM member
+    WHERE member_id = :NEW.member_id;
+    :NEW.member_name := member_name_var;
+END;
+/
+
+
 CREATE OR REPLACE TRIGGER trigger_delete_godok_alarm
 AFTER DELETE ON member
 FOR EACH ROW
@@ -352,6 +368,22 @@ END;
 commit;
 
 select * from godok_alarm;
+insert into godok_alarm(member_id, alarm_time) values('00000a', sysdate);
+insert into godok_alarm(member_id, alarm_time) values('ansqudwns98', sysdate);
+select * from location;
+
+SELECT *
+FROM location
+WHERE location_time <= SYSDATE - 3;
+insert into location(member_id, location_latitude, location_longitude, location_time) values('00000a', '33', '33', TO_DATE('2023-08-21 13:30:20', 'YYYY-MM-DD HH24:MI:SS'));
+
+select * from member;
+
+select alarm_time from godok_alarm;
+
+select * from godok_alarm;
+
+commit;
 
 insert into godok_alarm(member_id, alarm_time) values ('ansqudwns98', TO_DATE(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'));
 insert into godok_alarm(member_id, alarm_time) values ('ansqudwns98', sysdate);
@@ -364,3 +396,6 @@ SELECT member_id, TO_CHAR(alarm_time, 'YYYY-MM-DD HH24:MI:SS') AS alarm_time
 FROM godok_alarm;
 
 commit;
+
+select * from ephone;
+select * from godok_alarm;

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="godok">
+<sql id="searchWhere">
+<choose>
+	<!-- 전체 -->
+	<when test=" search == 'all' ">
+	where member_id in ( select MEMBER_ID FROM MEMBER WHERE MEMBER_ADMIN = 0 )
+	and (member_id   like '%' || #{keyword} || '%' 
+	   or member_name like '%' || #{keyword} || '%' 
+	   )
+	</when>
+	<!-- 제목, 내용 -->
+	<when test=" search == 'member_id' or search == 'member_name'">
+	where member_id in ( select MEMBER_ID FROM MEMBER WHERE MEMBER_ADMIN = 0 )
+	and ${search} like '%' || #{keyword} || '%' 
+	</when>
+</choose>
+</sql>
+
+
+<select id="viewLocationList"
+		resultType="cloudWeb.member.LocationVO">
+		select * from location where location_time &lt;= SYSDATE -3
+	</select>
+	<select id="viewEphone" resultType="cloudWeb.member.EphoneVO">
+		select * from ephone where
+		member_id = #{member_id}
+	</select>
+	<select id="viewGodokAlarmList" resultType="cloudWeb.member.GodokVO">
+		select member_id, member_name, alarm_time, ephone_name, ephone_phone, alarm_id, no from  
+		(select row_number() over(order by alarm_id) no, g.*
+		from godok_alarm g
+      <include refid="searchWhere"/>) n
+	where no between #{beginList} and #{endList} 
+	order by no desc
+	</select>
+	<select id="totalViewGodokAlarmList" resultType="integer">
+select count(*) from godok_alarm <include refid="searchWhere"/>
+</select>
+	
+</mapper>

@@ -3,14 +3,14 @@
 <mapper namespace="godok">
 	<select id="viewLocationList"
 		resultType="cloud.member.LocationVO">
-		select * from location where member_id = #{member_id}
+		select * from location where location_time &lt;= SYSDATE -3
 	</select>
 	<select id="viewEphone" resultType="cloud.member.EphoneVO">
 		select * from ephone where
 		member_id = #{member_id}
 	</select>
 	<select id="viewGodokAlarmList" resultType="cloud.member.GodokVO">
-		select * from godok_alarm where location_time &lt;= SYSDATE -3
+		select * from godok_alarm
 	</select>
 
 </mapper>

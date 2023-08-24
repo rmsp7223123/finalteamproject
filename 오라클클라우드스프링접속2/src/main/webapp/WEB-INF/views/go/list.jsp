@@ -18,7 +18,6 @@
 				<option value="all" ${page.search eq 'all' ? 'selected' : '' }>전체</option>
 				<option value="member_id" <c:if test="${page.search eq 'member_id'}">selected</c:if> >아이디</option>
 				<option value="member_name" ${page.search eq 'member_name' ? 'selected' : '' }>이름</option>
-				<option value="member_nickname" ${page.search eq 'member_nickname' ? 'selected' : '' }>닉네임</option>
 			</select>
 			<input type="text" name="keyword" value="${page.keyword }" class="form-control">
 			<button class="btn btn-warning px-3"><i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i></button>
@@ -34,15 +33,14 @@
 		<col width="250px">
 		<col width="100px">
 		<col width="200px">
-		<col width="200px">
 	</colgroup>
 		<tr>
-		<th>번호</th>
+		<th>알람번호</th>
 			<th>이름</th>
+			<th>알람 시간</th>
 			<th>아이디</th>
-			<th>성별</th>
-			<th>생일</th>
-			<th>전화번호</th>
+			<th>보호자 이름</th>
+			<th>보호자 번호</th>
 		</tr>
 		<!-- 회원정보가 없는 경우 -->
 		<c:if test="${empty page.list }">
@@ -59,11 +57,10 @@
 					${vo.member_name }
 				</a>
 			</td>
-			<td>${vo.member_id }</td>
-			<td>${vo.member_nickname }</td>
-			<td>${vo.member_gender }</td>
-			<td>${vo.member_birth }</td>
-			<td>${vo.member_phone }</td>
+			<td>${vo.member_name }</td>
+			<td>${vo.alarm_time }</td>
+			<td>${vo.ephone_name }</td>
+			<td>${vo.ephone_phone }</td>
 		</tr>
 		</c:forEach>
 	</table>
