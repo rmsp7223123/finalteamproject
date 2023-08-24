@@ -25,17 +25,8 @@
 				myCustomButton: {
 					text: '전체보기', // 버튼 텍스트
 					click: function() {
-						$.ajax({
-							url: '<c:url value="/go/list" />',
-							method: 'GET',
-							success: function(data) {
-								$("#listModal .modal-body").html(data);
-								$("#listModal").addClass("show").removeClass("fade");
-								$("#listModal").modal("show");
-// 								new bootstrap.Modal( $('#listModal') ).show();
-							}
-						});
-					}
+			            window.location.href = '<c:url value="/go/list" />';
+			        }
 				}
 			},
 			headerToolbar: {

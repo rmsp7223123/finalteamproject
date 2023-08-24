@@ -45,7 +45,7 @@
 		<!-- 회원정보가 없는 경우 -->
 		<c:if test="${empty page.list }">
 			<tr>
-				<td colspan='7'>회원정보가 없습니다.</td>
+				<td colspan='6'>정보가 없습니다.</td>
 			</tr>
 		</c:if>
 		<!-- 사원정보가 있는 경우 -->

@@ -10,7 +10,9 @@
 <body>
 	<form action="list" method="post">
 	<input type="hidden" name="curPage" value="1">
-	
+	<div class="flex flex-middle space-between">
+      
+    </div>
 	<div class="row mb-3 justify-content-between">
 		<div class="col-auto">
 		<div class="input-group">
@@ -21,6 +23,7 @@
 			</select>
 			<input type="text" name="keyword" value="${page.keyword }" class="form-control">
 			<button class="btn btn-warning px-3"><i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i></button>
+			<span class="prev-page ml-auto"><a href="<c:url value='/go/home'/>"><i class="fa-solid fa-arrow-rotate-left" style="font-size: 1.5rem;"></i></a></span>
 		</div>
 		</div>
 	</div>
