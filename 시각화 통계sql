@@ -29,13 +29,27 @@ where rownum <= 10;
 
 
 --회원-성별 조회
---빠밤~!! mapper 조회 쿼리
 select
 (select count(*)
 from member where member_gender = '여') as 여자,
 (select count(*)
 from member where member_gender = '남') as 남자
 from dual;
+
+
+--빠밤~!! mapper 조회 쿼리
+SELECT
+    '여자' gender,
+    COUNT(*) AS population
+FROM member
+WHERE member_gender = '여'
+UNION ALL
+SELECT
+    '남자' AS gender,
+    COUNT(*) AS population
+FROM member
+WHERE member_gender = '남';
+
 
 --회원-나이별 조회
 select *
