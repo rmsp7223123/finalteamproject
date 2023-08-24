@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://code.jquery.com/jquery-3.7.0.js" ></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
@@ -83,12 +84,12 @@ $('.btn-register').click(function(){
 	}).done(function( response ){
 		console.log( response )
 		if( response ){
-			alert("댓글 등록 성공");
+			alert("답변 등록 성공");
 			initRegisterContent();
 			commentList();
 			history.go(0);
 		}else{
-			alert("댓글 등록 실패");
+			alert("답변 등록 실패");
 		}
 	});
 	

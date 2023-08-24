@@ -32,15 +32,15 @@ public class CsController {
 
 	@RequestMapping("/list")
 	public String home(HttpSession session, PageVO page, Model model) {
+		session.setAttribute("category", "cs");
 		page.setTotalList(sql.selectOne("csboard.totalList", page));
 		page.setList(sql.selectList("csboard.list", page));
 		model.addAttribute("page", page);
-		session.setAttribute("category", "cs");
 		return "cs/list";
 	}
 
 	// 선택한 방명록 정보 화면 요청
-	@RequestMapping(value = "/info", method = { RequestMethod.POST, RequestMethod.GET })
+	@RequestMapping("/info")
 	public String info(Model model, int csboard_id, PageVO page) {
 		// 선택한 방명록 글 정보를 DB에서 조회해와 화면에 출력할 수 있도록 Model에 담기
 		model.addAttribute("list", sql.selectList("csboard.commentList", csboard_id));

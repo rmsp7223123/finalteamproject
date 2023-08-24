@@ -49,9 +49,8 @@ table { table-layout: fixed; }
 <c:forEach items="${page.list}" var="vo">
 <tr><td>${vo.no }</td>
 	<td class="text-start">
-		${vo.comment_exist eq 'Y' ? '<i class="fa-brands fa-replyd" style="color: #000000;"></i>' : 
-		'<i class="fa-brands fa-replyd" style="color: #005eff;"></i>'}
-	<a class="text-link" href="javascript:info(${vo.csboard_id})">${vo.csboard_title }</a></td>
+		${vo.comment_exist eq 'Y' ? '<i class="fa-brands fa-replyd"></i>' : ''}
+	<a class="text-link" onclick="javascript:info(${vo.csboard_id})">${vo.csboard_title }</a></td>
 	<td>${vo.nickname }</td>
 	<td>${vo.csboard_writedate }</td>
 </tr>
