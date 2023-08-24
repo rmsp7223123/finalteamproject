@@ -20,10 +20,10 @@
 	<resources location="/resources/fullcalendar/"
 		mapping="/fullcalendar/**" />
 	<resources location="/resources/css/" mapping="/css/**" />
-	<resources location="/resources/js/" mapping="/js/**" />
-	<resources location="/resources/img/" mapping="/img/**" />
-	<resources location="/resources/scss/" mapping="/scss/**" />
-	<resources location="/resources/vendor/" mapping="/vendor/**" />
+	<resources location="/resources/theme/css/" mapping="/theme/css/**" />
+	<resources location="/resources/theme/js/" mapping="/theme/js/**" />
+	<resources location="/resources/theme/images/" mapping="/theme/images/**" />
+	<resources location="/resources/theme/plugins/" mapping="/theme/plugins/**" />
 	<resources mapping="/resources/**" location="/resources/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
@@ -34,15 +34,13 @@
 		<beans:property name="suffix" value=".jsp" />
 		<beans:property name="order" value="2" />
 	</beans:bean>
-
-	<beans:bean
-		class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
-		<beans:property name="order" value="1" />
+	
+	<beans:bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
+		<beans:property name="order" value="1"/>
 	</beans:bean>
-	<beans:bean
-		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
-		<beans:property name="definitions"
-			value="/WEB-INF/views/tiles/config.xml" />
+	<beans:bean class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<beans:property name="definitions" 
+						value="/WEB-INF/views/tiles/config.xml"/>
 	</beans:bean>
 
 	<context:component-scan

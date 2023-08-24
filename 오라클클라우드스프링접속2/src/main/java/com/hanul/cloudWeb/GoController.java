@@ -5,19 +5,30 @@ import java.time.LocalDateTime;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cloudWeb.member.LocationVO;
+
 @Controller
 @RequestMapping("/go")
 public class GoController {
+	@Autowired @Qualifier("project") SqlSession sql;
 
 	@RequestMapping("/home")
-	public String home(HttpSession session, Model model, HttpServletRequest request, LocalDateTime localDateTime) {
-		session.setAttribute("category", "go");
+	public String home() {
+		
 		return "go/home";
+	}
+	
+	@RequestMapping("list")
+	public String list() {
+		return "go/list";
 	}
 
 	@RequestMapping("/events")

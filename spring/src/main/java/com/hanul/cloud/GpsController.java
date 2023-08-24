@@ -84,4 +84,6 @@ public class GpsController {
 		
 		dao.locationupdate(senior_latitude, senior_longitude, member_id);
 	}
+	
+	
 }

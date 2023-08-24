@@ -87,12 +87,125 @@
 		</tr>
 	</table>
 	
+	</form>
+	
+	
+	
 	<div class="btn-toolbar my-3 gap-2 justify-content-center">
-		<button class="btn btn-warning">저장</button>
+		<button class="btn btn-warning" id="btn-join">저장</button>
 		<button class="btn btn-online-primary" type="button" onclick="history.go(-1)">취소</button>
 	</div>
 	
-	</form>
+	
+	<script src="<c:url value='/js/member.js?${now}'/>"></script>
+	
+	<script>
+//회원가입 버튼 클릭시
+$('#btn-join').on('click', function(){
+	
+	if( $("[name=member_name]").val().trim() =="" ){
+		alert("이름을 입력하세요");
+		$("[name=member_name]").focus();
+		$("[name=member_name]").val("")
+		return;
+	}
+	
+	var _id = $("[name=member_nickname]");
+	//중복확인 한 경우
+	if( _id.hasClass("checked-item") ){
+		//사용중인 아이디인 경우 회원가입 불가
+		if( _id.closest(".input-check").find(".desc").hasClass("text-danger") ){
+			alert("회원가입 불가\n" + member.member_nickname.unUsable.desc)
+			_id.focus()
+			return;
+		}
+	}else{
+	//중복확인 하지 않은 경우
+		if(  invalidStatus( _id ) ) return;
+		else{
+			//입력은 유효하나 중복확인하지 않은 경우
+			alert("회원가입 불가\n" + member.member_nickname.valid.desc)
+			_id.focus()
+			return;
+		}
+	}
+	
+	if(  invalidStatus( $("[name=member_name]") ) ) return;
+	if(  invalidStatus( $("[name=member_nickname]") ) ) return;
+	if(  invalidStatus( $("[name=member_phone]") ) ) return;
+	
+	singleFileUpload();
+	$('form').submit()
+})
+
+
+
+//체크항목에 입력을 유효하게 했는지 확인
+function invalidStatus( tag ){
+	var status = member.tagStatus( tag )
+	if( status.is )
+		return false;
+	else{
+		alert('회원가입 불가\n' + status.desc )
+		tag.focus()
+		return true;
+	}	
+}
+
+//아이디중복확인 버튼 클릭시
+$('#btn-member_nickname').on('click', function(){
+	memberNicknameCheck();
+})
+
+// 아이디 중복확인 함수
+function memberNicknameCheck(){
+	var _id = $('[name=member_nickname]');
+	var status = member.tagStatus( _id );
+	if( status.is ){
+		$.ajax({
+			url: 'memberNicknameCheck',
+			data: { userid: _id.val() }
+		}).done(function( response ){
+			console.log( response )
+			status = response ? member.userid.usable : member.userid.unUsable;
+			_id.closest('.input-check').find('.desc').text( status.desc )
+				.removeClass('text-success text-danger')
+				.addClass( status.is ? 'text-success' : 'text-danger')
+			_id.addClass("checked-item");  //중복확인 했음을 클래스로 지정
+		})
+		
+	}else{
+		alert('아이디 중복확인 불필요\n' + status.desc );
+		_id.focus();
+	}
+}
+
+//체크대상 항목에 키보드입력시 처리
+$('.check-item').on('keyup', function( e ){
+	$(this).removeClass("checked-item") //중복확인했음 클래스 삭제
+	// 아이디에서 엔터시 중복확인처리하기
+	if( $(this).attr("name")=="userid" && e.keyCode==13 ){
+		memberNicknameCheck();
+	}else{
+		member.showStatus( $(this) )
+	}
+})
+
+
+$(function(){
+	var today = new Date();
+	//만 나이를 적용한다면:13년전 해의 오늘날짜 이전까지는 선택 가능 
+	//var endDay = new Date(today.getFullYear()-13, today.getMonth(), today.getDate()-1);
+	//년도: 13년전 해의 12월 31일까지는 선택 가능
+	var endDay = new Date(today.getFullYear()-13, 11, 31);
+	$('[name=birth]').datepicker('option', 'maxDate', endDay);
+
+
+})
+
+
+
+</script>
 	
 	
 	

@@ -35,7 +35,7 @@
 			</div>
 		</div>
 	</div>
-
+	<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 	<script>
  	$('#btn-login').on('click',  function() {
 		$.ajax({

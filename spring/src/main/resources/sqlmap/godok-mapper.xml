@@ -9,5 +9,8 @@
 		select * from ephone where
 		member_id = #{member_id}
 	</select>
+	<select id="viewGodokAlarmList" resultType="cloud.member.GodokVO">
+		select * from godok_alarm
+	</select>
 
 </mapper>

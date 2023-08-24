@@ -14,12 +14,11 @@
 		var calendarEl = document.getElementById('calendar');
 
 		var calendar = new FullCalendar.Calendar(calendarEl, {
-			initialDate : '2023-08-22',
+			locale : 'ko',
 			editable : true,
 			selectable : true,
 			businessHours : true,
-			dayMaxEvents : true, // allow "more" link when too many events
-			events : '/go/event'
+			dayMaxEvents : true,
 		});
 
 		calendar.render();
@@ -27,7 +26,6 @@
 </script>
 <style>
 body {
-	margin: 40px 10px;
 	padding: 0;
 	font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
 	font-size: 14px;
@@ -35,6 +33,7 @@ body {
 
 #calendar {
 	max-width: 1100px;
+	max-width: 950px;
 	margin: 0 auto;
 }
 </style>

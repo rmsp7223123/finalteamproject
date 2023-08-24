@@ -160,6 +160,7 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
     public static void showNotification(Context context, String title,
                                         String message) {
         // Pass the intent to switch to the MainActivity
+        Log.d("TAG", "onMessageReceived: 백그라운드??");
         Intent intent
                 = new Intent(context, MainAlarmHistoryActivity.class);
         intent.putExtra("addFriend", true);
