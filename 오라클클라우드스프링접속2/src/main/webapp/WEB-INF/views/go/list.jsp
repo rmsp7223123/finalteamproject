@@ -36,9 +36,9 @@
 	</colgroup>
 		<tr>
 		<th>알람번호</th>
-			<th>이름</th>
-			<th>알람 시간</th>
 			<th>아이디</th>
+			<th>알람 시간</th>
+			<th>이름</th>
 			<th>보호자 이름</th>
 			<th>보호자 번호</th>
 		</tr>
@@ -54,11 +54,11 @@
 			<td class="text-start">
 				<a class="text-link" 
 					href="info?id=${vo.member_id}&curPage=${page.curPage}&search=${page.search}&keyword=${page.keyword}">
-					${vo.member_name }
+					${vo.member_id }
 				</a>
 			</td>
-			<td>${vo.member_name }</td>
 			<td>${vo.alarm_time }</td>
+			<td>${vo.member_name }</td>
 			<td>${vo.ephone_name }</td>
 			<td>${vo.ephone_phone }</td>
 		</tr>

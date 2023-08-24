@@ -27,12 +27,12 @@
 		select * from ephone where
 		member_id = #{member_id}
 	</select>
-	<select id="viewGodokAlarmList" resultType="cloudWeb.member.GodokVO">
+	<select id="viewGodokAlarmList" resultType="cloudWeb.godok.GodokVO">
 		select member_id, member_name, alarm_time, ephone_name, ephone_phone, alarm_id, no from  
-		(select row_number() over(order by alarm_id) no, g.*
+		(select row_number() over(order by alarm_time) no, g.*
 		from godok_alarm g
       <include refid="searchWhere"/>) n
-	where no between #{beginList} and #{endList} 
+	<if test="beginList != null"> where no between #{beginList} and #{endList}</if> 
 	order by no desc
 	</select>
 	<select id="totalViewGodokAlarmList" resultType="integer">

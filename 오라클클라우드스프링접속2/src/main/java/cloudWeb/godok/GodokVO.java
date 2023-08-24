@@ -1,4 +1,4 @@
-package cloudWeb.member;
+package cloudWeb.godok;
 
 import lombok.Getter;
 import lombok.Setter;

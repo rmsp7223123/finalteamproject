@@ -19,8 +19,11 @@
 			selectable : true,
 			businessHours : true,
 			dayMaxEvents : true,
+			events: '<c:url value = "/go/addEvents"/>'
+// 				dataClick : function() {
+// 			    	alert('확인');	
+// 			    },
 		});
-
 		calendar.render();
 	});
 </script>
