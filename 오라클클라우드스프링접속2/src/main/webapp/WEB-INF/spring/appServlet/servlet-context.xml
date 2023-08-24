@@ -22,6 +22,7 @@
 	<resources location="/resources/css/" mapping="/css/**" />
 	<resources location="/resources/theme/css/" mapping="/theme/css/**" />
 	<resources location="/resources/theme/js/" mapping="/theme/js/**" />
+	<resources location="/resources/js/" mapping="/js/**" />
 	<resources location="/resources/theme/images/" mapping="/theme/images/**" />
 	<resources location="/resources/theme/plugins/" mapping="/theme/plugins/**" />
 	<resources mapping="/resources/**" location="/resources/" />

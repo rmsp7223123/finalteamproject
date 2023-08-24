@@ -13,6 +13,15 @@ table { table-layout: fixed; }
 <body>
 <h3 class="my-4">고객센터</h3>
 
+	<form method="post" action="list">
+		<input type="hidden" name="curPage" value="1">
+		<input type="hidden" name="comment_exist" value="N">
+		
+		<input type="checkbox" name="comment_exist" id="checkbox_comment" 
+		${page.comment_exist eq 'Y' ? 'checked' : ''}
+		onclick='checkbox()'/>답변필요
+	</form>
+
 <form method="post" action="list">
 <div class="row justify-content-between mb-3">
 	<div class="col-auto">
@@ -26,14 +35,15 @@ table { table-layout: fixed; }
 			</select>
 			<input type="text" name="keyword" class="form-control" value="${page.keyword}">
 			<button class="btn btn-warning px-3">
-				<i class="fa-solid fa-magnifying-glass"></i>
+				<i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
 			</button>
 		</div>
 	</div>
 
 </div>
 <input type="hidden" name="curPage" value="1">
-<input type="hidden" name="csboard_id" value="10">
+<input type="hidden" name="csboard_id">
+<input type="hidden" name="comment_exist" value="${page.comment_exist }">
 </form>
 
 <table class="tb-list">
@@ -44,13 +54,14 @@ table { table-layout: fixed; }
 	<th>최종수정일</th>
 </tr> 
 <c:if test="${empty page.list}">
-<tr><td colspan="5">건의사항이 없습니다</td></tr>
+<tr><td colspan="4">건의사항이 없습니다</td></tr>
 </c:if>
 <c:forEach items="${page.list}" var="vo">
 <tr><td>${vo.no }</td>
 	<td class="text-start">
-		${vo.comment_exist eq 'Y' ? '<i class="fa-brands fa-replyd"></i>' : ''}
-	<a class="text-link" onclick="javascript:info(${vo.csboard_id})">${vo.csboard_title }</a></td>
+		${vo.comment_exist eq 'Y' ? ''
+		: '<i class="fa-solid fa-q"></i>'}
+	<a class="text-link" href="javascript:info(${vo.csboard_id})">${vo.csboard_title }</a></td>
 	<td>${vo.nickname }</td>
 	<td>${vo.csboard_writedate }</td>
 </tr>
@@ -60,12 +71,37 @@ table { table-layout: fixed; }
 <jsp:include page="/WEB-INF/views/include/page.jsp"/>
 
 <script>
+
+checkbox()
+
 //상세정보화면 요청
 function info( csboard_id ){
 	$('[name=csboard_id]').val(csboard_id )
 	$('[name=curPage]').val( ${page.curPage} )
+	$('[name=comment_exist]').val(($("#checkbox_comment").prop("checked")) ? 'Y' : 'N')
 	$('form').attr('action', 'info').submit()
 }
+
+function checkbox(){
+	
+//     var newCommentExist = ($("#checkbox_comment").prop("checked")) ? 'Y' : 'N';
+//     var newUrl = "list?comment_exist=" + newCommentExist + "&pagelist="+"${page.pageList }"+
+//     		"&curPage="+"${page.curPage}"+"&search=" + "${page.search}" + "&keyword=" + "${page.keyword}";
+//     window.location.href = newUrl;
+	
+	if ($("#checkbox_comment").prop("checked")) {
+		$('[name=comment_exist]').val('Y'); // 'Y'로 변경
+	} else {
+		$('[name=comment_exist]').val('N'); // 'N'로 변경
+	}
+	
+	$('[name=search]').val("${page.search}");
+	$('[name=keyword]').val("${page.keyword}");
+	$('[name=curPage]').val("${page.curPage}");
+	$('form').attr('action', 'list').submit();
+
+}
+
 
 </script>
 

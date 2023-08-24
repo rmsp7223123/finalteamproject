@@ -24,7 +24,8 @@ public class PageVO {
 //	 각 블럭의 시작 페이지번호 : 끝 페이지번호 - (블럭당 보여질 페이지수-1)
 	private int endPage, beginPage;
 	private List<Object> list; // 현재페이지에서의 글 목록
-	
+
+	private String comment_exist = "N";
 	public void setTotalList(int totalList) {
 		this.totalList = totalList;
 		
@@ -54,5 +55,6 @@ public class PageVO {
 		if( totalPage < endPage ) endPage = totalPage;	
 		
 	}
+	
 	
 }

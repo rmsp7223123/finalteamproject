@@ -5,25 +5,29 @@
 <sql id="searchWhere">
 	<choose>
 		<when test=" search == 's1' "> <!-- 전체 -->
-		where c.csboard_title like '%' || #{keyword} || '%'
+		and (c.csboard_title like '%' || #{keyword} || '%'
 		or  c.csboard_content like '%' || #{keyword} || '%'
-		or  c.writer  in (select member_id from member where member_nickname like '%' || #{keyword} || '%' )			 
+		or  c.writer  in (select member_id from member where member_nickname like '%' || #{keyword} || '%' ))		 
 		</when> 
 		<when test=" search == 's2' "> <!-- 제목-->
-		where c.csboard_title like '%' || #{keyword} || '%'
+		and c.csboard_title like '%' || #{keyword} || '%'
 		</when> 
 		<when test=" search == 's3' "> <!-- 내용-->
-		where c.csboard_content like '%' || #{keyword} || '%'
+		and c.csboard_content like '%' || #{keyword} || '%'
 		</when> 
 		<when test=" search == 's4' "> <!-- 작성자-->
-		where c.writer  in (select member_id from member where member_nickname like '%' || #{keyword} || '%' )		
+		and c.writer  in (select member_id from member where member_nickname like '%' || #{keyword} || '%' )		
 		</when> 
 		<when test=" search == 's5' "> <!-- 제목+내용 -->
-		where c.csboard_title like '%' || #{keyword} || '%'
-		or  c.csboard_content like '%' || #{keyword} || '%'
+		and (c.csboard_title like '%' || #{keyword} || '%'
+		or  c.csboard_content like '%' || #{keyword} || '%')
+		</when>
+		<when test='comment_exist == "Y"'>
+			and c.csboard_id not in (select csboard_id from csboard_comment)
 		</when>
 	</choose>
 </sql>
+
 
 <!-- 목록 조회 -->
 <select id="list" resultType="cloudWeb.csboard.CSBoardVO">
@@ -35,7 +39,9 @@ from (select row_number() over(order by c.csboard_id) no, c.*, m.member_nickname
 		 end) as comment_exist
 		from csboard c inner join member m on c.writer = m.member_id
 					   left outer join csboard_comment b on b.csboard_id = c.csboard_id
-      <include refid="searchWhere"/>) n
+					   where 1=1
+				<include refid="searchWhere"/>
+		) n
 	where no between #{beginList} and #{endList} 
 	order by no desc
 </select>
@@ -43,7 +49,10 @@ from (select row_number() over(order by c.csboard_id) no, c.*, m.member_nickname
 
 <!-- 총 글의 건수 조회 -->
 <select id="totalList" resultType="integer">
-select count(*) from csboard c <include refid="searchWhere"/>
+select count(*) from csboard c 
+ where 1=1
+<include refid="searchWhere"/>
+
 </select>
 
 <!-- 선택한 방명록 글 조회 -->
