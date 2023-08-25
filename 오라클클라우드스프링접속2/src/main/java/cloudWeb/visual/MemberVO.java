@@ -9,6 +9,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MemberVO {
-	private String gender;
+	private String gender, age;
 	private int population;
 }

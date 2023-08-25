@@ -38,20 +38,49 @@ from dual;
 
 
 --빠밤~!! mapper 조회 쿼리
-SELECT
-    '여자' gender,
-    COUNT(*) AS population
-FROM member
-WHERE member_gender = '여'
-UNION ALL
-SELECT
-    '남자' AS gender,
-    COUNT(*) AS population
-FROM member
-WHERE member_gender = '남';
+SELECT '여자' AS gender, COUNT(*) AS population FROM member WHERE
+		member_gender = '여'
+		UNION ALL
+		SELECT '남자' AS gender, COUNT(*) AS population FROM member WHERE
+		member_gender = '남';
 
 
 --회원-나이별 조회
-select *
+select '40대 미만' as age, count(*) as population
+from member
+where extract(year from sysdate) - extract(year from member_birth) < 40
+union all
+select '40대' as age, count(*) as population
+from member
+where extract(year from sysdate) - extract(year from member_birth) >= 40
+    and extract(year from sysdate) - extract(year from member_birth) < 50
+union all
+select '50대' as age, count(*) as population
+from member
+where extract(year from sysdate) - extract(year from member_birth) >= 50
+    and extract(year from sysdate) - extract(year from member_birth) < 60
+union all
+select '60대' as age, count(*) as population
+from member
+where extract(year from sysdate) - extract(year from member_birth) >= 60
+    and extract(year from sysdate) - extract(year from member_birth) < 70
+union all
+select '70대' as age, count(*) as population
+from member
+where extract(year from sysdate) - extract(year from member_birth) >= 70
+    and extract(year from sysdate) - extract(year from member_birth) < 80
+union all
+select '전체' as age, count(*) as population
+from member
+where extract(year from sysdate) - extract(year from member_birth) >= 0
+    and extract(year from sysdate) - extract(year from member_birth) < 200;
+
+select count(*) from member;
+
+select * from member
+order by member_birth;
+
+
+select count(*)
 from member
 where extract(year from sysdate) - extract(year from member_birth) < 40;

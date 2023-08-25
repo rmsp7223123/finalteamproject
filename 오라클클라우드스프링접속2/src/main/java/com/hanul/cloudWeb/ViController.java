@@ -30,9 +30,16 @@ public class ViController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("/memchart")
-	public String memchart() {
+	@RequestMapping("/genderchart")
+	public String genderchart() {
 		List<MemberVO> result = sql.selectList("vi.gender");
+	    return new Gson().toJson(result);
+	}
+	
+	@ResponseBody
+	@RequestMapping("/agechart")
+	public String agechart() {
+		List<MemberVO> result = sql.selectList("vi.age");
 	    return new Gson().toJson(result);
 	}
 		
