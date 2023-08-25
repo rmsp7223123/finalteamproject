@@ -19,12 +19,12 @@
 					</div>
 					<form class="user" action="loginCheck" method="post">
 						<div class="form-group">
-							<input type="text" class="form-control form-control-user"
+							<input type="text" class="form-control form-control-user" autocomplete="off"
 								id="member_id" aria-describedby="emailHelp" name="member_id"
 								placeholder="아이디를 입력해주세요.">
 						</div>
 						<div class="form-group">
-							<input type="password" class="form-control form-control-user"
+							<input type="password" class="form-control form-control-user" autocomplete="off"
 								name="member_pw" id="member_pw" placeholder="비밀번호를 입력해주세요.">
 						</div>
 						<button id="btn-login" type="button"
