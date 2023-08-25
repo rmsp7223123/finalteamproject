@@ -76,6 +76,9 @@
     </div>
   </div>
 </nav>
+
+
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 	<script src="<c:url value = '/theme/plugins/jquery-2.2.4.min.js'/>"></script>
 	<script src="<c:url value = '/theme/plugins/bootstrap/bootstrap.min.js'/>"></script>
 	<script src="<c:url value = '/theme/plugins/jquery.nicescroll.min.js'/>"></script>
@@ -89,8 +92,11 @@
 	<script src="<c:url value='/js/common.js?${now }'/>"></script>
 	
 	<script>
+	
+	
+	//점검 후 수정 해야함;.
 		
-	 function getCurrentUrl() {
+	 	function getCurrentUrl() {
 	        return window.location.href;
 	    }
 
