@@ -9,13 +9,13 @@
 
 </head>
 <body>
-	<h3>회원 통계</h3>
+	<h3>경로당 현황</h3>
 
 	<ul class="nav nav-tabs">
 		<li class="nav-item"><a class="nav-link" data-toggle="tab"
-			href="#gender">성별 통계</a></li>
+			href="#region">전국 경로당</a></li>
 		<li class="nav-item"><a class="nav-link" data-toggle="tab"
-			href="#age">연령 통계</a></li>
+			href="#pop">인기 경로당 TOP10</a></li>
 	</ul>
 
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -28,8 +28,8 @@
 	<div id="tab-content">
 		<canvas id="Chart" width="900" height="500"></canvas>
 
-		<div class="tab-pane fade show active" id="gender"></div>
-		<div class="tab-pane fade" id="age"></div>
+		<div class="tab-pane fade show active" id="region"></div>
+		<div class="tab-pane fade" id="pop"></div>
 	</div>
 
 
@@ -103,31 +103,31 @@
 
 
 
-	<!-- 연령 통계 -->
-		function age() {
+	<!-- 인기경로당 -->
+		function pop() {
 
-			let ageList = [];
-			let population = [];
+			let popList = [];
+			let likeNum = [];
 
 			$.ajax({
-				url : 'agechart',
+				url : 'pop',
 				type : 'get',
 				dataType : 'json',
 				success : function(data) {
 					for (let i = 0; i < data.length; i++) {
-						ageList.push(data[i].age);
-						population.push(data[i].population);
+						popList.push(data[i].senior_name);
+						likeNum.push(data[i].senior_like_num);
 					}
 
 					new Chart(document.getElementById('Chart'), {
-						type : 'line',
+						type : 'bar',
 						data : {
-							labels : ageList,
+							labels : popList,
 							datasets : [ {
-								data : population,
-								label : "연령현황",
-								backgroundColor : [ "#3e95cd", "#8e5ea2" ],
-								borderColor : [ "#3e95cd", "#8e5ea2" ],
+								data : likeNum,
+								label : "인기많은 경로당",
+								backgroundColor : [ "#3e95cd", "#8e5ea2"],
+								borderColor : [ "#3e95cd", "#8e5ea2"],
 								borderWidth : 1,
 								fill : false
 							} ]
@@ -136,7 +136,7 @@
 							responsive : false,
 							title : {
 								display : true,
-								text : '회원통계'
+								text : '경로당 현황'
 							}
 						}
 					});

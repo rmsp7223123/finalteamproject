@@ -171,7 +171,7 @@
 										<div></div>
 										<div></div>
 									</div>
-									<a href="works.html" class="hex-content"> <span
+									<a href="<c:url value='/vi/senior' />" class="hex-content"> <span
 										class="hex-content-inner"> <span class="icon"> <i
 												class="tf-briefcase2"></i>
 										</span> <span class="title">경로당 통계</span>

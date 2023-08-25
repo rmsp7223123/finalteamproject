@@ -8,9 +8,12 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.google.gson.Gson;
 
 import cloudWeb.visual.MemberVO;
 
@@ -26,11 +29,33 @@ public class ViController {
 		return "vi/member";
 	}
 	
-	@RequestMapping("/memchart")
 	@ResponseBody
-	public List<MemberVO> memchart() {
-	    List<MemberVO> result = sql.selectList("vi.gender");
-	    return result;
+	@RequestMapping("/genderchart")
+	public String genderchart() {
+		List<MemberVO> result = sql.selectList("vi.gender");
+	    return new Gson().toJson(result);
+	}
+	
+	@ResponseBody
+	@RequestMapping("/agechart")
+	public String agechart() {
+		List<MemberVO> result = sql.selectList("vi.age");
+	    return new Gson().toJson(result);
+	}
+		
+	
+	
+	@RequestMapping("/senior")
+	public String senior(HttpSession session) {
+		session.setAttribute("category", "vi");
+		return "vi/senior";
+	}
+	
+	@ResponseBody
+	@RequestMapping("/pop")
+	public String pop() {
+		List<MemberVO> result = sql.selectList("vi.pop");
+	    return new Gson().toJson(result);
 	}
 
 }
