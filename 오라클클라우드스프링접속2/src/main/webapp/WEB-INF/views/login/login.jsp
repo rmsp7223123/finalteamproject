@@ -37,6 +37,12 @@
 	</div>
 	<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 	<script>
+	$('#member_pw').on('keypress', function(e){ 
+	    if(e.keyCode == '13'){ 
+	        $('#btn-login').click(); 
+	    }
+	}); 
+	
  	$('#btn-login').on('click',  function() {
 		$.ajax({
 			url : "loginCheck", 
