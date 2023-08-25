@@ -15,8 +15,11 @@ import android.util.TypedValue;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
+<<<<<<< HEAD
 import com.example.finalteamproject.common.CustomTextview;
 import com.example.finalteamproject.common.Customcom.example.finalteamproject.common.CustomTextview;
+=======
+>>>>>>> parent of 9b527d3 (커스텀 텍스트뷰 기능 추가)
 import com.example.finalteamproject.databinding.ActivityChangeFontBinding;
 import com.example.finalteamproject.main.OptionVO;
 import com.google.gson.Gson;
@@ -63,17 +66,19 @@ public class ChangeFontActivity extends AppCompatActivity {
                     conn.addParamMap("option_font_size", dialog_item[savedItem]);
                     conn.onExcute((isResult, data) -> {
                         if(savedItem == 0) {
-                            CustomTextview.plusTextSize = 10;
+                            // 작게
                         } else if (savedItem == 1) {
-                            CustomTextview.plusTextSize = 20;
+                            // 중간
                         } else {
+<<<<<<< HEAD
                            CustomTextview.plusTextSize = 30;
+=======
+                            // 크게
+>>>>>>> parent of 9b527d3 (커스텀 텍스트뷰 기능 추가)
                         }
-                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ChangeFontActivity.this);
-                        preferences.edit().putFloat("font_size", CustomTextview.plusTextSize).apply(); // plusTextSize를 저장
+                        recreate();
                         dialog.dismiss();
                         changeFontSize();
-                        recreate();
                     });
                 }
             });
