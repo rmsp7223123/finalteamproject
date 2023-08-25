@@ -27,7 +27,7 @@
             android:src="@drawable/baseline_priority_high_24"
             android:layout_gravity="center"/>
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:gravity="center|left"
             android:layout_weight="9"
             android:id="@+id/tv_text"

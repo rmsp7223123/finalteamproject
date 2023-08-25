@@ -374,7 +374,7 @@ $(function(){
 			console.log("asdsad");
 			$('#listModal').addClass("fade").removeClass("show");
 		})
-	})
+})
 
 
 

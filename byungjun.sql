@@ -424,5 +424,42 @@ and (member_id   like '%' || '홍길동' || '%'
 	   );
        
 select * from ephone where member_id = 'testaaa1';
+
+select * from location;
+
+select * from location;
+
+SELECT *
+FROM location
+WHERE location_time BETWEEN SYSDATE - INTERVAL '3' DAY + INTERVAL '9' HOUR AND SYSDATE - INTERVAL '3' DAY + INTERVAL '10' HOUR;
+
+insert into location(member_id,LOCATION_LATITUDE,LOCATION_LONGITUDE,location_time) values('1test', '33','33', TO_DATE('2023-08-22 13:40:20', 'YYYY-MM-DD HH24:MI:SS'));
+
+commit;
+select * from location;
+select * from member;
+
+SELECT TO_CHAR(location_time, 'YYYY-MM-DD HH24:MI:SS') AS location_time
+FROM location;
+
+select to_char(sysdate, 'YYYY-MM-DD HH24:MI:SS')
+from dual;
+select sysdate from dual;
+
+
+
+SELECT *
+		FROM location
+		WHERE location_time BETWEEN SYSDATE - INTERVAL '3' DAY + INTERVAL '9' HOUR
+		AND SYSDATE - INTERVAL '3' DAY + INTERVAL '10' HOUR;
     
     
+    update location
+    set location_time = sysdate + INTERVAL '9' HOUR
+    WHERE location_time BETWEEN SYSDATE - INTERVAL '3' DAY + INTERVAL '9' HOUR
+	AND SYSDATE - INTERVAL '3' DAY + INTERVAL '10' HOUR;
+    
+    select * from location;
+
+
+rollback;

@@ -141,11 +141,11 @@ public class SplashActivity extends AppCompatActivity {
 
     private void applyFontSize(float fontSize) {
         if (fontSize == 0) {
-            CustomTextview.plusTextSize = 10;
+            CustomTextview.plusTextSize = 60;
         } else if (fontSize == 1) {
-            CustomTextview.plusTextSize = 20;
+            CustomTextview.plusTextSize = 50;
         } else {
-            CustomTextview.plusTextSize = 30;
+            CustomTextview.plusTextSize = 0;
         }
     }
 }

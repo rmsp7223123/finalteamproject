@@ -22,7 +22,7 @@
             android:layout_height="30dp"
             android:src="@drawable/back"/>
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -85,7 +85,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/secret_unchecked"/>
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:layout_marginStart="5dp"
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
@@ -96,7 +96,7 @@
             android:layout_toEndOf="@id/imgv_secret"/>
 
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="비밀글은 작성자와 관리자에게만 보여집니다"
@@ -124,7 +124,7 @@
             android:layout_marginHorizontal="25dp"
             android:layout_marginBottom="60dp">
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -23,5 +23,10 @@
     <string name="findPw"><u>비밀번호 찾기</u></string>
     <string name="findPwMessage"><u>임시 비밀번호 문자로 전송받기</u></string>
     <string name="setting_underline2"><u>고객센터</u></string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="app_widget_description">This is an app widget description</string>
+
+    <string name="widget_description">고독사 문자를 보내는 위젯 입니다.</string>
 
 </resources>

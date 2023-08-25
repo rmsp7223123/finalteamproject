@@ -22,7 +22,7 @@ table { table-layout: fixed; }
 		onclick='checkbox()'/>답변필요
 
 
-<div class="row justify-content-between mb-3">
+<div class="row mb-3">
 	<div class="col-auto">
 		<div class="input-group">
 			<select class="form-select" name="search">

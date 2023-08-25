@@ -12,7 +12,7 @@
 	<form action="list" method="post">
 	<input type="hidden" name="curPage" value="1">
 	
-	<div class="row mb-3 justify-content-between">
+	<div class="row mb-3">
 		<div class="col-auto">
 		<div class="input-group">
 			<select name="search" class="form-select">
