@@ -218,3 +218,10 @@ textarea.form-control {
 
 
 
+.date + .date-delete {
+	position: relative;
+	right: 34px;
+	display: none;
+}
+
+

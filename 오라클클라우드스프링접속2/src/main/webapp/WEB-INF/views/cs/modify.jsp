@@ -44,7 +44,7 @@ $('#btn-join').on('click', function(){
 		$("[name=csboard_title]").val("")
 		return;
 	}else if($("[name=csboard_content]").val().trim() =="" ){
-		alert("제목을 입력하세요");
+		alert("내용을 입력하세요");
 		$("[name=csboard_content]").focus();
 		$("[name=csboard_content]").val("")
 		return;

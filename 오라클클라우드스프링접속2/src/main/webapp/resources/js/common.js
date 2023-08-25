@@ -282,7 +282,7 @@ $(function(){
 		$(this).next('.date-delete').css('display', 'inline')
 	})
 
-	$('[name=member_phone]').keyup(function(){
+	$('[name=phone]').keyup(function(){
 		toPhone( $(this) );	
 	})
 	
@@ -323,7 +323,8 @@ $(function(){
 	
 	var today = new Date();
 	var range = today.getFullYear()-100 + ':' + today.getFullYear();
-		if($('.date').lenth>0){
+		if($('.date').length>0){
+			console.log(1)
 		$.datepicker.setDefaults({
 			dateFormat: "yy-mm-dd",
 			changeYear: true,

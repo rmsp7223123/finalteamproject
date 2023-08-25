@@ -116,5 +116,12 @@ public class CuController {
 		return sql.selectOne("member.info", member_nickname)==null ? false : true;
 	}
 	
+	
+	//닉네임 중복확인 처리 요청
+	@ResponseBody @RequestMapping("/nicknameCheck")
+	public boolean nicknameCheck(String member_nickname) {
+		return  sql.selectOne("member.nickname", member_nickname)==null ? true : false;
+	}
+	
 
 }
