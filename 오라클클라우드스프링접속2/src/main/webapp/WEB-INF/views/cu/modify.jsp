@@ -80,7 +80,9 @@
 			<td>
 				<div class="row">
 					<div class="col-auto">
-						<input type="text" class="form-control" name="member_phone" value="${vo.member_phone }">
+						<input type="text" class="form-control" name="member_phone" 
+						value="${vo.member_phone}">
+<%-- 						value="${vo.member_phone.replace(vo.member_phone.substring(3), vo.member_phone.substring(3)+'-') }"> --%>
 					</div>
 				</div>
 			</td>
@@ -98,8 +100,12 @@
 	
 	
 	<script src="<c:url value='/js/member.js?${now}'/>"></script>
+	<script src="<c:url value='/js/common.js?${now}'/>"></script>
 	
 	<script>
+	
+
+	
 //회원가입 버튼 클릭시
 $('#btn-join').on('click', function(){
 	
@@ -133,6 +139,7 @@ $('#btn-join').on('click', function(){
 	if(  invalidStatus( $("[name=member_name]") ) ) return;
 	if(  invalidStatus( $("[name=member_nickname]") ) ) return;
 	if(  invalidStatus( $("[name=member_phone]") ) ) return;
+	if(  invalidStatus( $("[name=member_birth]") ) ) return;
 	
 	singleFileUpload();
 	$('form').submit()
@@ -202,6 +209,7 @@ $(function(){
 
 
 })
+
 
 
 
