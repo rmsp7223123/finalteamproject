@@ -3,14 +3,26 @@
 <mapper namespace="godok">
 	<select id="viewLocationList"
 		resultType="cloud.member.LocationVO">
-		select * from location where location_time &lt;= SYSDATE -3
+		SELECT *
+		FROM location
+		WHERE location_time BETWEEN SYSDATE -
+		INTERVAL '3' DAY + INTERVAL '9' HOUR
+		AND SYSDATE - INTERVAL '3' DAY +
+		INTERVAL '10' HOUR
 	</select>
 	<select id="viewEphone" resultType="cloud.member.EphoneVO">
 		select * from ephone where
 		member_id = #{member_id}
 	</select>
-	<select id="viewGodokAlarmList" resultType="cloud.member.GodokVO">
+	<select id="viewGodokAlarmList"
+		resultType="cloud.member.GodokVO">
 		select * from godok_alarm
 	</select>
+	<update id="updateLocationTime">
+		update location
+		set location_time = sysdate + INTERVAL '9' HOUR
+		WHERE location_time BETWEEN SYSDATE - INTERVAL '3' DAY + INTERVAL '9' HOUR
+		AND SYSDATE - INTERVAL '3' DAY + INTERVAL '10' HOUR;
+	</update>
 
 </mapper>

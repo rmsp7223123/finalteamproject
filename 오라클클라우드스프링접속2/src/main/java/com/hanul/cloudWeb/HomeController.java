@@ -45,12 +45,12 @@ public class HomeController implements HandlerInterceptor {
 		model.addAttribute("admin", admin);
 		if (admin == 1) { // 로그인 성공
 			session.setAttribute("admin", admin);
+//			session.setMaxInactiveInterval(admin); 초단위 세션 시간 지정
 			returnUrl = "redirect:/";
 		} else { // 로그인 실패
 			returnUrl = "redirect:/";
 		}
 		return admin;
-//		return "redirect:/default/login/loginCheck";
 	}
 
 	@RequestMapping("/logout")

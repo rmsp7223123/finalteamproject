@@ -62,22 +62,17 @@ public class ChangeFontActivity extends AppCompatActivity {
                     conn.addParamMap("option_font_size", dialog_item[savedItem]);
                     conn.onExcute((isResult, data) -> {
                         if(savedItem == 0) {
-                            CustomTextview.plusTextSize = 10;
+                            CustomTextview.plusTextSize = 60;
                         } else if (savedItem == 1) {
-                            CustomTextview.plusTextSize = 20;
+                            CustomTextview.plusTextSize = 50;
                         } else {
-                            CustomTextview.plusTextSize = 30;
+                            CustomTextview.plusTextSize = 0;
                         }
-                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ChangeFontActivity.this);
-                        preferences.edit().putFloat("font_size", CustomTextview.plusTextSize).apply(); // plusTextSize를 저장
+                        //SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ChangeFontActivity.this);
+                        //preferences.edit().putFloat("font_size", CustomTextview.plusTextSize).apply(); // plusTextSize를 저장
                         dialog.dismiss();
                         changeFontSize();
                         recreate();
-                        Intent intent = getPackageManager().getLaunchIntentForPackage(getPackageName());
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
-                        finish();
                     });
                 }
             });
