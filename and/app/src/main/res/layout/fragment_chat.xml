@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_marginEnd="16dp"
-        android:backgroundTint="#FFC81E"
+        android:backgroundTint="#F7DE6D"
         android:layout_marginBottom="16dp"
         android:src="@drawable/baseline_add_24"
         app:fabSize="normal"
@@ -32,14 +32,14 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
         app:fabSize="normal"
-        android:backgroundTint="#FFC81E"
+        android:backgroundTint="#F7DE6D"
         app:layout_constraintBottom_toTopOf="@+id/fltbtn_menu"
         app:layout_constraintEnd_toEndOf="@+id/fltbtn_menu"
         app:layout_constraintStart_toStartOf="@+id/fltbtn_menu"
         app:srcCompat="@drawable/friend_list" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:backgroundTint="#FFC81E"
+        android:backgroundTint="#F7DE6D"
         android:id="@+id/fltbtn_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
