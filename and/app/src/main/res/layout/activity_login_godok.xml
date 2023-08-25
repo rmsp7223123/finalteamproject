@@ -22,7 +22,7 @@
             android:layout_height="30dp"
             android:src="@drawable/back"/>
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -32,7 +32,7 @@
 
     </RelativeLayout>
 
-    <com.example.finalteamproject.common.CustomTextview
+    <TextView
         android:layout_marginStart="20dp"
         android:layout_marginTop="50dp"
         android:layout_width="match_parent"
@@ -41,7 +41,7 @@
         android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="28sp"/>
-    <com.example.finalteamproject.common.CustomTextview
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="위급상황시 연락할 \n주변인의 정보를 입력해주세요"
@@ -50,7 +50,7 @@
         android:textSize="20sp"/>
 
 
-    <com.example.finalteamproject.common.CustomTextview
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="이름"
@@ -70,7 +70,7 @@
         android:textSize="21sp"
         android:layout_marginHorizontal="25dp"
         android:layout_marginTop="10dp"/>
-    <com.example.finalteamproject.common.CustomTextview
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="전화번호"
@@ -91,7 +91,7 @@
         android:layout_marginHorizontal="25dp"
         android:layout_marginTop="10dp"/>
 
-    <com.example.finalteamproject.common.CustomTextview
+    <TextView
         android:id="@+id/tv_wrong"
         android:visibility="invisible"
         android:layout_marginTop="5dp"
@@ -100,7 +100,7 @@
         android:text="전화번호를 정확히 입력해주세요"
         android:textColor="#FF0000"
         android:layout_marginStart="25dp"/>
-    <com.example.finalteamproject.common.CustomTextview
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="주변인과의 관계"
@@ -154,7 +154,7 @@
             android:layout_marginHorizontal="40dp"
             android:layout_marginBottom="60dp">
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -22,7 +22,7 @@
             android:layout_height="30dp"
             android:src="@drawable/back"/>
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -74,7 +74,7 @@
 
         </androidx.cardview.widget.CardView>
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:id="@+id/tv_alarm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

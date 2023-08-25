@@ -34,7 +34,7 @@
             android:layout_height="35dp"
             android:src="@drawable/minji12"/>
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:id="@+id/tv_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -142,7 +142,7 @@
                 android:src="@drawable/baseline_photo_24_white"/>
 
         </androidx.cardview.widget.CardView>
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="앨범"
@@ -174,7 +174,7 @@
                     android:src="@drawable/baseline_photo_camera_24_white"/>
 
             </androidx.cardview.widget.CardView>
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="카메라"
@@ -206,7 +206,7 @@
                     android:src="@drawable/baseline_keyboard_voice_24_white"/>
 
             </androidx.cardview.widget.CardView>
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="음성메시지"

@@ -23,7 +23,7 @@
             android:layout_height="30dp"
             android:src="@drawable/back"/>
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:id="@+id/tv_board_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:id="@+id/tv_title"
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
@@ -73,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <com.example.finalteamproject.common.CustomTextview
+                <TextView
                     android:id="@+id/tv_date"
                     android:textSize="11dp"
                     android:layout_width="wrap_content"
@@ -83,13 +83,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                    <com.example.finalteamproject.common.CustomTextview
+                    <TextView
                         android:id="@+id/tv_writer"
                         android:textSize="11dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="작성자 : test"/>
-                    <com.example.finalteamproject.common.CustomTextview
+                    <TextView
                         android:id="@+id/tv_view"
                         android:layout_marginStart="4dp"
                         android:textSize="11dp"
@@ -108,7 +108,7 @@
             android:layout_height="1dp"
             android:background="#A3666666"/>
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:id="@+id/tv_content"
             android:paddingVertical="10dp"
             android:maxLength="2000"
@@ -133,7 +133,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-                <com.example.finalteamproject.common.CustomTextview
+                <TextView
                     android:id="@+id/tv_modify"
                     android:layout_centerVertical="true"
                     android:layout_alignParentStart="true"
@@ -143,7 +143,7 @@
                     android:layout_height="wrap_content"
                     android:text="수정"/>
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:id="@+id/tv_delete"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@id/tv_modify"
@@ -161,7 +161,7 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/thumb"/>
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:id="@+id/tv_rec"
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
@@ -184,7 +184,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:id="@+id/tv_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -220,7 +220,7 @@
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true">
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:paddingVertical="5dp"
@@ -246,7 +246,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:id="@+id/tv_comment_writer"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
@@ -256,7 +256,7 @@
                 android:textColor="@color/black"
                 android:textSize="15dp"/>
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:id="@+id/tv_back"
                 android:layout_centerVertical="true"
                 android:layout_width="wrap_content"
@@ -287,7 +287,7 @@
 
     </LinearLayout>
 
-    <com.example.finalteamproject.common.CustomTextview
+    <TextView
         android:visibility="gone"
         android:id="@+id/tv_none"
         android:gravity="center"

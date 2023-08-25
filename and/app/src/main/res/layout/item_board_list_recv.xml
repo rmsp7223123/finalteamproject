@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:id="@+id/tv_title"
                 android:textSize="20dp"
                 android:textStyle="bold"
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:text="글 제목"/>
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:layout_marginTop="15dp"
                 android:id="@+id/tv_writer"
                 android:textColor="@color/black"
@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:id="@+id/tv_rec"
                 android:textColor="@color/black"
                 android:textSize="16dp"
@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:text="추천수"/>
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:id="@+id/tv_view"
                 android:textColor="@color/black"
                 android:textSize="16dp"
@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:text="조회수"/>
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:id="@+id/tv_comment"
                 android:textColor="@color/black"
                 android:textSize="16dp"

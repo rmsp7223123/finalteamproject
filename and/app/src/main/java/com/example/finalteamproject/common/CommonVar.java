@@ -1,7 +1,7 @@
 package com.example.finalteamproject.common;
 
 import android.content.Context;
-import android.widget.com.example.finalteamproject.common.CustomTextview;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 

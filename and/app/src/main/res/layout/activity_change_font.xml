@@ -21,7 +21,7 @@
             android:layout_height="30dp"
             android:src="@drawable/back"/>
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:layout_weight="2"
             android:textColor="@color/black"
             android:layout_width="0dp"
@@ -46,7 +46,7 @@
             android:text="글씨 크기 조절"
             android:textSize="35dp"/>
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:id="@+id/tv_font_size"
             android:layout_weight="1"
             android:layout_width="0dp"

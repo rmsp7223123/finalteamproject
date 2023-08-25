@@ -29,7 +29,7 @@
 
         </androidx.cardview.widget.CardView>
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:id="@+id/tv_nickname"
             android:layout_marginRight="15dp"
             android:layout_gravity="center"

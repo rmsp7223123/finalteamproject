@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.com.example.finalteamproject.common.CustomTextview;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
@@ -25,8 +25,8 @@ public class FontColorArrayAdapter extends ArrayAdapter<String> {
     @NonNull
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-        com.example.finalteamproject.common.CustomTextview com.example.finalteamproject.common.CustomTextview = (com.example.finalteamproject.common.CustomTextview) super.getView(position, convertView, parent);
-        com.example.finalteamproject.common.CustomTextview.setTextColor(colors[position]);
-        return com.example.finalteamproject.common.CustomTextview;
+        TextView textView = (TextView) super.getView(position, convertView, parent);
+        textView.setTextColor(colors[position]);
+        return textView;
     }
 }

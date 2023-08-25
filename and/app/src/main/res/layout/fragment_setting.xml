@@ -14,7 +14,7 @@
        android:layout_height="wrap_content">
 
 
-      <com.example.finalteamproject.common.CustomTextview
+      <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_centerInParent="true"
@@ -54,7 +54,7 @@
           android:layout_height="match_parent"
           android:orientation="vertical">
 
-         <com.example.finalteamproject.common.CustomTextview
+         <TextView
              android:textSize="22dp"
              android:id="@+id/tv_name"
              android:textColor="@color/black"
@@ -62,7 +62,7 @@
              android:layout_height="wrap_content"
              android:text="이름"/>
 
-         <com.example.finalteamproject.common.CustomTextview
+         <TextView
              android:textSize="18dp"
              android:id="@+id/tv_nickname"
              android:layout_width="wrap_content"
@@ -103,7 +103,7 @@
           android:layout_height="match_parent"
           android:orientation="vertical">
 
-         <com.example.finalteamproject.common.CustomTextview
+         <TextView
              android:textSize="25dp"
              android:id="@+id/tv_font"
              android:textColor="@color/black"
@@ -146,7 +146,7 @@
           android:layout_height="match_parent"
           android:orientation="vertical">
 
-         <com.example.finalteamproject.common.CustomTextview
+         <TextView
              android:textSize="25dp"
              android:id="@+id/tv_alarm"
              android:textColor="@color/black"
@@ -186,7 +186,7 @@
           android:layout_height="match_parent"
           android:orientation="vertical">
 
-         <com.example.finalteamproject.common.CustomTextview
+         <TextView
              android:textSize="25dp"
              android:id="@+id/tv_pw"
              android:textColor="@color/black"
@@ -226,7 +226,7 @@
           android:layout_height="match_parent"
           android:orientation="vertical">
 
-         <com.example.finalteamproject.common.CustomTextview
+         <TextView
              android:textSize="25dp"
              android:id="@+id/tv_logout"
              android:textColor="@color/black"
@@ -266,7 +266,7 @@
           android:layout_height="match_parent"
           android:orientation="vertical">
 
-         <com.example.finalteamproject.common.CustomTextview
+         <TextView
              android:textSize="25dp"
              android:id="@+id/tv_delete_account"
              android:textColor="@color/black"
@@ -283,7 +283,7 @@
           android:layout_gravity="center"/>
 
    </LinearLayout>
-   <com.example.finalteamproject.common.CustomTextview
+   <TextView
        android:id="@+id/tv_cs"
        android:textAlignment="center"
        android:layout_marginTop="10dp"

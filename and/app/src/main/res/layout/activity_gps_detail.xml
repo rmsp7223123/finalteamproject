@@ -26,14 +26,14 @@
                 android:layout_weight="7"
                 android:orientation="vertical">
 
-                <com.example.finalteamproject.common.CustomTextview
+                <TextView
                     android:id="@+id/senior_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="금호APT경로당"
                     android:textSize="15sp" />
 
-                <com.example.finalteamproject.common.CustomTextview
+                <TextView
                     android:id="@+id/senior_like"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -64,19 +64,19 @@
             </RelativeLayout>
         </LinearLayout>
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="위치" />
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:id="@+id/senior_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="광주광역시 북구 각화대로 33 (각화동 금호타운)" />
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -88,7 +88,7 @@
             android:orientation="horizontal"
             android:layout_marginBottom="30dp">
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:id="@+id/phone_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -96,11 +96,11 @@
                 android:text="062-262-7342" />
 
         </LinearLayout>
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="잘못된 내용이 있나요?"/>
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:id="@+id/tv_toadmin"
             android:layout_gravity="right"
             android:layout_width="wrap_content"

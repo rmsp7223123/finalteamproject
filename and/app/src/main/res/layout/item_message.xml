@@ -36,7 +36,7 @@
             android:layout_marginRight="15dp"
             android:orientation="vertical">
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:id="@+id/tv_nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
                 android:textColor="@color/black"
                 android:textSize="20dp" />
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:id="@+id/tv_content"
                 android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
@@ -56,7 +56,7 @@
         </LinearLayout>
 
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:layout_marginLeft="5dp"
             android:id="@+id/tv_time"
             android:layout_width="wrap_content"

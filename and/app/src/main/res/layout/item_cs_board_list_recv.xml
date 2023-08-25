@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/chat_done"/>
-                <com.example.finalteamproject.common.CustomTextview
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="답변 완료"
@@ -52,7 +52,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/lock"/>
-                <com.example.finalteamproject.common.CustomTextview
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="비밀글"
@@ -73,7 +73,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/chat"/>
-                <com.example.finalteamproject.common.CustomTextview
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="답변 필요"
@@ -85,7 +85,7 @@
 
             </LinearLayout>
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:layout_below="@id/ln_comment"
                 android:id="@+id/tv_title"
                 android:textSize="22dp"
@@ -104,7 +104,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:id="@+id/tv_writedate"
                 android:textColor="@color/black"
                 android:textSize="16dp"
@@ -112,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:text="작성일"/>
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:textAlignment="textEnd"
                 android:layout_marginTop="10dp"
                 android:id="@+id/tv_writer"

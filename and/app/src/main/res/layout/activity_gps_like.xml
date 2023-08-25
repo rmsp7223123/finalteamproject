@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/btn_back"/>
         </LinearLayout>
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="자주가는 경로당"

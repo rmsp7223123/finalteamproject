@@ -32,7 +32,7 @@
             android:layout_height="150dp"
             android:src="@drawable/party"/>
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:layout_marginTop="30dp"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
@@ -41,7 +41,7 @@
             android:textStyle="bold"
             android:text="성공적으로 \n전달되었습니다."/>
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:id="@+id/btn_return"
             android:layout_marginTop="20dp"
             android:padding="10dp"

@@ -31,20 +31,20 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/memory_game"/>
 
-                <com.example.finalteamproject.common.CustomTextview
+                <TextView
                     android:layout_marginLeft="30dp"
                     android:layout_marginTop="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1. 귀여운 동물이 등장합니다."
                     android:textSize="20sp" />
-                <com.example.finalteamproject.common.CustomTextview
+                <TextView
                     android:layout_marginLeft="30dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="2. 등장 순서를 잘 기억해주세요."
                     android:textSize="20sp" />
-                <com.example.finalteamproject.common.CustomTextview
+                <TextView
                     android:layout_marginLeft="30dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
                     android:textSize="20sp" />
             </LinearLayout>
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:id="@+id/btn_gameStart"
                 android:layout_width="150dp"
                 android:layout_height="50dp"
@@ -82,7 +82,7 @@
                 android:src="@drawable/game_intelligence" />
             </LinearLayout>
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:layout_margin="40dp"
                 android:id="@+id/btn_gameRank"
                 android:layout_width="150dp"

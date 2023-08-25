@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.example.finalteamproject.common.CustomTextview
+    <TextView
         android:id="@+id/loadingText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

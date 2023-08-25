@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <com.example.finalteamproject.common.CustomTextview
+    <TextView
         android:textSize="23dp"
         android:textColor="@color/black"
         android:id="@android:id/message"

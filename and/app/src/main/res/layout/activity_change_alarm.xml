@@ -21,14 +21,14 @@
             android:layout_height="30dp"
             android:src="@drawable/back"/>
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="알람 설정"
-            android:textStyle="bold"
             android:textColor="@color/black"
-            android:textSize="27sp" />
+            android:textSize="27sp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 
@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:layout_weight="2"
             android:textColor="@color/black"
             android:layout_width="0dp"
@@ -46,7 +46,7 @@
             android:text="고독사 알람"
             android:textSize="30dp"/>
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:id="@+id/tv_godok_alarm_change"
             android:layout_weight="1"
             android:layout_width="0dp"
@@ -64,7 +64,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp">
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:layout_weight="2"
             android:textColor="@color/black"
             android:layout_width="0dp"
@@ -72,7 +72,7 @@
             android:text="기본 알람"
             android:textSize="30dp"/>
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:id="@+id/tv_call_message_alarm_change"
             android:layout_weight="1"
             android:layout_width="0dp"

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -16,6 +17,7 @@ import com.example.finalteamproject.Login.LockScreenPatternActivity;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
+import com.example.finalteamproject.common.CustomTextview;
 import com.example.finalteamproject.common.MemberVO;
 import com.example.finalteamproject.main.MainActivity;
 import com.example.finalteamproject.Login.LoginActivity;
@@ -54,6 +56,9 @@ public class SplashActivity extends AppCompatActivity {
                     if (CommonVar.logininfo != null) {
                         getToken();
                         checkOption();
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+                        float fontSize = preferences.getFloat("font_size", 2); // 기본값 글씨 크기 설정
+                        applyFontSize(fontSize);
                         CommonConn conn1 = new CommonConn(this, "setting/inquirePw");
                         conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
                         conn1.onExcute((isResult1, data1) -> {
@@ -132,5 +137,15 @@ public class SplashActivity extends AppCompatActivity {
         conn1.onExcute((isResult, data) -> {
 
         });
+    }
+
+    private void applyFontSize(float fontSize) {
+        if (fontSize == 0) {
+            CustomTextview.plusTextSize = 10;
+        } else if (fontSize == 1) {
+            CustomTextview.plusTextSize = 20;
+        } else {
+            CustomTextview.plusTextSize = 30;
+        }
     }
 }

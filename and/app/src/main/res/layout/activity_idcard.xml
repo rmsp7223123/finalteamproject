@@ -22,7 +22,7 @@
             android:layout_height="30dp"
             android:src="@drawable/back"/>
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -32,7 +32,7 @@
 
     </RelativeLayout>
 
-    <com.example.finalteamproject.common.CustomTextview
+    <TextView
         android:layout_marginStart="20dp"
         android:layout_marginTop="50dp"
         android:layout_width="match_parent"
@@ -41,7 +41,7 @@
         android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="28sp"/>
-    <com.example.finalteamproject.common.CustomTextview
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="개인 정보는 안전하게 보호돼요"
@@ -49,7 +49,7 @@
         android:layout_marginTop="10dp"
         android:textSize="20sp"/>
 
-    <com.example.finalteamproject.common.CustomTextview
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="사진 촬영하기"
@@ -93,7 +93,7 @@
         android:textSize="21sp"/>
 
     </LinearLayout>
-    <com.example.finalteamproject.common.CustomTextview
+    <TextView
         android:layout_marginStart="90dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -116,7 +116,7 @@
             android:layout_marginHorizontal="40dp"
             android:layout_marginBottom="60dp">
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

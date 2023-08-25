@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:gravity="center"
             android:textColor="@color/black"
             android:textSize="25dp"
@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:text="1"/>
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:gravity="center"
             android:textColor="@color/black"
             android:textSize="25dp"
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:text="제목"/>
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:gravity="center"
             android:textColor="@color/black"
             android:textSize="25dp"
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:text="작성자"/>
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:gravity="center"
             android:textColor="@color/black"
             android:textSize="25dp"

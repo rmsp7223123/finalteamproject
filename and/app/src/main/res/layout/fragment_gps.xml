@@ -31,7 +31,7 @@
                 android:textColorHint="#A9A9AB"
                 android:textSize="15sp" />
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:id="@+id/btn_search"
                 android:layout_width="70dp"
                 android:layout_height="45dp"
@@ -42,7 +42,7 @@
 
         </RelativeLayout>
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -69,13 +69,13 @@
                 android:layout_alignParentBottom="true"
                 android:orientation="horizontal">
 
-                <com.example.finalteamproject.common.CustomTextview
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:text="... " />
 
-                <com.example.finalteamproject.common.CustomTextview
+                <TextView
                     android:id="@+id/tv_more"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -90,7 +90,7 @@
             android:layout_width="match_parent"
             android:layout_height="220dp" />
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -134,7 +134,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="20dp">
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:id="@+id/tv_search_result"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -184,7 +184,7 @@
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp">
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="상세정보"
@@ -221,14 +221,14 @@
                     android:layout_weight="7"
                     android:orientation="vertical">
 
-                    <com.example.finalteamproject.common.CustomTextview
+                    <TextView
                         android:id="@+id/senior_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="금호APT경로당"
                         android:textSize="15sp" />
 
-                    <com.example.finalteamproject.common.CustomTextview
+                    <TextView
                         android:id="@+id/senior_like"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -259,19 +259,19 @@
                 </RelativeLayout>
             </LinearLayout>
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="위치" />
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:id="@+id/senior_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="광주광역시 북구 각화대로 33 (각화동 금호타운)" />
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -283,7 +283,7 @@
                 android:orientation="horizontal"
                 android:layout_marginBottom="30dp">
 
-                <com.example.finalteamproject.common.CustomTextview
+                <TextView
                     android:id="@+id/phone_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -291,11 +291,11 @@
                     android:text="062-262-7342" />
 
             </LinearLayout>
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="잘못된 내용이 있나요?"/>
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:id="@+id/tv_toadmin"
                 android:layout_gravity="right"
                 android:layout_width="wrap_content"

@@ -12,7 +12,7 @@
         android:layout_height="72dp"
         android:layout_gravity="center_vertical"
         />
-    <com.example.finalteamproject.common.CustomTextview
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"

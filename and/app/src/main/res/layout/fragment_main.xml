@@ -57,7 +57,7 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/red_border">
 
-                    <com.example.finalteamproject.common.CustomTextview
+                    <TextView
                         android:id="@+id/tv_alarm_cnt"
                         android:gravity="center"
                         android:layout_width="wrap_content"
@@ -91,7 +91,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center">
-        <TextView
+        <com.example.finalteamproject.common.CustomTextview
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:layout_width="match_parent"
@@ -171,7 +171,7 @@
 
         </LinearLayout>
 
-    <com.example.finalteamproject.common.CustomTextview
+    <TextView
         android:layout_marginHorizontal="20dp"
         android:gravity="center"
         android:id="@+id/tv_nickname"
@@ -207,7 +207,7 @@
                 android:layout_height="40dp"
                 android:src="@drawable/tv"/>
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:id="@+id/tv_tv"
                 android:textColor="@color/black"
                 android:textSize="20dp"
@@ -233,7 +233,7 @@
                 android:layout_height="40dp"
                 android:src="@drawable/music"/>
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:id="@+id/tv_music"
                 android:textColor="@color/black"
                 android:textSize="20dp"
@@ -259,7 +259,7 @@
                 android:layout_height="40dp"
                 android:src="@drawable/movie"/>
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:id="@+id/tv_movie"
                 android:textColor="@color/black"
                 android:textSize="20dp"
@@ -285,7 +285,7 @@
                 android:layout_height="40dp"
                 android:src="@drawable/fashion"/>
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:id="@+id/tv_fashion"
                 android:textColor="@color/black"
                 android:textSize="20dp"
@@ -311,7 +311,7 @@
                 android:layout_height="40dp"
                 android:src="@drawable/animal"/>
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:id="@+id/tv_animal"
                 android:textColor="@color/black"
                 android:textSize="20dp"
@@ -347,7 +347,7 @@
                 android:layout_height="40dp"
                 android:src="@drawable/news"/>
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:id="@+id/tv_news"
                 android:textColor="@color/black"
                 android:textSize="20dp"
@@ -373,7 +373,7 @@
                 android:layout_height="40dp"
                 android:src="@drawable/car"/>
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:id="@+id/tv_car"
                 android:textColor="@color/black"
                 android:textSize="20dp"
@@ -399,7 +399,7 @@
                 android:layout_height="40dp"
                 android:src="@drawable/sports"/>
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:id="@+id/tv_sports"
                 android:textColor="@color/black"
                 android:textSize="20dp"
@@ -425,7 +425,7 @@
                 android:layout_height="40dp"
                 android:src="@drawable/game"/>
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:id="@+id/tv_game"
                 android:textColor="@color/black"
                 android:textSize="20dp"
@@ -460,7 +460,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp">
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"

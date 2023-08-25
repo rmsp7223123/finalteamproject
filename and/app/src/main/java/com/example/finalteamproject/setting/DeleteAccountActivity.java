@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.com.example.finalteamproject.common.CustomTextview;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.finalteamproject.Login.LoginInfoActivity;
@@ -39,8 +39,8 @@ public class DeleteAccountActivity extends AppCompatActivity {
 
             // 정의한 AlertDialog에 View를 설정하고, 예 아니오 버튼 리스너 등을 추가
             AlertDialog dialog = builder.create();
-            com.example.finalteamproject.common.CustomTextview messagecom.example.finalteamproject.common.CustomTextview = dialogView.findViewById(android.R.id.message);
-            messagecom.example.finalteamproject.common.CustomTextview.setGravity(Gravity.CENTER); // 메시지 텍스트를 가운데 정렬
+            TextView messageTextView = dialogView.findViewById(android.R.id.message);
+            messageTextView.setGravity(Gravity.CENTER); // 메시지 텍스트를 가운데 정렬
 
             Button yesButton = dialogView.findViewById(R.id.btnYes);
             Button noButton = dialogView.findViewById(R.id.btnNo);

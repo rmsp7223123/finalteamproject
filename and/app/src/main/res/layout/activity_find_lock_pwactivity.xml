@@ -21,7 +21,7 @@
             android:layout_height="30dp"
             android:src="@drawable/back"/>
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -31,7 +31,7 @@
 
     </RelativeLayout>
 
-    <com.example.finalteamproject.common.CustomTextview
+    <TextView
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="50dp"
         android:layout_width="match_parent"
@@ -40,7 +40,7 @@
         android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="28sp"/>
-    <com.example.finalteamproject.common.CustomTextview
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="비밀번호 삭제를 위해 로그인해주세요"
@@ -54,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:id="@+id/tv_id"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
@@ -85,7 +85,7 @@
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
-    <com.example.finalteamproject.common.CustomTextview
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="비밀번호"
@@ -126,7 +126,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginTop="20dp">
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:id="@+id/tv_findId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -134,7 +134,7 @@
                 android:textColor="#595959"
                 android:textSize="13dp"/>
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:id="@+id/tv_findPw"
                 android:layout_marginStart="10dp"
                 android:layout_width="wrap_content"
@@ -156,7 +156,7 @@
             android:layout_marginHorizontal="25dp"
             android:layout_marginTop="40dp">
 
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

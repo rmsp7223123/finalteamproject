@@ -13,13 +13,13 @@
         android:layout_weight="7"
         android:orientation="vertical">
 
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:id="@+id/senior_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:text="금호APT경로당"/>
-        <com.example.finalteamproject.common.CustomTextview
+        <TextView
             android:id="@+id/senior_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

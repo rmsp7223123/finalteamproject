@@ -26,7 +26,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
-import android.widget.com.example.finalteamproject.common.CustomTextview;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -195,7 +195,7 @@ public class IDCardActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             IDCardActivity activity = mActivityWeakReference.get();
             if (activity != null && !activity.isFinishing()) {
-                com.example.finalteamproject.common.CustomTextview tv_result = activity.findViewById(R.id.edt_rgNumber);
+                TextView tv_result = activity.findViewById(R.id.edt_rgNumber);
                 try {
                     if(result.contains("주민등록증")){
                         name = result.substring(result.indexOf("증")+2, result.indexOf("("));
