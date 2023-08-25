@@ -4,6 +4,7 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <!DOCTYPE html>
 <html>
+
 <head>
 <meta charset="UTF-8">
 <title>우동탑</title>
@@ -43,11 +44,20 @@
 <!--Favicon-->
 <link rel="icon" href="<c:url value = '/theme/images/logo.png'/>"
 	type="image/x-icon">
-	
-	
-
 <!-- fontawesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<script src="<c:url value = '/theme/plugins/jquery-2.2.4.min.js'/>"></script>
+	<script src="<c:url value = '/theme/plugins/bootstrap/bootstrap.min.js'/>"></script>
+	<script src="<c:url value = '/theme/plugins/jquery.nicescroll.min.js'/>"></script>
+	<script src="<c:url value = '/theme/plugins/isotope/isotope.pkgd.min.js'/>"></script>
+	<script src="<c:url value = '/theme/plugins/slick/slick.min.js'/>"></script>
+	
+	<script src="<c:url value = '/theme/js/script.js'/>"></script>
+	<script src="<c:url value = '/theme/js/common.js'/>"></script>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="<c:url value='/js/common.js?${now }'/>"></script>
 </head>
 <body>
 <div class="preloader">
@@ -74,17 +84,6 @@
     </div>
   </div>
 </nav>
-	<script src="<c:url value = '/theme/plugins/jquery-2.2.4.min.js'/>"></script>
-	<script src="<c:url value = '/theme/plugins/bootstrap/bootstrap.min.js'/>"></script>
-	<script src="<c:url value = '/theme/plugins/jquery.nicescroll.min.js'/>"></script>
-	<script src="<c:url value = '/theme/plugins/isotope/isotope.pkgd.min.js'/>"></script>
-	<script src="<c:url value = '/theme/plugins/slick/slick.min.js'/>"></script>
-	
-	<script src="<c:url value = '/theme/js/script.js'/>"></script>
-	<script src="<c:url value = '/theme/js/common.js'/>"></script>
-    <!-- Bootstrap core JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="<c:url value='/js/common.js?${now }'/>"></script>
 	
 	<script>
 		
