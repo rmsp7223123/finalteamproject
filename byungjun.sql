@@ -422,6 +422,7 @@ where  member_id in ( select MEMBER_ID FROM MEMBER WHERE MEMBER_ADMIN = 0 )
 and (member_id   like '%' || '홍길동' || '%' 
 	   or member_name like '%' ||'홍길동' || '%' 
 	   );
-    
+       
+select * from ephone where member_id = 'testaaa1';
     
     
