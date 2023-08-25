@@ -6,7 +6,7 @@
     tools:context=".chat.CallFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <com.example.finalteamproject.common.CustomTextview
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="@string/hello_blank_fragment" />

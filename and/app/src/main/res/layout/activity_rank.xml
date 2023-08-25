@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_margin="5dp">
-            <com.example.finalteamproject.common.CustomTextview
+            <TextView
                 android:padding="10dp"
                 android:layout_margin="5dp"
                 android:gravity="center"

@@ -1,9 +1,12 @@
 package com.example.finalteamproject;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
+import android.content.Intent;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
 /**
  * Implementation of App Widget functionality.
@@ -44,5 +47,21 @@ public class GodokAlarmWidget extends AppWidgetProvider {
     @Override
     public void onDisabled(Context context) {
         // Enter relevant functionality for when the last widget is disabled
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        super.onReceive(context, intent);
+
+        if ("widgetImageClicked".equals(intent.getAction())) {
+            // Handle widget image click event
+            Toast.makeText(context, "위젯 클릭시 나오는토스트 확인용", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private PendingIntent getPendingSelfIntent(Context context, String action) {
+        Intent intent = new Intent(context, getClass());
+        intent.setAction(action);
+        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 }

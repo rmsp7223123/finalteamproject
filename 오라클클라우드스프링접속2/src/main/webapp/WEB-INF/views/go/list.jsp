@@ -21,7 +21,7 @@
 				</select>
 				<div class="input-group">
 					<input type="text" name="keyword" value="${page.keyword }"
-						class="form-control" style= "width :300px;">
+						class="form-control" style="width: 300px;">
 					<button class="btn btn-warning px-3">
 						<i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
 					</button>
@@ -76,5 +76,13 @@
 
 
 	<jsp:include page="/WEB-INF/views/include/page.jsp" />
+	<script>
+		$(function() {
+			$('.page-link').click(function() {
+				console.log("teststet");
+			})
+		})
+		
+	</script>
 </body>
 </html>
