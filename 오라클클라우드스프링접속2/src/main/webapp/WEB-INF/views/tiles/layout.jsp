@@ -76,7 +76,7 @@
     </div>
   </div>
 </nav>
-	<script src="<c:url value = '/theme/plugins/jquery-2.2.4.min.js'/>"></script>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 	<script src="<c:url value = '/theme/plugins/bootstrap/bootstrap.min.js'/>"></script>
 	<script src="<c:url value = '/theme/plugins/jquery.nicescroll.min.js'/>"></script>
 	<script src="<c:url value = '/theme/plugins/isotope/isotope.pkgd.min.js'/>"></script>
