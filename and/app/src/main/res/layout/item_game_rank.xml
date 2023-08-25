@@ -10,7 +10,7 @@
         android:orientation="horizontal"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp">
-        <TextView
+        <com.example.finalteamproject.common.CustomTextview
             android:id="@+id/game_rank"
             android:padding="10dp"
             android:layout_margin="5dp"
@@ -22,7 +22,7 @@
             android:textSize="15sp"
             android:background="@drawable/box_fill"
             android:backgroundTint="@color/white"/>
-        <TextView
+        <com.example.finalteamproject.common.CustomTextview
             android:id="@+id/game_id"
             android:padding="10dp"
             android:layout_margin="5dp"
@@ -34,7 +34,7 @@
             android:textSize="15sp"
             android:background="@drawable/box_fill"
             android:backgroundTint="@color/white"/>
-        <TextView
+        <com.example.finalteamproject.common.CustomTextview
             android:id="@+id/game_score"
             android:padding="10dp"
             android:layout_margin="5dp"

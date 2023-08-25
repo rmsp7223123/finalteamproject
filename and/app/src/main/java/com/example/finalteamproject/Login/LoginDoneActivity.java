@@ -7,7 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.widget.TextView;
+import android.widget.com.example.finalteamproject.common.CustomTextview;
 import android.widget.Toast;
 
 import com.example.finalteamproject.HideActionBar;

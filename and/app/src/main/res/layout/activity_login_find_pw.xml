@@ -21,7 +21,7 @@
             android:layout_height="30dp"
             android:src="@drawable/back"/>
 
-        <TextView
+        <com.example.finalteamproject.common.CustomTextview
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -31,7 +31,7 @@
 
     </RelativeLayout>
 
-    <TextView
+    <com.example.finalteamproject.common.CustomTextview
         android:id="@+id/tv_phoneNumber"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="50dp"
@@ -43,7 +43,7 @@
         android:textSize="28sp"/>
 
 
-    <TextView
+    <com.example.finalteamproject.common.CustomTextview
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="해당하는 번호로 \n임시 비밀번호가 전송됩니다"
@@ -51,7 +51,7 @@
         android:layout_marginTop="10dp"
         android:textSize="20sp"/>
 
-    <TextView
+    <com.example.finalteamproject.common.CustomTextview
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="아이디"
@@ -78,7 +78,7 @@
 
 
 
-<!--    <TextView-->
+<!--    <com.example.finalteamproject.common.CustomTextview-->
 <!--        android:id="@+id/tv_sendPw"-->
 <!--        android:visibility="invisible"-->
 <!--        android:layout_marginTop="5dp"-->
@@ -104,7 +104,7 @@
             android:layout_marginHorizontal="40dp"
             android:layout_marginBottom="60dp">
 
-            <TextView
+            <com.example.finalteamproject.common.CustomTextview
                 android:id="@+id/tv_find"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"

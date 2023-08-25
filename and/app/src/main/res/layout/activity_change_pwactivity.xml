@@ -25,7 +25,7 @@
                 android:layout_height="30dp"
                 android:src="@drawable/back"/>
 
-            <TextView
+            <com.example.finalteamproject.common.CustomTextview
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -35,7 +35,7 @@
 
         </RelativeLayout>
 
-        <TextView
+        <com.example.finalteamproject.common.CustomTextview
             android:layout_marginStart="20dp"
             android:layout_marginTop="50dp"
             android:layout_width="match_parent"
@@ -44,7 +44,7 @@
             android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="28sp"/>
-        <TextView
+        <com.example.finalteamproject.common.CustomTextview
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="현재 비밀번호"
@@ -71,7 +71,7 @@
                 android:layout_marginTop="10dp"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
+        <com.example.finalteamproject.common.CustomTextview
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="비밀번호"
@@ -97,7 +97,7 @@
                 android:layout_marginHorizontal="25dp"
                 android:layout_marginTop="10dp"/>
         </com.google.android.material.textfield.TextInputLayout>
-        <TextView
+        <com.example.finalteamproject.common.CustomTextview
             android:id="@+id/tv_pwAlert"
             android:layout_marginHorizontal="25dp"
             android:visibility="invisible"
@@ -107,7 +107,7 @@
             android:textColor="#FF0000"
             android:textSize="15dp"/>
 
-        <TextView
+        <com.example.finalteamproject.common.CustomTextview
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="비밀번호 확인"
@@ -133,7 +133,7 @@
                 android:layout_marginHorizontal="25dp"
                 android:layout_marginTop="10dp"/>
         </com.google.android.material.textfield.TextInputLayout>
-        <TextView
+        <com.example.finalteamproject.common.CustomTextview
             android:id="@+id/tv_pwCheckAlert"
             android:layout_marginHorizontal="25dp"
             android:visibility="invisible"
@@ -160,7 +160,7 @@
                 android:layout_marginBottom="60dp"
                 android:layout_marginTop="20dp">
 
-                <TextView
+                <com.example.finalteamproject.common.CustomTextview
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

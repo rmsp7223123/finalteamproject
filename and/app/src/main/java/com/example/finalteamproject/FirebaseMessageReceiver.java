@@ -16,7 +16,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.widget.RemoteViews;
-import android.widget.TextView;
+import android.widget.com.example.finalteamproject.common.CustomTextview;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -131,8 +131,8 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
                 context.getPackageName(),
                 R.layout.notification);
 
-        remoteViews.setTextViewText(R.id.title, title);
-        remoteViews.setTextViewText(R.id.message, message);
+        remoteViews.setcom.example.finalteamproject.common.CustomTextviewText(R.id.title, title);
+        remoteViews.setcom.example.finalteamproject.common.CustomTextviewText(R.id.message, message);
 //        try {
 //            Bitmap bitmap = Glide.with(context)
 //                    .asBitmap()

@@ -21,7 +21,7 @@
             android:layout_marginStart="20dp"
             android:src="@drawable/back" />
 
-        <TextView
+        <com.example.finalteamproject.common.CustomTextview
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -40,7 +40,7 @@
         android:layout_marginHorizontal="25dp"
         android:layout_marginTop="20dp">
 
-        <TextView
+        <com.example.finalteamproject.common.CustomTextview
             android:id="@+id/tv_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
                 android:textSize="21sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
+        <com.example.finalteamproject.common.CustomTextview
             android:id="@+id/tv_idAlert"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
             android:visibility="invisible" />
     </LinearLayout>
 
-    <TextView
+    <com.example.finalteamproject.common.CustomTextview
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
@@ -120,7 +120,7 @@
         android:backgroundTint="#FFC81E"
         app:cardCornerRadius="30dp">
 
-        <TextView
+        <com.example.finalteamproject.common.CustomTextview
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"

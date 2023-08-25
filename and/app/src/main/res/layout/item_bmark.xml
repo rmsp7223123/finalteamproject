@@ -3,7 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <TextView
+    <com.example.finalteamproject.common.CustomTextview
         android:id="@+id/senior_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

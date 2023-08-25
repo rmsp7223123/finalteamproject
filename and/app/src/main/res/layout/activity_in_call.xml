@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <TextView
+            <com.example.finalteamproject.common.CustomTextview
                 android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
                 android:textColor="#8E8F8F"
                 android:textSize="15dp" />
 
-            <TextView
+            <com.example.finalteamproject.common.CustomTextview
                 android:id="@+id/tv_call_totaltime"
                 android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"

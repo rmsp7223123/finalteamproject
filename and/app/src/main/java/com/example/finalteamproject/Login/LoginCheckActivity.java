@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.TextView;
+import android.widget.com.example.finalteamproject.common.CustomTextview;
 import android.widget.Toast;
 
 import com.example.finalteamproject.R;

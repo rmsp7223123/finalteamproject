@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.TextView;
+import android.widget.com.example.finalteamproject.common.CustomTextview;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -42,7 +42,7 @@ public class GpsAdapter extends RecyclerView.Adapter<GpsAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if(list == null || list.size() == 0){
-            TextView tv = new TextView(parent.getContext());
+            com.example.finalteamproject.common.CustomTextview tv = new com.example.finalteamproject.common.CustomTextview(parent.getContext());
             tv.setText("검색 결과가 없습니다.");
             return new ViewHolder(tv);
         }else{

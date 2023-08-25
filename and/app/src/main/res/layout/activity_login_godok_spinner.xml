@@ -6,7 +6,7 @@
     android:padding="16dp">
 
     <!-- 클릭 시 나타나는 스피너 안의 텍스트뷰들 -->
-    <TextView
+    <com.example.finalteamproject.common.CustomTextview
         android:id="@+id/spinner_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

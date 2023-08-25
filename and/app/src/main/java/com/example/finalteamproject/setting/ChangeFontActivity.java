@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -15,6 +16,7 @@ import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.common.CustomTextview;
+import com.example.finalteamproject.common.Customcom.example.finalteamproject.common.CustomTextview;
 import com.example.finalteamproject.databinding.ActivityChangeFontBinding;
 import com.example.finalteamproject.main.OptionVO;
 import com.google.gson.Gson;
@@ -65,7 +67,7 @@ public class ChangeFontActivity extends AppCompatActivity {
                         } else if (savedItem == 1) {
                             CustomTextview.plusTextSize = 20;
                         } else {
-                            CustomTextview.plusTextSize = 30;
+                           CustomTextview.plusTextSize = 30;
                         }
                         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ChangeFontActivity.this);
                         preferences.edit().putFloat("font_size", CustomTextview.plusTextSize).apply(); // plusTextSize를 저장

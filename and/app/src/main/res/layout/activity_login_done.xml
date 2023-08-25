@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/main_logo" />
 
-        <TextView
+        <com.example.finalteamproject.common.CustomTextview
             android:textColor="@color/black"
             android:textAlignment="center"
             android:textSize="28sp"
@@ -53,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <TextView
+            <com.example.finalteamproject.common.CustomTextview
                 android:layout_marginStart="10dp"
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"

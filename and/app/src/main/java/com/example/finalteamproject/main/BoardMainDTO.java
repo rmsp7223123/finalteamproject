@@ -1,7 +1,7 @@
 package com.example.finalteamproject.main;
 
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.com.example.finalteamproject.common.CustomTextview;
 
 public class BoardMainDTO {
 

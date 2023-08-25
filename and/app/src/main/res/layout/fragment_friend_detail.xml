@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
+            <com.example.finalteamproject.common.CustomTextview
                 android:id="@+id/tv_detail_nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

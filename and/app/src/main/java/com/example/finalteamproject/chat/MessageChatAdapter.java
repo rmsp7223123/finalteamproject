@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.com.example.finalteamproject.common.CustomTextview;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -85,8 +85,8 @@ public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.
 
         holder.binding.containerFrame.removeAllViews();
         ImageView imageView = new ImageView(context);
-        TextView tv_msg = new TextView(context);
-        TextView tv_time = new TextView(context);
+        com.example.finalteamproject.common.CustomTextview tv_msg = new com.example.finalteamproject.common.CustomTextview(context);
+        com.example.finalteamproject.common.CustomTextview tv_time = new com.example.finalteamproject.common.CustomTextview(context);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         LinearLayout.LayoutParams params3 = new LinearLayout.LayoutParams(500, 500);

@@ -25,7 +25,7 @@
                 android:layout_height="30dp"
                 android:src="@drawable/back"/>
 
-            <TextView
+            <com.example.finalteamproject.common.CustomTextview
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -35,7 +35,7 @@
 
         </RelativeLayout>
 
-        <TextView
+        <com.example.finalteamproject.common.CustomTextview
             android:layout_marginStart="20dp"
             android:layout_marginTop="50dp"
             android:layout_width="match_parent"
@@ -44,7 +44,7 @@
             android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="28sp"/>
-        <TextView
+        <com.example.finalteamproject.common.CustomTextview
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="회원가입에 필요한 정보를 입력해주세요"
@@ -52,7 +52,7 @@
             android:layout_marginTop="10dp"
             android:textSize="20sp"/>
 
-        <TextView
+        <com.example.finalteamproject.common.CustomTextview
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="이름"
@@ -82,7 +82,7 @@
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <TextView
+            <com.example.finalteamproject.common.CustomTextview
                 android:id="@+id/tv_nicknameCheck"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@id/tv_nickname"
@@ -98,7 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="중복확인" />
-            <TextView
+            <com.example.finalteamproject.common.CustomTextview
                 android:id="@+id/tv_nicknameCheckDone"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@id/tv_nickname"
@@ -116,7 +116,7 @@
 
                 />
 
-            <TextView
+            <com.example.finalteamproject.common.CustomTextview
                 android:id="@+id/tv_nickname"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
@@ -149,7 +149,7 @@
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <TextView
+            <com.example.finalteamproject.common.CustomTextview
                 android:id="@+id/tv_IdCheck"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@id/tv_id"
@@ -165,7 +165,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="중복확인" />
-            <TextView
+            <com.example.finalteamproject.common.CustomTextview
                 android:id="@+id/tv_IdCheckDone"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@id/tv_id"
@@ -183,7 +183,7 @@
 
                 />
 
-        <TextView
+        <com.example.finalteamproject.common.CustomTextview
             android:id="@+id/tv_id"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
@@ -213,7 +213,7 @@
             android:paddingVertical="10dp"
             android:textSize="21sp"/>
         </com.google.android.material.textfield.TextInputLayout>
-            <TextView
+            <com.example.finalteamproject.common.CustomTextview
                 android:id="@+id/tv_idAlert"
                 android:visibility="invisible"
                 android:layout_width="match_parent"
@@ -223,7 +223,7 @@
                 android:textSize="15dp"/>
     </LinearLayout>
 
-        <TextView
+        <com.example.finalteamproject.common.CustomTextview
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="비밀번호"
@@ -250,7 +250,7 @@
             android:layout_marginHorizontal="25dp"
             android:layout_marginTop="10dp"/>
         </com.google.android.material.textfield.TextInputLayout>
-        <TextView
+        <com.example.finalteamproject.common.CustomTextview
             android:id="@+id/tv_pwAlert"
             android:layout_marginHorizontal="25dp"
             android:visibility="invisible"
@@ -260,7 +260,7 @@
             android:textColor="#FF0000"
             android:textSize="15dp"/>
 
-        <TextView
+        <com.example.finalteamproject.common.CustomTextview
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="비밀번호 확인"
@@ -286,7 +286,7 @@
                 android:layout_marginHorizontal="25dp"
                 android:layout_marginTop="10dp"/>
         </com.google.android.material.textfield.TextInputLayout>
-        <TextView
+        <com.example.finalteamproject.common.CustomTextview
             android:id="@+id/tv_pwCheckAlert"
             android:layout_marginHorizontal="25dp"
             android:visibility="invisible"
@@ -310,7 +310,7 @@
                 android:layout_marginBottom="60dp"
                 android:layout_marginTop="40dp">
 
-                <TextView
+                <com.example.finalteamproject.common.CustomTextview
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

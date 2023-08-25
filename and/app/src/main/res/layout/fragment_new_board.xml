@@ -22,7 +22,7 @@
             android:layout_height="30dp"
             android:src="@drawable/back"/>
 
-        <TextView
+        <com.example.finalteamproject.common.CustomTextview
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -100,7 +100,7 @@
             android:layout_height="30dp"
             android:src="@drawable/camera"/>
 
-        <TextView
+        <com.example.finalteamproject.common.CustomTextview
             android:layout_marginStart="5dp"
             android:textSize="20dp"
             android:textStyle="bold"
@@ -156,7 +156,7 @@
         android:layout_marginHorizontal="25dp"
         android:layout_marginBottom="60dp">
 
-        <TextView
+        <com.example.finalteamproject.common.CustomTextview
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
