@@ -20,7 +20,7 @@
 
             android:src="@drawable/baseline_lock_24_white" />
 
-        <TextView
+        <com.example.finalteamproject.common.CustomTextview
             android:id="@+id/tv_find_pw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

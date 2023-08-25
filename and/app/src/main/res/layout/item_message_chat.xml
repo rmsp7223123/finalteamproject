@@ -35,7 +35,7 @@
             android:layout_marginLeft="10dp"
             android:orientation="vertical">
 
-            <TextView
+            <com.example.finalteamproject.common.CustomTextview
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

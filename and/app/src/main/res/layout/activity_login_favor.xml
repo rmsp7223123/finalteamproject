@@ -22,7 +22,7 @@
             android:layout_height="30dp"
             android:src="@drawable/back"/>
 
-        <TextView
+        <com.example.finalteamproject.common.CustomTextview
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -32,7 +32,7 @@
 
     </RelativeLayout>
 
-    <TextView
+    <com.example.finalteamproject.common.CustomTextview
         android:layout_marginStart="20dp"
         android:layout_marginTop="50dp"
         android:layout_width="match_parent"
@@ -41,7 +41,7 @@
         android:textStyle="bold"
         android:textColor="@color/black"
         android:textSize="28sp"/>
-    <TextView
+    <com.example.finalteamproject.common.CustomTextview
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="1개 이상 선택해주세요"
@@ -74,7 +74,7 @@
                 android:layout_height="40dp"
                 android:src="@drawable/tv"/>
 
-            <TextView
+            <com.example.finalteamproject.common.CustomTextview
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
@@ -96,7 +96,7 @@
                 android:layout_height="40dp"
                 android:src="@drawable/music"/>
 
-            <TextView
+            <com.example.finalteamproject.common.CustomTextview
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
@@ -118,7 +118,7 @@
                 android:layout_height="40dp"
                 android:src="@drawable/movie"/>
 
-            <TextView
+            <com.example.finalteamproject.common.CustomTextview
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
@@ -140,7 +140,7 @@
                 android:layout_height="40dp"
                 android:src="@drawable/fashion"/>
 
-            <TextView
+            <com.example.finalteamproject.common.CustomTextview
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
@@ -162,7 +162,7 @@
                 android:layout_height="40dp"
                 android:src="@drawable/animal"/>
 
-            <TextView
+            <com.example.finalteamproject.common.CustomTextview
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
@@ -192,7 +192,7 @@
                 android:layout_height="40dp"
                 android:src="@drawable/news"/>
 
-            <TextView
+            <com.example.finalteamproject.common.CustomTextview
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
@@ -214,7 +214,7 @@
                 android:layout_height="40dp"
                 android:src="@drawable/car"/>
 
-            <TextView
+            <com.example.finalteamproject.common.CustomTextview
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
@@ -236,7 +236,7 @@
                 android:layout_height="40dp"
                 android:src="@drawable/sports"/>
 
-            <TextView
+            <com.example.finalteamproject.common.CustomTextview
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
@@ -258,7 +258,7 @@
                 android:layout_height="40dp"
                 android:src="@drawable/game"/>
 
-            <TextView
+            <com.example.finalteamproject.common.CustomTextview
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
@@ -281,7 +281,7 @@
             android:layout_marginHorizontal="40dp"
             android:layout_marginBottom="60dp">
 
-            <TextView
+            <com.example.finalteamproject.common.CustomTextview
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
