@@ -18,7 +18,7 @@
 		src="https://cdn.jsdelivr.net/npm/chartjs-plugin-autocolors@0.2.2/dist/chartjs-plugin-autocolors.min.js"></script>
  -->
 
-	<canvas id="Chart" width="300" height="300"></canvas>
+	<canvas id="Chart" width="500" height="200"></canvas>
 
 
 
@@ -62,9 +62,9 @@
 						}
 					});
 				},
-				error : function() {
-					alert("실패");
-				}
+				error :function(XMLHttpRequest, textStatus, errorThrown) {
+				     alert("some error");
+				  }
 			}); //ajax
 		} //그래프
 	</script>

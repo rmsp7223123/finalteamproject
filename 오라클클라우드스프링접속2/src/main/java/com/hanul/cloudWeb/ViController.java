@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.Gson;
+
 import cloudWeb.visual.MemberVO;
 
 
@@ -21,17 +23,18 @@ import cloudWeb.visual.MemberVO;
 public class ViController {
 	@Autowired @Qualifier("project") SqlSession sql;
 	
-//	@RequestMapping("/member")
-//	public String home(HttpSession session) {
-//		session.setAttribute("category", "vi");
-//		return "vi/member";
-//	}
-		
 	@RequestMapping("/member")
-	public List<MemberVO> memchart() {
-		List<MemberVO> result = sql.selectList("vi.gender");
-	    return result;
+	public String home(HttpSession session) {
+		session.setAttribute("category", "vi");
+		return "vi/member";
 	}
 	
+	@ResponseBody
+	@RequestMapping("/memchart")
+	public String memchart() {
+		List<MemberVO> result = sql.selectList("vi.gender");
+	    return new Gson().toJson(result);
+	}
+		
 
 }
