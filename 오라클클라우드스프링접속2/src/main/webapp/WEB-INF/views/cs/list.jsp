@@ -14,15 +14,15 @@ table { table-layout: fixed; }
 <h3 class="my-4">고객센터</h3>
 
 	<form method="post" action="list">
-		<input type="hidden" name="curPage" value="1">
-		<input type="hidden" name="comment_exist" value="N">
+		<input type="hidden" name="curPage" value="1">.
+		${page.comment_exist }
+		<input type="hidden" name="comment_exist" value="	${page.comment_exist }">
 		
-		<input type="checkbox" name="comment_exist" id="checkbox_comment" 
+		<input type="checkbox" name="comment_exist_chk" id="checkbox_comment" 
 		${page.comment_exist eq 'Y' ? 'checked' : ''}
 		onclick='checkbox()'/>답변필요
-	</form>
 
-<form method="post" action="list">
+
 <div class="row justify-content-between mb-3">
 	<div class="col-auto">
 		<div class="input-group">
@@ -43,7 +43,7 @@ table { table-layout: fixed; }
 </div>
 <input type="hidden" name="curPage" value="1">
 <input type="hidden" name="csboard_id">
-<input type="hidden" name="comment_exist" value="${page.comment_exist }">
+<%-- <input type="hidden" name="comment_exist" value="${page.comment_exist }"> --%>
 </form>
 
 <table class="tb-list">
@@ -72,32 +72,31 @@ table { table-layout: fixed; }
 
 <script>
 
-checkbox()
 
 //상세정보화면 요청
 function info( csboard_id ){
-	$('[name=csboard_id]').val(csboard_id )
+ 	$('[name=csboard_id]').val(csboard_id )
 	$('[name=curPage]').val( ${page.curPage} )
-	$('[name=comment_exist]').val(($("#checkbox_comment").prop("checked")) ? 'Y' : 'N')
+	$('[name=comment_exist_chk]').val(($("#checkbox_comment").prop("checked")) ? 'Y' : 'N') 
 	$('form').attr('action', 'info').submit()
 }
 
 function checkbox(){
-	
+
 //     var newCommentExist = ($("#checkbox_comment").prop("checked")) ? 'Y' : 'N';
 //     var newUrl = "list?comment_exist=" + newCommentExist + "&pagelist="+"${page.pageList }"+
 //     		"&curPage="+"${page.curPage}"+"&search=" + "${page.search}" + "&keyword=" + "${page.keyword}";
 //     window.location.href = newUrl;
 	
-	if ($("#checkbox_comment").prop("checked")) {
+ 	if ($("#checkbox_comment").prop("checked")) {
 		$('[name=comment_exist]').val('Y'); // 'Y'로 변경
 	} else {
 		$('[name=comment_exist]').val('N'); // 'N'로 변경
-	}
+	} 
 	
-	$('[name=search]').val("${page.search}");
+/* 	$('[name=search]').val("${page.search}");
 	$('[name=keyword]').val("${page.keyword}");
-	$('[name=curPage]').val("${page.curPage}");
+	$('[name=curPage]').val("${page.curPage}");  */
 	$('form').attr('action', 'list').submit();
 
 }
