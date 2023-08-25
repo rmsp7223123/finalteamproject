@@ -12,23 +12,38 @@
 	<h3>회원 통계</h3>
 	
 	<ul class="nav nav-tabs">
-		<li class="nav-item"><a class="nav-link">성별 통계</a></li>
-		<li class="nav-item"><a class="nav-link">연령 통계</a></li>
+		<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#gender">성별 통계</a></li>
+		<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#age">연령 통계</a></li>
 	</ul>
 
-	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-	<!-- <script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+		<!-- <script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/chartjs-plugin-autocolors@0.2.2/dist/chartjs-plugin-autocolors.min.js"></script>
  -->
+ 
+ <div id="tab-content">
 
-	<canvas id="Chart" width="900" height="500"></canvas>
+		<canvas id="Chart" width="900" height="500"></canvas>
+		
+		</div>
+		
+		<script>
+		function initCanvas(){
+			$('canvas#Chart').remove();
+			$('#tab-content').append(`<canvas id="Chart" width="900" height="500"></canvas>`);
+		}
+		</script>
 
 
+<!-- 성별 통계 탭 -->
+<div id="tab-content">
+		<div class="tab-pane fade show active" id="gender">
 
-	<script>
+		<script>
 	$(function(){
+		initCanvas();
 			gender();
 		});
 
@@ -47,7 +62,7 @@
 					}
 
 					new Chart(document.getElementById('Chart'), {
-						type : 'bar',
+						type : 'doughnut',
 						data : {
 							labels : genderList,
 							datasets : [ {
@@ -75,8 +90,17 @@
 		} //그래프
 	</script>
 	
-	<!-- <script>
+	</div>
+	
+	
+	
+	
+	<!-- 연령 통계 탭 -->
+
+<div class="tab-pane fade" id="age">
+		<script>
 	$(function(){
+		initCanvas();
 			age();
 		});
 
@@ -95,7 +119,7 @@
 					}
 
 					new Chart(document.getElementById('Chart'), {
-						type : 'doughnut',
+						type : 'bar',
 						data : {
 							labels : ageList,
 							datasets : [ {
@@ -121,8 +145,11 @@
 				  }
 			}); //ajax
 		} //그래프
-	</script> -->
-
-
+	</script>
+	
+	</div>
+	</div>
+	
+	
 </body>
 </html>
