@@ -44,4 +44,18 @@
 		and extract(year from sysdate) - extract(year from member_birth) < 200
 		]]>
 	</select>
+
+	<select id="pop" resultType="cloudWeb.visual.SeniorVO">
+		<![CDATA[
+		select *
+		from(
+		select s.senior_name, l.senior_like_num
+		from senior_like l
+		left join senior s
+		on l.key = s.key
+		order by senior_like_num desc)
+		where rownum <= 10
+		]]>
+	</select>
+
 </mapper>

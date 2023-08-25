@@ -43,5 +43,19 @@ public class ViController {
 	    return new Gson().toJson(result);
 	}
 		
+	
+	
+	@RequestMapping("/senior")
+	public String senior(HttpSession session) {
+		session.setAttribute("category", "vi");
+		return "vi/senior";
+	}
+	
+	@ResponseBody
+	@RequestMapping("/pop")
+	public String pop() {
+		List<MemberVO> result = sql.selectList("vi.pop");
+	    return new Gson().toJson(result);
+	}
 
 }

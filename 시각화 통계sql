@@ -17,16 +17,16 @@ from senior_like
 order by senior_like_num desc)
 where rownum <= 10;
 
+--인기 경로당
 --빠밤~!! mapper 조회 쿼리
 select *
 from(
-select *
+select s.senior_name, l.senior_like_num
 from senior_like l
 left join senior s
 on l.key = s.key
 order by senior_like_num desc)
 where rownum <= 10;
-
 
 --회원-성별 조회
 select
@@ -70,9 +70,9 @@ from member
 where extract(year from sysdate) - extract(year from member_birth) >= 70
     and extract(year from sysdate) - extract(year from member_birth) < 80
 union all
-select '전체' as age, count(*) as population
+select '80대 이상' as age, count(*) as population
 from member
-where extract(year from sysdate) - extract(year from member_birth) >= 0
+where extract(year from sysdate) - extract(year from member_birth) >= 80
     and extract(year from sysdate) - extract(year from member_birth) < 200;
 
 select count(*) from member;

@@ -11,4 +11,5 @@ import lombok.Setter;
 public class MemberVO {
 	private String gender, age;
 	private int population;
+
 }
