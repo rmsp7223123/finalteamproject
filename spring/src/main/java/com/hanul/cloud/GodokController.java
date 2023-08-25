@@ -35,8 +35,8 @@ public class GodokController {
 	final String APISECRET = "Q3WAV69X3RISPNBEJLIQ2YN8OCCHGOAY";
 
 	@RequestMapping(value = "/viewLocationList", produces = "text/html;charset=utf-8")
-	public String viewLocationList(String member_id) {
-		List<LocationVO> list = sql.selectList("godok.viewLocationList", member_id);
+	public String viewLocationList() {
+		List<LocationVO> list = sql.selectList("godok.viewLocationList");
 		return new Gson().toJson(list);
 	}
 
@@ -46,7 +46,7 @@ public class GodokController {
 		return new Gson().toJson(list);
 	}
 	
-	@RequestMapping("/sendGodokMsg")
+	@RequestMapping(value = "/sendGodokMsg" , produces = "text/html;charset=utf-8")
 	public String sendGodokMsg(LocationVO vo) {
 		List<LocationVO> location_list =sql.selectList("godok.viewLocationList", vo);
 		List<EphoneVO> ephone_list = sql.selectList("godok.viewEphone", vo);
@@ -58,13 +58,13 @@ public class GodokController {
     		params.put("to", ephone.getEphone_phone());
     		params.put("from", "01096024788");
     		params.put("type", "SMS"); //SMS, LMS, MMS ...
-    		params.put("text", "고독사 문자 내용 담을곳");
+    		params.put("text", "문자 내용 담을곳");
     		params.put("app_version", "JAVA SDK v1.2");
     		
     		try {
-//    			JSONObject obj = sms.send(params);
-//    			System.out.println(obj.toString()) ;
-    			return "";
+    			JSONObject obj = sms.send(params);
+    			System.out.println(obj.toString());
+    			return "문자 보내졌으면 나오는곳";
     		} catch (Exception e) {
     			e.printStackTrace();
     			return "실패";

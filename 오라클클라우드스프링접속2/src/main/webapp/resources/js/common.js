@@ -282,7 +282,7 @@ $(function(){
 		$(this).next('.date-delete').css('display', 'inline')
 	})
 
-	$('[name=phone]').keyup(function(){
+	$('[name=member_phone]').keyup(function(){
 		toPhone( $(this) );	
 	})
 	

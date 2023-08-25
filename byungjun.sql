@@ -386,11 +386,22 @@ select * from godok_alarm;
 commit;
 
 insert into godok_alarm(member_id, alarm_time) values ('ansqudwns98', TO_DATE(SYSDATE, 'YYYY-MM-DD HH24:MI:SS'));
-insert into godok_alarm(member_id, alarm_time) values ('ansqudwns98', sysdate);
+insert into godok_alarm(member_id, alarm_time) values ('test111', sysdate);
+insert into godok_alarm(member_id, alarm_time) values ('testest1', TO_DATE('2023-08-4 15:30:00', 'YYYY-MM-DD HH24:MI:SS'));
+
+commit;
+
+select * from godok_alarm ;
+
+select * from member;
+
+select * from ephone;
 
 select to_char(sysdate, 'YYYY-MM-DD HH24:MI:SS') from dual;
 
 select * from godok_alarm;
+
+select * from godok_alarm order by alarm_id desc;
 
 SELECT member_id, TO_CHAR(alarm_time, 'YYYY-MM-DD HH24:MI:SS') AS alarm_time
 FROM godok_alarm;
@@ -399,3 +410,19 @@ commit;
 
 select * from ephone;
 select * from godok_alarm;
+select * from member;
+
+
+
+
+select member_id, member_name, alarm_time, ephone_name, ephone_phone, alarm_id, no from  
+		(select row_number() over(order by alarm_id) no, g.*
+		from godok_alarm g) n
+where  member_id in ( select MEMBER_ID FROM MEMBER WHERE MEMBER_ADMIN = 0 )
+and (member_id   like '%' || '홍길동' || '%' 
+	   or member_name like '%' ||'홍길동' || '%' 
+	   );
+       
+select * from ephone where member_id = 'testaaa1';
+    
+    

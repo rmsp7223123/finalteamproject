@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/tv_select"/>
 
-    <TextView
+    <com.example.finalteamproject.common.CustomTextview
         android:id="@+id/tv_board_name"
         android:layout_marginStart="20dp"
         android:layout_weight="1"

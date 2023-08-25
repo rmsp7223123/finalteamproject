@@ -30,7 +30,7 @@
 
 	<div class="btn-toolbar my-3 justify-content-center">
 	<c:set var="params" value="curPage=${page.curPage}&search=${page.search}&keyword=${page.keyword }&pagelist=${page.pageList }&comment_exist=${page.comment_exist}"/>
-		<button class="btn btn-warning" onclick="location='list?${params}'">목록</button>
+		<a class="btn btn-warning" onclick="location='list?${params}'">목록</a>
 		<button class="btn btn-warning ml-3" onclick="location='modify?csboard_id=${vo.csboard_id}&${params}'">수정</button>
 		<button class="btn btn-warning ml-3"
 			onclick="if(confirm('건의사항을 삭제하시겠습니까?')){location='delete?csboard_id=${vo.csboard_id}&${params}'}">삭제
