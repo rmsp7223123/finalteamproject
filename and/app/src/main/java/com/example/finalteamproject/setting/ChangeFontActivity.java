@@ -14,6 +14,7 @@ import android.util.TypedValue;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
+import com.example.finalteamproject.common.CustomTextview;
 import com.example.finalteamproject.databinding.ActivityChangeFontBinding;
 import com.example.finalteamproject.main.OptionVO;
 import com.google.gson.Gson;
@@ -60,15 +61,17 @@ public class ChangeFontActivity extends AppCompatActivity {
                     conn.addParamMap("option_font_size", dialog_item[savedItem]);
                     conn.onExcute((isResult, data) -> {
                         if(savedItem == 0) {
-                            // 작게
+                            CustomTextview.plusTextSize = 10;
                         } else if (savedItem == 1) {
-                            // 중간
+                            CustomTextview.plusTextSize = 20;
                         } else {
-                            // 크게
+                            CustomTextview.plusTextSize = 30;
                         }
-                        recreate();
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ChangeFontActivity.this);
+                        preferences.edit().putFloat("font_size", CustomTextview.plusTextSize).apply(); // plusTextSize를 저장
                         dialog.dismiss();
                         changeFontSize();
+                        recreate();
                     });
                 }
             });
