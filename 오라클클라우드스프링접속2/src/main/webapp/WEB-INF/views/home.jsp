@@ -35,8 +35,6 @@
 <link rel="stylesheet" href="<c:url value = '/theme/css/style.css'/>">
 <link href="<c:url value='/css/common.css?${now }'/>" rel="stylesheet" />
 
-<!-- Theme Stylesheet -->
-<link rel="stylesheet" href="#" id="color-changer">
 
 <!--Favicon-->
 <link rel="icon" href="<c:url value = '/theme/images/logo.png'/>"

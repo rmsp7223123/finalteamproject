@@ -52,6 +52,7 @@ public class GodokController {
 		List<EphoneVO> ephone_list = sql.selectList("godok.viewEphone", vo);
 		Message sms = new Message(APIKEY, APISECRET);
         for (int i = 0; i < location_list.size(); i++) {
+        	System.out.println(i+"번");
             LocationVO location = location_list.get(i);
             EphoneVO ephone = ephone_list.get(i);
     		HashMap<String, String> params = new HashMap();
@@ -62,8 +63,8 @@ public class GodokController {
     		params.put("app_version", "JAVA SDK v1.2");
     		
     		try {
-    			JSONObject obj = sms.send(params);
-    			System.out.println(obj.toString());
+//    			JSONObject obj = sms.send(params);
+//    			System.out.println(obj.toString());
     			return "문자 보내졌으면 나오는곳";
     		} catch (Exception e) {
     			e.printStackTrace();
