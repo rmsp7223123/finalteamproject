@@ -46,7 +46,7 @@
 <link rel="icon" href="<c:url value = '/theme/images/logo.png'/>"
 	type="image/x-icon">
 	
-	
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 
 <!-- fontawesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -78,7 +78,6 @@
 </nav>
 
 
-<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 	<script src="<c:url value = '/theme/plugins/jquery-2.2.4.min.js'/>"></script>
 	<script src="<c:url value = '/theme/plugins/bootstrap/bootstrap.min.js'/>"></script>
 	<script src="<c:url value = '/theme/plugins/jquery.nicescroll.min.js'/>"></script>

@@ -23,7 +23,7 @@
 
 
 	<script>
-		$(document).ready(function() {
+	$(function(){
 			gender();
 		});
 
