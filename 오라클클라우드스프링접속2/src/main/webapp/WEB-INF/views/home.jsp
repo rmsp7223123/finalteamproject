@@ -67,7 +67,7 @@
 								<!-- 									typography &amp; clean interfaces. Also works in Google.</p> 센터 글자 -->
 							</div>
 
-							<div class="hexagon-menu clear">
+							<div class="hexagon-menu clear" style="width :850px; margin-left: 100px;">
 								<div class="hexagon-item">
 									<div class="hex-item">
 										<div></div>
@@ -137,11 +137,7 @@
                   </svg>
 									</a>
 								</div>
-								<div class="hexagon-item">
-									
-									
-									
-								</div>
+								<div class="hexagon-item"></div>
 								<div class="hexagon-item">
 									<div class="hex-item">
 										<div></div>
@@ -188,8 +184,7 @@
                   </svg>
 									</a>
 								</div>
-								<div class="hexagon-item">
-								</div>
+								<div class="hexagon-item"></div>
 							</div>
 							<!-- /.hexagon-menu -->
 
