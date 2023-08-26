@@ -39,7 +39,7 @@
 <!--Favicon-->
 <link rel="icon" href="<c:url value = '/theme/images/logo.png'/>"
 	type="image/x-icon">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
 </head>
 <body>
 	<div class="preloader">
@@ -67,7 +67,7 @@
 								<!-- 									typography &amp; clean interfaces. Also works in Google.</p> 센터 글자 -->
 							</div>
 
-							<div class="hexagon-menu clear" style="width :850px; margin-left: 100px;">
+							<div class="hexagon-menu clear" style ="width : 850px; margin-left : 100px;">
 								<div class="hexagon-item">
 									<div class="hex-item">
 										<div></div>
@@ -81,7 +81,7 @@
 									</div>
 									<a href="<c:url value='/cu/list' />" id="memberManage"
 										class="hex-content"> <span class="hex-content-inner">
-											<span class="icon"> <i class="tf-dial"></i>
+											<span class="icon"> <i class="fa-solid fa-users"></i>
 										</span> <span class="title">회원 관리</span>
 									</span> <svg viewbox="0 0 173.20508075688772 200" height="200"
 											width="174" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -126,8 +126,7 @@
 										<div></div>
 									</div>
 									<a href="<c:url value='/go/home' />" class="hex-content"> <span
-										class="hex-content-inner"> <span class="icon"> <i
-												class="tf-tools-2"></i>
+										class="hex-content-inner"> <span class="icon"> <i class="fa-regular fa-envelope"></i>
 										</span> <span class="title">고독사</span>
 									</span> <svg viewbox="0 0 173.20508075688772 200" height="200"
 											width="174" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -151,7 +150,7 @@
 									</div>
 									<a href="<c:url value='/vi/senior' />" class="hex-content">
 										<span class="hex-content-inner"> <span class="icon">
-												<i class="tf-briefcase2"></i>
+												<i class="fa-regular fa-map"></i>
 										</span> <span class="title">경로당 통계</span>
 									</span> <svg viewbox="0 0 173.20508075688772 200" height="200"
 											width="174" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -174,7 +173,7 @@
 									</div>
 									<a href="<c:url value='/vi/member' />" class="hex-content">
 										<span class="hex-content-inner"> <span class="icon">
-												<i class="tf-chat"></i>
+												<i class="fa-solid fa-chart-pie"></i>
 										</span> <span class="title">회원 통계</span>
 									</span> <svg viewbox="0 0 173.20508075688772 200" height="200"
 											width="174" version="1.1" xmlns="http://www.w3.org/2000/svg">
