@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.finalteamproject.HideActionBar;
 import com.example.finalteamproject.Login.LoginInfoActivity;
 import com.example.finalteamproject.Login.LoginProfileActivity;
 import com.example.finalteamproject.R;
