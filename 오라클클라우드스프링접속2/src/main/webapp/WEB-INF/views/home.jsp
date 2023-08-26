@@ -61,7 +61,7 @@
 						<div
 							class="col-xs-12 col-md-offset-1 col-md-10 col-lg-offset-2 col-lg-8">
 							<div class="page-title home text-center">
-							<img src="resources/theme/images/main_logo.png" alt="">
+								<img src="resources/theme/images/main_logo.png" alt="">
 								<!-- 								<p>A product designer from England, who focuses on -->
 								<!-- 									interactive design &amp; A freelance designer focusing on -->
 								<!-- 									typography &amp; clean interfaces. Also works in Google.</p> 센터 글자 -->
@@ -138,27 +138,9 @@
 									</a>
 								</div>
 								<div class="hexagon-item">
-									<div class="hex-item">
-										<div></div>
-										<div></div>
-										<div></div>
-									</div>
-									<div class="hex-item">
-										<div></div>
-										<div></div>
-										<div></div>
-									</div>
-									<a href="<c:url value='/vi/member' />" class="hex-content"> <span
-										class="hex-content-inner"> <span class="icon"> <i
-												class="tf-tools"></i>
-										</span> <span class="title">회원 통계</span>
-									</span> <svg viewbox="0 0 173.20508075688772 200" height="200"
-											width="174" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                    <path
-												d="M86.60254037844386 0L173.20508075688772 50L173.20508075688772 150L86.60254037844386 200L0 150L0 50Z"
-												fill="#1e2530"></path>
-                  </svg>
-									</a>
+									
+									
+									
 								</div>
 								<div class="hexagon-item">
 									<div class="hex-item">
@@ -171,9 +153,9 @@
 										<div></div>
 										<div></div>
 									</div>
-									<a href="<c:url value='/vi/senior' />" class="hex-content"> <span
-										class="hex-content-inner"> <span class="icon"> <i
-												class="tf-briefcase2"></i>
+									<a href="<c:url value='/vi/senior' />" class="hex-content">
+										<span class="hex-content-inner"> <span class="icon">
+												<i class="tf-briefcase2"></i>
 										</span> <span class="title">경로당 통계</span>
 									</span> <svg viewbox="0 0 173.20508075688772 200" height="200"
 											width="174" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -194,10 +176,10 @@
 										<div></div>
 										<div></div>
 									</div>
-									<a href="testimonials.html" class="hex-content"> <span
-										class="hex-content-inner"> <span class="icon"> <i
-												class="tf-chat"></i>
-										</span> <span class="title">Testimonials</span>
+									<a href="<c:url value='/vi/member' />" class="hex-content">
+										<span class="hex-content-inner"> <span class="icon">
+												<i class="tf-chat"></i>
+										</span> <span class="title">회원 통계</span>
 									</span> <svg viewbox="0 0 173.20508075688772 200" height="200"
 											width="174" version="1.1" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -207,27 +189,6 @@
 									</a>
 								</div>
 								<div class="hexagon-item">
-									<div class="hex-item">
-										<div></div>
-										<div></div>
-										<div></div>
-									</div>
-									<div class="hex-item">
-										<div></div>
-										<div></div>
-										<div></div>
-									</div>
-									<a href="contact.html" class="hex-content"> <span
-										class="hex-content-inner"> <span class="icon"> <i
-												class="tf-envelope2"></i>
-										</span> <span class="title">Contact</span>
-									</span> <svg viewbox="0 0 173.20508075688772 200" height="200"
-											width="174" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                    <path
-												d="M86.60254037844386 0L173.20508075688772 50L173.20508075688772 150L86.60254037844386 200L0 150L0 50Z"
-												fill="#1e2530"></path>
-                  </svg>
-									</a>
 								</div>
 							</div>
 							<!-- /.hexagon-menu -->
@@ -245,34 +206,36 @@
 		</div>
 		<!-- /.pt-table -->
 	</main>
-	
+
 	<script src="<c:url value = '/theme/plugins/jquery-2.2.4.min.js'/>"></script>
-	<script src="<c:url value = '/theme/plugins/bootstrap/bootstrap.min.js'/>"></script>
-	<script src="<c:url value = '/theme/plugins/jquery.nicescroll.min.js'/>"></script>
-	<script src="<c:url value = '/theme/plugins/isotope/isotope.pkgd.min.js'/>"></script>
+	<script
+		src="<c:url value = '/theme/plugins/bootstrap/bootstrap.min.js'/>"></script>
+	<script
+		src="<c:url value = '/theme/plugins/jquery.nicescroll.min.js'/>"></script>
+	<script
+		src="<c:url value = '/theme/plugins/isotope/isotope.pkgd.min.js'/>"></script>
 	<script src="<c:url value = '/theme/plugins/slick/slick.min.js'/>"></script>
 
 	<script src="<c:url value = '/theme/js/script.js'/>"></script>
 	<script>
-		
-	 function getCurrentUrl() {
-	        return window.location.href;
-	    }
+		function getCurrentUrl() {
+			return window.location.href;
+		}
 
-	    function toggleButtonVisibility() {
-	        var button = document.getElementById("page-close");
-	        var currentUrl = getCurrentUrl();
-	        var homeUrl = "http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/home";
-	        if (currentUrl === homeUrl) {
-	            button.style.display = "none";
-	        } else {
-	            button.style.display = "block";
-	        }
-	    }
+		function toggleButtonVisibility() {
+			var button = document.getElementById("page-close");
+			var currentUrl = getCurrentUrl();
+			var homeUrl = "http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/home";
+			if (currentUrl === homeUrl) {
+				button.style.display = "none";
+			} else {
+				button.style.display = "block";
+			}
+		}
 
-	    window.onload = function () {
-	        toggleButtonVisibility();
-	    }
+		window.onload = function() {
+			toggleButtonVisibility();
+		}
 	</script>
 </body>
 </html>
