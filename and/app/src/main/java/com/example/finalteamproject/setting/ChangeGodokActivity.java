@@ -27,17 +27,27 @@ public class ChangeGodokActivity extends AppCompatActivity {
         binding.imgvBack.setOnClickListener(view -> {
             finish();
         });
+
         CommonConn conn = new CommonConn(this, "setting/viewOption");
         conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
         conn.onExcute((isResult, data) -> {
             ArrayList<OptionVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<OptionVO>>() {
             }.getType());
+            if(list.get(0).getOption_godok_alarm().equals("N") ) {
+                binding.tvGodok.setText("꺼짐");
+            } else {
+                binding.tvGodok.setText("켜짐");
+            }
             binding.tvGodok.setOnClickListener(view -> {
-                if(list.get(0).getOption_godok_alarm().equals("N") ) {
-                    binding.tvGodok.setText("켜짐");
-                } else {
-                    binding.tvGodok.setText("꺼짐");
-                }
+                CommonConn conn1 = new CommonConn(this, "setting/updateGodokAlarm");
+                conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                conn1.onExcute((isResult1, data1) ->  {
+                    if(list.get(0).getOption_godok_alarm().equals("N") ) {
+                        binding.tvGodok.setText("꺼짐");
+                    } else {
+                        binding.tvGodok.setText("켜짐");
+                    }
+                });
             });
         });
 
