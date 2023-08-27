@@ -7,5 +7,8 @@
     android:resizeMode="horizontal|vertical"
     android:initialLayout="@layout/widget_layout"
     android:updatePeriodMillis="86400000"
+    android:configure="com.example.finalteamproject.GodokAlarmWidget"
     android:widgetCategory="home_screen"></appwidget-provider>
+
+<!--    android:configure="com.example.finalteamproject.main.SplashActivity"-->
 

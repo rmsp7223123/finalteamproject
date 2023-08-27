@@ -38,6 +38,11 @@
 
 <script>
 function page(no){
+ 	if ($("#checkbox_comment").prop("checked")) {
+		$('[name=comment_exist]').val('Y'); // 'Y'로 변경
+	} else {
+		$('[name=comment_exist]').val('N'); // 'N'로 변경
+	} 
 	$('[name=curPage]').val(no);
 	$('form').submit()
 }

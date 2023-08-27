@@ -42,6 +42,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivitySplashBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         new Handler().postDelayed(() -> {
             SharedPreferences pref = getSharedPreferences("loginInfo", MODE_PRIVATE);
             if (pref.getString("loginInfo", null) == null) {

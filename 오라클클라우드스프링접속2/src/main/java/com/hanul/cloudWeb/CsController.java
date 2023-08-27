@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -41,7 +42,7 @@ public class CsController {
 
 	// 선택한 방명록 정보 화면 요청
 	@RequestMapping("/info")
-	public String info(Model model, int csboard_id, PageVO page) {
+	public String info(Model model,@RequestParam int csboard_id, PageVO page) {
 		// 선택한 방명록 글 정보를 DB에서 조회해와 화면에 출력할 수 있도록 Model에 담기
 		model.addAttribute("list", sql.selectList("csboard.commentList", csboard_id));
 		model.addAttribute("vo", sql.selectOne("csboard.info", csboard_id));

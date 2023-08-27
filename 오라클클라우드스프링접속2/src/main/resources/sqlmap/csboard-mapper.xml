@@ -22,10 +22,10 @@
 		and (c.csboard_title like '%' || #{keyword} || '%'
 		or  c.csboard_content like '%' || #{keyword} || '%')
 		</when>
-		<when test='comment_exist == "Y"'>
-			and c.csboard_id not in (select csboard_id from csboard_comment)
-		</when>
 	</choose>
+	<if test='comment_exist == "Y"'>
+		and c.csboard_id not in (select csboard_id from csboard_comment)
+	</if>
 </sql>
 
 
@@ -52,7 +52,6 @@ from (select row_number() over(order by c.csboard_id) no, c.*, m.member_nickname
 select count(*) from csboard c 
  where 1=1
 <include refid="searchWhere"/>
-
 </select>
 
 <!-- 선택한 방명록 글 조회 -->

@@ -14,11 +14,10 @@ table { table-layout: fixed; }
 <h3 class="my-4">고객센터</h3>
 
 	<form method="post" action="list">
-		<input type="hidden" name="curPage" value="1">.
-		${page.comment_exist }
-		<input type="hidden" name="comment_exist" value="	${page.comment_exist }">
+		<input type="hidden" name="curPage" value="1">
+<%-- 		<input type="hidden" name="comment_exist" value="	${page.comment_exist }"> --%>
 		
-		<input type="checkbox" name="comment_exist_chk" id="checkbox_comment" 
+		<input type="checkbox" name="comment_exist" id="checkbox_comment" 
 		${page.comment_exist eq 'Y' ? 'checked' : ''}
 		onclick='checkbox()'/>답변필요
 
@@ -77,7 +76,7 @@ table { table-layout: fixed; }
 function info( csboard_id ){
  	$('[name=csboard_id]').val(csboard_id )
 	$('[name=curPage]').val( ${page.curPage} )
-	$('[name=comment_exist_chk]').val(($("#checkbox_comment").prop("checked")) ? 'Y' : 'N') 
+	$('[name=comment_exist]').val(($("#checkbox_comment").prop("checked")) ? 'Y' : 'N') 
 	$('form').attr('action', 'info').submit()
 }
 
