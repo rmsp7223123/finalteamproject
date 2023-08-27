@@ -28,7 +28,7 @@
 								name="member_pw" id="member_pw" placeholder="비밀번호를 입력해주세요.">
 						</div>
 						<button id="btn-login" type="button"
-							class="btn btn-primary btn-user btn-block form-control">
+							class="btn btn-user btn-block form-control" style="background : #F7DE6D;">
 							Login</button>
 					</form>
 				</div>
