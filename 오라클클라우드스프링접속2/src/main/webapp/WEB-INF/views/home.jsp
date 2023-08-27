@@ -103,8 +103,7 @@
 										<div></div>
 									</div>
 									<a href="<c:url value='/cs/list' />" class="hex-content"> <span
-										class="hex-content-inner"> <span class="icon"> <i
-												class="tf-profile-male"></i>
+										class="hex-content-inner"> <span class="icon"> <i class="fa-solid fa-headphones"></i>
 										</span> <span class="title">고객센터 관리</span>
 									</span> <svg viewbox="0 0 173.20508075688772 200" height="200"
 											width="174" version="1.1" xmlns="http://www.w3.org/2000/svg">
