@@ -34,8 +34,8 @@ public class SettingFragment extends Fragment {
             Intent intent = new Intent(getContext(), ChangeProfileActivity.class);
             startActivity(intent);
         });
-        binding.containerLinearChangeFont.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), ChangeFontActivity.class);
+        binding.containerLinearChangeGodok.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), ChangeGodokActivity.class);
             startActivity(intent);
         });
         binding.containerLinearChangeAlarm.setOnClickListener(v -> {

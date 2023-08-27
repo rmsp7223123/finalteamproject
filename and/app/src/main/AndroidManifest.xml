@@ -70,6 +70,9 @@
         android:theme="@style/Project02.LastProject"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".setting.ChangeGodokActivity"
+            android:exported="false" />
 
         <receiver
             android:name=".GodokAlarmWidget"
