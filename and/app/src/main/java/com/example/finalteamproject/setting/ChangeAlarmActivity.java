@@ -63,24 +63,20 @@ public class ChangeAlarmActivity extends AppCompatActivity {
                 editor.apply();
             }
 
-            if (list.get(0).getOption_godok_alarm().equals("N")) {
-                binding.tvGodokAlarmChange.setText("꺼짐");
-                // 기본 알람을 껐을때 알람창 데이터가 있는경우 삭제 추가
-                CommonConn conn1 = new CommonConn(this, "main/deleteAlarm");
-                conn1.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
-                conn1.addParamMap("nickname", "");
-                conn1.addParamMap("alarm_content2", "");
-                conn1.onExcute((isResult1, data1) -> {
-//                    FirebaseMessageReceiver.setIsEnabled(this,false);
-//                    editor.putBoolean("notificationEnabled", isEnabled);
-//                    editor.apply();
-                });
-            } else {
-                binding.tvGodokAlarmChange.setText("켜짐");
-//                FirebaseMessageReceiver.setIsEnabled(this,true);
-//                editor.putBoolean("notificationEnabled", isEnabled);
-//                editor.apply();
-            }
+//            if (list.get(0).getOption_godok_alarm().equals("N")) {
+//                binding.tvGodokAlarmChange.setText("꺼짐");
+//                // 기본 알람을 껐을때 알람창 데이터가 있는경우 삭제 추가
+//                CommonConn conn1 = new CommonConn(this, "main/deleteAlarm");
+//                conn1.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
+//                conn1.addParamMap("nickname", "");
+//                conn1.addParamMap("alarm_content2", "");
+//                conn1.onExcute((isResult1, data1) -> {
+
+//                });
+//            } else {
+//                binding.tvGodokAlarmChange.setText("켜짐");
+
+//            }
         });
         binding.tvCallMessageAlarmChange.setOnClickListener(view -> {
             CommonConn conn1 = new CommonConn(this, "setting/updateAlarm");
@@ -93,17 +89,17 @@ public class ChangeAlarmActivity extends AppCompatActivity {
                 }
             });
         });
-        binding.tvGodokAlarmChange.setOnClickListener(v -> {
-            CommonConn conn1 = new CommonConn(this, "setting/updateGodokAlarm");
-            conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
-            conn1.onExcute((isResult, data) -> {
-                if (binding.tvGodokAlarmChange.getText().toString().equals("꺼짐")) {
-                    binding.tvGodokAlarmChange.setText("켜짐");
-                } else {
-                    binding.tvGodokAlarmChange.setText("꺼짐");
-                }
-            });
-        });
+//        binding.tvGodokAlarmChange.setOnClickListener(v -> {
+//            CommonConn conn1 = new CommonConn(this, "setting/updateGodokAlarm");
+//            conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+//            conn1.onExcute((isResult, data) -> {
+//                if (binding.tvGodokAlarmChange.getText().toString().equals("꺼짐")) {
+//                    binding.tvGodokAlarmChange.setText("켜짐");
+//                } else {
+//                    binding.tvGodokAlarmChange.setText("꺼짐");
+//                }
+//            });
+//        });
     }
 
 }
