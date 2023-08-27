@@ -44,7 +44,7 @@
 		initCanvas();
 		console.log($(this).index())
 		if($(this).index()==0)
-		gender();
+		region();
 		else
 		pop();
 	})
@@ -54,6 +54,11 @@
 		$(function() {
 			$('.nav-tabs .nav-item').eq(0).trigger('click')
 		});
+	
+	
+	function region(){
+		
+	}
 	
 	
 	
