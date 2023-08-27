@@ -46,7 +46,7 @@
 		if($(this).index()==0)
 		gender();
 		else
-		age();
+		pop();
 	})
 	
 	
