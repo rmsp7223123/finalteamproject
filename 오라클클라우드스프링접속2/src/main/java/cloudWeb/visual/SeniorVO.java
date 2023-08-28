@@ -8,8 +8,8 @@ import lombok.Setter;
 @Setter
 public class SeniorVO {
 	
-	private String senior_name, senior_roadaddress, senior_numaddress, senior_call, senior_latitude, senior_longitude, sido, sigungu, member_id;
-	private int key, senior_like_num;
+	private String age, gender, senior_name, region;
+	private int population, senior_like_num, count;
 	
 	
 }

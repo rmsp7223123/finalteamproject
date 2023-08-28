@@ -57,5 +57,12 @@ public class ViController {
 		List<MemberVO> result = sql.selectList("vi.pop");
 	    return new Gson().toJson(result);
 	}
+	
+	@ResponseBody
+	@RequestMapping("/region")
+	public String region() {
+		List<MemberVO> result = sql.selectList("vi.region");
+	    return new Gson().toJson(result);
+	}
 
 }
