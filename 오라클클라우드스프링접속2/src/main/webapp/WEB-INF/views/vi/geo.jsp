@@ -6,11 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="/korea.css" />
+<link rel="stylesheet" href="./korea.css" />
 </head>
 
-<script type="text/javascript" src="/d3.js"></script>
-<script type="text/javascript" src="/korea.js"></script>
+<script type="text/javascript" src="./d3.js"></script>
+<script type="text/javascript" src="./korea.js"></script>
 
 <body>
 	<h3>지도 그리기</h3>
