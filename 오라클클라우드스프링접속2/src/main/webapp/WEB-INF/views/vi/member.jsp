@@ -25,8 +25,10 @@
 		src="https://cdn.jsdelivr.net/npm/chartjs-plugin-autocolors@0.2.2/dist/chartjs-plugin-autocolors.min.js"></script>
  -->
 
-	<div id="tab-content" class="canvas-container">
+	<div id="tab-content" class="container">
+	<div class="canvas">
 		<canvas id="Chart" width="900" height="500"></canvas>
+		</div>
 
 		<div class="tab-pane fade show active" id="gender"></div>
 		<div class="tab-pane fade" id="age"></div>

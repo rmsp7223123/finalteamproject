@@ -25,8 +25,10 @@
 		src="https://cdn.jsdelivr.net/npm/chartjs-plugin-autocolors@0.2.2/dist/chartjs-plugin-autocolors.min.js"></script>
  -->
 
-	<div id="tab-content">
+	<div id="tab-content" class="container">
+	<div class="canvas">
 		<canvas id="Chart" width="900" height="500"></canvas>
+		</div>
 
 		<div class="tab-pane fade show active" id="region"></div>
 		<div class="tab-pane fade" id="pop"></div>
@@ -62,12 +64,13 @@
 		function region() {
 			let region = [];
 			let count = [];
-
+			
 			$.ajax({
 				url : 'region',
 				type : 'get',
 				dataType : 'json',
 				success : function(data) {
+					
 					for (let i = 0; i < data.length; i++) {
 						region.push(data[i].region);
 						count.push(data[i].count);
@@ -80,7 +83,19 @@
 							datasets : [ {
 								data : count,
 								label : "전국 경로당",
-								backgroundColor : [ "#e94c3b", "#01adc1", "#f7941d", "#0d9788", "#f7b419" ],
+								backgroundColor : count.map(value => {
+									if (value < 500) {
+		                                return "#775995";
+		                            } else if (value < 1000) {
+		                                return "#29797f";
+		                            } else if (value < 1500) {
+		                                return "#29d1bb";
+		                            } else if (value < 3000) {
+		                            	return "#f8cf63";
+									}else {
+		                                return "#fc7b1d";
+		                            }
+								}),
 								borderColor : [  ],
 								borderWidth : 0,
 								fill : false
