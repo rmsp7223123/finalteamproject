@@ -25,8 +25,10 @@
 		src="https://cdn.jsdelivr.net/npm/chartjs-plugin-autocolors@0.2.2/dist/chartjs-plugin-autocolors.min.js"></script>
  -->
 
-	<div id="tab-content">
+	<div id="tab-content" class="container">
+	<div class="canvas">
 		<canvas id="Chart" width="900" height="500"></canvas>
+		</div>
 
 		<div class="tab-pane fade show active" id="gender"></div>
 		<div class="tab-pane fade" id="age"></div>
@@ -79,8 +81,8 @@
 							datasets : [ {
 								data : population,
 								label : "성별현황",
-								backgroundColor : [ "#3e95cd", "#8e5ea2" ],
-								borderColor : [ "#3e95cd", "#8e5ea2" ],
+								backgroundColor : [ "#e94c3b", "#01adc1" ],
+								borderColor : [ "#e94c3b", "#01adc1" ],
 								borderWidth : 1,
 								fill : false
 							} ]
@@ -126,17 +128,22 @@
 							datasets : [ {
 								data : population,
 								label : "연령현황",
-								backgroundColor : [ "#3e95cd", "#8e5ea2" ],
-								borderColor : [ "#3e95cd", "#8e5ea2" ],
-								borderWidth : 1,
+								backgroundColor : [ "#e94c3b", "#01adc1" ],
+								borderColor : [ "#f7941d" ],
+								borderWidth : 3,
 								fill : false
 							} ]
 						},
 						options : {
 							responsive : false,
+							plugins:{
+							legend: {
+	                            display: false
+	                        },
 							title : {
 								display : true,
-								text : '회원통계'
+								text : '연령현황'
+							}
 							}
 						}
 					});
