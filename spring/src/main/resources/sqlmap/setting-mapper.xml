@@ -106,4 +106,7 @@
 		end
 		where member_id = #{member_id}
 	</update>
+	<select id="viewOptionList">
+		select * from option_table
+	</select>
 </mapper>

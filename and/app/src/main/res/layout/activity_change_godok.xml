@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".setting.ChangeAlarmActivity"
+    tools:context=".setting.ChangeGodokActivity"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="알람 설정"
+            android:text="고독사 문자 발신"
             android:textColor="@color/black"
             android:textSize="27sp"
             android:textStyle="bold" />
@@ -43,16 +43,16 @@
             android:textColor="@color/black"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:text="기본 알람"
-            android:textSize="30dp"/>
+            android:text="문자 보내기"
+            android:textSize="35dp"/>
 
         <TextView
-            android:id="@+id/tv_call_message_alarm_change"
+            android:id="@+id/tv_godok"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:text="꺼짐"
-            android:textSize="30dp"
+            android:textSize="25dp"
             android:textColor="@color/black"
             android:gravity="right|center"/>
 

@@ -81,7 +81,7 @@
 
 
    <LinearLayout
-       android:id="@+id/container_linear_change_font"
+       android:id="@+id/container_linear_change_godok"
        android:layout_marginVertical="10dp"
        android:layout_marginHorizontal="20dp"
        android:layout_width="match_parent"
@@ -90,10 +90,10 @@
 
          <ImageView
              android:layout_gravity="center"
-             android:id="@+id/imgv_change_font"
+             android:id="@+id/imgv_change_godok"
              android:layout_width="60dp"
              android:layout_height="60dp"
-             android:src="@drawable/change_font"/>
+             android:src="@drawable/baseline_mail_outline_24"/>
 
 
       <LinearLayout
@@ -105,11 +105,11 @@
 
          <TextView
              android:textSize="25dp"
-             android:id="@+id/tv_font"
+             android:id="@+id/tv_godok"
              android:textColor="@color/black"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:text="글꼴" />
+             android:text="고독사 문자 발신" />
 
       </LinearLayout>
 
