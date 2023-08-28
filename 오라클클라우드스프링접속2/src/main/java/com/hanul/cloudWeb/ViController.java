@@ -57,5 +57,23 @@ public class ViController {
 		List<MemberVO> result = sql.selectList("vi.pop");
 	    return new Gson().toJson(result);
 	}
+	
+	@ResponseBody
+	@RequestMapping("/region")
+	public String region() {
+		List<MemberVO> result = sql.selectList("vi.region");
+	    return new Gson().toJson(result);
+	}
+	
+//	@RequestMapping("/geo")
+//	public String geo(HttpSession session) {
+//		session.setAttribute("category", "vi");
+//		return "vi/geo";
+//	}
+	
+	@RequestMapping("/geo")
+	public String geo() {
+		return "vi/geo";
+	}
 
 }

@@ -224,4 +224,11 @@ textarea.form-control {
 	display: none;
 }
 
+.container {
+	text-align: center;
+	margin-top: 3rem
+}
 
+.canvas {
+	display: inline-block;
+}

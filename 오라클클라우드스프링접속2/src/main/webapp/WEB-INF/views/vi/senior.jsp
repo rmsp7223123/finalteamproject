@@ -25,8 +25,10 @@
 		src="https://cdn.jsdelivr.net/npm/chartjs-plugin-autocolors@0.2.2/dist/chartjs-plugin-autocolors.min.js"></script>
  -->
 
-	<div id="tab-content">
+	<div id="tab-content" class="container">
+	<div class="canvas">
 		<canvas id="Chart" width="900" height="500"></canvas>
+		</div>
 
 		<div class="tab-pane fade show active" id="region"></div>
 		<div class="tab-pane fade" id="pop"></div>
@@ -56,45 +58,60 @@
 		});
 	
 	
-	function region(){
-		
-	}
 	
 	
-	
-	<!-- 성별 통계 -->
-		function gender() {
-			let genderList = [];
-			let population = [];
-
+	<!-- 지역별 통계 -->
+		function region() {
+			let region = [];
+			let count = [];
+			
 			$.ajax({
-				url : 'genderchart',
+				url : 'region',
 				type : 'get',
 				dataType : 'json',
 				success : function(data) {
+					
 					for (let i = 0; i < data.length; i++) {
-						genderList.push(data[i].gender);
-						population.push(data[i].population);
+						region.push(data[i].region);
+						count.push(data[i].count);
 					}
 
 					new Chart(document.getElementById('Chart'), {
-						type : 'doughnut',
+						type : 'bar',
 						data : {
-							labels : genderList,
+							labels : region,
 							datasets : [ {
-								data : population,
-								label : "성별현황",
-								backgroundColor : [ "#3e95cd", "#8e5ea2" ],
-								borderColor : [ "#3e95cd", "#8e5ea2" ],
-								borderWidth : 1,
+								data : count,
+								label : "전국 경로당",
+								backgroundColor : count.map(value => {
+									if (value < 500) {
+		                                return "#775995";
+		                            } else if (value < 1000) {
+		                                return "#29797f";
+		                            } else if (value < 1500) {
+		                                return "#29d1bb";
+		                            } else if (value < 3000) {
+		                            	return "#f8cf63";
+									}else {
+		                                return "#fc7b1d";
+		                            }
+								}),
+								borderColor : [  ],
+								borderWidth : 0,
 								fill : false
 							} ]
 						},
 						options : {
 							responsive : false,
+							indexAxis: 'y',
+							plugins:{
+								legend: {
+		                            display: false
+		                        },
 							title : {
 								display : true,
-								text : '회원통계'
+								text : '전국 경로당'
+							}
 							}
 						}
 					});
@@ -131,17 +148,22 @@
 							datasets : [ {
 								data : likeNum,
 								label : "인기많은 경로당",
-								backgroundColor : [ "#3e95cd", "#8e5ea2"],
-								borderColor : [ "#3e95cd", "#8e5ea2"],
-								borderWidth : 1,
+								backgroundColor : [ "#e94c3b", "#01adc1", "#f7941d", "#0d9788", "#f7b419" ],
+								borderColor : [ ],
+								borderWidth : 0,
 								fill : false
 							} ]
 						},
 						options : {
 							responsive : false,
+							plugins:{
+								legend: {
+		                            display: false
+		                        },
 							title : {
 								display : true,
-								text : '경로당 현황'
+								text : '인기많은 경로당'
+							}
 							}
 						}
 					});

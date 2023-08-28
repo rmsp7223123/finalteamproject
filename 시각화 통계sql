@@ -8,6 +8,62 @@
 select count(*) from senior
 where sido='전라북도';
 
+SELECT s.KEY, s.SENIOR_NAME, s.SENIOR_ROADADDRESS, s.SENIOR_NUMADDRESS, s.SENIOR_CALL, s.SENIOR_LATITUDE, s.SENIOR_LONGITUDE, s.SIDO, s.SIGUNGU
+, l.SENIOR_LIKE_NUM
+FROM SENIOR s
+LEFT JOIN SENIOR_LIKE l
+ON s.key = l.key
+WHERE s.SENIOR_NAME LIKE '%강원%' OR s.SENIOR_ROADADDRESS LIKE '%강원%'
+ORDER BY s.KEY;
+
+
+--빠밤~!! mapper 조회 쿼리
+select '서울특별시' as region, count(*) as count from senior
+where sido='서울특별시'
+union all
+select '부산광역시' as region, count(*) as count from senior
+where sido='부산광역시'
+union all
+select '인천광역시' as region, count(*) as count from senior
+where sido='인천광역시'
+union all
+select '대구광역시' as region, count(*) as count from senior
+where sido='대구광역시'
+union all
+select '대전광역시' as region, count(*) as count from senior
+where sido='대전광역시'
+union all
+select '광주광역시' as region, count(*) as count from senior
+where sido='광주광역시'
+union all
+select '울산광역시' as region, count(*) as count from senior
+where sido='울산광역시'
+union all
+select '경기도' as region, count(*) as count from senior
+where sido='경기도'
+union all
+select '강원도' as region, count(*) as count from senior
+where sido='강원도'
+union all
+select '충청북도' as region, count(*) as count from senior
+where sido='충청북도'
+union all
+select '충청남도' as region, count(*) as count from senior
+where sido='충청남도'
+union all
+select '전라북도' as region, count(*) as count from senior
+where sido='전라북도'
+union all
+select '전라남도' as region, count(*) as count from senior
+where sido='전라남도'
+union all
+select '경상북도' as region, count(*) as count from senior
+where sido='경상북도'
+union all
+select '경상남도' as region, count(*) as count from senior
+where sido='경상남도';
+
+
 --경로당-인기별 통계
 select * from senior_like;
 select *
