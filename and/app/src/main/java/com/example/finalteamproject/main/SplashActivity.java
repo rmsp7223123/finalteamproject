@@ -55,11 +55,14 @@ public class SplashActivity extends AppCompatActivity {
                 conn.onExcute((isResult, data) -> {
                     CommonVar.logininfo = new Gson().fromJson(data, MemberVO.class);
                     if (CommonVar.logininfo != null) {
+                        // 프로필사진, 관심사, 보호자(고독사)정보 없을시 추가 할 곳
+
+
                         getToken();
                         checkOption();
-                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-                        float fontSize = preferences.getFloat("font_size", 2); // 기본값 글씨 크기 설정
-                        applyFontSize(fontSize);
+//                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+//                        float fontSize = preferences.getFloat("font_size", 2); // 기본값 글씨 크기 설정
+//                        applyFontSize(fontSize);
                         CommonConn conn1 = new CommonConn(this, "setting/inquirePw");
                         conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
                         conn1.onExcute((isResult1, data1) -> {
