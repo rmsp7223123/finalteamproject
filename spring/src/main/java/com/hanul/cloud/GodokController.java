@@ -42,7 +42,7 @@ public class GodokController {
 	@Scheduled(fixedRate = 3600000)
 	@RequestMapping(value = "/viewLocationList", produces = "text/html;charset=utf-8")
 	public String viewLocationList() {
-//		sendGodokSms(vo, vo2);
+//		sendGodokSms();
 		System.out.println("되는지 확인");
 		return "확인용";
 	}
@@ -54,8 +54,8 @@ public class GodokController {
 	}
 
 	@RequestMapping(value = "/sendGodokMsg", produces = "text/html;charset=utf-8")
-	public String sendGodokMsg(LocationVO vo) {
-		sendGodokSms(vo);
+	public String sendGodokMsg() {
+		sendGodokSms();
 		return "";
 	}
 
@@ -65,8 +65,7 @@ public class GodokController {
 		return new Gson().toJson(list);
 	}
 
-	public void sendGodokSms(LocationVO vo) {
-
+	public void sendGodokSms() {
 		List<LocationVO> location_list = sql.selectList("godok.viewLocationList");
 //		List<EphoneVO> ephone_list = sql.selectList("godok.viewEphone", location_list);
 		Message sms = new Message(APIKEY, APISECRET);
