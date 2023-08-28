@@ -176,6 +176,9 @@ $(document)
 		$('.modal-body').html( $(this).clone() );
 		$('#modal-image .modal-body img').removeAttr('style');
 		new bootstrap.Modal( $('#modal-image') ).show()
+						$("#modal-image").on('show.bs.modal', function() {
+					$(this).data('bs.modal')._config.backdrop = false;
+				});
 	}
 	
 })
@@ -322,7 +325,7 @@ $(function(){
 	
 	
 	var today = new Date();
-	var range = today.getFullYear()-100 + ':' + today.getFullYear();
+	var range = today.getFullYear()-150 + ':' + today.getFullYear();
 		if($('.date').length>0){
 			console.log(1)
 		$.datepicker.setDefaults({

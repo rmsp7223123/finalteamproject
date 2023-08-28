@@ -13,16 +13,10 @@ table { table-layout: fixed; }
 <body>
 <h3 class="my-4">고객센터</h3>
 
-	<form method="post" action="list">
-		<input type="hidden" name="curPage" value="1">
-<%-- 		<input type="hidden" name="comment_exist" value="	${page.comment_exist }"> --%>
-		
-		<input type="checkbox" name="comment_exist" id="checkbox_comment" 
-		${page.comment_exist eq 'Y' ? 'checked' : ''}
-		onclick='checkbox()'/>답변필요
 
 
-<div class="row mb-3">
+<div class="d-flex mt-3 mb-3 justify-content-between">
+
 	<div class="col-auto">
 		<div class="input-group">
 			<select class="form-select" name="search">
@@ -39,11 +33,18 @@ table { table-layout: fixed; }
 		</div>
 	</div>
 
+
+	<form method="post" action="list" class="mt-4">
+		<input type="hidden" name="curPage" value="1">
+		<input type="checkbox" name="comment_exist" id="checkbox_comment" 
+		${page.comment_exist eq 'Y' ? 'checked' : ''}
+		onclick='checkbox()'>   답변필요
+
 </div>
 <input type="hidden" name="curPage" value="1">
 <input type="hidden" name="csboard_id">
 <%-- <input type="hidden" name="comment_exist" value="${page.comment_exist }"> --%>
-</form>
+		</form>
 
 <table class="tb-list">
 <colgroup><col width="100px"><col><col width="100px"><col width="150px"></colgroup>

@@ -67,13 +67,13 @@
 						<div class="form-check form-check-inline">
 						<label>
 							<input class="form-check-input" type="radio" name="member_gender" value="남" 
-							${vo.member_gender eq '남' ? 'checked' : ''} }>남	
+							${vo.member_gender eq '남' ? 'checked' : ''} }>   남	
 						</label>
 						</div>
 						<div class="form-check form-check-inline">
 						<label>
 							<input class="form-check-input" type="radio" name="member_gender" value="여"
-							${vo.member_gender eq '여' ? 'checked' : ''}>여	
+							${vo.member_gender eq '여' ? 'checked' : ''}>   여	
 						</label>
 						</div>
 					</div>
@@ -88,8 +88,8 @@
 						<input type="text" class="form-control check-item" name="member_phone" 
 						value="${vo.member_phone}">
 					</div>
-				<div class="col-auto">- 제외</div>
-				<div class="desc"></div>
+				<div class="col-auto ms-3 mt-2_5">- 제외</div>
+				<div class="desc col-auto ms-3 mt-2_5"></div>
 				</div>
 			</td>
 		</tr>
@@ -224,8 +224,7 @@ $(function(){
 	//년도: 13년전 해의 12월 31일까지는 선택 가능
 	var endDay = new Date(today.getFullYear()-44, 11, 31);
 	$('[name=member_birth]').datepicker('option', 'maxDate', endDay);
-	console.log(2)
-// 	console.log(endDay);
+	
 })
 
 

@@ -13,7 +13,7 @@
 	<input type="hidden" name="curPage" value="1">
 	
 	<div class="row mb-3">
-		<div class="col-auto">
+		<div class="col-auto mt-3">
 		<div class="input-group">
 			<select name="search" class="form-select">
 				<option value="all" ${page.search eq 'all' ? 'selected' : '' }>전체</option>

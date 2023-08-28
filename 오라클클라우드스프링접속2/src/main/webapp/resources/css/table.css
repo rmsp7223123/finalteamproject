@@ -82,6 +82,10 @@
   margin-top: 0.5rem !important;
 }
 
+.mt-2_5 {
+	margin-top: 0.75rem !important;
+}
+
 .mt-3 {
   margin-top: 1rem !important;
 }
@@ -291,3 +295,20 @@ blockquote {
 	color: white;
 	text-align: center;
 }
+
+.t5 {
+	font-size: 1.25rem;
+}
+
+.d-flex {
+	display: flex;
+}
+
+.gap-0 {
+  gap: 10 !important;
+}
+
+.modal-backdrop{
+        opacity: 0.4;
+    }
+

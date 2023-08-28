@@ -10,7 +10,7 @@
 </head>
 <body>
 <h3 class="my-4">건의사항</h3>
-<table class="tb-row">
+<table class="tb-row mt-3">
 <colgroup><col width="180px"><col>
 		<col width="160px"><col width="160px">
 		<col width="100px"><col width="100px">
@@ -28,11 +28,11 @@
 </tr>
 </table>
 
-	<div class="btn-toolbar my-3 justify-content-center">
+	<div class="d-flex btn-toolbar my-3 justify-content-center mt-3 gap-0">
 	<c:set var="params" value="curPage=${page.curPage}&search=${page.search}&keyword=${page.keyword }&pagelist=${page.pageList }&comment_exist=${page.comment_exist}"/>
 		<a class="btn btn-warning" onclick="location='list?${params}'">목록</a>
-		<button class="btn btn-warning ml-3" onclick="location='modify?csboard_id=${vo.csboard_id}&${params}'">수정</button>
-		<button class="btn btn-warning ml-3"
+		<button class="btn btn-warning" onclick="location='modify?csboard_id=${vo.csboard_id}&${params}'">수정</button>
+		<button class="btn btn-warning"
 			onclick="if(confirm('건의사항을 삭제하시겠습니까?')){location='delete?csboard_id=${vo.csboard_id}&${params}'}">삭제
 		</button>
 	</div>
@@ -40,9 +40,9 @@
 <!-- 댓글입력부분 -->
 <div class="row justify-content-center" id="comment-register">
 	<div class="col-md-10 content">
-		<div class="title d-flex align-items-center justify-content-between mb-2 invisible">
+		<div class="title d-flex align-items-center justify-content-between mb-2 invisible mt-4">
 			<span>답변작성 [ <span class="writing">0</span> / 1000 ]</span>
-			<a class="btn btn-outline-primary btn-sm btn-register invisible">답변등록</a>
+			<a class="btn btn-outline-primary btn-sm btn-register invisible t5">답변등록</a>
 		</div>
 		<div class="comment">
 			<c:if test="${empty list }">

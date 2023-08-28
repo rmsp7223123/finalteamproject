@@ -9,7 +9,7 @@
 </head>
 <body>
 	<h3 class="my-4">회원정보</h3>
-	<table class="tb-row my-3 " style="margin-left:auto;margin-right:auto;">
+	<table class="tb-row my-3 mt-3" style="margin-left:auto;margin-right:auto;">
 		<colgroup>
 			<col width="180px">
 		</colgroup>
@@ -49,10 +49,10 @@
 	</table>
 	
 	<c:set var="params" value="curPage=${page.curPage}&search=${page.search}&keyword=${page.keyword }"/>
-	<div class="btn-toolbar my-3 justify-content-center">
+	<div class="d-flex btn-toolbar my-3 justify-content-center mt-4 gap-0">
 		<button class="btn btn-warning" onclick="location='list?${params}'">회원목록</button>
-		<button class="btn btn-warning ml-3" onclick="location='modify?id=${vo.member_id}&${params}'">정보수정</button>
-		<button class="btn btn-warning ml-3"
+		<button class="btn btn-warning" onclick="location='modify?id=${vo.member_id}&${params}'">정보수정</button>
+		<button class="btn btn-warning"
 			onclick="if(confirm('회원 [${vo.member_id }] 회원정보를 삭제하시겠습니까?')){location='delete?id=${vo.member_id}&${params}'}">회원삭제
 		</button>
 	</div>
