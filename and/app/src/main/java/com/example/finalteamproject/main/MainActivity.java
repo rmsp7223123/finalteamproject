@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         supportRequestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
 
-
+//        new HideActionBar().hideActionBar(this);
 
 
         if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

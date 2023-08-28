@@ -8,7 +8,7 @@
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/gps"
-        android:title="위치추적"
+        android:title="위치"
         android:icon="@drawable/bottomnav_gps"
         app:showAsAction="ifRoom"/>
     <item

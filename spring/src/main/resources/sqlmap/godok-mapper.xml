@@ -4,11 +4,11 @@
 	<select id="viewLocationList"
 		resultType="cloud.member.LocationVO">
 		SELECT *
-		FROM location
-		WHERE location_time BETWEEN SYSDATE -
-		INTERVAL '3' DAY + INTERVAL '9' HOUR
-		AND SYSDATE - INTERVAL '3' DAY +
-		INTERVAL '10' HOUR
+		FROM location l
+		INNER JOIN ephone e ON l.member_id = e.member_id
+		INNER JOIN option_table o ON l.member_id = o.member_id
+		WHERE l.location_time BETWEEN SYSDATE - INTERVAL '3' DAY + INTERVAL '9'HOUR
+		AND SYSDATE - INTERVAL '3' DAY + INTERVAL '10' HOUR
 	</select>
 	<select id="viewEphone" resultType="cloud.member.EphoneVO">
 		select * from ephone where
@@ -20,9 +20,14 @@
 	</select>
 	<update id="updateLocationTime">
 		update location
-		set location_time = sysdate + INTERVAL '9' HOUR
-		WHERE location_time BETWEEN SYSDATE - INTERVAL '3' DAY + INTERVAL '9' HOUR
-		AND SYSDATE - INTERVAL '3' DAY + INTERVAL '10' HOUR;
+		set location_time = sysdate + INTERVAL
+		'9' HOUR
+		WHERE location_time BETWEEN SYSDATE - INTERVAL '3' DAY +
+		INTERVAL '9' HOUR
+		AND SYSDATE - INTERVAL '3' DAY + INTERVAL '10' HOUR
 	</update>
+	<insert id="addGodokAlarm">
+		insert into godok_alarm(member_id, alarm_time) values (#{member_id}, #{alarm_time})
+	</insert>
 
 </mapper>

@@ -42,7 +42,7 @@ public class ChangeGodokActivity extends AppCompatActivity {
                 CommonConn conn1 = new CommonConn(this, "setting/updateGodokAlarm");
                 conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
                 conn1.onExcute((isResult1, data1) ->  {
-                    if(list.get(0).getOption_godok_alarm().equals("N") ) {
+                    if(binding.tvGodok.getText().toString().equals("켜짐") ) {
                         binding.tvGodok.setText("꺼짐");
                     } else {
                         binding.tvGodok.setText("켜짐");

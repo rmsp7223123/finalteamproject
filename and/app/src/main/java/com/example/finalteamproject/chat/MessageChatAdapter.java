@@ -136,12 +136,12 @@ public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.
             tv_time.setTextColor(Color.parseColor("#000000"));
             tv_time.setTextSize(12f);
             holder.binding.containerFrame.addView(tv_msg);
-            holder.binding.containerFrame.addView(tv_time);
             if(list.get(position).getContent().contains("https://firebasestorage.googleapis.com/")) {
                 imageView.setLayoutParams(params3);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 Glide.with(context).load(list.get(position).getContent()).into(imageView);
                 holder.binding.containerFrame.addView(imageView);
+                holder.binding.containerFrame.addView(tv_time);
             } else {
                 tv_msg.setText(friendVO.getContent());
                 tv_msg.setTextColor(Color.parseColor("#000000"));
@@ -149,8 +149,10 @@ public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.
                 tv_msg.setBackgroundResource(R.drawable.message_chat_background);
                 tv_msg.setPadding(30, 20, 70, 20);
                 tv_msg.setMaxWidth(800);
+                holder.binding.containerFrame.addView(tv_time);
+                holder.binding.containerFrame.addView(imageView2);
             }
-            holder.binding.containerFrame.addView(imageView2);
+
         }
 
         holder.binding.containerLinearMessageChat.setOnClickListener(v -> {
