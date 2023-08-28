@@ -439,7 +439,7 @@ WHERE location_time BETWEEN SYSDATE - INTERVAL '3' DAY + INTERVAL '9' HOUR AND S
 
 insert into location(member_id,LOCATION_LATITUDE,LOCATION_LONGITUDE,location_time) values('test1', '33','33', TO_DATE('2023-08-22 13:40:20', 'YYYY-MM-DD HH24:MI:SS'));
 
-update location set location_time = TO_DATE('2023-08-25 12:40:20', 'YYYY-MM-DD HH24:MI:SS') where member_id = 'test2';
+update location set location_time = TO_DATE('2023-08-25 13:40:20', 'YYYY-MM-DD HH24:MI:SS') where member_id = 'test2';
 
 select * from location;
 select * from godok_alarm;
