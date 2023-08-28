@@ -106,7 +106,7 @@
 		end
 		where member_id = #{member_id}
 	</update>
-	<select id="viewOptionList">
+	<select id="viewOptionList" resultType="cloud.setting.OptionVO">
 		select * from option_table
 	</select>
 </mapper>

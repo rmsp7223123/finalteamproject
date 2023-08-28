@@ -6,5 +6,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LocationVO {
-	String member_id, location_latitude, location_longitude, location_time;
+	String member_id, location_latitude, location_longitude, location_time, ephone_phone, option_godok_alarm;
 }

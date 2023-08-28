@@ -3,6 +3,7 @@ package com.hanul.cloud;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -53,8 +54,8 @@ public class GodokController {
 	}
 
 	@RequestMapping(value = "/sendGodokMsg", produces = "text/html;charset=utf-8")
-	public String sendGodokMsg(LocationVO vo, OptionVO vo2) {
-		sendGodokSms(vo, vo2);
+	public String sendGodokMsg(LocationVO vo) {
+		sendGodokSms(vo);
 		return "";
 	}
 
@@ -64,33 +65,36 @@ public class GodokController {
 		return new Gson().toJson(list);
 	}
 
-	public void sendGodokSms(LocationVO vo, OptionVO vo2) {
-		List<OptionVO> option_list = sql.selectList("setting.viewOptionList", vo2);
-		List<LocationVO> location_list = sql.selectList("godok.viewLocationList", vo);
-		List<EphoneVO> ephone_list = sql.selectList("godok.viewEphone", vo);
+	public void sendGodokSms(LocationVO vo) {
+
+		List<LocationVO> location_list = sql.selectList("godok.viewLocationList");
+//		List<EphoneVO> ephone_list = sql.selectList("godok.viewEphone", location_list);
 		Message sms = new Message(APIKEY, APISECRET);
-		for (int i = 0; i < location_list.size(); i++) {
-			System.out.println(i + "번");
-			if (option_list.get(i).getOption_godok_alarm().equals("Y")) {
+		if (location_list != null) {
+			for (int i = 0; i < location_list.size(); i++) {
+				System.out.println(i + "번");
 				LocationVO location = location_list.get(i);
-				EphoneVO ephone = ephone_list.get(i);
-				HashMap<String, String> params = new HashMap();
-				params.put("to", ephone.getEphone_phone());
-				params.put("from", "01096024788");
-				params.put("type", "SMS"); // SMS, LMS, MMS ...
-				params.put("text", "문자 내용 담을곳");
-				params.put("app_version", "JAVA SDK v1.2");
-				try {
-//        			JSONObject obj = sms.send(params);
-//        			System.out.println(obj.toString());
-					System.out.println(i + "번 보냄");
-				} catch (Exception e) {
-					e.printStackTrace();
+				if(location.getOption_godok_alarm().equals("Y")) {
+					HashMap<String, String> params = new HashMap();
+					params.put("to", location.getEphone_phone());
+					params.put("from", "01096024788");
+					params.put("type", "SMS"); // SMS, LMS, MMS ...
+					params.put("text", "문자 내용 담을곳");
+					params.put("app_version", "JAVA SDK v1.2");
+					try {
+//		        			JSONObject obj = sms.send(params);
+//		        			System.out.println(obj.toString());
+						System.out.println(location.getEphone_phone() + "번 보냄");
+						HashMap<String, Object> params2 = new HashMap<String, Object>();
+						params2.put("member_id", location.getMember_id());
+						params2.put("alarm_time", LocalDateTime.now());
+						sql.insert("godok.addGodokAlarm", params2);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				}
-
-			} else {
-
-			}
+				
+		}
 
 		}
 		sql.update("godok.updateLocationTime");

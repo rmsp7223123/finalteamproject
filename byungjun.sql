@@ -231,6 +231,10 @@ select * from alarm;
 
 delete alarm where member_id = 'alaa1';
 
+delete alarm;
+
+rollback;
+
 commit;
 
 select alarm_content, alarm_time from alarm where member_id = 'ansqudwns98';
@@ -433,9 +437,16 @@ SELECT *
 FROM location
 WHERE location_time BETWEEN SYSDATE - INTERVAL '3' DAY + INTERVAL '9' HOUR AND SYSDATE - INTERVAL '3' DAY + INTERVAL '10' HOUR;
 
-insert into location(member_id,LOCATION_LATITUDE,LOCATION_LONGITUDE,location_time) values('1test', '33','33', TO_DATE('2023-08-22 13:40:20', 'YYYY-MM-DD HH24:MI:SS'));
+insert into location(member_id,LOCATION_LATITUDE,LOCATION_LONGITUDE,location_time) values('test1', '33','33', TO_DATE('2023-08-22 13:40:20', 'YYYY-MM-DD HH24:MI:SS'));
 
+update location set location_time = TO_DATE('2023-08-25 12:40:20', 'YYYY-MM-DD HH24:MI:SS') where member_id = 'test2';
+
+select * from location;
+select * from godok_alarm;
 commit;
+
+select * from godok_alarm;
+
 select * from location;
 select * from member;
 
@@ -463,3 +474,27 @@ SELECT *
 
 
 rollback;
+
+delete member;
+
+select * from member;
+
+select * from option_table;
+
+select * from location;
+
+select * from godok_alarm;
+
+commit;
+
+select count(member_admin) cnt from member where
+		member_id = 'admin' and member_pw = 'admin' and member_admin = 1;
+
+SELECT *
+FROM location l
+INNER JOIN ephone e ON l.member_id = e.member_id
+INNER JOIN option_table o ON l.member_id = o.member_id
+WHERE l.location_time BETWEEN SYSDATE - INTERVAL '3' DAY + INTERVAL '9' HOUR
+                         AND SYSDATE - INTERVAL '3' DAY + INTERVAL '10' HOUR;
+
+commit;
