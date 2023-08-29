@@ -52,6 +52,16 @@
 	<update id="modifyPw">
 		update member set member_pw = #{pw} where member_id = #{id}
 	</update>
+	
+	<select id="checking" resultType="cloud.member.CheckVO">
+		select m.member_profileimg member_profileimg, 
+			   nvl(count(f.favor), 0) favor, 
+			   e.ephone_phone ephone_phone
+		from member m left outer join favor f on m.member_id = f.member_id
+		              left outer join ephone e on m.member_id = e.member_id 
+		where m.member_id = #{member_id}
+		group by m.member_profileimg, e.ephone_phone
+	</select>
 
 
 </mapper>

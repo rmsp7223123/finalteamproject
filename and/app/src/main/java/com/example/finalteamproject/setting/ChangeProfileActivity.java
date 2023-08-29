@@ -117,6 +117,11 @@ public class ChangeProfileActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        binding.btnChangeFavor.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ChangeFavorActivity.class);
+            startActivity(intent);
+        });
+
     }
 
     public void showDialog() {

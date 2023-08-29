@@ -109,4 +109,16 @@
 	<select id="viewOptionList" resultType="cloud.setting.OptionVO">
 		select * from option_table
 	</select>
+	
+	<!-- 아이디로 관심사 리스트 가져오기 -->
+	<select id="favor" resultType="cloud.member.FavorVO">
+		select * from favor where member_id = #{member_id}
+	</select>
+	
+	<!-- 아이디에 해당하는 관심사 삭제 -->
+	<delete id="deleteFavor">
+		delete favor where member_id = #{member_id}
+	</delete>
+	 
+	
 </mapper>

@@ -24,7 +24,7 @@
 			<a class="btn btn-outline-danger btn-sm btn-delete-cancel">삭제</a>
 		</div>
 		</div>
-		<div class="comment">${fn:replace(fn:replace(vo.csboard_comment_content, lf, '<br>'), crlf, '<br>') }</div>
+		<div class="comment align-content-start">${fn:replace(fn:replace(vo.csboard_comment_content, lf, '<br>'), crlf, '<br>') }</div>
 		<div class="d-none hidden"></div>
 	</div>
 
