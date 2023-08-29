@@ -20,6 +20,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.finalteamproject.R;
+import com.example.finalteamproject.common.CommonConn;
+import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.common.RetrofitClient;
 import com.example.finalteamproject.common.RetrofitInterface;
 import com.example.finalteamproject.databinding.ActivityLoginProfileBinding;
@@ -64,6 +66,7 @@ public class LoginProfileActivity extends AppCompatActivity {
                 MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", "asd.jpg", fileBody);
                 RetrofitInterface api = new RetrofitClient().retrofitLogin().create(RetrofitInterface.class);
                 HashMap<String, RequestBody> map = new HashMap<>();
+                LoginVar.id = CommonVar.logininfo.getMember_id();
                 map.put("member_id", RequestBody.create(MediaType.parse("multipart/form-data"), LoginVar.id));
                 api.clientSendFile("login/file", map, filePart).enqueue(new Callback<String>() {
                     @Override

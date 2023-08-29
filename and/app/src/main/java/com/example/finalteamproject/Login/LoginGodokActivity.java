@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
+import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.databinding.ActivityLoginGodokBinding;
 import com.google.android.gms.common.internal.service.Common;
 import com.google.android.play.core.integrity.b;
@@ -100,6 +101,7 @@ public class LoginGodokActivity extends AppCompatActivity {
                 manager.showSoftInput(binding.edtRelation, InputMethodManager.SHOW_IMPLICIT);
             }else {
                 CommonConn conn = new CommonConn(this, "login/godok");
+                LoginVar.id = CommonVar.logininfo.getMember_id();
                 conn.addParamMap("member_id", LoginVar.id);
                 conn.addParamMap("ephone_name", binding.edtName.getText().toString());
                 conn.addParamMap("ephone_phone", binding.edtPhone.getText().toString());
