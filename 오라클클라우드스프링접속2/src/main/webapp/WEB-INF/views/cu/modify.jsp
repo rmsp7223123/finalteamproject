@@ -207,7 +207,9 @@ function memberNicknameCheck(){
 //체크대상 항목에 키보드입력시 처리
 $('.check-item').on('keyup', function( e ){
 	$(this).removeClass("checked-item") //중복확인했음 클래스 삭제
-	nickname();
+	if($(this).attr("name")=="member_nickname"){
+		nickname();
+	}
 	// 아이디에서 엔터시 중복확인처리하기
 	if( $(this).attr("name")=="member_nickname" && e.keyCode==13 ){
 		memberNicknameCheck();

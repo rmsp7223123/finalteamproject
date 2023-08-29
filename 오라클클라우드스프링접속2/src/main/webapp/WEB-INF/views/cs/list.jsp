@@ -13,7 +13,7 @@ table { table-layout: fixed; }
 <body>
 <h3 class="my-4">고객센터</h3>
 
-
+	<form method="post" action="list" class="mt-4">
 
 <div class="d-flex mt-3 mb-3 justify-content-between">
 
@@ -34,11 +34,13 @@ table { table-layout: fixed; }
 	</div>
 
 
-	<form method="post" action="list" class="mt-4">
+
 		<input type="hidden" name="curPage" value="1">
+		<div class="mt-3">
 		<input type="checkbox" name="comment_exist" id="checkbox_comment" 
 		${page.comment_exist eq 'Y' ? 'checked' : ''}
 		onclick='checkbox()'>   답변필요
+		</div>
 
 </div>
 <input type="hidden" name="curPage" value="1">

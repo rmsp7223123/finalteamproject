@@ -71,11 +71,14 @@ public class LoginFavorActivity extends AppCompatActivity {
                     conn.onExcute((isResult, data) -> {
                         if(!data.equals("성공")){
                             Toast.makeText(this, list.get(j).name+"관심사 등록 실패", Toast.LENGTH_SHORT).show();
+                        }else {
+                            num++;
+
                         }
                     });
                 }
             }
-            if(num==0){
+            if(num>0){
                 Toast.makeText(this, "관심사 등록 완료", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, LoginGodokActivity.class);
                 startActivity(intent);

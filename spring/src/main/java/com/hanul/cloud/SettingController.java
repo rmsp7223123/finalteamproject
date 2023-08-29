@@ -1,5 +1,6 @@
 package com.hanul.cloud;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 
+import cloud.member.FavorVO;
 import cloud.member.MemberVO;
 import cloud.setting.OptionVO;
 
@@ -114,5 +116,22 @@ public class SettingController {
 	public String updateGodokAlarm(String member_id) {
 		return new Gson().toJson(sql.update("setting.updateGodokAlarm", member_id));
 	}
+	
+	//아이디로 관심사 정보 가져오기
+	@RequestMapping("/favor")
+	public String favor(String member_id) {
+		List<FavorVO> list = sql.selectList("setting.favor", member_id);
+		return new Gson().toJson(list);
+	}
+	
+	//아이디에 해당하는 관심사 삭제
+	@RequestMapping("/deleteFavor")
+	public String deleteFavor(String member_id) {
+		String result = sql.delete("setting.deleteFavor", member_id)>0 ? "성공" : "실패";
+		System.out.println(result);
+		return result;
+	}
+	
+	
 
 }
