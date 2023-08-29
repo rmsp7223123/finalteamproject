@@ -37,6 +37,16 @@
             android:layout_height="45dp"
             android:src="@drawable/menu"/>
 
+        <TextView
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="친구추천"
+            android:textSize="27dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
+
         <ImageView
             android:id="@+id/imgv_alarm_history"
             android:layout_centerVertical="true"
@@ -49,7 +59,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_alarm_cnt"
             android:layout_toStartOf="@id/cv_small_profile"
-            android:layout_marginRight="8dp"
+            android:layout_marginRight="13dp"
             android:layout_width="26dp"
             android:layout_height="26dp"
             app:cardCornerRadius="13dp"
@@ -90,20 +100,7 @@
     </RelativeLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center">
-        <TextView
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="친구추천"
-            android:textSize="27dp"
-            android:textColor="@color/black"
-            android:textStyle="bold"/>
-    </LinearLayout>
+
         <FrameLayout
 
             android:layout_width="match_parent"

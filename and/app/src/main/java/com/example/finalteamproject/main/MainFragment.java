@@ -76,6 +76,14 @@ public class MainFragment extends Fragment{
         binding.tvMenu.setOnClickListener(v->{
             boardEvent();
         });
+        binding.imgvAlarmHistory.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), MainAlarmHistoryActivity.class);
+            startActivity(intent);
+        });
+        binding.imgvSmallProfile.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), ChangeProfileActivity.class);
+            startActivity(intent);
+        });
 
         selectMainSlider();
         selectAlarmCount();
@@ -276,7 +284,7 @@ public class MainFragment extends Fragment{
         public void onReceive(Context context, Intent intent) {
             if ("update-alarm-count".equals(intent.getAction())) {
                 String alarmCount = intent.getStringExtra("alarmCount");
-                updateAlarmCount(alarmCount); // 데이터 변경 메서드 호출
+                updateAlarmCount(alarmCount);
             }
         }
     };
