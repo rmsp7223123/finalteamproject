@@ -4,6 +4,11 @@ https://developers.naver.com/forum/posts/24571
 https://navermaps.github.io/maps.js.ncp/docs/tutorial-2-Marker.html
 https://3uomlkh.tistory.com/94
 
+
+https://stickode.tistory.com/850
+네이버 맵 마커 클릭 이벤트
+
+
 특수문자 변환
 https://www.baraverkstad.se/encode/
 
