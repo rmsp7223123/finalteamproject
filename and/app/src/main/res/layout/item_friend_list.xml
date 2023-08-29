@@ -8,7 +8,7 @@
     <LinearLayout
         android:id="@+id/container_linear_profile"
         android:paddingVertical="10dp"
-        android:background="@drawable/border_black"
+        android:background="@drawable/box_radius"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
