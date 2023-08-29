@@ -78,7 +78,7 @@ public class MainAlarmHistoryAdapter extends RecyclerView.Adapter<MainAlarmHisto
                             deleteAlarm(idx);
                           //  selectAlarmList();
                           //  updateAlarm();
-                           // notifyDataSetChanged();
+                            notifyDataSetChanged();
                         });
 
 
@@ -130,10 +130,10 @@ public class MainAlarmHistoryAdapter extends RecyclerView.Adapter<MainAlarmHisto
         conn.addParamMap("nickname", list.get(position).getAlarm_content().substring(0, list.get(position).getAlarm_content().indexOf("님")));
         conn.addParamMap("alarm_content2", "친구신청을");
         conn.onExcute((isResult, data) -> {
-            list = new Gson().fromJson(data, new TypeToken<ArrayList<AlarmVO>>(){}.getType());
-            Intent intent = new Intent("update-alarm-count");
-            intent.putExtra("alarmCount", list.size());
-            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
+//            list = new Gson().fromJson(data, new TypeToken<ArrayList<AlarmVO>>(){}.getType());
+//            Intent intent = new Intent("update-alarm-count");
+//            intent.putExtra("alarmCount", list.size());
+//            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
             notifyDataSetChanged();
         });
     }

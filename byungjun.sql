@@ -216,9 +216,9 @@ BEGIN
       :NEW.MEMBER_ID,
       '크게',
       '#000000',
-      'N', 
+      'Y', 
       NULL,
-      'N'
+      'Y'
    );
 END;
 /
