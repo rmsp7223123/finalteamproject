@@ -24,12 +24,22 @@ import java.util.ArrayList;
 
 public class GodokAlarmWidget extends AppWidgetProvider {
 
+    private static final String ACTION_WIDGET_CLICKED = "com.example.finalteamproject.WIDGET_CLICKED";
+
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         for (int appWidgetId : appWidgetIds) {
-            Log.d("TAG", "onUpdate: " + "확인ㅇㅇㅇㅇㅇ"+appWidgetIds);
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
             views.setImageViewResource(R.id.widgetImageView, R.drawable.logo);
+
+            // 액션을 설정한 PendingIntent 생성
+            Intent clickIntent = new Intent(context, GodokAlarmWidget.class);
+            clickIntent.setAction(ACTION_WIDGET_CLICKED);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, clickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+            // 위젯 뷰에 클릭 이벤트와 PendingIntent 연결
+            views.setOnClickPendingIntent(R.id.widgetImageView, pendingIntent);
+
             appWidgetManager.updateAppWidget(appWidgetId, views);
         }
     }
@@ -47,8 +57,14 @@ public class GodokAlarmWidget extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
-        if ("widgetImageClicked".equals(intent.getAction())) {
-            // 다이얼로그 생성
+        Toast.makeText(context, "확인용ㅇㅇㅇㅇㅇ", Toast.LENGTH_SHORT).show();
+        if (intent.getAction() != null && intent.getAction().equals(ACTION_WIDGET_CLICKED)) {
+            showAlertDialog(context);
+        }
+    }
+
+    private void showAlertDialog(Context context) {
+        if (CommonVar.logininfo != null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setTitle("안부문자 보내기")
                     .setMessage("안부문자를 보내시겠습니까?")
@@ -67,10 +83,10 @@ public class GodokAlarmWidget extends AppWidgetProvider {
                             dialog.dismiss();
                         }
                     });
-
-            // 다이얼로그 보이기
             AlertDialog dialog = builder.create();
             dialog.show();
+        } else {
+            Toast.makeText(context, "로그인 정보가 없습니다.", Toast.LENGTH_SHORT).show();
         }
     }
 

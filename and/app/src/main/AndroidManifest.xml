@@ -79,7 +79,6 @@
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="com.example.finalteamproject.widgetImageClicked" />
             </intent-filter>
 
             <meta-data
