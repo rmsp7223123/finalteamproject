@@ -68,6 +68,7 @@
 							</div>
 
 							<div class="hexagon-menu clear" style ="width : 850px; margin-left : 100px;">
+							
 								<div class="hexagon-item">
 									<div class="hex-item">
 										<div></div>

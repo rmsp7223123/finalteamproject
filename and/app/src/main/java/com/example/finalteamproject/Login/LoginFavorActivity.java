@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.R;
+import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.databinding.ActivityLoginFavorBinding;
 
 import java.util.ArrayList;
@@ -55,6 +56,9 @@ public class LoginFavorActivity extends AppCompatActivity {
                     list.get(j).bl = true;
                 }
             });
+        }
+        if(LoginVar.id==null){
+            LoginVar.id = CommonVar.logininfo.getMember_id();
         }
         
         binding.cvNext.setOnClickListener(v -> {

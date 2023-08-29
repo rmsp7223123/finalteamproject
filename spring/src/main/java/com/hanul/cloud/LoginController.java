@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartRequest;
 
 import com.google.gson.Gson;
 
+import cloud.member.CheckVO;
 import cloud.member.EphoneVO;
 import cloud.member.FavorVO;
 import cloud.member.MemberVO;
@@ -248,6 +249,13 @@ public class LoginController {
 		map.put("pw", pw);
 		map.put("id", id);
 		return sql.update("login.modifyPw", map)==1 ? "성공" : "실패";
+	}
+	
+	//아이디로 프로필사진, 관심사, 보호자정보 유무 확인
+	@RequestMapping(value="/checking", produces = "text/html;charset=utf-8")
+	public String checking(String member_id) {	
+		CheckVO vo = sql.selectOne("login.checking", member_id);
+		return new Gson().toJson(vo);
 	}
 	
 	

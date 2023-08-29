@@ -479,9 +479,13 @@ delete member;
 
 select * from member;
 
+--insert into member(member_id, member_pw, member_name, member_nickname, member_birth, member_gender, member_phone) values
+
 select * from option_table;
 
 select * from location;
+
+commit;
 
 select * from godok_alarm;
 
@@ -498,3 +502,5 @@ WHERE l.location_time BETWEEN SYSDATE - INTERVAL '3' DAY + INTERVAL '9' HOUR
                          AND SYSDATE - INTERVAL '3' DAY + INTERVAL '10' HOUR;
 
 commit;
+
+select * from option_table where member_id = 'test2';

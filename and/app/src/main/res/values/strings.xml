@@ -29,4 +29,6 @@
 
     <string name="widget_description">고독사 문자를 보내는 위젯 입니다.</string>
 
+    <string name="skip">건너뛰기</string>
+
 </resources>

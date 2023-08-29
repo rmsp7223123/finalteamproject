@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.finalteamproject.HideActionBar;
 import com.example.finalteamproject.common.CommonConn;
@@ -37,14 +39,20 @@ public class MainAlarmHistoryActivity extends AppCompatActivity {
             finish();
         });
         binding.imgvAlarmClean.setOnClickListener(view -> {
-            // 알람 지웠을 때 알람기록 다 지우기 추가
-            CommonConn conn = new CommonConn(this, "main/deleteAlarm");
-            conn.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
-            conn.onExcute((isResult, data) -> {
-                binding.containerLinearAlarm.setVisibility(View.VISIBLE);
-                adapter.list = new ArrayList<>();
-                adapter.notifyDataSetChanged();
-            });
+            if(itemCnt==0){
+                Toast.makeText(this, "삭제할 알람이 없습니다", Toast.LENGTH_SHORT).show();
+            }else {
+                // 알람 지웠을 때 알람기록 다 지우기 추가
+                CommonConn conn = new CommonConn(this, "main/deleteAlarm");
+                Log.d("id", "onCreate: "+CommonVar.logininfo.getMember_id());
+                conn.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
+                conn.onExcute((isResult, data) -> {
+                    binding.containerLinearAlarm.setVisibility(View.VISIBLE);
+                    adapter.list = new ArrayList<>();
+                    adapter.notifyDataSetChanged();
+                });
+            }
+
         });
 
 

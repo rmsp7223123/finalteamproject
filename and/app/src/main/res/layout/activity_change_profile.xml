@@ -14,7 +14,7 @@
 
 
     <RelativeLayout
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -79,7 +79,7 @@
         android:backgroundTint="#FFC81E"
         android:textColor="@color/black"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="70dp"
         android:text="프로필 이미지 변경"
         android:textSize="30dp"/>
 
@@ -98,7 +98,7 @@
             android:backgroundTint="#FFC81E"
             android:textColor="@color/black"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="70dp"
             android:text="닉네임 변경"
             android:textSize="30dp"/>
 
@@ -117,7 +117,7 @@
             android:backgroundTint="#FFC81E"
             android:textColor="@color/black"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="70dp"
             android:text="비밀번호 변경"
             android:textSize="30dp"/>
 
