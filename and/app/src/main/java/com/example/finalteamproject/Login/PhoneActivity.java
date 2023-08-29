@@ -81,7 +81,7 @@ public class PhoneActivity extends AppCompatActivity {
                         Toast.makeText(this, "sms 문자 전송에 실패하였습니다\n다시 시도해주세요", Toast.LENGTH_SHORT).show();
                     }else {
                         result = data;
-//                        binding.edtNumber.setText(data);
+                        binding.edtNumber.setText(data);
                         binding.tvMessage.setVisibility(View.VISIBLE);
                         binding.rlMessage.setVisibility(View.VISIBLE);
                         setTimer();

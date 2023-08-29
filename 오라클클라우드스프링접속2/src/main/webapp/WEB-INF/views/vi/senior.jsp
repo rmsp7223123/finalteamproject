@@ -164,7 +164,16 @@
 								display : true,
 								text : '인기많은 경로당'
 							}
-							}
+							},
+							scales: {
+					            y: {
+					                beginAtZero: true,
+					                ticks: {
+					                    stepSize: 1,
+					                    precision: 0
+					                }
+					            }
+					        }
 						}
 					});
 				},

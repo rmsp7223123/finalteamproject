@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.R;
+import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.databinding.ActivityLoginFavorBinding;
 
 import java.util.ArrayList;
@@ -56,6 +57,9 @@ public class LoginFavorActivity extends AppCompatActivity {
                 }
             });
         }
+        if(LoginVar.id==null){
+            LoginVar.id = CommonVar.logininfo.getMember_id();
+        }
         
         binding.cvNext.setOnClickListener(v -> {
             for (int i = 0; i < list.size(); i++) {
@@ -67,11 +71,14 @@ public class LoginFavorActivity extends AppCompatActivity {
                     conn.onExcute((isResult, data) -> {
                         if(!data.equals("성공")){
                             Toast.makeText(this, list.get(j).name+"관심사 등록 실패", Toast.LENGTH_SHORT).show();
+                        }else {
+                            num++;
+
                         }
                     });
                 }
             }
-            if(num==0){
+            if(num>0){
                 Toast.makeText(this, "관심사 등록 완료", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, LoginGodokActivity.class);
                 startActivity(intent);

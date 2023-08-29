@@ -12,8 +12,12 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.finalteamproject.HideActionBar;
+import com.example.finalteamproject.Login.CheckVO;
 import com.example.finalteamproject.Login.LockScreenPasswordActivity;
 import com.example.finalteamproject.Login.LockScreenPatternActivity;
+import com.example.finalteamproject.Login.LoginFavorActivity;
+import com.example.finalteamproject.Login.LoginGodokActivity;
+import com.example.finalteamproject.Login.LoginProfileActivity;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
@@ -56,52 +60,71 @@ public class SplashActivity extends AppCompatActivity {
                     CommonVar.logininfo = new Gson().fromJson(data, MemberVO.class);
                     if (CommonVar.logininfo != null) {
                         // 프로필사진, 관심사, 보호자(고독사)정보 없을시 추가 할 곳
-
-
-                        getToken();
-                        checkOption();
+                        CommonConn commonConn = new CommonConn(this, "login/checking");
+                        commonConn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                        commonConn.onExcute((isResult5, data5) -> {
+                            CheckVO vo = new Gson().fromJson(data5, CheckVO.class);
+                            Log.d("test", "onCreate: "+vo.getMember_profileimg());
+                            Log.d("test", "onCreate: "+vo.getFavor());
+                            Log.d("test", "onCreate: "+vo.getEphone_phone());
+                            if(vo.getMember_profileimg()==null){
+                                Intent intent = new Intent(this, LoginProfileActivity.class);
+                                startActivity(intent);
+                            }else if(vo.getFavor()==0){
+                                Intent intent = new Intent(this, LoginFavorActivity.class);
+                                startActivity(intent);
+                            }else if(vo.getEphone_phone()==null){
+                                Intent intent = new Intent(this, LoginGodokActivity.class);
+                                startActivity(intent);
+                            }else {
+                                getToken();
+                                checkOption();
 //                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 //                        float fontSize = preferences.getFloat("font_size", 2); // 기본값 글씨 크기 설정
 //                        applyFontSize(fontSize);
-                        CommonConn conn1 = new CommonConn(this, "setting/inquirePw");
-                        conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
-                        conn1.onExcute((isResult1, data1) -> {
-                            if (isResult1 && data1 != null) {
-                                HashMap<String, String> paramMap = new Gson().fromJson(data1, new TypeToken<HashMap<String, String>>() {
-                                }.getType());
-                                if (paramMap != null && paramMap.containsKey("option_lock_pw")) {
-                                    storedPw = paramMap.get("option_lock_pw");
-                                }
-                            }
-
-                            if (!storedPw.isEmpty()) {
-                                Intent intent = new Intent(this, LockScreenPasswordActivity.class);
-                                startActivity(intent);
-                                finish();
-                            } else {
-
-                                CommonConn conn2 = new CommonConn(this, "setting/inquirePattern");
-                                conn2.addParamMap("member_id", CommonVar.logininfo.getMember_id());
-                                conn2.onExcute((isResult2, data2) -> {
-                                    if (isResult2 && data2 != null) {
-                                        HashMap<String, String> paramMap = new Gson().fromJson(data2, new TypeToken<HashMap<String, String>>() {
+                                CommonConn conn1 = new CommonConn(this, "setting/inquirePw");
+                                conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                                conn1.onExcute((isResult1, data1) -> {
+                                    if (isResult1 && data1 != null) {
+                                        HashMap<String, String> paramMap = new Gson().fromJson(data1, new TypeToken<HashMap<String, String>>() {
                                         }.getType());
-                                        if (paramMap != null && paramMap.containsKey("option_lock_pattern_pw")) {
-                                            storedPw = paramMap.get("option_lock_pattern_pw");
+                                        if (paramMap != null && paramMap.containsKey("option_lock_pw")) {
+                                            storedPw = paramMap.get("option_lock_pw");
                                         }
                                     }
+
                                     if (!storedPw.isEmpty()) {
-                                        Intent intent = new Intent(this, LockScreenPatternActivity.class);
+                                        Intent intent = new Intent(this, LockScreenPasswordActivity.class);
                                         startActivity(intent);
                                         finish();
                                     } else {
-                                        Intent intent = new Intent(this, MainActivity.class);
-                                        startActivity(intent);
-                                        finish();
+
+                                        CommonConn conn2 = new CommonConn(this, "setting/inquirePattern");
+                                        conn2.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                                        conn2.onExcute((isResult2, data2) -> {
+                                            if (isResult2 && data2 != null) {
+                                                HashMap<String, String> paramMap = new Gson().fromJson(data2, new TypeToken<HashMap<String, String>>() {
+                                                }.getType());
+                                                if (paramMap != null && paramMap.containsKey("option_lock_pattern_pw")) {
+                                                    storedPw = paramMap.get("option_lock_pattern_pw");
+                                                }
+                                            }
+                                            if (!storedPw.isEmpty()) {
+                                                Intent intent = new Intent(this, LockScreenPatternActivity.class);
+                                                startActivity(intent);
+                                                finish();
+                                            } else {
+                                                Intent intent = new Intent(this, MainActivity.class);
+                                                startActivity(intent);
+                                                finish();
+                                            }
+                                        });
                                     }
                                 });
                             }
                         });
+
+
                     } else {
                         Intent intent = new Intent(this, LoginActivity.class);
                         startActivity(intent);

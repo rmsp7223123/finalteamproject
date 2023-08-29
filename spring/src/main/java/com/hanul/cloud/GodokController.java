@@ -59,10 +59,35 @@ public class GodokController {
 		return "";
 	}
 
-	@RequestMapping("viewGodokAlarmList")
+	@RequestMapping("/viewGodokAlarmList")
 	public String viewGodokAlarmList(GodokVO vo) {
 		List<GodokVO> list = sql.selectList("godok.viewGodokAlarmList", vo);
 		return new Gson().toJson(list);
+	}
+	
+	@RequestMapping("/sendOneGodokMsg")
+	public void sendOneGodokMsg(String member_id) {
+		Message sms = new Message(APIKEY, APISECRET);
+		List<LocationVO> location_list = sql.selectList("godok.viewLocationOne", member_id);
+		LocationVO location = location_list.get(0);
+		if(location.getOption_godok_alarm().equals("Y")) {
+			HashMap<String, String> params = new HashMap();
+			params.put("to", location.getEphone_phone());
+			params.put("from", "01096024788");
+			params.put("type", "SMS"); // SMS, LMS, MMS ...
+			params.put("text", "문자 내용 담을곳");
+			params.put("app_version", "JAVA SDK v1.2");
+			try {
+//        			JSONObject obj = sms.send(params);
+//        			System.out.println(obj.toString());
+				HashMap<String, Object> params2 = new HashMap<String, Object>();
+				params2.put("member_id", location.getMember_id());
+				params2.put("alarm_time", LocalDateTime.now());
+				sql.insert("godok.addGodokAlarm", params2);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public void sendGodokSms() {

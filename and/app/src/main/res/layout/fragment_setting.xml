@@ -83,7 +83,7 @@
    <LinearLayout
        android:id="@+id/container_linear_change_godok"
        android:layout_marginVertical="10dp"
-       android:layout_marginHorizontal="20dp"
+       android:layout_marginLeft="20dp"
        android:layout_width="match_parent"
        android:layout_height="70dp">
 
@@ -99,33 +99,36 @@
       <LinearLayout
           android:layout_marginLeft="20dp"
           android:gravity="center|left"
-          android:layout_width="250dp"
+          android:layout_width="match_parent"
           android:layout_height="match_parent"
-          android:orientation="vertical">
+          android:orientation="horizontal">
 
          <TextView
              android:textSize="25dp"
-             android:id="@+id/tv_godok"
              android:textColor="@color/black"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:text="고독사 문자 발신" />
 
+         <TextView
+             android:id="@+id/tv_godok"
+             android:layout_marginLeft="55dp"
+             android:layout_width="wrap_content"
+             android:layout_height="30dp"
+             android:textSize="23dp"
+             android:textColor="@color/black"
+             android:text="꺼짐"
+             android:layout_marginRight="20dp"
+             android:layout_gravity="center"/>
+
       </LinearLayout>
-
-      <ImageView
-          android:layout_width="30dp"
-          android:layout_height="30dp"
-          android:src="@drawable/forward"
-          android:layout_gravity="center"/>
-
    </LinearLayout>
 
 
    <LinearLayout
        android:id="@+id/container_linear_change_alarm"
        android:layout_marginVertical="10dp"
-       android:layout_marginHorizontal="20dp"
+       android:layout_marginLeft="20dp"
        android:layout_width="match_parent"
        android:layout_height="70dp">
 
@@ -142,25 +145,31 @@
       <LinearLayout
           android:layout_marginLeft="20dp"
           android:gravity="center|left"
-          android:layout_width="250dp"
+          android:layout_width="match_parent"
           android:layout_height="match_parent"
-          android:orientation="vertical">
+          android:orientation="horizontal">
 
          <TextView
              android:textSize="25dp"
-             android:id="@+id/tv_alarm"
              android:textColor="@color/black"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:text="알람 설정" />
+             android:text="알람" />
+
+         <TextView
+             android:id="@+id/tv_alarm"
+             android:layout_marginLeft="183dp"
+             android:layout_width="wrap_content"
+             android:layout_height="30dp"
+             android:textSize="23dp"
+             android:textColor="@color/black"
+             android:text="꺼짐"
+             android:layout_marginRight="20dp"
+             android:layout_gravity="center"/>
 
       </LinearLayout>
 
-      <ImageView
-          android:layout_width="30dp"
-          android:layout_height="30dp"
-          android:src="@drawable/forward"
-          android:layout_gravity="center"/>
+
 
    </LinearLayout>
 

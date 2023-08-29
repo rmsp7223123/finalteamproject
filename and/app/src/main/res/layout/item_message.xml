@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/border_black"
+    android:background="@drawable/box_radius"
     android:layout_marginVertical="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/border_black"
+        android:background="@drawable/box_radius"
         android:id="@+id/container_linear_message_chat">
 
     <androidx.cardview.widget.CardView

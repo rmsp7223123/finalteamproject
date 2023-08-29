@@ -37,7 +37,7 @@ var member = {
 	nickname: {
 		valid: { is:true,  desc:'중복확인을 완료해주세요'},		
 		usable: { is:true,  desc:'사용가능한 닉네임입니다'},		
-		unUsable: { is:false,  desc:'이미 사용가능중인 닉네임입니다'}		
+		unUsable: { is:false,  desc:'이미 사용중인 닉네임입니다'}		
 	},
 	
 	common: {

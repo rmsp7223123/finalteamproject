@@ -71,6 +71,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".setting.ChangeFavorActivity"
+            android:exported="false" />
+        <activity
             android:name=".setting.ChangeGodokActivity"
             android:exported="false" />
 

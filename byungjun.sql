@@ -13,7 +13,7 @@ rollback;
 
 insert into dday(member_id, dday_date, dday_content) values('admin', sysdate, '알람내용');
 
-select * from dday;
+select * from member;
 
 rollback;
 
@@ -216,9 +216,9 @@ BEGIN
       :NEW.MEMBER_ID,
       '크게',
       '#000000',
-      'N', 
+      'Y', 
       NULL,
-      'N'
+      'Y'
    );
 END;
 /
@@ -479,9 +479,13 @@ delete member;
 
 select * from member;
 
+--insert into member(member_id, member_pw, member_name, member_nickname, member_birth, member_gender, member_phone) values
+
 select * from option_table;
 
 select * from location;
+
+commit;
 
 select * from godok_alarm;
 
@@ -496,5 +500,18 @@ INNER JOIN ephone e ON l.member_id = e.member_id
 INNER JOIN option_table o ON l.member_id = o.member_id
 WHERE l.location_time BETWEEN SYSDATE - INTERVAL '3' DAY + INTERVAL '9' HOUR
                          AND SYSDATE - INTERVAL '3' DAY + INTERVAL '10' HOUR;
+
+commit;
+
+select * from option_table where member_id = 'test2';
+
+
+commit;
+
+select * from option_table;
+
+select * from member;
+
+select * from godok_alarm;
 
 commit;

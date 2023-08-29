@@ -29,5 +29,13 @@
 	<insert id="addGodokAlarm">
 		insert into godok_alarm(member_id, alarm_time) values (#{member_id}, #{alarm_time})
 	</insert>
+	<select id="viewLocationOne"
+		resultType="cloud.member.LocationVO">
+		SELECT *
+		FROM location l
+		INNER JOIN ephone e ON l.member_id = e.member_id
+		INNER JOIN option_table o ON l.member_id = o.member_id
+		WHERE l.member_id = #{member_id}
+	</select>
 
 </mapper>

@@ -66,14 +66,34 @@ public class LoginCheckActivity extends AppCompatActivity {
                 conn.onExcute((isResult, data) -> {
                     CommonVar.logininfo = new Gson().fromJson(data, MemberVO.class);
                     if(CommonVar.logininfo!=null){
-                        Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show();
-                        SharedPreferences pref = getSharedPreferences("loginInfo", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = pref.edit();
-                        editor.putString("loginInfo", binding.edtId.getText().toString());
-                        editor.commit();
-                        Intent intent = new Intent(this, MainActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
+
+                        CommonConn commonConn = new CommonConn(this, "login/checking");
+                        commonConn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                        commonConn.onExcute((isResult1, data1) -> {
+                            CheckVO vo = new Gson().fromJson(data1, CheckVO.class);
+                            if(vo.getMember_profileimg()==null){
+                                Intent intent = new Intent(this, LoginProfileActivity.class);
+                                startActivity(intent);
+                            }else if(vo.getFavor()==0){
+                                Intent intent = new Intent(this, LoginFavorActivity.class);
+                                startActivity(intent);
+                            }else if(vo.getEphone_phone()==null){
+                                Intent intent = new Intent(this, LoginGodokActivity.class);
+                                startActivity(intent);
+                            }else {
+                                Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show();
+                                SharedPreferences pref = getSharedPreferences("loginInfo", MODE_PRIVATE);
+                                SharedPreferences.Editor editor = pref.edit();
+                                editor.putString("loginInfo", binding.edtId.getText().toString());
+                                editor.commit();
+                                Intent intent = new Intent(this, MainActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                            }
+                        });
+
+
+
                     }else {
                         Toast.makeText(this, "로그인 실패\n아이디나 비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show();
                     }

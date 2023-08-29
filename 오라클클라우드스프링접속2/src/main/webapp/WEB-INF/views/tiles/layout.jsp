@@ -84,7 +84,7 @@
   <div class="container">
     <div class="flex flex-middle space-between">
 <!--       <span class="prev-page"><a href="#" class="link">← Prev Page</a></span> -->
-      <span class="copyright">footerddddddddddddddddd</span>
+<!--       <span class="copyright">footerddddddddddddddddd</span> -->
 <!--       <span class="next-page"><a href="#" class="link">Next Page →</a></span> -->
     </div>
   </div>

@@ -9,9 +9,11 @@
 </head>
 <body>
 	<h3 class="my-4">회원정보</h3>
-	<table class="tb-row my-3 mt-3" style="margin-left:auto;margin-right:auto;">
+	<table class="tb-row my-3 mt-3" style="margin-left:auto;margin-right:auto; width: 800px;">
 		<colgroup>
 			<col width="180px">
+			<col width="250px">
+			<col width="200px">
 		</colgroup>
 		<tr>
 			<th>이름</th>
