@@ -39,38 +39,7 @@ public class SettingFragment extends Fragment {
         Glide.with(this).load(CommonVar.logininfo.getMember_profileimg()).into(binding.imgvProfileImg);
         binding.tvNickname.setText(CommonVar.logininfo.getMember_nickname());
         binding.tvName.setText(CommonVar.logininfo.getMember_name());
-        CommonConn conn = new CommonConn(getContext(), "setting/viewOption");
-        conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
-        conn.onExcute((isResult, data) -> {
-            ArrayList<OptionVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<OptionVO>>() {
-            }.getType());
-            if(list.get(0).getOption_godok_alarm().equals("N") ) {
-                binding.tvGodok.setText("꺼짐");
-            } else {
-                binding.tvGodok.setText("켜짐");
-            }
-            SharedPreferences sharedPreferences = getActivity().getSharedPreferences("NotificationPrefs", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            if (list.get(0).getOption_alarm().equals("N")) {
-                binding.tvAlarm.setText("꺼짐");
-                // 기본 알람을 껐을때 알람창 데이터 삭제 추가
-                CommonConn conn1 = new CommonConn(getContext(), "main/deleteAlarm");
-                conn1.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
-                conn1.addParamMap("nickname", "");
-                conn1.addParamMap("alarm_content2", "");
-                conn1.onExcute((isResult1, data1) -> {
-                    // 알람을 보냈을때 받는사람의 id가 알람이 N인 상태이면 보낼때 받는사람의 알람상태를 조회후 Y인 경우에만 보내게?
-                    FirebaseMessageReceiver.setIsEnabled(getContext(), false);
-                    editor.putBoolean("notificationEnabled", isEnabled);
-                    editor.apply();
-                });
-            } else {
-                binding.tvAlarm.setText("켜짐");
-                FirebaseMessageReceiver.setIsEnabled(getContext(), true);
-                editor.putBoolean("notificationEnabled", isEnabled);
-                editor.apply();
-            }
-        });
+        setAlarmState();
 
 
         binding.containerLinearChangeProfile.setOnClickListener(v -> {
@@ -96,9 +65,11 @@ public class SettingFragment extends Fragment {
             conn1.onExcute((isResult, data) -> {
                 if (binding.tvAlarm.getText().toString().equals("꺼짐")) {
                     binding.tvAlarm.setText("켜짐");
+                    setAlarmState();
                     Toast.makeText(getContext(), "알람이 켜졌습니다.", Toast.LENGTH_SHORT).show();
                 } else {
                     binding.tvAlarm.setText("꺼짐");
+                    setAlarmState();
                     Toast.makeText(getContext(), "알람이 꺼졌습니다.", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -157,6 +128,33 @@ public class SettingFragment extends Fragment {
         conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
         conn.onExcute((isResult, data) -> {
             binding.tvNickname.setText(CommonVar.logininfo.getMember_nickname());
+        });
+    }
+
+    public void setAlarmState() {
+        CommonConn conn = new CommonConn(getContext(), "setting/viewOption");
+        conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+        conn.onExcute((isResult, data) -> {
+            ArrayList<OptionVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<OptionVO>>() {
+            }.getType());
+            if (list.get(0).getOption_godok_alarm().equals("N")) {
+                binding.tvGodok.setText("꺼짐");
+            } else {
+                binding.tvGodok.setText("켜짐");
+            }
+            SharedPreferences sharedPreferences = getActivity().getSharedPreferences("NotificationPrefs", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            if (list.get(0).getOption_alarm().equals("N")) {
+                binding.tvAlarm.setText("꺼짐");
+                FirebaseMessageReceiver.setIsEnabled(getContext(), false);
+                editor.putBoolean("notificationEnabled", isEnabled);
+                editor.apply();
+            } else {
+                binding.tvAlarm.setText("켜짐");
+                FirebaseMessageReceiver.setIsEnabled(getContext(), true);
+                editor.putBoolean("notificationEnabled", isEnabled);
+                editor.apply();
+            }
         });
     }
 }
