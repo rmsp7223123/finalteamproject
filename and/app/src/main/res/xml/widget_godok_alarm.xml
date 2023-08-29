@@ -10,5 +10,3 @@
     android:configure="com.example.finalteamproject.GodokAlarmWidget"
     android:widgetCategory="home_screen"></appwidget-provider>
 
-<!--    android:configure="com.example.finalteamproject.main.SplashActivity"-->
-

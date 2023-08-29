@@ -512,4 +512,6 @@ select * from option_table;
 
 select * from member;
 
+select * from godok_alarm;
+
 commit;
