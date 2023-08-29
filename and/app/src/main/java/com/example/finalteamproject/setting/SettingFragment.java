@@ -153,5 +153,10 @@ public class SettingFragment extends Fragment {
     public void onResume() {
         super.onResume();
         Glide.with(this).load(CommonVar.logininfo.getMember_profileimg()).into(binding.imgvProfileImg);
+        CommonConn conn = new CommonConn(getContext(), "setting/viewOption");
+        conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+        conn.onExcute((isResult, data) -> {
+            binding.tvNickname.setText(CommonVar.logininfo.getMember_nickname());
+        });
     }
 }

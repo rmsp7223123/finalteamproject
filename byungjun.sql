@@ -13,7 +13,7 @@ rollback;
 
 insert into dday(member_id, dday_date, dday_content) values('admin', sysdate, '알람내용');
 
-select * from dday;
+select * from member;
 
 rollback;
 
@@ -504,3 +504,12 @@ WHERE l.location_time BETWEEN SYSDATE - INTERVAL '3' DAY + INTERVAL '9' HOUR
 commit;
 
 select * from option_table where member_id = 'test2';
+
+
+commit;
+
+select * from option_table;
+
+select * from member;
+
+commit;
