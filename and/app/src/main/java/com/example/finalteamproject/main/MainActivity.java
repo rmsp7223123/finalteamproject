@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_ACTION_BAR_OVERLAY);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
+        //setSystemUiVisibility()를 호출하고 SYSTEM_UI_FLAG_IMMERSIVE 플래그를 SYSTEM_UI_FLAG_FULLSCREEN과 SYSTEM_UI_FLAG_HIDE_NAVIGATION과 함께 전달합니다.
 
 //        new HideActionBar().hideActionBar(this);
 
