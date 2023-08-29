@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -34,12 +35,20 @@ import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.common.MemberVO;
 import com.example.finalteamproject.databinding.FragmentMainBinding;
+import com.example.finalteamproject.databinding.ItemMainFriendBinding;
 import com.example.finalteamproject.setting.ChangeProfileActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.chip.Chip;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
+import com.yuyakaido.android.cardstackview.CardStackListener;
+import com.yuyakaido.android.cardstackview.CardStackView;
+import com.yuyakaido.android.cardstackview.Direction;
+import com.yuyakaido.android.cardstackview.Duration;
+import com.yuyakaido.android.cardstackview.RewindAnimationSetting;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -49,17 +58,14 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment{
 
     FragmentMainBinding binding;
 
     public static ArrayList<MemberVO> list;
 
-    SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
-    String currentTime = dateFormat.format(new Date());
 
-    Viewpager_main_adapter adapter;
-
+    //Viewpager_main_adapter adapter;
 
 
     @Override
@@ -67,162 +73,17 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentMainBinding.inflate(inflater, container, false);
 
-        CommonConn conn = new CommonConn(getContext(), "main/viewpager");
-        conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
-        conn.onExcute((isResult, data) -> {
-            list = new Gson().fromJson(data, new TypeToken<ArrayList<MemberVO>>() {
-            }.getType());
-
-            favorChange(0);
-
-            if (list.size() == 0) {
-
-            } else {
-                ArrayList<MemberVO> virtualList = new ArrayList<>();
-                for (MemberVO member : list) {
-                    virtualList.add(member);
-                }
-
-                adapter = new Viewpager_main_adapter(getContext(), virtualList);
-                binding.imgViewpager.setAdapter(adapter);
-
-
-                int initialPosition = list.size() * 1000;
-                binding.imgViewpager.setCurrentItem(0, false);
-                binding.tvNickname.setText(list.get(0).getMember_nickname());
-                binding.imgViewpager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-                    int currentState = 0;
-                    int currentPos = initialPosition;
-
-                    @Override
-                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                        if (currentState == ViewPager2.SCROLL_STATE_DRAGGING && currentPos == position) {
-                            if (currentPos == 0) {
-                                binding.imgViewpager.setCurrentItem(list.size() * 2 - 2, false);
-                            } else if (currentPos == list.size() * 2 - 1) {
-                                binding.imgViewpager.setCurrentItem(1, false);
-                            }
-                        }
-                        super.onPageScrolled(position, positionOffset, positionOffsetPixels);
-                    }
-
-                    @Override
-                    public void onPageSelected(int position) {
-                        binding.imgvAdd.setOnClickListener(view -> {
-                            dialog_friend(position);
-                        });
-                        binding.imgvMessage.setOnClickListener(view -> {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-//            CommonConn conn1 = new CommonConn(getContext(),"main/viewpager");
-//            conn1.addParamMap("member_id",CommonVar.logininfo.getMember_id());
-                            builder.setTitle("메시지 보내기");
-                            builder.setPositiveButton("취소", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setNegativeButton("확인", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                   // new FriendVO(friendVO.getMember_id(), friendVO.getFriend_id(), friendVO.getMember_nickname(), friendVO.getMember_profileimg(), currentTime, binding.edtMessage.getText().toString(), true);
-                                   // friendVO = (FriendVO) getIntent().getSerializableExtra("vo");
-
-                                    FriendVO vo = new FriendVO(CommonVar.logininfo.getMember_id(), list.get(position).getMember_id() , list.get(position).getMember_nickname() , list.get(position).getMember_profileimg(),"","",false );
-                                    Intent intent = new Intent(getContext() , MessageChatActivity.class);
-                                    intent.putExtra("vo",vo);
-                                    getContext().startActivity(intent);
-
-                                    //메시지 보내기
-//                                    CommonConn conn1 = new CommonConn(getContext(), "main/viewpager");
-//                                    conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
-//                                    conn1.onExcute((isResult, data) -> {
-//                                        ArrayList<FriendVO> friend_list = new Gson().fromJson(data, new TypeToken<ArrayList<FriendVO>>() {
-//                                        }.getType());
-//                                        CommonConn conn2 = new CommonConn(getContext(), "main/viewFriendList");
-//                                        conn2.addParamMap("member_id", friend_list.get(position).getMember_id());
-//                                        conn2.onExcute((isResult1, data1) -> {
-//                                            Intent intent = new Intent(getContext(), MessageChatActivity.class);
-//                                            friend_list.get(position).setMember_id(CommonVar.logininfo.getMember_id());
-//                                            intent.putExtra("vo", friend_list.get(position));
-//                                            startActivity(intent);
-//                                        });
-//                                    });
-//                                    dialog.dismiss();
-                                }
-                            });
-
-                            AlertDialog dialog = builder.create();
-                            dialog.show();
-                        });
-
-                        favorChange(position);
-                        currentPos = position;
-                        int realPosition = position % list.size();
-                        binding.tvNickname.setText(list.get(realPosition).getMember_nickname());
-                        super.onPageSelected(position);
-                    }
-
-                    @Override
-                    public void onPageScrollStateChanged(int state) {
-                        currentState = state;
-                        super.onPageScrollStateChanged(state);
-                    }
-                });
-
-            }
-
-
-        });
-        CommonConn conn1 = new CommonConn(getContext(), "main/viewAlarmCnt");
-        conn1.addParamMap("receive_id" , CommonVar.logininfo.getMember_id());
-        conn1.onExcute((isResult, data) -> {
-            if(data.equals("0")) {
-                binding.cvAlarmCnt.setVisibility(View.GONE);
-            } else {
-                binding.cvAlarmCnt.setVisibility(View.VISIBLE);
-                binding.tvAlarmCnt.setText(data);
-            }
+        binding.tvMenu.setOnClickListener(v->{
+            boardEvent();
         });
 
-        MainBoardAdapter adapter1 = new MainBoardAdapter();
-        binding.recvBoard.setAdapter(adapter1);
-        binding.recvBoard.setLayoutManager(new LinearLayoutManager(getContext()));
+        selectMainSlider();
+        selectAlarmCount();
 
-        binding.imgvAlarmHistory.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), MainAlarmHistoryActivity.class);
-            startActivity(intent);
-        });
-
-        binding.imgvSmallProfile.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), ChangeProfileActivity.class);
-            startActivity(intent);
-        });
-
-        binding.imgvRight.setOnClickListener(v -> {
-            //마지막 누르면 처음으로 이동
-            if (binding.imgViewpager.getCurrentItem() == list.size() - 1) {
-                binding.imgViewpager.setCurrentItem(0);
-            } else {
-                binding.imgViewpager.setCurrentItem(binding.imgViewpager.getCurrentItem() + 1);
-            }
-            //
-        });
-
-        binding.imgvLeft.setOnClickListener(v -> {
-            //처음 누르면 마지막으로 이동
-            if (binding.imgViewpager.getCurrentItem() == 0) {
-                binding.imgViewpager.setCurrentItem(list.size() - 1);
-            } else {
-                binding.imgViewpager.setCurrentItem(binding.imgViewpager.getCurrentItem() - 1);
-            }
-            //
-        });
-
-        binding.imgvAdd.setOnClickListener(view -> {
-            dialog_friend(0);
-        });
-
+//        //ym 주석 2023 08 29
+        return binding.getRoot();
+    }
+    private void boardEvent(){
         BoardMainAdapter adapter2 = new BoardMainAdapter(this, getList(), getActivity());
         binding.recvBoard.setAdapter(adapter2);
         binding.recvBoard.setLayoutManager(new LinearLayoutManager(this.getContext()));
@@ -237,14 +98,6 @@ public class MainFragment extends Fragment {
             BoardCommonVar.board = false;
             binding.lnBoard.setVisibility(View.INVISIBLE);
         });
-        //
-
-//        CommonConn conn = new CommonConn(getContext(),"main/test");
-//        conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
-
-
-        Glide.with(this).load(CommonVar.logininfo.getMember_profileimg()).into(binding.imgvSmallProfile);
-
         //게시판에서 뒤로갔을 때 게시판 메뉴 보여주기
         if (BoardCommonVar.board) {
             binding.lnBoard.setVisibility(View.VISIBLE);
@@ -252,26 +105,6 @@ public class MainFragment extends Fragment {
             binding.lnBoard.setVisibility(View.GONE);
         }
         //
-
-        //프로필 화면 자동 변환//
-        final Handler handler = new Handler();
-        final Runnable Update = new Runnable() {
-            @Override
-            public void run() {
-                binding.imgvRight.performClick();
-            }
-        };
-
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                handler.post(Update);
-            }
-        }, 5000, 5000);
-        //프로필 화면 자동 변환//
-
-        return binding.getRoot();
     }
 
     private ArrayList<BoardMainDTO> getList() {
@@ -287,6 +120,76 @@ public class MainFragment extends Fragment {
         list.add(new BoardMainDTO(R.drawable.game_select, R.drawable.mini_arrow, "게임"));
         return list;
     }
+    private void selectMainSlider() {
+        CommonConn conn =new CommonConn(getContext() , "main/viewpager");
+        conn.addParamMap("member_id",CommonVar.logininfo.getMember_id());
+        conn.onExcute((isResult, data) -> {
+            list = new Gson().fromJson(data, new TypeToken<ArrayList<MemberVO>>() {
+            }.getType());
+                    SwipeStackAdapter adapter = new SwipeStackAdapter(getLayoutInflater(),list,getContext());
+                    adapter.setFragment(this);
+
+
+           CardStackLayoutManager manager = new CardStackLayoutManager(getContext(), new CardStackListener() {
+               @Override
+               public void onCardDragging(Direction direction, float ratio) {
+
+               }
+
+               @Override
+               public void onCardSwiped(Direction direction) {
+
+               }
+
+               @Override
+               public void onCardRewound() {
+
+               }
+
+               @Override
+               public void onCardCanceled() {
+
+               }
+
+               @Override
+               public void onCardAppeared(View view, int position) {
+                   Log.d("TAG", "onCardAppeared: ");
+               }
+
+               @Override
+               public void onCardDisappeared(View view, int position) {
+                   Log.d("TAG", "onCardAppeared: ");
+                   if(position+1 == list.size()){
+                       selectMainSlider();
+                   }
+               }
+           });
+
+            RewindAnimationSetting.Builder setting = new  RewindAnimationSetting.Builder();
+            setting.setDirection(Direction.Bottom);
+            setting.setInterpolator(input -> {
+                Log.d("TAG", "selectMainSlider: "+ ""+input);
+                return input;
+            });
+
+            setting.setDuration(Duration.Normal.duration);
+            manager.setTranslationInterval(8.0f);
+            manager.setVisibleCount(3);
+            manager.setRewindAnimationSetting(setting.build());
+                    binding.swipeStack.setLayoutManager(manager);
+                    binding.swipeStack.setAdapter(adapter);
+
+
+
+
+
+        });
+
+
+
+
+
+    }
 
     @Override
     public void onResume() {
@@ -294,75 +197,31 @@ public class MainFragment extends Fragment {
         Glide.with(this).load(CommonVar.logininfo.getMember_profileimg()).into(binding.imgvSmallProfile);
     }
 
-    public void images() {
 
-    }
+    public void dialog_message(int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        CommonConn conn1 = new CommonConn(getContext(), "main/viewpager");
+        conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
 
-    public void favorChange(int position) {
-        returnFavorColor();
-        CommonConn conn1 = new CommonConn(getContext(), "main/favor");
-        if (list.size() == 0) {
+        builder.setTitle("메시지 보내기");
+        builder.setPositiveButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                FriendVO vo = new FriendVO(CommonVar.logininfo.getMember_id(), list.get(position).getMember_id(), list.get(position).getMember_nickname(), list.get(position).getMember_profileimg(), "", "", false);
+                Intent intent = new Intent(getContext(), MessageChatActivity.class);
+                intent.putExtra("vo", vo);
+                getContext().startActivity(intent);
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
 
-        } else {
-            conn1.addParamMap("member_id", list.get(position).getMember_id());
-            conn1.onExcute((isResult1, data1) -> {
-                ArrayList<FavorVO> list1 = new Gson().fromJson(data1, new TypeToken<ArrayList<FavorVO>>() {
-                }.getType());
-                for (int i = 0; i < list1.size(); i++) {
-                    FavorVO favorVO = list1.get(i);
-                    int favor = favorVO.favor;
-                    if (favor == 1) {
-                        binding.imgvTv.setImageResource(R.drawable.tv_select);
-                        binding.tvTv.setTextColor(Color.parseColor("#F5DC6D"));
-                    } else if (favor == 2) {
-                        binding.imgvMusic.setImageResource(R.drawable.music_select);
-                        binding.tvMusic.setTextColor(Color.parseColor("#F5DC6D"));
-                    } else if (favor == 3) {
-                        binding.imgvMovie.setImageResource(R.drawable.movie_select);
-                        binding.tvMovie.setTextColor(Color.parseColor("#F5DC6D"));
-                    } else if (favor == 4) {
-                        binding.imgvFashion.setImageResource(R.drawable.fashion_select);
-                        binding.tvFashion.setTextColor(Color.parseColor("#F5DC6D"));
-                    } else if (favor == 5) {
-                        binding.imgvAnimal.setImageResource(R.drawable.animal_select);
-                        binding.tvAnimal.setTextColor(Color.parseColor("#F5DC6D"));
-                    } else if (favor == 6) {
-                        binding.imgvNews.setImageResource(R.drawable.news_select);
-                        binding.tvNews.setTextColor(Color.parseColor("#F5DC6D"));
-                    } else if (favor == 7) {
-                        binding.imgvCar.setImageResource(R.drawable.car_select);
-                        binding.tvCar.setTextColor(Color.parseColor("#F5DC6D"));
-                    } else if (favor == 8) {
-                        binding.imgvSports.setImageResource(R.drawable.sports_select);
-                        binding.tvSports.setTextColor(Color.parseColor("#F5DC6D"));
-                    } else if (favor == 9) {
-                        binding.imgvGame.setImageResource(R.drawable.game_select);
-                        binding.tvGame.setTextColor(Color.parseColor("#F5DC6D"));
-                    }
-                }
-            });
-        }
-    }
-
-    public void returnFavorColor() {
-        binding.imgvTv.setImageResource(R.drawable.tv);
-        binding.imgvMusic.setImageResource(R.drawable.music);
-        binding.imgvMovie.setImageResource(R.drawable.movie);
-        binding.imgvFashion.setImageResource(R.drawable.fashion);
-        binding.imgvAnimal.setImageResource(R.drawable.animal);
-        binding.imgvNews.setImageResource(R.drawable.news);
-        binding.imgvCar.setImageResource(R.drawable.car);
-        binding.imgvSports.setImageResource(R.drawable.sports);
-        binding.imgvGame.setImageResource(R.drawable.game);
-        binding.tvTv.setTextColor(Color.parseColor("#000000"));
-        binding.tvMusic.setTextColor(Color.parseColor("#000000"));
-        binding.tvMovie.setTextColor(Color.parseColor("#000000"));
-        binding.tvFashion.setTextColor(Color.parseColor("#000000"));
-        binding.tvAnimal.setTextColor(Color.parseColor("#000000"));
-        binding.tvNews.setTextColor(Color.parseColor("#000000"));
-        binding.tvCar.setTextColor(Color.parseColor("#000000"));
-        binding.tvSports.setTextColor(Color.parseColor("#000000"));
-        binding.tvGame.setTextColor(Color.parseColor("#000000"));
     }
 
     public void dialog_friend(int position) {
@@ -385,14 +244,10 @@ public class MainFragment extends Fragment {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     Toast.makeText(getContext(), list.get(position).getMember_nickname() + "님에게 친구추가를 보냈습니다.", Toast.LENGTH_SHORT).show();
-                    // 친구추가 보냈을 때 상대방에게 알람이 가게 수정
-                    // 알람 클릭했을 때 친구추가 확인 수정
-                    // FirebaseMessageReceiver.showNotification();
-                    // 알람이 꺼져있는상태면 안보내기? 보내는데 보이지 않게하기?
                     CommonConn conn = new CommonConn(getContext(), "main/addAlarm");
                     conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
                     conn.addParamMap("alarm_content", CommonVar.logininfo.getMember_nickname() + "님이 친구신청을 보냈습니다.");
-                    conn.addParamMap("alarm_time", currentTime);
+                    conn.addParamMap("alarm_time", new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date()));
                     conn.addParamMap("receive_id", list.get(position).getMember_id());
                     conn.onExcute((isResult1, data1) -> {
                         if (isResult1) {
@@ -408,6 +263,12 @@ public class MainFragment extends Fragment {
         });
 
     }
+
+
+
+
+
+    //친구 추가 메소드 ( 하트버튼 누르면 )
 
     // 알람을 받았을때 알람개수가 바로 늘어나게 추가
     private BroadcastReceiver updateAlarmCountReceiver = new BroadcastReceiver() {
@@ -431,6 +292,7 @@ public class MainFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(updateAlarmCountReceiver);
+        binding = null;
     }
 
     public void updateAlarmCount(String alarmCount) {
@@ -443,4 +305,20 @@ public class MainFragment extends Fragment {
     }
 
 
+    //알람개수조회
+    public void selectAlarmCount(){
+        CommonConn conn1 = new CommonConn(getContext(), "main/viewAlarmCnt");
+        conn1.addParamMap("receive_id" , CommonVar.logininfo.getMember_id());
+        conn1.onExcute((isResult, data) -> {
+            if(data.equals("0")) {
+                binding.cvAlarmCnt.setVisibility(View.GONE);
+            } else {
+                binding.cvAlarmCnt.setVisibility(View.VISIBLE);
+                binding.tvAlarmCnt.setText(data);
+            }
+        });
+
+    }
 }
+
+

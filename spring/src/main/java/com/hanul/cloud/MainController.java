@@ -85,6 +85,7 @@ public class MainController {
 		return new Gson().toJson(vo2);
 	}
 
+	
 	@RequestMapping("/viewpager")
 	public List<MemberVO> viewpager(String member_id) {
 		List<MemberVO> vo = sql.selectList("main.viewpager", member_id);
