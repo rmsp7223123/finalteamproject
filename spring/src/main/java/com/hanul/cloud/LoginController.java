@@ -255,7 +255,6 @@ public class LoginController {
 	@RequestMapping(value="/checking", produces = "text/html;charset=utf-8")
 	public String checking(String member_id) {	
 		CheckVO vo = sql.selectOne("login.checking", member_id);
-		System.out.println(vo.getFavor());
 		return new Gson().toJson(vo);
 	}
 	

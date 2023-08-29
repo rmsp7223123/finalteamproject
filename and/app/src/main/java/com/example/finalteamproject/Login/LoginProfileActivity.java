@@ -59,6 +59,12 @@ public class LoginProfileActivity extends AppCompatActivity {
             showDialog();
         });
 
+        binding.tvSkip.setOnClickListener(v -> {
+            Toast.makeText(LoginProfileActivity.this, "프로필 이미지 업로드를 건너뛰었습니다", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(LoginProfileActivity.this, LoginFavorActivity.class);
+            startActivity(intent);
+        });
+
         binding.cvNext.setOnClickListener(v -> {
             if(num==1){
                 //갤러리
@@ -66,7 +72,9 @@ public class LoginProfileActivity extends AppCompatActivity {
                 MultipartBody.Part filePart = MultipartBody.Part.createFormData("file", "asd.jpg", fileBody);
                 RetrofitInterface api = new RetrofitClient().retrofitLogin().create(RetrofitInterface.class);
                 HashMap<String, RequestBody> map = new HashMap<>();
-                LoginVar.id = CommonVar.logininfo.getMember_id();
+                if(LoginVar.id==null){
+                    LoginVar.id = CommonVar.logininfo.getMember_id();
+                }
                 map.put("member_id", RequestBody.create(MediaType.parse("multipart/form-data"), LoginVar.id));
                 api.clientSendFile("login/file", map, filePart).enqueue(new Callback<String>() {
                     @Override

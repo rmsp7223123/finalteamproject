@@ -57,8 +57,9 @@ public class LoginFavorActivity extends AppCompatActivity {
                 }
             });
         }
-
-        LoginVar.id = CommonVar.logininfo.getMember_id();
+        if(LoginVar.id==null){
+            LoginVar.id = CommonVar.logininfo.getMember_id();
+        }
         
         binding.cvNext.setOnClickListener(v -> {
             for (int i = 0; i < list.size(); i++) {

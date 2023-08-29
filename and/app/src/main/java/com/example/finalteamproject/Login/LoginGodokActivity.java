@@ -41,6 +41,8 @@ public class LoginGodokActivity extends AppCompatActivity {
             finish();
         });
 
+
+
         binding.edtPhone.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -101,7 +103,9 @@ public class LoginGodokActivity extends AppCompatActivity {
                 manager.showSoftInput(binding.edtRelation, InputMethodManager.SHOW_IMPLICIT);
             }else {
                 CommonConn conn = new CommonConn(this, "login/godok");
-                LoginVar.id = CommonVar.logininfo.getMember_id();
+                if(LoginVar.id==null){
+                    LoginVar.id = CommonVar.logininfo.getMember_id();
+                }
                 conn.addParamMap("member_id", LoginVar.id);
                 conn.addParamMap("ephone_name", binding.edtName.getText().toString());
                 conn.addParamMap("ephone_phone", binding.edtPhone.getText().toString());

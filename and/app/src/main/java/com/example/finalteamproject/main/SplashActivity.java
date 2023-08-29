@@ -64,6 +64,9 @@ public class SplashActivity extends AppCompatActivity {
                         commonConn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
                         commonConn.onExcute((isResult5, data5) -> {
                             CheckVO vo = new Gson().fromJson(data5, CheckVO.class);
+                            Log.d("test", "onCreate: "+vo.getMember_profileimg());
+                            Log.d("test", "onCreate: "+vo.getFavor());
+                            Log.d("test", "onCreate: "+vo.getEphone_phone());
                             if(vo.getMember_profileimg()==null){
                                 Intent intent = new Intent(this, LoginProfileActivity.class);
                                 startActivity(intent);
