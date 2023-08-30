@@ -93,6 +93,25 @@
 				</div>
 			</td>
 		</tr>
+		
+			<tr><th>주소</th>
+		<td><div class="row align-items-center">
+				<div class="col-auto pe-0">
+					<a class="btn btn-secondary btn-sm" id="btn-post">
+						<i class="fa-solid fa-magnifying-glass me-2"></i>주소찾기
+					</a>
+				</div>
+			</div>
+<!-- 			<div class="row mt-2"> -->
+				<div class="col-xl-7">
+					<input type="text" name="address" class="form-control"  readonly value="${vo.member_address}">			
+				</div>
+				<div class="col-xl">
+					<input type="text" name="address" class="form-control">			
+				</div>
+<!-- 			</div> -->
+		</td>
+	</tr>
 	</table>
 	
 	</form>
@@ -109,6 +128,7 @@
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 	<script src="<c:url value='/js/member.js?${now}'/>"></script>
   <script src="<c:url value='/js/scripts.js'/>"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         
 	<script>
 	
@@ -218,6 +238,27 @@ $('.check-item').on('keyup', function( e ){
 	}
 })
 
+// $('#btn-post').click(function(){
+$('#btn-post').on('click', function(){
+	new daum.Postcode({
+        oncomplete: function(data) {
+        	console.log(data)
+//         	if( data.userSelectedType == "R" ){
+//         		data.roadAddress
+//         	}else{
+//         		data.jibunAddress
+//         	}
+        	var address = data.userSelectedType == "R" ? data.roadAddress : data.jibunAddress;
+        	if( data.buildingName !="" ) address += " ("+data.buildingName+")";
+        	
+        	$('[name=address]:eq(0)').val( address );
+        	
+            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+            // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+        }
+    }).open();
+})
+
 
 $(function(){
 	var today = new Date();
@@ -228,9 +269,6 @@ $(function(){
 	$('[name=member_birth]').datepicker('option', 'maxDate', endDay);
 	
 })
-
-
-
 
 </script>
 	

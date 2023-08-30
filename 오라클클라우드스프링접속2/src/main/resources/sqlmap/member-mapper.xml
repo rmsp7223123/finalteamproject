@@ -33,7 +33,7 @@ from (select row_number() over(order by member_id) no, m.*
 <select id="info" resultType="cloudWeb.member.MemberVO">
 	select member_id, member_name, member_nickname, member_gender, 
 	member_phone, to_char(member_birth, 'YYYY-MM-DD') member_birth,
-	member_profileimg, member_phone_id
+	member_profileimg, member_phone_id, member_address
 	from member
 	where member_id = #{id}
 </select>

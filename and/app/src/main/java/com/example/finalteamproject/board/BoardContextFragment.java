@@ -50,6 +50,10 @@ public class BoardContextFragment extends Fragment {
         this.vo = vo;
     }
 
+
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -58,6 +62,8 @@ public class BoardContextFragment extends Fragment {
         binding.imgvBack.setOnClickListener(v -> {
                 activity.changeFragment(this, activity);
         });
+
+
 
         CommonConn conn5 = new CommonConn(getContext(), "board/viewCnt");
         conn5.addParamMap("id", vo.fav_board_id);
@@ -272,6 +278,7 @@ public class BoardContextFragment extends Fragment {
 
         return binding.getRoot();
     }
+
 
 
 

@@ -48,6 +48,10 @@
 			<th>전화번호</th>
 			<td>${vo.member_phone }</td>
 		</tr>
+		<tr>
+			<th>주소</th>
+			<td>${vo.member_address }</td>
+		</tr>
 	</table>
 	
 	<c:set var="params" value="curPage=${page.curPage}&search=${page.search}&keyword=${page.keyword }"/>

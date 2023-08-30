@@ -123,7 +123,12 @@ public class ModifyBoardFragment extends Fragment {
                         public void onResponse(Call<String> call, Response<String> response) {
                             if(response.body().equals("성공")){
                                 Toast.makeText(ModifyBoardFragment.this.getContext(), "게시글 수정 성공", Toast.LENGTH_SHORT).show();
-                                activity.replaceFragment(ModifyBoardFragment.this, new BoardContextFragment(activity, vo));
+                                CommonConn conn = new CommonConn(getContext(), "board/select");
+                                conn.addParamMap("fav_board_id", vo.fav_board_id);
+                                conn.onExcute((isResult, data) -> {
+                                    vo = new Gson().fromJson(data, FavorBoardVO.class);
+                                    activity.replaceFragment(ModifyBoardFragment.this, new BoardContextFragment(activity, vo));
+                                });
                             }else {
                                 Toast.makeText(ModifyBoardFragment.this.getContext(), "게시글 수정 실패", Toast.LENGTH_SHORT).show();
                             }
@@ -147,7 +152,12 @@ public class ModifyBoardFragment extends Fragment {
                         public void onResponse(Call<String> call, Response<String> response) {
                             if(response.body().equals("성공")){
                                 Toast.makeText(ModifyBoardFragment.this.getContext(), "게시글 수정 성공", Toast.LENGTH_SHORT).show();
-                                activity.replaceFragment(ModifyBoardFragment.this, new BoardContextFragment(activity, vo));
+                                CommonConn conn = new CommonConn(getContext(), "board/select");
+                                conn.addParamMap("fav_board_id", vo.fav_board_id);
+                                conn.onExcute((isResult, data) -> {
+                                    vo = new Gson().fromJson(data, FavorBoardVO.class);
+                                    activity.replaceFragment(ModifyBoardFragment.this, new BoardContextFragment(activity, vo));
+                                });
                             }else {
                                 Toast.makeText(ModifyBoardFragment.this.getContext(), "게시글 수정 실패", Toast.LENGTH_SHORT).show();
                             }
@@ -165,7 +175,12 @@ public class ModifyBoardFragment extends Fragment {
                     conn1.onExcute((isResult1, data1) -> {
                         if (data1.equals("성공")) {
                             Toast.makeText(ModifyBoardFragment.this.getContext(), "게시글 수정 성공", Toast.LENGTH_SHORT).show();
-                            activity.replaceFragment(ModifyBoardFragment.this, new BoardContextFragment(activity, vo));
+                            CommonConn conn = new CommonConn(getContext(), "board/select");
+                            conn.addParamMap("fav_board_id", vo.fav_board_id);
+                            conn.onExcute((isResult, data) -> {
+                                vo = new Gson().fromJson(data, FavorBoardVO.class);
+                                activity.replaceFragment(ModifyBoardFragment.this, new BoardContextFragment(activity, vo));
+                            });
                         } else {
                             Toast.makeText(activity, "게시글 수정 실패", Toast.LENGTH_SHORT).show();
                         }
