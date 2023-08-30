@@ -203,6 +203,7 @@ public class MainFragment extends Fragment{
     public void onResume() {
         super.onResume();
         Glide.with(this).load(CommonVar.logininfo.getMember_profileimg()).into(binding.imgvSmallProfile);
+        selectAlarmCount();
     }
 
 

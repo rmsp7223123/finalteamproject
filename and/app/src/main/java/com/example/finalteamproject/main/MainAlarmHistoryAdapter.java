@@ -65,7 +65,7 @@ public class MainAlarmHistoryAdapter extends RecyclerView.Adapter<MainAlarmHisto
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             deleteAlarm(idx);
-                           // selectAlarmList();//?
+                            selectAlarmList();
                            // updateAlarm();//?
                             notifyDataSetChanged();
                         }
@@ -76,7 +76,7 @@ public class MainAlarmHistoryAdapter extends RecyclerView.Adapter<MainAlarmHisto
                         conn1.addParamMap("friend_id", CommonVar.logininfo.getMember_id());
                         conn1.onExcute((isResult1, data1) -> {
                             deleteAlarm(idx);
-                          //  selectAlarmList();
+                            selectAlarmList();
                           //  updateAlarm();
                             notifyDataSetChanged();
                         });
@@ -99,7 +99,7 @@ public class MainAlarmHistoryAdapter extends RecyclerView.Adapter<MainAlarmHisto
                     FriendVO vo =new FriendVO(CommonVar.logininfo.getMember_id(), list.get(idx).getMember_id(), member_list.get(0).getMember_nickname(),member_list.get(0).getMember_profileimg(),"","",false);
                     intent.putExtra("vo", vo);
                     conn2.onExcute((isResult2, data2) -> {
-                       // selectAlarmList();
+                        selectAlarmList();
                         notifyDataSetChanged();
                         context.startActivity(intent);
                     });
@@ -148,11 +148,10 @@ public class MainAlarmHistoryAdapter extends RecyclerView.Adapter<MainAlarmHisto
 //        });
 //    }
 
-//    private void selectAlarmList() {
-//        CommonConn conn = new CommonConn(context, "main/viewAlarm");
-//        conn.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
-//        conn.onExcute((isResult, data) -> {
-//            list = new Gson().fromJson(data, new TypeToken<ArrayList<AlarmVO>>(){}.getType());
-//        });
-//    }
+    private void selectAlarmList() {
+        CommonConn conn = new CommonConn(context, "main/viewAlarm");
+        conn.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
+        conn.onExcute((isResult, data) -> {
+        });
+    }
 }
