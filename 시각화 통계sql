@@ -17,6 +17,12 @@ WHERE s.SENIOR_NAME LIKE '%강원%' OR s.SENIOR_ROADADDRESS LIKE '%강원%'
 ORDER BY s.KEY;
 
 
+
+
+SELECT sido as region, COUNT(*) AS COUNT
+from (select sido from senior
+REGION)
+group by sido;
 --빠밤~!! mapper 조회 쿼리
 select '서울특별시' as region, count(*) as count from senior
 where sido='서울특별시'
@@ -155,3 +161,11 @@ union all
 SELECT '서울' AS ADDRESS, COUNT(*) AS member_count
 FROM member
 WHERE SUBSTR(member_address, 1, INSTR(member_address, ' ') - 1) = '서울';
+
+
+
+SELECT REGION, COUNT(*) AS COUNT
+		FROM (SELECT SUBSTR(MEMBER_ADDRESS, 1, INSTR(MEMBER_ADDRESS, ' ' )-1 )
+		REGION
+		FROM MEMBER WHERE MEMBER_ADMIN = 0)
+		GROUP BY REGION;
