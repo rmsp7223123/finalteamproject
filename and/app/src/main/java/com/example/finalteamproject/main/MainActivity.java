@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Toast;
 
+import com.example.finalteamproject.ChangeStatusBar;
 import com.example.finalteamproject.Constants;
 import com.example.finalteamproject.HideActionBar;
 import com.example.finalteamproject.LocationService;
@@ -34,6 +35,7 @@ import com.example.finalteamproject.chat.ChatMainFragment;
 import com.example.finalteamproject.databinding.ActivityMainBinding;
 import com.example.finalteamproject.game.GameFragment;
 import com.example.finalteamproject.gps.GpsFragment;
+import com.example.finalteamproject.setting.ChangeStatusBarWhite;
 import com.example.finalteamproject.setting.SettingFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -102,8 +104,10 @@ public class MainActivity extends AppCompatActivity {
             transaction.commit();
             binding.bottomNavigationView.setVisibility(View.VISIBLE);
             manager.beginTransaction().replace(R.id.container_frame, new MainFragment()).commit();
+            new ChangeStatusBar().changeStatusBarColor(this);
         });
         manager.beginTransaction().replace(R.id.container_frame, new MainFragment()).commit();
+        new ChangeStatusBar().changeStatusBarColor(this);
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             Fragment fragment = null;
             if (item.getItemId() == R.id.chat) {
@@ -117,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 return true;
             }
+            new ChangeStatusBarWhite().changeStatusBarColor(this);
             manager.beginTransaction().remove(fragment);
             manager.beginTransaction().replace(R.id.container_frame, fragment).commit();
             return true;

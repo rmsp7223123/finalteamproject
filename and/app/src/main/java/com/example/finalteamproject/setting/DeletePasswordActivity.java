@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.example.finalteamproject.ChangeStatusBar;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
@@ -30,6 +31,7 @@ public class DeletePasswordActivity extends AppCompatActivity {
         binding.imgvBack.setOnClickListener(v -> {
             finish();
         });
+        new ChangeStatusBar().changeStatusBarColor(this);
 
         binding.containerFrameTv0.setOnClickListener(v -> {
             pw += "0";

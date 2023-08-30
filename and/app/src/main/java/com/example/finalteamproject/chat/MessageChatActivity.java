@@ -29,6 +29,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.finalteamproject.ChangeStatusBar;
 import com.example.finalteamproject.FirebaseMessageReceiver;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
@@ -87,7 +88,7 @@ public class MessageChatActivity extends AppCompatActivity {
         binding.imgvBack.setOnClickListener(v -> {
             finish();
         });
-        changeStatusBarColor();
+        new ChangeStatusBar().changeStatusBarColor(this);
         friendVO = (FriendVO) getIntent().getSerializableExtra("vo");
 
         adapter = new MessageChatAdapter(getlist(), this, isChatCheck, friendVO.getMember_profileimg());
@@ -358,14 +359,5 @@ public class MessageChatActivity extends AppCompatActivity {
                 }
             });
     }
-
-    public void changeStatusBarColor(){
-        Window window = this.getWindow();
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(ContextCompat.getColor(this,R.color.main_color));
-    }
-
-
 
 }

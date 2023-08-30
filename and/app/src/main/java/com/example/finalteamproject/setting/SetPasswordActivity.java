@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.finalteamproject.ChangeStatusBar;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.databinding.ActivitySetPasswordBinding;
 
@@ -28,6 +29,7 @@ public class SetPasswordActivity extends AppCompatActivity {
             int length =  ChangePasswordActivity.password.length();
             updatePasswordImage(length);
         });
+        new ChangeStatusBar().changeStatusBarColor(this);
 
         binding.containerFrameTv1.setOnClickListener(v -> {
             ChangePasswordActivity.password += "1";

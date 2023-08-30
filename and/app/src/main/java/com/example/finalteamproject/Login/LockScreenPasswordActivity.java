@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.example.finalteamproject.ChangeStatusBar;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
@@ -32,6 +33,7 @@ public class LockScreenPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityLockScreenPasswordBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        new ChangeStatusBar().changeStatusBarColor(this);
 
         //비밀번호 찾기
         binding.tvFindPw.setOnClickListener(v -> {

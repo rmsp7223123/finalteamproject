@@ -101,7 +101,6 @@ public class MainFragment extends Fragment{
             Intent intent = new Intent(getContext(), MainAlarmHistoryActivity.class);
             startActivity(intent);
         });
-        changeStatusBarColor();
         selectMainSlider();
         selectAlarmCount();
 
@@ -109,13 +108,6 @@ public class MainFragment extends Fragment{
         return binding.getRoot();
     }
 
-
-    public void changeStatusBarColor(){
-        Window window = getActivity().getWindow();
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(ContextCompat.getColor(getContext(),R.color.main_color));
-    }
     private void boardEvent(){
         BoardMainAdapter adapter2 = new BoardMainAdapter(this, getList(), getActivity());
         binding.recvBoard.setAdapter(adapter2);
