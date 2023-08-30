@@ -309,29 +309,13 @@ public class LoginInfoActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-
-        Log.d("onActivityResult", "onActivityResult1");
-
-        super.onActivityResult(requestCode, resultCode, data);
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
-
-            String arg1 = data.getStringExtra("arg1"); // postcode
-            String arg2 = data.getStringExtra("arg2"); // address
-            String arg3 = data.getStringExtra("arg3"); // building
-
-            if (!arg1.isEmpty()) {
-                binding.edtAddress.setText(arg1);
-            } else {
-                binding.edtAddress.setText("");
-            }
-
-            if (!arg2.isEmpty()) {
-                binding.edtAddress.setText(binding.edtAddress.getText()+arg2);
-            }
-
-            if (!arg3.isEmpty()) {
-                binding.edtAddress.setText(binding.edtAddress.getText()+arg3);
+            String data = intent.getExtras().getString("data");
+            if(data!=null){
+                Log.d("address", "onActivityResult: "+data);
+                binding.edtAddress.setText(data);
             }
 
         }
