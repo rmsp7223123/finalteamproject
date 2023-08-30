@@ -89,14 +89,6 @@ public class MainFragment extends Fragment{
             binding.lnBoard.setVisibility(View.VISIBLE);
 
         });
-        binding.imgvAlarmHistory.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), MainAlarmHistoryActivity.class);
-            startActivity(intent);
-        });
-        binding.imgvSmallProfile.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), ChangeProfileActivity.class);
-            startActivity(intent);
-        });
 
         binding.tvMenu.setOnClickListener(v->{
             boardEvent();
@@ -231,7 +223,6 @@ public class MainFragment extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
-        Glide.with(this).load(CommonVar.logininfo.getMember_profileimg()).into(binding.imgvSmallProfile);
         selectAlarmCount();
     }
 
