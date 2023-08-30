@@ -35,7 +35,7 @@ public class GodokAlarmWidget extends AppWidgetProvider {
             // 액션을 설정한 PendingIntent 생성
             Intent clickIntent = new Intent(context, GodokAlarmWidget.class);
             clickIntent.setAction(ACTION_WIDGET_CLICKED);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, clickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, clickIntent, PendingIntent.FLAG_IMMUTABLE);
 
             // 위젯 뷰에 클릭 이벤트와 PendingIntent 연결
             views.setOnClickPendingIntent(R.id.widgetImageView, pendingIntent);

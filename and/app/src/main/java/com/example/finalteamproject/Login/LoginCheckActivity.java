@@ -86,7 +86,7 @@ public class LoginCheckActivity extends AppCompatActivity {
                                 SharedPreferences.Editor editor = pref.edit();
                                 editor.putString("loginInfo", binding.edtId.getText().toString());
                                 editor.commit();
-                                Intent intent = new Intent(this, MainActivity.class);
+                                Intent intent = new Intent(this, SplashActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(intent);
                             }
