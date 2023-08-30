@@ -281,7 +281,7 @@ public void moveCamera(String lat , String log){
     marker.setIconTintColor(Color.parseColor("#27D829")); //마커 색상
     marker.setWidth(70);
     marker.setHeight(100);
-    
+
     selectedMarker = marker;
     selectedMarker.setIconTintColor(Color.parseColor("#27D829"));
 
