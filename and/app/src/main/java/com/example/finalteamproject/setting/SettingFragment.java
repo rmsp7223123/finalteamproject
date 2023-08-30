@@ -129,6 +129,7 @@ public class SettingFragment extends Fragment {
         conn.onExcute((isResult, data) -> {
             binding.tvNickname.setText(CommonVar.logininfo.getMember_nickname());
         });
+        setAlarmState();
     }
 
     public void setAlarmState() {
@@ -146,7 +147,7 @@ public class SettingFragment extends Fragment {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             if (list.get(0).getOption_alarm().equals("N")) {
                 binding.tvAlarm.setText("꺼짐");
-                FirebaseMessageReceiver.setIsEnabled(getContext(), false);
+                FirebaseMessageReceiver.setIsEnabled(getContext(), true);
                 editor.putBoolean("notificationEnabled", isEnabled);
                 editor.apply();
             } else {

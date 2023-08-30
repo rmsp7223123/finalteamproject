@@ -7,9 +7,8 @@ import java.util.ArrayList;
 
 public class MemberVO {
 	String member_id, member_pw, member_name, member_nickname, 
-		   member_gender, member_phone, member_profileimg, member_phone_id;
+		   member_gender, member_phone, member_profileimg, member_phone_id, member_address;
 	int member_age, member_manner_score, member_admin;
-
 
 
 	public String getMember_id() {
@@ -74,6 +73,14 @@ public class MemberVO {
 
 	public void setMember_phone_id(String member_phone_id) {
 		this.member_phone_id = member_phone_id;
+	}
+
+	public String getMember_address() {
+		return member_address;
+	}
+
+	public void setMember_address(String member_address) {
+		this.member_address = member_address;
 	}
 
 	public int getMember_age() {

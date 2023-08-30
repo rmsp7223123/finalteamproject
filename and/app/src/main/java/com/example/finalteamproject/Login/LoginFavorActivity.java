@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -69,13 +70,12 @@ public class LoginFavorActivity extends AppCompatActivity {
                     conn.addParamMap("favor", list.get(i).num);
                     conn.addParamMap("member_id", LoginVar.id);
                     conn.onExcute((isResult, data) -> {
+                        Log.d("data", "onCreate: "+data);
                         if(!data.equals("성공")){
                             Toast.makeText(this, list.get(j).name+"관심사 등록 실패", Toast.LENGTH_SHORT).show();
-                        }else {
-                            num++;
-
                         }
                     });
+                    num++;
                 }
             }
             if(num>0){
