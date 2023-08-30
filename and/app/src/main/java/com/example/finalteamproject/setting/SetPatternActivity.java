@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.andrognito.patternlockview.listener.PatternLockViewListener;
 import com.andrognito.patternlockview.utils.PatternLockUtils;
+import com.example.finalteamproject.ChangeStatusBar;
 import com.example.finalteamproject.Login.LoginActivity;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.databinding.ActivitySetPatternBinding;
@@ -28,6 +29,7 @@ public class SetPatternActivity extends AppCompatActivity {
         binding.imgvBack.setOnClickListener(v -> {
             finish();
         });
+        new ChangeStatusBar().changeStatusBarColor(this);
         binding.patternLockView.addPatternLockListener(new PatternLockViewListener() {
             @Override
             public void onStarted() {

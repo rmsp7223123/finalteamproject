@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.finalteamproject.ChangeStatusBar;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
@@ -30,6 +31,7 @@ public class CheckPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityCheckPasswordBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        new ChangeStatusBar().changeStatusBarColor(this);
 
         binding.containerFrameTv0.setOnClickListener(v -> {
             pw += "0";
