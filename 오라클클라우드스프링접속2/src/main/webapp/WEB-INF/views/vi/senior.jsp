@@ -11,8 +11,8 @@
 <body>
 	<h3>경로당 현황</h3>
 
-	<ul class="nav nav-tabs">
-		<li class="nav-item"><a class="nav-link" data-toggle="tab"
+	<ul class="nav nav-tabs active">
+		<li class="nav-item active"><a class="nav-link" data-toggle="tab"
 			href="#region">전국 경로당</a></li>
 		<li class="nav-item"><a class="nav-link" data-toggle="tab"
 			href="#pop">인기 경로당 TOP10</a></li>
@@ -30,16 +30,13 @@
 		<canvas id="Chart" width="900" height="500"></canvas>
 		</div>
 
-		<div class="tab-pane fade show active" id="region"></div>
+		<div class="tab-pane fade" id="region"></div>
 		<div class="tab-pane fade" id="pop"></div>
 	</div>
 
 
 
 	<script>
-	
-	
-	
 	
 	//탭 선택 이벤트
 	$('.nav-tabs .nav-item').click(function(){
@@ -52,11 +49,10 @@
 	})
 	
 	
-	//초기화면 트리거
+	//초기화면 탭 강제 클릭
 		$(function() {
-			$('.nav-tabs .nav-item').eq(0).trigger('click')
-		});
-	
+			$('.nav-tabs .nav-item').eq(0).trigger('click');
+		})
 	
 	
 	

@@ -11,8 +11,8 @@
 <body>
 	<h3>회원 통계</h3>
 
-	<ul class="nav nav-tabs">
-		<li class="nav-item"><a class="nav-link" data-toggle="tab"
+	<ul class="nav nav-tabs active">
+		<li class="nav-item active"><a class="nav-link" data-toggle="tab"
 			href="#gender">성별 통계</a></li>
 		<li class="nav-item"><a class="nav-link" data-toggle="tab"
 			href="#age">연령 통계</a></li>
