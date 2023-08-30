@@ -34,7 +34,7 @@
             android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="회원가입이 성공적으로\n 완료되었습니다!"/>
+            android:text="모든 정보 입력이 \n성공적으로 완료되었습니다!"/>
 
     </LinearLayout>
 

@@ -91,7 +91,9 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_godok_alarm" />
         </receiver>
-
+        <activity
+            android:name=".Login.SearchAddress"
+            android:exported="false" />
         <activity
             android:name=".Login.FindLockPWActivity"
             android:exported="false" />

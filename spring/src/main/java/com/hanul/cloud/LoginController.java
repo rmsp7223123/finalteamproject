@@ -9,12 +9,14 @@ import java.util.Random;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -203,7 +205,8 @@ public class LoginController {
 	
 	@RequestMapping(value="/favor", produces = "text/html;charset=utf-8")
 	public String favor(FavorVO vo) {
-		return sql.insert("login.favor", vo)==1 ? "성공" : "실패";
+		String result = sql.insert("login.favor", vo)==1 ? "성공" : "실패";
+		return result;
 	}
 	
 	@RequestMapping(value="/godok", produces = "text/html;charset=utf-8")
@@ -258,7 +261,11 @@ public class LoginController {
 		return new Gson().toJson(vo);
 	}
 	
-	
+	//주소 api 호출
+	@RequestMapping("/address")
+	public String home() {
+		return "home";
+	}
 	
 	
 }
