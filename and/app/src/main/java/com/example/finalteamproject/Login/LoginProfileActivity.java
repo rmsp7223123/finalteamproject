@@ -53,6 +53,10 @@ public class LoginProfileActivity extends AppCompatActivity {
         binding = ActivityLoginProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        binding.imgvBack.setOnClickListener(v -> {
+            finish();
+        });
+
         binding.imgvSelect.bringToFront();
 
         binding.imgvSelect.setOnClickListener(v -> {
