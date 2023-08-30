@@ -65,6 +65,7 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
         binding.btnSearch.setOnClickListener(v -> {
             binding.lnResult.setVisibility(View.VISIBLE);
             binding.tvSearchResult.setText("검색결과");
+            binding.lnDetail.setVisibility(View.INVISIBLE);
 
             //검색 결과 데이터
             CommonConn connresult = new CommonConn(getContext(), "gps/search");
