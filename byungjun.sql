@@ -25,6 +25,8 @@ select * from member where member_nickname = 'ansqudwns';
 
 select * from member;
 
+select * from alarm;
+
 delete from member where member_name = '홍길동'
 		and member_nickname = 'qrew' and member_id = 'qrew1'
 		and member_pw = 'asdf123!';

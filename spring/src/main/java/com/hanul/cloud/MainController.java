@@ -85,7 +85,6 @@ public class MainController {
 		return new Gson().toJson(vo2);
 	}
 
-	
 	@RequestMapping("/viewpager")
 	public List<MemberVO> viewpager(String member_id) {
 		List<MemberVO> vo = sql.selectList("main.viewpager", member_id);
@@ -144,26 +143,25 @@ public class MainController {
 		return list;
 	}
 
-
 	@RequestMapping(value = "/deleteAlarm", produces = "text/html;charset=utf-8")
-	public String deleteAlarm(String receive_id, String nickname,  String alarm_content2) {
+	public String deleteAlarm(String receive_id, String nickname, String alarm_content2) {
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("receive_id", receive_id);
-		paramMap.put("nickname", nickname  );
-		paramMap.put("alarm_content2",  alarm_content2  );
-		
+		paramMap.put("nickname", nickname);
+		paramMap.put("alarm_content2", alarm_content2);
+
 		int result = sql.delete("main.deleteAlarm", paramMap);
 		System.out.println(result);
 		List<AlarmVO> list = sql.selectList("main.viewAlarm", receive_id);
 		return new Gson().toJson(list);
-		//./return new Gson().toJson(sql.delete("main.deleteAlarm", paramMap));
+		// ./return new Gson().toJson(sql.delete("main.deleteAlarm", paramMap));
 	}
 
 	@RequestMapping(value = "/addAlarm")
 	public String send2(MemberVO vo1, AlarmVO vo2) {
 		vo1 = sql.selectOne("main.detail", vo1.getMember_id());
 		MemberVO vo3 = sql.selectOne("main.detail", vo2.getReceive_id());
-		List<OptionVO> vo4 = sql.selectList("setting.viewOption",vo3.getMember_id());
+		List<OptionVO> vo4 = sql.selectList("setting.viewOption", vo3.getMember_id());
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("member_id", vo1.getMember_id());
 		paramMap.put("alarm_content", vo2.getAlarm_content());
@@ -176,8 +174,8 @@ public class MainController {
 //			while((s == br.readLine())) {
 //				System.out.println(s);
 //			}
-			//File test = File.createTempFile(String.valueOf(""), ".json");
-			FileInputStream refreshToken = new FileInputStream("D:\\Service.json"); 
+			// File test = File.createTempFile(String.valueOf(""), ".json");
+			FileInputStream refreshToken = new FileInputStream("D:\\Service.json");
 			FirebaseOptions options = FirebaseOptions.builder()
 					.setCredentials(GoogleCredentials.fromStream(refreshToken)).build();
 
@@ -186,46 +184,41 @@ public class MainController {
 			}
 
 			// 메세지 작성
-			if(vo2.getAlarm_content().contains("친구신청")) {
+			if (vo2.getAlarm_content().contains("친구신청")) {
 				System.out.println(vo3.getMember_phone_id());
-				Notification noti = Notification.builder().setTitle("친구추가").setBody(vo1.getMember_nickname()+"님이 친구신청을 보냈습니다.").build();
-				Message msg = Message.builder().putData("title", "friend").putData("name", "aaa").putData("body", "aaa").putData("check", "addFriend")
-						.putData("color", "#f45342").setNotification(noti).setToken(vo3.getMember_phone_id()).build();
-				if(vo4.get(0).getOption_alarm().equals("Y")) {
-					FirebaseMessaging.getInstance().send(msg);
-				}
+				Notification noti = Notification.builder().setTitle("친구추가")
+						.setBody(vo1.getMember_nickname() + "님이 친구신청을 보냈습니다.").build();
+				Message msg = Message.builder().putData("title", "friend").putData("name", "aaa").putData("body", "aaa")
+						.putData("check", "addFriend").putData("color", "#f45342").setNotification(noti)
+						.setToken(vo3.getMember_phone_id()).build();
+				FirebaseMessaging.getInstance().send(msg);
+
 			} else if (vo2.getAlarm_content().contains("메시지")) {
-				Notification noti = Notification.builder().setTitle("메시지").setBody(vo1.getMember_nickname()+"님이 메시지를 보냈습니다.").build();
-				Message msg = Message.builder().putData("title", "friend").putData("name", "aaa").putData("body", "aaa").putData("check", "msgFriend")
-						.putData("color", "#f45342").setNotification(noti).setToken(vo3.getMember_phone_id()).build();
-				if(vo4.get(0).getOption_alarm().equals("Y")) {
-					FirebaseMessaging.getInstance().send(msg);
-				}
+				Notification noti = Notification.builder().setTitle("메시지")
+						.setBody(vo1.getMember_nickname() + "님이 메시지를 보냈습니다.").build();
+				Message msg = Message.builder().putData("title", "friend").putData("name", "aaa").putData("body", "aaa")
+						.putData("check", "msgFriend").putData("color", "#f45342").setNotification(noti)
+						.setToken(vo3.getMember_phone_id()).build();
+				FirebaseMessaging.getInstance().send(msg);
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "false";
 		}
-		if(vo4.get(0).getOption_alarm().equals("Y")) {
-			return new Gson().toJson(sql.insert("main.addAlarm", paramMap));
-		}
-		else {
-			return "";
-		}
-		
+		return new Gson().toJson(sql.insert("main.addAlarm", paramMap));
 	}
-	
+
 	@RequestMapping("/deleteOneAlarm")
 	public String deleteOneAlarm(int alarm_id) {
 		return new Gson().toJson(sql.delete("main.deleteOneAlarm", alarm_id));
 	}
-	
-	@RequestMapping(value = "/viewFriendList" , produces = "text/html;charset=utf-8")
+
+	@RequestMapping(value = "/viewFriendList", produces = "text/html;charset=utf-8")
 	public String viewFriendList(String member_id) {
 		return new Gson().toJson(sql.selectList("main.viewFriendList", member_id));
 	}
-	
-	
+
 	@RequestMapping("/updateToken")
 	public String updateToken(MemberVO vo) {
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
@@ -233,13 +226,13 @@ public class MainController {
 		paramMap.put("member_phone_id", vo.getMember_phone_id());
 		return new Gson().toJson(sql.update("main.updateToken", paramMap));
 	}
-	
+
 	@RequestMapping("/viewAlarmCnt")
 	public Integer ViewAlarmCnt(String receive_id) {
 		Integer cnt = sql.selectOne("main.viewAlarmCnt", receive_id);
 		return cnt;
 	}
-	
+
 	@RequestMapping(value = "/detail", produces = "text/html;charset=utf-8")
 	public String detail(String member_id) {
 		List<MemberVO> list = sql.selectList("main.detail", member_id);

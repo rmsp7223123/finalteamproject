@@ -130,6 +130,7 @@ public class SettingController {
 		String result = sql.delete("setting.deleteFavor", member_id)>0 ? "성공" : "실패";
 		return result;
 	}
+
 	
 	
 

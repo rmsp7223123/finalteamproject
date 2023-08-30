@@ -29,6 +29,7 @@ import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.main.FriendVO;
 import com.example.finalteamproject.main.MainActivity;
 import com.example.finalteamproject.main.MainAlarmHistoryActivity;
+import com.example.finalteamproject.main.OptionVO;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,7 +38,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
@@ -85,30 +89,35 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
             if (isEnabled) {
 
                 if (checkValue != null) {
-                    if (checkValue.equals("addFriend")) {
-                        String title = remoteMessage.getNotification().getTitle();
-                        String message = remoteMessage.getNotification().getBody();
-                        showNotification(this, title, message);
+                    CommonConn conn = new CommonConn(this,"setting/viewOption");
+                    conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                    conn.onExcute((isResult, data) -> {
+                        ArrayList<OptionVO> option_list = new Gson().fromJson(data, new TypeToken<ArrayList<OptionVO>>(){}.getType());
+                        if (checkValue.equals("addFriend") && option_list.get(0).getOption_alarm().equals("Y")) {
+                            String title = remoteMessage.getNotification().getTitle();
+                            String message = remoteMessage.getNotification().getBody();
+                            showNotification(this, title, message);
 //                    showAddFriendDialogOnMainThread(
 //                            remoteMessage.getNotification().getTitle(),
 //                            remoteMessage.getNotification().getBody());
 
-                    } else if (checkValue.equals("msgFriend")) {
-                        if (friend_id.equals(CommonVar.logininfo.getMember_id())) {
+                        } else if (checkValue.equals("msgFriend") && option_list.get(0).getOption_alarm().equals("Y")) {
+                            if (friend_id.equals(CommonVar.logininfo.getMember_id())) {
 
-                        } else {
-                            String title = remoteMessage.getNotification().getTitle();
-                            String message = remoteMessage.getNotification().getBody();
-                            showNotification(this, title, message);
+                            } else {
+                                String title = remoteMessage.getNotification().getTitle();
+                                String message = remoteMessage.getNotification().getBody();
+                                showNotification(this, title, message);
+                            }
+
                         }
-
-                    }
-                    CommonConn conn1 = new CommonConn(this, "main/viewAlarmCnt");
-                    conn1.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
-                    conn1.onExcute((isResult1, data1) -> {
-                        Intent intent = new Intent("update-alarm-count");
-                        intent.putExtra("alarmCount", data1);
-                        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+                        CommonConn conn1 = new CommonConn(this, "main/viewAlarmCnt");
+                        conn1.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
+                        conn1.onExcute((isResult1, data1) -> {
+                            Intent intent = new Intent("update-alarm-count");
+                            intent.putExtra("alarmCount", data1);
+                            LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+                        });
                     });
                 }
             }

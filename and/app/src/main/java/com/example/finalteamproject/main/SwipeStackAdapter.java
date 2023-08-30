@@ -69,7 +69,8 @@ public class SwipeStackAdapter extends RecyclerView.Adapter<SwipeStackAdapter.Vi
            Glide.with(context).load(list.get(position).getMember_profileimg()).into(h.binding.imgvProfile);
         }
         h.binding.tvName.setText(list.get(position).getMember_name() + " ( " + list.get(position).getMember_nickname() + ")" + "\n" +
-                list.get(position).getMember_gender() + " , " + list.get(position).getMember_manner_score());
+                list.get(position).getMember_gender() );
+//        + " , " + list.get(position).getMember_manner_score()
 
             CommonConn conn = new CommonConn(inflater.getContext(), "main/favor");
             if (list.size() == 0 || list.size() < position) {
