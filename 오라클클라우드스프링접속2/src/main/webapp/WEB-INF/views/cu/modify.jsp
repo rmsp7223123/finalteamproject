@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -103,11 +105,20 @@
 				</div>
 			</div>
 <!-- 			<div class="row mt-2"> -->
+				<c:if test="${vo.member_address.indexOf('(')==-1 }">
+					<c:set var="address1" value="${vo.member_address }"></c:set>
+					<c:set var="address2" value=""></c:set>
+				</c:if>
+				<c:if test="${vo.member_address.indexOf('(')!=-1 }">
+					<c:set var="address1" value="${fn:substring(vo.member_address, 0, vo.member_address.indexOf(')')+1)}"></c:set>
+					<c:set var="address2" value="${fn:substring(vo.member_address, vo.member_address.indexOf(')')+1,  fn:length(vo.member_address) )}"></c:set>
+				</c:if>
+				
 				<div class="col-xl-7">
-					<input type="text" name="address" class="form-control"  readonly value="${vo.member_address}">			
+					<input type="text" name="address" class="form-control"  readonly value="${address1}">			
 				</div>
 				<div class="col-xl">
-					<input type="text" name="address" class="form-control">			
+					<input type="text" name="address" class="form-control"  value="${address2}">			
 				</div>
 <!-- 			</div> -->
 		</td>
