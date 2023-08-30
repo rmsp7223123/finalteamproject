@@ -35,6 +35,7 @@ public class GodokAlarmWidget extends AppWidgetProvider {
             // 액션을 설정한 PendingIntent 생성
             Intent clickIntent = new Intent(context, GodokAlarmWidget.class);
             clickIntent.setAction(ACTION_WIDGET_CLICKED);
+            clickIntent.putExtra("member_id", CommonVar.logininfo.getMember_id());
             PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, clickIntent, PendingIntent.FLAG_IMMUTABLE);
 
             // 위젯 뷰에 클릭 이벤트와 PendingIntent 연결
@@ -57,37 +58,35 @@ public class GodokAlarmWidget extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
+        String member_id = intent.getStringExtra("member_id");
         Toast.makeText(context, "확인용ㅇㅇㅇㅇㅇ", Toast.LENGTH_SHORT).show();
-        if (intent.getAction() != null && intent.getAction().equals(ACTION_WIDGET_CLICKED)) {
-            showAlertDialog(context);
+        if (intent.getAction() != null && intent.getAction().equals(ACTION_WIDGET_CLICKED) && member_id != null) {
+            if (CommonVar.logininfo != null) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("안부문자 보내기")
+                        .setMessage("안부문자를 보내시겠습니까?")
+                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                CommonConn conn = new CommonConn(context, "godok/sendOneGodokMsg");
+                                conn.addParamMap("member_id", member_id);
+                                conn.onExcute((isResult, data) -> {
+                                });
+                            }
+                        })
+                        .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            } else {
+                Toast.makeText(context, "로그인 정보가 없습니다.", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
-    private void showAlertDialog(Context context) {
-        if (CommonVar.logininfo != null) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setTitle("안부문자 보내기")
-                    .setMessage("안부문자를 보내시겠습니까?")
-                    .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            CommonConn conn = new CommonConn(context, "godok/sendOneGodokMsg");
-                            conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
-                            conn.onExcute((isResult, data) -> {
-                            });
-                        }
-                    })
-                    .setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-            AlertDialog dialog = builder.create();
-            dialog.show();
-        } else {
-            Toast.makeText(context, "로그인 정보가 없습니다.", Toast.LENGTH_SHORT).show();
-        }
-    }
 
 }

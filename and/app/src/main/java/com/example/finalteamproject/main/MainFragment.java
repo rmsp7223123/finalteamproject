@@ -90,11 +90,6 @@ public class MainFragment extends Fragment{
             binding.lnBoard.setVisibility(View.VISIBLE);
 
         });
-        binding.imgvAlaram.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), MainAlarmHistoryActivity.class);
-            startActivity(intent);
-        });
-
 
         binding.tvMenu.setOnClickListener(v->{
             boardEvent();
@@ -230,7 +225,7 @@ public class MainFragment extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
-
+        selectAlarmCount();
     }
 
 
@@ -341,6 +336,8 @@ public class MainFragment extends Fragment{
            // binding.tvAlarmCnt.setText(alarmCount);
         }
     }
+
+
 
 
     //알람개수조회
