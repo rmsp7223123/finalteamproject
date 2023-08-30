@@ -52,6 +52,7 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
     private FusedLocationSource locationSource;
     private NaverMap naverMap;
     private double lat, lon;
+    private Marker selectedMarker;
     FragmentGpsBinding binding;
 
     @Override
@@ -213,8 +214,6 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                     marker.setHeight(100);
                     marker.setOnClickListener(overlay -> {
                         selectDetail(gpsVO);
-                        marker.setIcon(MarkerIcons.BLACK);
-                        marker.setIconTintColor(Color.parseColor("#27D829")); //마커 색상
                         return true;
                     });
                 }
@@ -268,6 +267,11 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
 public void moveCamera(String lat , String log){
         double latitude = Double.parseDouble(lat);
         double longitude = Double.parseDouble(log);
+
+        if (selectedMarker != null){
+            selectedMarker.setIconTintColor(Color.parseColor("#4B6EFD"));
+        }
+
     CameraUpdate cameraUpdate = CameraUpdate.scrollTo(new LatLng(latitude, longitude));
     naverMap.moveCamera(cameraUpdate);
     Marker marker = new Marker();
@@ -277,6 +281,9 @@ public void moveCamera(String lat , String log){
     marker.setIconTintColor(Color.parseColor("#27D829")); //마커 색상
     marker.setWidth(70);
     marker.setHeight(100);
+    
+    selectedMarker = marker;
+    selectedMarker.setIconTintColor(Color.parseColor("#27D829"));
 
 }
 
