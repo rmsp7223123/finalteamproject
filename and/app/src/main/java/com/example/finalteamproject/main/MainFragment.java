@@ -313,6 +313,8 @@ public class MainFragment extends Fragment{
     }
 
 
+
+
     //알람개수조회
     public void selectAlarmCount(){
         CommonConn conn1 = new CommonConn(getContext(), "main/viewAlarmCnt");

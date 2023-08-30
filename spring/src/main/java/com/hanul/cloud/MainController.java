@@ -191,18 +191,16 @@ public class MainController {
 				Message msg = Message.builder().putData("title", "friend").putData("name", "aaa").putData("body", "aaa")
 						.putData("check", "addFriend").putData("color", "#f45342").setNotification(noti)
 						.setToken(vo3.getMember_phone_id()).build();
-				if (vo4.get(0).getOption_alarm().equals("Y")) {
-					FirebaseMessaging.getInstance().send(msg);
-				}
+				FirebaseMessaging.getInstance().send(msg);
+
 			} else if (vo2.getAlarm_content().contains("메시지")) {
 				Notification noti = Notification.builder().setTitle("메시지")
 						.setBody(vo1.getMember_nickname() + "님이 메시지를 보냈습니다.").build();
 				Message msg = Message.builder().putData("title", "friend").putData("name", "aaa").putData("body", "aaa")
 						.putData("check", "msgFriend").putData("color", "#f45342").setNotification(noti)
 						.setToken(vo3.getMember_phone_id()).build();
-				if (vo4.get(0).getOption_alarm().equals("Y")) {
-					FirebaseMessaging.getInstance().send(msg);
-				}
+				FirebaseMessaging.getInstance().send(msg);
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
