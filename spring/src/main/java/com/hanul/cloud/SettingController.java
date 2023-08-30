@@ -125,10 +125,9 @@ public class SettingController {
 	}
 	
 	//아이디에 해당하는 관심사 삭제
-	@RequestMapping("/deleteFavor")
+	@RequestMapping(value="/deleteFavor", produces = "text/html;charset=utf-8")
 	public String deleteFavor(String member_id) {
 		String result = sql.delete("setting.deleteFavor", member_id)>0 ? "성공" : "실패";
-		System.out.println(result);
 		return result;
 	}
 	

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.finalteamproject.Login.LoginFavorVO;
@@ -78,41 +79,41 @@ public class ChangeFavorActivity extends AppCompatActivity {
         }
 
         binding.cvNext.setOnClickListener(v -> {
-            CommonConn commonConn = new CommonConn(this, "setting/deleteFavor");
-            commonConn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
-            commonConn.onExcute((isResult2, data2) -> {
-                if(data2.equals("성공")){
-                    for (int i = 0; i < list.size(); i++) {
-                        if(list.get(i).isBl()){
-                            int j = i;
-                            CommonConn conn = new CommonConn(this, "login/favor");
-                            conn.addParamMap("favor", list.get(i).getNum());
-                            conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
-                            conn.onExcute((isResult, data) -> {
-                                if(!data.equals("성공")){
-                                    Toast.makeText(this, list.get(j).getName()+"관심사 등록 실패", Toast.LENGTH_SHORT).show();
-                                }else {
-                                    num++;
-                                }
-                            });
-                        }
-                    }
-                }else {
-                    Toast.makeText(this, "관심사 변경 실패", Toast.LENGTH_SHORT).show();
-                    num=-1;
+            for (int i = 0; i < list.size(); i++) {
+                if(list.get(i).isBl()){
+                    num++;
                 }
-            });
-
-
+            }
             if(num>0){
-                Toast.makeText(this, "관심사 등록 완료", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(this, LoginGodokActivity.class);
-                startActivity(intent);
+                CommonConn commonConn = new CommonConn(this, "setting/deleteFavor");
+                commonConn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                commonConn.onExcute((isResult2, data2) -> {
+                    if(data2.equals("성공")) {
+                        for (int i = 0; i < list.size(); i++) {
+                            if (list.get(i).isBl()) {
+                                int j = i;
+                                CommonConn conn = new CommonConn(this, "login/favor");
+                                conn.addParamMap("favor", list.get(i).getNum());
+                                conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                                conn.onExcute((isResult, data) -> {
+                                    Log.d("data", "onCreate: " + data);
+                                    if (!data.equals("성공")) {
+                                        Toast.makeText(this, list.get(j).getName() + "관심사 등록 실패", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        }
+                        Toast.makeText(this, "관심사 등록 완료", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                });
             }else if(num==0) {
                 Toast.makeText(this, "관심사를 선택해주세요", Toast.LENGTH_SHORT).show();
-            }else if(num<0){
-                num=0;
             }
+
+
+
+
         });
 
     }

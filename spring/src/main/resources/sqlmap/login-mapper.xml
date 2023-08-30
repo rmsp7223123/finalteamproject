@@ -21,10 +21,10 @@
 	<insert id="join">
 		insert into member (MEMBER_ID, MEMBER_PW, MEMBER_NAME, MEMBER_NICKNAME, 
 							MEMBER_BIRTH, MEMBER_GENDER, MEMBER_PHONE, 
-							MEMBER_PHONE_ID)
+							MEMBER_PHONE_ID, MEMBER_ADDRESS)
 		values (#{member_id}, #{member_pw}, #{member_name}, #{member_nickname},
 				to_date('19'||substr(#{member_birth}, 1, 2)||'-'||substr(#{member_birth}, 3, 2)||'-'||substr(#{member_birth}, -2), 'yyyy-mm-dd'), 
-				#{member_gender}, #{member_phone}, #{member_phone_id})
+				#{member_gender}, #{member_phone}, #{member_phone_id}, #{member_address})
 	</insert>
 	
 	<insert id="favor">
