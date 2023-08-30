@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.andrognito.patternlockview.PatternLockView;
 import com.andrognito.patternlockview.listener.PatternLockViewListener;
 import com.andrognito.patternlockview.utils.PatternLockUtils;
+import com.example.finalteamproject.ChangeStatusBar;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
@@ -30,6 +31,7 @@ public class DeletePatternActivity extends AppCompatActivity {
         binding.imgvBack.setOnClickListener(v -> {
             finish();
         });
+        new ChangeStatusBar().changeStatusBarColor(this);
 
         binding.patternLockView.addPatternLockListener(new PatternLockViewListener() {
             @Override

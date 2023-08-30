@@ -452,6 +452,12 @@ select * from godok_alarm;
 select * from location;
 select * from member;
 
+delete member;
+
+select * from member;
+
+commit;
+
 SELECT TO_CHAR(location_time, 'YYYY-MM-DD HH24:MI:SS') AS location_time
 FROM location;
 

@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.andrognito.patternlockview.PatternLockView;
 import com.andrognito.patternlockview.listener.PatternLockViewListener;
 import com.andrognito.patternlockview.utils.PatternLockUtils;
+import com.example.finalteamproject.ChangeStatusBar;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
@@ -32,6 +33,7 @@ public class LockScreenPatternActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityLockScreenPatternBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        new ChangeStatusBar().changeStatusBarColor(this);
 
         //비밀번호 찾기
         binding.tvFindPw.setOnClickListener(v -> {

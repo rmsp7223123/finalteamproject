@@ -76,7 +76,7 @@
 
     <Button
         android:id="@+id/btn_change_profile"
-        android:backgroundTint="#FFC81E"
+        android:backgroundTint="#F7DE6D"
         android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="70dp"
@@ -95,7 +95,7 @@
 
         <Button
             android:id="@+id/btn_change_nickname"
-            android:backgroundTint="#FFC81E"
+            android:backgroundTint="#F7DE6D"
             android:textColor="@color/black"
             android:layout_width="match_parent"
             android:layout_height="70dp"
@@ -114,7 +114,7 @@
 
         <Button
             android:id="@+id/btn_change_pw"
-            android:backgroundTint="#FFC81E"
+            android:backgroundTint="#F7DE6D"
             android:textColor="@color/black"
             android:layout_width="match_parent"
             android:layout_height="70dp"
@@ -133,7 +133,7 @@
 
         <Button
             android:id="@+id/btn_change_favor"
-            android:backgroundTint="#FFC81E"
+            android:backgroundTint="#F7DE6D"
             android:textColor="@color/black"
             android:layout_width="match_parent"
             android:layout_height="70dp"
