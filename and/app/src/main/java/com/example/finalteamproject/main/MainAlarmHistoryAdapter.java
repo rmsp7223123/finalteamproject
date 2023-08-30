@@ -26,13 +26,14 @@ import java.util.List;
 
 public class MainAlarmHistoryAdapter extends RecyclerView.Adapter<MainAlarmHistoryAdapter.ViewHolder> {
 
-    ItemAlarmHistoryBinding binding;
     ArrayList<AlarmVO> list;
 
     Context context;
 
     ArrayList<AlarmVO> list2;
     ArrayList<FriendVO> friendList;
+
+
 
     public MainAlarmHistoryAdapter(ArrayList<AlarmVO> list, Context context) {
         this.list = list;
@@ -42,7 +43,8 @@ public class MainAlarmHistoryAdapter extends RecyclerView.Adapter<MainAlarmHisto
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        binding = ItemAlarmHistoryBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        ItemAlarmHistoryBinding  binding = ItemAlarmHistoryBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+
         return new ViewHolder(binding);
     }
 
@@ -78,6 +80,7 @@ public class MainAlarmHistoryAdapter extends RecyclerView.Adapter<MainAlarmHisto
                             deleteAlarm(idx);
                             selectAlarmList();
                           //  updateAlarm();
+
                             notifyDataSetChanged();
                         });
 
@@ -108,6 +111,11 @@ public class MainAlarmHistoryAdapter extends RecyclerView.Adapter<MainAlarmHisto
 
             }
         });
+    }
+
+    public void changeVisibility(int visible){
+        MainAlarmHistoryActivity activity= (MainAlarmHistoryActivity) context;
+        activity.alarmVisibility(visible);
     }
 
     @Override
@@ -152,6 +160,13 @@ public class MainAlarmHistoryAdapter extends RecyclerView.Adapter<MainAlarmHisto
         CommonConn conn = new CommonConn(context, "main/viewAlarm");
         conn.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
         conn.onExcute((isResult, data) -> {
+            ArrayList<AlarmVO> alarm_list = new Gson().fromJson(data, new TypeToken<ArrayList<AlarmVO>>(){}.getType());
+            list = alarm_list;
+            if(alarm_list == null || alarm_list.size() == 0){
+                changeVisibility(View.VISIBLE);
+            }else{
+                changeVisibility(View.GONE);
+            }
         });
     }
 }

@@ -38,26 +38,32 @@ public class MainAlarmHistoryActivity extends AppCompatActivity {
         binding.imgvBack.setOnClickListener(v -> {
             finish();
         });
-        binding.imgvAlarmClean.setOnClickListener(view -> {
-            if(itemCnt==0){
-                Toast.makeText(this, "삭제할 알람이 없습니다", Toast.LENGTH_SHORT).show();
-            }else {
-                // 알람 지웠을 때 알람기록 다 지우기 추가
-                CommonConn conn = new CommonConn(this, "main/deleteAlarm");
-                Log.d("id", "onCreate: "+CommonVar.logininfo.getMember_id());
-                conn.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
-                conn.onExcute((isResult, data) -> {
-                    binding.containerLinearAlarm.setVisibility(View.VISIBLE);
-                    adapter.list = new ArrayList<>();
-                    adapter.notifyDataSetChanged();
-                });
-            }
+        CommonConn conn = new CommonConn(this, "main/viewAlarm");
+        conn.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
+        conn.onExcute((isResult, data) -> {
+            ArrayList<AlarmVO> alarm_list = new Gson().fromJson(data, new com.google.gson.reflect.TypeToken<ArrayList<AlarmVO>>(){}.getType());
+            binding.imgvAlarmClean.setOnClickListener(view -> {
+                if(alarm_list.size() == 0){
+                    Toast.makeText(this, "삭제할 알람이 없습니다", Toast.LENGTH_SHORT).show();
+                }else {
+                    // 알람 지웠을 때 알람기록 다 지우기 추가
+                    CommonConn conn1 = new CommonConn(this, "main/deleteAlarm");
+                    Log.d("id", "onCreate: "+CommonVar.logininfo.getMember_id());
+                    conn.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
+                    conn.onExcute((isResult1, data1) -> {
+                        alarmVisibility(View.VISIBLE);
+                        adapter.list = new ArrayList<>();
+                        adapter.notifyDataSetChanged();
+                    });
+                }
 
+            });
         });
-
-
         selectList();
-        // 알람 기록이 있을때 -- > 어댑터 리턴 사이즈가 0이 아닐 때 프레임 레이아웃안에 linear 안보이게 추가하기
+    }
+
+    public void alarmVisibility(int visible){
+        binding.containerLinearAlarm.setVisibility(visible);
     }
 
     public void selectList() {
@@ -78,9 +84,11 @@ public class MainAlarmHistoryActivity extends AppCompatActivity {
             binding.recvAlarmHistory.setAdapter(adapter);
             binding.recvAlarmHistory.setLayoutManager(new LinearLayoutManager(this));
 
-            itemCnt = adapter.getItemCount();
-            if (itemCnt > 0) {
-                binding.containerLinearAlarm.setVisibility(View.INVISIBLE);
+
+            if (list.size() > 0) {
+               alarmVisibility(View.GONE);
+            } else {
+                alarmVisibility(View.VISIBLE);
             }
         });
     }
