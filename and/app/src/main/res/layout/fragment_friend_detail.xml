@@ -30,7 +30,7 @@
 
     <FrameLayout
         android:id="@+id/container_frame_profile"
-        android:background="@drawable/border_black"
+        android:background="@drawable/box_fill"
         android:layout_marginTop="60dp"
         android:layout_width="match_parent"
         android:layout_height="280dp">

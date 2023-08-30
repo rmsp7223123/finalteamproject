@@ -52,6 +52,7 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
     private FusedLocationSource locationSource;
     private NaverMap naverMap;
     private double lat, lon;
+    private Marker selectedMarker;
     FragmentGpsBinding binding;
 
     @Override
@@ -65,6 +66,7 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
         binding.btnSearch.setOnClickListener(v -> {
             binding.lnResult.setVisibility(View.VISIBLE);
             binding.tvSearchResult.setText("검색결과");
+            binding.lnDetail.setVisibility(View.INVISIBLE);
 
             //검색 결과 데이터
             CommonConn connresult = new CommonConn(getContext(), "gps/search");
@@ -210,6 +212,10 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                     marker.setIconTintColor(Color.parseColor("#4B6EFD")); // 다중 마커 색상
                     marker.setWidth(70);
                     marker.setHeight(100);
+                    marker.setOnClickListener(overlay -> {
+                        selectDetail(gpsVO);
+                        return true;
+                    });
                 }
 
 
@@ -221,11 +227,11 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                 binding.btnClose2.setOnClickListener(v -> {
                     binding.lnDetail.setVisibility(View.GONE);
                 });
-                binding.phoneNumber.setOnClickListener(v -> {
-                    Intent intent = new Intent(Intent.ACTION_DIAL,
-                            Uri.parse("tel:/"+binding.phoneNumber.getText().toString()));
-                    startActivity(intent);
-                });
+//                binding.phoneNumber.setOnClickListener(v -> {
+//                        Intent intent = new Intent(Intent.ACTION_DIAL,
+//                                Uri.parse("tel:/"+binding.phoneNumber.getText().toString()));
+//                        startActivity(intent);
+//                });
                 binding.tvToadmin.setOnClickListener(v -> {
                     Intent intent = new Intent(getContext(), NewCSBoardActivity.class);
                     startActivity(intent);
@@ -261,6 +267,11 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
 public void moveCamera(String lat , String log){
         double latitude = Double.parseDouble(lat);
         double longitude = Double.parseDouble(log);
+
+        if (selectedMarker != null){
+            selectedMarker.setIconTintColor(Color.parseColor("#4B6EFD"));
+        }
+
     CameraUpdate cameraUpdate = CameraUpdate.scrollTo(new LatLng(latitude, longitude));
     naverMap.moveCamera(cameraUpdate);
     Marker marker = new Marker();
@@ -270,6 +281,9 @@ public void moveCamera(String lat , String log){
     marker.setIconTintColor(Color.parseColor("#27D829")); //마커 색상
     marker.setWidth(70);
     marker.setHeight(100);
+
+    selectedMarker = marker;
+    selectedMarker.setIconTintColor(Color.parseColor("#27D829"));
 
 }
 
@@ -286,8 +300,16 @@ public void moveCamera(String lat , String log){
         }
         if(vo.getSenior_call() == null){
             binding.phoneNumber.setText("전화번호 정보 없음");
+            binding.phoneNumber.setOnClickListener(v -> {
+                Toast.makeText(getContext(), "전화번호가 없습니다.", Toast.LENGTH_SHORT).show();
+            });
         }else {
             binding.phoneNumber.setText(vo.getSenior_call()+"");
+            binding.phoneNumber.setOnClickListener(v -> {
+                Intent intent = new Intent(Intent.ACTION_DIAL,
+                        Uri.parse("tel:/"+binding.phoneNumber.getText().toString()));
+                startActivity(intent);
+            });
         }
         binding.seniorLike.setText("좋아요 "+vo.getSenior_like_num()+"");
         //     if(vo.getSenior_call() == null){ => select nvl(adress , '주소 정보 없음')

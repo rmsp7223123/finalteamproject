@@ -1,5 +1,6 @@
 package com.example.finalteamproject.main;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,6 +23,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.Toast;
 
@@ -39,6 +43,8 @@ import com.example.finalteamproject.databinding.ItemMainFriendBinding;
 import com.example.finalteamproject.setting.ChangeProfileActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.badge.BadgeDrawable;
+import com.google.android.material.badge.BadgeUtils;
 import com.google.android.material.chip.Chip;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
@@ -58,6 +64,8 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.crypto.Cipher;
+
 public class MainFragment extends Fragment{
 
     FragmentMainBinding binding;
@@ -73,8 +81,13 @@ public class MainFragment extends Fragment{
                              Bundle savedInstanceState) {
         binding = FragmentMainBinding.inflate(inflater, container, false);
 
-        binding.tvMenu.setOnClickListener(v->{
+
+        binding.imgvMenu.setOnClickListener(v-> {
             boardEvent();
+
+            BoardCommonVar.board = true;
+            binding.lnBoard.setVisibility(View.VISIBLE);
+
         });
         binding.imgvAlarmHistory.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), MainAlarmHistoryActivity.class);
@@ -85,11 +98,28 @@ public class MainFragment extends Fragment{
             startActivity(intent);
         });
 
+        binding.tvMenu.setOnClickListener(v->{
+            boardEvent();
+
+            BoardCommonVar.board = true;
+            binding.lnBoard.setVisibility(View.VISIBLE);
+        });
+        changeStatusBarColor();
         selectMainSlider();
         selectAlarmCount();
 
 //        //ym 주석 2023 08 29
         return binding.getRoot();
+    }
+
+
+    public void changeStatusBarColor(){
+        Window window = getActivity().getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+// finally change the color
+        window.setStatusBarColor(ContextCompat.getColor(getContext(),R.color.main_color));
     }
     private void boardEvent(){
         BoardMainAdapter adapter2 = new BoardMainAdapter(this, getList(), getActivity());
@@ -98,8 +128,7 @@ public class MainFragment extends Fragment{
 
         //
         binding.imgvMenu.setOnClickListener(v -> {
-            BoardCommonVar.board = true;
-            binding.lnBoard.setVisibility(View.VISIBLE);
+
         });
 
         binding.imgvClose.setOnClickListener(v -> {
@@ -303,13 +332,15 @@ public class MainFragment extends Fragment{
         LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(updateAlarmCountReceiver);
         binding = null;
     }
-
+    @SuppressLint("UnsafeOptInUsageError")
     public void updateAlarmCount(String alarmCount) {
         if (alarmCount.equals("0")) {
-            binding.cvAlarmCnt.setVisibility(View.GONE);
+            BadgeUtils.attachBadgeDrawable(getBadge(alarmCount) , binding.imgvAlaram );
+           // binding.cvAlarmCnt.setVisibility(View.GONE);
         } else {
-            binding.cvAlarmCnt.setVisibility(View.VISIBLE);
-            binding.tvAlarmCnt.setText(alarmCount);
+            BadgeUtils.attachBadgeDrawable(getBadge(alarmCount) , binding.imgvAlaram );
+           // binding.cvAlarmCnt.setVisibility(View.VISIBLE);
+           // binding.tvAlarmCnt.setText(alarmCount);
         }
     }
 
@@ -317,18 +348,31 @@ public class MainFragment extends Fragment{
 
 
     //알람개수조회
+    @SuppressLint("UnsafeOptInUsageError")
     public void selectAlarmCount(){
         CommonConn conn1 = new CommonConn(getContext(), "main/viewAlarmCnt");
         conn1.addParamMap("receive_id" , CommonVar.logininfo.getMember_id());
         conn1.onExcute((isResult, data) -> {
             if(data.equals("0")) {
-                binding.cvAlarmCnt.setVisibility(View.GONE);
+                BadgeUtils.attachBadgeDrawable(getBadge(data) , binding.imgvAlaram );
+                //binding.cvAlarmCnt.setVisibility(View.GONE);
             } else {
-                binding.cvAlarmCnt.setVisibility(View.VISIBLE);
-                binding.tvAlarmCnt.setText(data);
+                BadgeUtils.attachBadgeDrawable(getBadge(data) , binding.imgvAlaram );
+             //   binding.cvAlarmCnt.setVisibility(View.VISIBLE);
+              //  binding.tvAlarmCnt.setText(data);
             }
         });
 
+    }
+
+
+    BadgeDrawable getBadge(String data){
+        BadgeDrawable badge =  BadgeDrawable.create(getContext());
+        badge.setBackgroundColor(Color.parseColor("#990000"));
+        badge.setBadgeTextColor(Color.parseColor("#FFFFFF"));
+        badge.setBadgeGravity(BadgeDrawable.TOP_START);
+        badge.setNumber(Integer.parseInt(data));
+        return badge;
     }
 }
 
