@@ -55,6 +55,7 @@ import com.yuyakaido.android.cardstackview.CardStackView;
 import com.yuyakaido.android.cardstackview.Direction;
 import com.yuyakaido.android.cardstackview.Duration;
 import com.yuyakaido.android.cardstackview.RewindAnimationSetting;
+import com.yuyakaido.android.cardstackview.StackFrom;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -89,14 +90,11 @@ public class MainFragment extends Fragment{
             binding.lnBoard.setVisibility(View.VISIBLE);
 
         });
-        binding.imgvAlarmHistory.setOnClickListener(v -> {
+        binding.imgvAlaram.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), MainAlarmHistoryActivity.class);
             startActivity(intent);
         });
-        binding.imgvSmallProfile.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), ChangeProfileActivity.class);
-            startActivity(intent);
-        });
+
 
         binding.tvMenu.setOnClickListener(v->{
             boardEvent();
@@ -201,7 +199,8 @@ public class MainFragment extends Fragment{
                    }
                }
            });
-
+            manager.setStackFrom(StackFrom.Top);
+            manager.setVisibleCount(3);
             RewindAnimationSetting.Builder setting = new  RewindAnimationSetting.Builder();
             setting.setDirection(Direction.Bottom);
             setting.setInterpolator(input -> {
