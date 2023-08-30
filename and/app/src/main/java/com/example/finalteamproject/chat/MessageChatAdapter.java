@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.finalteamproject.R;
+import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.databinding.ItemMessageChatBinding;
 import com.example.finalteamproject.main.FriendVO;
 import com.example.finalteamproject.setting.ChangeProfileActivity;
@@ -35,11 +36,14 @@ public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.
 
     private TextToSpeech tts;
     String profile_img;
-    public MessageChatAdapter(ArrayList<FriendVO> list, Context context,boolean isChatCheck ,String profile_img) {
+
+    String nickname;
+    public MessageChatAdapter(ArrayList<FriendVO> list, Context context,boolean isChatCheck ,String profile_img, String nickname) {
         this.list = list;
         this.context = context;
         this.isChatCheck = isChatCheck;
         this.profile_img = profile_img;
+        this.nickname = nickname;
     }
 
     public MessageChatAdapter(ArrayList<FriendVO> list, Context context,boolean isChatCheck) {
@@ -79,7 +83,7 @@ public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         FriendVO friendVO = list.get(position);
-        holder.binding.tvName.setText(friendVO.getMember_nickname());
+        holder.binding.tvName.setText(nickname);
         Glide.with(context).load(profile_img).into(holder.binding.imgvMain);
 //        holder.binding.imgvMain.setImageResource(friendVO.getImgRes());
 

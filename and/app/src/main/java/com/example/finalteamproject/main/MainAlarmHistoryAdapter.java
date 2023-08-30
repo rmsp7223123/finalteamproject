@@ -95,8 +95,9 @@ public class MainAlarmHistoryAdapter extends RecyclerView.Adapter<MainAlarmHisto
                     CommonConn conn1 = new CommonConn(context, "main/detail");
                     conn1.addParamMap("member_id", list.get(idx).getMember_id());
                     conn1.onExcute((isResult1, data1) -> {
-                        ArrayList<MemberVO> member_list = new Gson().fromJson(data1, new TypeToken<ArrayList<MemberVO>>(){}.getType());
-                        FriendVO vo = new FriendVO(CommonVar.logininfo.getMember_id(), list.get(idx).getMember_id(), member_list.get(idx).getMember_nickname(), member_list.get(idx).getMember_profileimg(), "", "", false);
+//                        ArrayList<MemberVO> member_list = new Gson().fromJson(data1, new TypeToken<ArrayList<MemberVO>>(){}.getType());
+                        ArrayList<FriendVO> friend_list = new Gson().fromJson(data1, new TypeToken<ArrayList<FriendVO>>(){}.getType());
+                        FriendVO vo = new FriendVO(CommonVar.logininfo.getMember_id(), list.get(idx).getMember_id(), friend_list.get(idx).getMember_nickname(), friend_list.get(idx).getMember_profileimg(), "", "", false);
 //                        FriendVO vo =new FriendVO(CommonVar.logininfo.getMember_id(), list.get(idx).getMember_id(), member_list.get(0).getMember_nickname(),member_list.get(0).getMember_profileimg(),"","",false);
                         intent.putExtra("vo", vo);
                         selectAlarmList();
