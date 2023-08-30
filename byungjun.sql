@@ -374,7 +374,7 @@ END;
 commit;
 
 select * from godok_alarm;
-insert into godok_alarm(member_id, alarm_time) values('00000a', sysdate);
+insert into godok_alarm(member_id, alarm_time) values('test1', TO_DATE('2023-08-10 13:30:00', 'YYYY-MM-DD HH24:MI:SS'));
 insert into godok_alarm(member_id, alarm_time) values('ansqudwns98', sysdate);
 select * from location;
 
@@ -465,7 +465,13 @@ select to_char(sysdate, 'YYYY-MM-DD HH24:MI:SS')
 from dual;
 select sysdate from dual;
 
+INSERT INTO member (MEMBER_ID, MEMBER_PW, MEMBER_NAME, MEMBER_NICKNAME, MEMBER_BIRTH, MEMBER_GENDER, MEMBER_PHONE, MEMBER_PROFILEIMG, MEMBER_PHONE_ID, MEMBER_MANNER_SCORE, MEMBER_ADMIN, MEMBER_ADDRESS)
+VALUES
+    ('test100', 'userpwd', 'Max Smith', 'max_smith', '1988-11-30', '남', '01088889999', 'http://example.com/max.jpg', 'fcm_token_999', 85, 0, '울산광역시 남구 삼산동 777-888');
 
+commit;
+
+select * from member;
 
 SELECT *
 		FROM location
