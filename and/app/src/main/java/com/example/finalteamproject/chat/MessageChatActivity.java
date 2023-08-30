@@ -6,6 +6,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.ClipData;
@@ -19,6 +20,8 @@ import android.provider.MediaStore;
 import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
@@ -84,6 +87,7 @@ public class MessageChatActivity extends AppCompatActivity {
         binding.imgvBack.setOnClickListener(v -> {
             finish();
         });
+        changeStatusBarColor();
         friendVO = (FriendVO) getIntent().getSerializableExtra("vo");
 
         adapter = new MessageChatAdapter(getlist(), this, isChatCheck, friendVO.getMember_profileimg());
@@ -353,6 +357,13 @@ public class MessageChatActivity extends AppCompatActivity {
                     Log.d("TAG", "onClick: " + "확인용");
                 }
             });
+    }
+
+    public void changeStatusBarColor(){
+        Window window = this.getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(ContextCompat.getColor(this,R.color.main_color));
     }
 
 

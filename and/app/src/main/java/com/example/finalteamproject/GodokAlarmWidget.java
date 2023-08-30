@@ -28,6 +28,7 @@ public class GodokAlarmWidget extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        Log.d("위젯", "onEnabled: ");
         for (int appWidgetId : appWidgetIds) {
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
             views.setImageViewResource(R.id.widgetImageView, R.drawable.logo);
@@ -36,7 +37,7 @@ public class GodokAlarmWidget extends AppWidgetProvider {
             Intent clickIntent = new Intent(context, GodokAlarmWidget.class);
             clickIntent.setAction(ACTION_WIDGET_CLICKED);
             clickIntent.putExtra("member_id", CommonVar.logininfo.getMember_id());
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, clickIntent, PendingIntent.FLAG_IMMUTABLE);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, clickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             // 위젯 뷰에 클릭 이벤트와 PendingIntent 연결
             views.setOnClickPendingIntent(R.id.widgetImageView, pendingIntent);
@@ -47,21 +48,24 @@ public class GodokAlarmWidget extends AppWidgetProvider {
 
     @Override
     public void onEnabled(Context context) {
+        Log.d("위젯", "onEnabled: ");
+      //  Toast.makeText(context, "확인용ㅇㅇㅇㅇㅇ", Toast.LENGTH_SHORT).show();
         // Enter relevant functionality for when the first widget is created
     }
 
     @Override
     public void onDisabled(Context context) {
         // Enter relevant functionality for when the last widget is disabled
+        Log.d("위젯", "onDisabled: ");
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        Log.d("위젯", "onReceive: ");
         super.onReceive(context, intent);
         String member_id = intent.getStringExtra("member_id");
         Toast.makeText(context, "확인용ㅇㅇㅇㅇㅇ", Toast.LENGTH_SHORT).show();
         if (intent.getAction() != null && intent.getAction().equals(ACTION_WIDGET_CLICKED) && member_id != null) {
-            if (CommonVar.logininfo != null) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle("안부문자 보내기")
                         .setMessage("안부문자를 보내시겠습니까?")
@@ -82,9 +86,8 @@ public class GodokAlarmWidget extends AppWidgetProvider {
                         });
                 AlertDialog dialog = builder.create();
                 dialog.show();
-            } else {
-                Toast.makeText(context, "로그인 정보가 없습니다.", Toast.LENGTH_SHORT).show();
-            }
+        } else {
+            Toast.makeText(context, "안됨ㅇㅇㅇㅇㅇㅇㅇㅇㅇ", Toast.LENGTH_SHORT).show();
         }
     }
 

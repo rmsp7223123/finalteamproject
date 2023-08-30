@@ -8,7 +8,7 @@
     android:orientation="vertical"
     >
     <RelativeLayout
-        android:background="#FFC81E"
+        android:background="#F7DE6D"
         android:layout_width="match_parent"
         android:layout_height="60dp">
 
@@ -66,7 +66,7 @@
         android:id="@+id/container_frame_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFC81E">
+        android:background="#F7DE6D">
 
         <ImageView
             android:id="@+id/imgv_send_file"
@@ -113,7 +113,7 @@
     </FrameLayout>
 
     <LinearLayout
-        android:background="#FFC81E"
+        android:background="#F7DE6D"
         android:id="@+id/container_linear_send_file"
         android:layout_width="match_parent"
         android:layout_height="150dp"

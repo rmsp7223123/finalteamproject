@@ -97,6 +97,10 @@ public class MainFragment extends Fragment{
             BoardCommonVar.board = true;
             binding.lnBoard.setVisibility(View.VISIBLE);
         });
+        binding.imgvAlaram.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), MainAlarmHistoryActivity.class);
+            startActivity(intent);
+        });
         changeStatusBarColor();
         selectMainSlider();
         selectAlarmCount();
@@ -110,8 +114,6 @@ public class MainFragment extends Fragment{
         Window window = getActivity().getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-
-// finally change the color
         window.setStatusBarColor(ContextCompat.getColor(getContext(),R.color.main_color));
     }
     private void boardEvent(){
