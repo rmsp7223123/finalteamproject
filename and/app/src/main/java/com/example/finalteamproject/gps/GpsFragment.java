@@ -210,6 +210,12 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                     marker.setIconTintColor(Color.parseColor("#4B6EFD")); // 다중 마커 색상
                     marker.setWidth(70);
                     marker.setHeight(100);
+                    marker.setOnClickListener(overlay -> {
+                        selectDetail(gpsVO);
+                        marker.setIcon(MarkerIcons.BLACK);
+                        marker.setIconTintColor(Color.parseColor("#27D829")); //마커 색상
+                        return true;
+                    });
                 }
 
 
@@ -221,11 +227,11 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                 binding.btnClose2.setOnClickListener(v -> {
                     binding.lnDetail.setVisibility(View.GONE);
                 });
-                binding.phoneNumber.setOnClickListener(v -> {
-                    Intent intent = new Intent(Intent.ACTION_DIAL,
-                            Uri.parse("tel:/"+binding.phoneNumber.getText().toString()));
-                    startActivity(intent);
-                });
+//                binding.phoneNumber.setOnClickListener(v -> {
+//                        Intent intent = new Intent(Intent.ACTION_DIAL,
+//                                Uri.parse("tel:/"+binding.phoneNumber.getText().toString()));
+//                        startActivity(intent);
+//                });
                 binding.tvToadmin.setOnClickListener(v -> {
                     Intent intent = new Intent(getContext(), NewCSBoardActivity.class);
                     startActivity(intent);
@@ -286,8 +292,16 @@ public void moveCamera(String lat , String log){
         }
         if(vo.getSenior_call() == null){
             binding.phoneNumber.setText("전화번호 정보 없음");
+            binding.phoneNumber.setOnClickListener(v -> {
+                Toast.makeText(getContext(), "전화번호가 없습니다.", Toast.LENGTH_SHORT).show();
+            });
         }else {
             binding.phoneNumber.setText(vo.getSenior_call()+"");
+            binding.phoneNumber.setOnClickListener(v -> {
+                Intent intent = new Intent(Intent.ACTION_DIAL,
+                        Uri.parse("tel:/"+binding.phoneNumber.getText().toString()));
+                startActivity(intent);
+            });
         }
         binding.seniorLike.setText("좋아요 "+vo.getSenior_like_num()+"");
         //     if(vo.getSenior_call() == null){ => select nvl(adress , '주소 정보 없음')
