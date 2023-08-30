@@ -140,3 +140,18 @@ order by member_birth;
 select count(*)
 from member
 where extract(year from sysdate) - extract(year from member_birth) < 40;
+
+select count(*) from member
+where member_address like '%±¤ÁÖ%';
+
+select * from member;
+
+
+
+SELECT '±¤ÁÖ' AS ADDRESS, COUNT(*) AS member_count
+FROM member
+WHERE SUBSTR(member_address, 1, INSTR(member_address, ' ') - 1) = '±¤ÁÖ'
+union all
+SELECT '¼­¿ï' AS ADDRESS, COUNT(*) AS member_count
+FROM member
+WHERE SUBSTR(member_address, 1, INSTR(member_address, ' ') - 1) = '¼­¿ï';

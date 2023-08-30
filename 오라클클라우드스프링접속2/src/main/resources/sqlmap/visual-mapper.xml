@@ -107,6 +107,14 @@
 		order by count desc
 		]]>
 	</select>
-	
-		
+
+	<select id="count" resultType="cloudWeb.visual.SeniorVO">
+		SELECT REGION, COUNT(*) AS COUNT
+		FROM (SELECT SUBSTR(MEMBER_ADDRESS, 1, INSTR(MEMBER_ADDRESS, ' ' )-1 )
+		REGION
+		FROM MEMBER WHERE MEMBER_ADMIN = 0)
+		GROUP BY REGION
+	</select>
+
+
 </mapper>

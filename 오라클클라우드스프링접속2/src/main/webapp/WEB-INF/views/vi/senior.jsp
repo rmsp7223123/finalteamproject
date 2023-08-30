@@ -25,9 +25,9 @@
 		src="https://cdn.jsdelivr.net/npm/chartjs-plugin-autocolors@0.2.2/dist/chartjs-plugin-autocolors.min.js"></script>
  -->
 
-	<div id="tab-content" class="container">
+	<div id="tab-content" class="container d-flex align-items-center">
 	<div class="canvas">
-		<canvas id="Chart" width="900" height="500"></canvas>
+		<canvas id="Chart" width="900" height="500" style="margin-left : 100px"></canvas>
 		</div>
 
 		<div class="tab-pane fade" id="region"></div>
@@ -185,7 +185,7 @@
 		function initCanvas() {
 			$('canvas#Chart').remove();
 			$('#tab-content').append(
-					`<canvas id="Chart" width="900" height="500"></canvas>`);
+					`<canvas id="Chart" width="900" height="500" style="margin-left : 100px"></canvas>`);
 		}
 	</script>
 

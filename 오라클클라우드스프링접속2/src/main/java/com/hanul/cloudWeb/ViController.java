@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 
 import cloudWeb.visual.MemberVO;
+import cloudWeb.visual.SeniorVO;
 
 
 @Controller
@@ -74,6 +75,13 @@ public class ViController {
 	@RequestMapping("/geo")
 	public String geo() {
 		return "vi/geo";
+	}
+	
+	@ResponseBody
+	@RequestMapping("/count")
+	public String count() {
+		List<SeniorVO> result = sql.selectList("vi.count");
+	    return new Gson().toJson(result);
 	}
 
 }
