@@ -49,7 +49,6 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
         Glide.with(context).load(list.get(position).getMember_profileimg()).apply(new RequestOptions().circleCrop()).into(holder.binding.imgvProfileImg);
         holder.binding.containerLinearProfile.setOnClickListener(v -> {
             FriendDetailFragment friendDetailFragment = new FriendDetailFragment();
-
             Bundle bundle = new Bundle();
             bundle.putSerializable("friend_detail", list.get(position));
             friendDetailFragment.setArguments(bundle);
@@ -59,17 +58,6 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Vi
             transaction.addToBackStack(null);
             transaction.commit();
         });
-//        conn.addParamMap("member_id", );
-//        holder.binding.imgvProfileImg.setImageResource(list.get(position).getImgRes());
-//        holder.binding.tvNickname.setText(list.get(position).getNickname());
-//        Glide.with(context).load(list.get(position).getImgRes()).apply(new RequestOptions().circleCrop()).into(holder.binding.imgvProfileImg);
-//        holder.binding.containerFrameMessage.setOnClickListener(v -> {
-//            Intent intent = new Intent(context, MessageChatActivity.class);
-//            intent.putExtra("dto",list.get(position));
-//            intent.putExtra("nickname",list.get(position).getNickname());
-//            intent.putExtra("img",list.get(position).getImgRes());
-//            context.startActivity(intent);
-//        });
     }
 
     @Override
