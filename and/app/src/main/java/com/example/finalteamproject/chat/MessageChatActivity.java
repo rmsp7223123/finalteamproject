@@ -91,7 +91,7 @@ public class MessageChatActivity extends AppCompatActivity {
         new ChangeStatusBar().changeStatusBarColor(this);
         friendVO = (FriendVO) getIntent().getSerializableExtra("vo");
 
-        adapter = new MessageChatAdapter(getlist(), this, isChatCheck, friendVO.getMember_profileimg());
+        adapter = new MessageChatAdapter(getlist(), this, isChatCheck, friendVO.getMember_profileimg(), friendVO.getMember_nickname());
         binding.tvNickname.setText(friendVO.getMember_nickname());
         Glide.with(this).load(friendVO.getMember_profileimg()).apply(new RequestOptions().circleCrop()).into(binding.imgvProfileImg);
         binding.recvMessageChat.setAdapter(adapter);
@@ -100,8 +100,20 @@ public class MessageChatActivity extends AppCompatActivity {
             String messageText = binding.edtMessage.getText().toString();
             if (!messageText.isEmpty()) {
                 FriendVO vo = new FriendVO(friendVO.getMember_id(), friendVO.getFriend_id(), friendVO.getMember_nickname(), friendVO.getMember_profileimg(), currentTime, binding.edtMessage.getText().toString(), true);
-                sendMsg(friendVO.getMember_id(), friendVO.getFriend_id() ,vo, true);
-                sendMsg(friendVO.getFriend_id(), friendVO.getMember_id() ,vo, false);
+
+                    vo.setMember_nickname(friendVO.getMember_nickname());
+                    sendMsg(friendVO.getMember_id(), friendVO.getFriend_id() ,vo, true);
+
+                    vo.setMember_id(friendVO.getFriend_id());
+                    vo.setFriend_id(friendVO.getMember_id());
+                    vo.setMember_profileimg(CommonVar.logininfo.getMember_profileimg());
+                     vo.setMember_nickname(CommonVar.logininfo.getMember_nickname());
+                    sendMsg(friendVO.getFriend_id(), friendVO.getMember_id() ,vo, false);
+                //vo.setMember_nickname(CommonVar.logininfo.getMember_nickname());
+                //friendVO.getMember_nickname()
+                // isChatCheck가 true일때 상대방 닉네임이 들어가야함
+
+
                     sendNotification(vo);
 
                 binding.edtMessage.setText("");
@@ -206,10 +218,6 @@ public class MessageChatActivity extends AppCompatActivity {
     public void sendMsg(String mainId , String subId , FriendVO vo, boolean isChatCheck) {
         DatabaseReference def = databaseReference.child("chat").child(mainId).child(subId);
         messageId =def.push().getKey();
-
-//        FriendVO temp = new FriendVO(friendVO.getMember_id(),friendVO.getFriend_id(),friendVO.getMember_nickname(),friendVO.getMember_profileimg(),currentTime,binding.edtMessage.getText().toString(),true);
-//                FriendVO temp = new FriendVO(messageDTO.getImgRes(), messageDTO.getNickname(), messageText,"", currentTime, true);
-        // 파이어베이스 경로를 닉네임이 아닌 id로 바꾸기
         vo.setCheck(isChatCheck);
         def.child(messageId).setValue(vo);
         binding.recvMessageChat.scrollToPosition(adapter.getItemCount() - 1);

@@ -15,7 +15,7 @@
 		member_id = #{member_id}
 	</select>
 	<select id="viewpager" resultType="cloud.member.MemberVO">
-		SELECT M.*
+		SELECT M.* 
 		FROM ( SELECT
 		MEMBER_ID
 		FROM FAVOR

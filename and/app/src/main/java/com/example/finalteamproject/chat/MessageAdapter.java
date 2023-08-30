@@ -37,6 +37,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        FriendVO vo = new FriendVO(CommonVar.logininfo.getMember_id(), list.get(position).getFriend_id(), list.get(position).getMember_nickname(), list.get(position).getMember_profileimg(), "", "", false);
+        // FriendVO friendVO = new FriendVO(CommonVar.logininfo.getMember_id(), list.get(position).getMember_id(), list.get(position).getMember_nickname(), list.get(position).getMember_profileimg(), "", "", false);
         String nickname = list.get(position).getMember_nickname();
         String content = list.get(position).getContent();
         if (nickname.length() > 7) {
@@ -53,8 +55,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         Glide.with(context).load(list.get(position).getMember_profileimg()).apply(new RequestOptions().circleCrop()).into(holder.binding.imgvProfileImg);
         holder.binding.containerLinearMessageChat.setOnClickListener(v -> {
             Intent intent = new Intent(context, MessageChatActivity.class);
-            list.get(position).setMember_id(CommonVar.logininfo.getMember_id());
-            intent.putExtra("vo",list.get(position));
+            intent.putExtra("vo",vo);
             context.startActivity(intent);
         });
     }

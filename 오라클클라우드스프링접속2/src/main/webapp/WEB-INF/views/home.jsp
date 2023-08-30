@@ -130,7 +130,7 @@
 								<a href="<c:url value='/go/home' />" class="hex-content"> <span
 									class="hex-content-inner"> <span class="icon"> <i
 											class="fa-regular fa-envelope"></i>
-									</span> <span class="title">고독사</span>
+									</span> <span class="title">안부 문자</span>
 								</span> <svg viewbox="0 0 173.20508075688772 200" height="200"
 										width="174" version="1.1" xmlns="http://www.w3.org/2000/svg">
                     <path
