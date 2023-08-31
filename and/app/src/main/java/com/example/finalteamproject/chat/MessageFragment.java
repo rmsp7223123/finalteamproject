@@ -21,6 +21,7 @@ import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.databinding.FragmentMessageBinding;
+import com.example.finalteamproject.main.AlarmVO;
 import com.example.finalteamproject.main.FriendVO;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -30,6 +31,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MessageFragment extends Fragment {

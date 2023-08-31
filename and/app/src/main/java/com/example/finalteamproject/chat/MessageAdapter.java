@@ -2,6 +2,7 @@ package com.example.finalteamproject.chat;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.databinding.ItemMessageBinding;
+import com.example.finalteamproject.main.AlarmVO;
 import com.example.finalteamproject.main.FriendVO;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 
@@ -56,7 +61,18 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         holder.binding.containerLinearMessageChat.setOnClickListener(v -> {
             Intent intent = new Intent(context, MessageChatActivity.class);
             intent.putExtra("vo",vo);
-            context.startActivity(intent);
+            CommonConn conn2 = new CommonConn(context, "main/deleteAlarm");
+            conn2.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
+            conn2.addParamMap("nickname", binding.tvNickname.getText().toString());
+            Log.d("TAG", "onBindViewHolder: " + binding.tvNickname.getText().toString());
+            conn2.addParamMap("alarm_content2", "메시지를");
+            conn2.onExcute((isResult, data) -> {
+                CommonConn conn1 = new CommonConn(context, "main/detail");
+                conn1.addParamMap("member_id", list.get(position).getMember_id());
+                conn1.onExcute((isResult1, data1) -> {
+                    context.startActivity(intent);
+                });
+            });
         });
     }
 
