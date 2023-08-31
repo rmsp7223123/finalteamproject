@@ -75,27 +75,11 @@ public class MessageFragment extends Fragment {
 
             }
         });
-
-//        CommonConn conn = new CommonConn(getContext(), "main/viewFriendList");
-//        conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
-//        conn.onExcute((isResult, data) -> {
-//            list = new Gson().fromJson(data, new TypeToken<ArrayList<FriendVO>>() {
-//            }.getType());
-//
-//            binding.recvMessage.setLayoutManager(new LinearLayoutManager(getContext()));
-//            binding.recvMessage.setAdapter(adapter);
-//            adapter.notifyDataSetChanged();
-//        });
         return binding.getRoot();
     }
 
     public ArrayList<FriendVO> getList() {
         ArrayList<FriendVO> list = new ArrayList<>();
-//        list.add(new MessageDTO(R.drawable.haerin2,"해린","내용1","12:34","",false));
-//        list.add(new MessageDTO(R.drawable.hanni9,"하니","내용2","11:34","",false));
-//        list.add(new MessageDTO(R.drawable.minji10,"민지","내용3","10:34","",false));
-//        list.add(new MessageDTO(R.drawable.hyein11,"혜인","내용4","14:34","",false));
-//        list.add(new MessageDTO(R.drawable.danielle11,"다니엘","내용5","15:34","",false));
         return list;
     }
 
@@ -114,6 +98,12 @@ public class MessageFragment extends Fragment {
 
 
                 adapter.notifyDataSetChanged();
+
+                if(list.size() != 0 ) {
+                    binding.containerLinearChatList.setVisibility(View.GONE);
+                } else {
+                    binding.containerLinearChatList.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
