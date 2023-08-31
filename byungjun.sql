@@ -548,3 +548,9 @@ SELECT M.*
 		AND M.MEMBER_ADMIN != 1;
         
         select * from member;
+        
+select * from alarm;
+
+select * from option_table;
+
+commit;

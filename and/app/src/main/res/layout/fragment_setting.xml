@@ -108,18 +108,14 @@
              android:textColor="@color/black"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:text="고독사 문자 발신" />
+             android:text="안부 문자 발신" />
 
-         <TextView
-             android:id="@+id/tv_godok"
-             android:layout_marginLeft="55dp"
+         <com.suke.widget.SwitchButton
+
+             android:layout_marginLeft="70dp"
+             android:id="@+id/switch_button_godok"
              android:layout_width="wrap_content"
-             android:layout_height="30dp"
-             android:textSize="23dp"
-             android:textColor="@color/black"
-             android:text="꺼짐"
-             android:layout_marginRight="20dp"
-             android:layout_gravity="center"/>
+             android:layout_height="wrap_content"/>
 
       </LinearLayout>
    </LinearLayout>
