@@ -117,7 +117,8 @@ public class MessageChatActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 FriendVO friendVO = dataSnapshot.getValue(FriendVO.class);
-                adapter.addData(friendVO);
+                    adapter.addData(friendVO);
+
                 int position = adapter.getItemCount() - 1;
                 if (position >= 0) {
                     binding.recvMessageChat.scrollToPosition(position);

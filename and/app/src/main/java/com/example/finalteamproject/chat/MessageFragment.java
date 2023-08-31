@@ -92,9 +92,31 @@ public class MessageFragment extends Fragment {
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 FriendVO vo = snapshot.getValue(FriendVO.class);
                 if(vo.getContent().contains("https://firebasestorage.googleapis.com/")) {
-                    list.add(new FriendVO(CommonVar.logininfo.getMember_id(), vo.getFriend_id(),vo.getMember_nickname(),vo.getMember_profileimg(), vo.getTime(), "이미지", true));
+                    boolean isFirst = true;
+                    for (int i = 0; i < adapter.list.size(); i++) {
+                        if(adapter.list.get(i).getMember_nickname().equals(vo.getMember_nickname())){
+                            adapter.list.set(i , vo) ;
+                            isFirst = false;
+                            adapter.notifyDataSetChanged();
+                            break;
+                        }
+                    }
+                    if(isFirst) {
+                        list.add(new FriendVO(CommonVar.logininfo.getMember_id(), vo.getFriend_id(),vo.getMember_nickname(),vo.getMember_profileimg(), vo.getTime(), "이미지", true));
+                    }
                 } else {
-                    list.add(new FriendVO(CommonVar.logininfo.getMember_id(), vo.getFriend_id(),vo.getMember_nickname(),vo.getMember_profileimg(), vo.getTime(), vo.getContent(), true));
+                    boolean isFirst = true;
+                    for (int i = 0; i < adapter.list.size(); i++) {
+                        if(adapter.list.get(i).getMember_nickname().equals(vo.getMember_nickname())){
+                            adapter.list.set(i , vo) ;
+                            isFirst = false;
+                            adapter.notifyDataSetChanged();
+                            break;
+                        }
+                    }
+                    if(isFirst) {
+                        list.add(new FriendVO(CommonVar.logininfo.getMember_id(), vo.getFriend_id(),vo.getMember_nickname(),vo.getMember_profileimg(), vo.getTime(), vo.getContent(), true));
+                    }
                 }
 
 

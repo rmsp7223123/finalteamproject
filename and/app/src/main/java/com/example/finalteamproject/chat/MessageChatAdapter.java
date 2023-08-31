@@ -62,6 +62,8 @@ public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.
         notifyDataSetChanged();
     }
 
+
+
     @Override
     public int getItemViewType(int position) {
         return position;

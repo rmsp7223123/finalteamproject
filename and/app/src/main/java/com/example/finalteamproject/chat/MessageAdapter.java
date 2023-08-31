@@ -43,7 +43,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         FriendVO vo = new FriendVO(CommonVar.logininfo.getMember_id(), list.get(position).getFriend_id(), list.get(position).getMember_nickname(), list.get(position).getMember_profileimg(), "", "", false);
-        // FriendVO friendVO = new FriendVO(CommonVar.logininfo.getMember_id(), list.get(position).getMember_id(), list.get(position).getMember_nickname(), list.get(position).getMember_profileimg(), "", "", false);
         String nickname = list.get(position).getMember_nickname();
         String content = list.get(position).getContent();
         if (nickname.length() > 7) {
