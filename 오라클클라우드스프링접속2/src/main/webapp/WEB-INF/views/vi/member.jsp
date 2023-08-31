@@ -211,7 +211,16 @@
 								display : true,
 								text : '지역별 회원 수'
 							}
-							}
+							},
+							scales: {
+					            x: {
+					                beginAtZero: true,
+					                ticks: {
+					                    stepSize: 1,
+					                    precision: 0
+					                }
+					            }
+					        }
 						}
 					});
 				},
