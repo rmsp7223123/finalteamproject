@@ -114,11 +114,11 @@
 					<c:set var="address2" value="${fn:substring(vo.member_address, vo.member_address.indexOf(')')+1,  fn:length(vo.member_address) )}"></c:set>
 				</c:if>
 				
-				<div class="col-xl-7">
-					<input type="text" name="address" class="form-control"  readonly value="${address1}">			
+				<div class="col-xl-7" style="width: 400px">
+					<input type="text" name="member_address1" class="form-control"  readonly value="${address1}">			
 				</div>
-				<div class="col-xl">
-					<input type="text" name="address" class="form-control"  value="${address2}">			
+				<div class="col-xl" style="width: 400px">
+					<input type="text" name="member_address2" class="form-control"  value="${address2}">			
 				</div>
 <!-- 			</div> -->
 		</td>
@@ -189,6 +189,14 @@ $('#btn-join').on('click', function(){
 
 	if(  invalidStatus( $("[name=member_nickname]") ) ) return;
 	if(  invalidStatus( $("[name=member_phone]") ) ) return;
+	
+	
+// 	if( $("[name=member_address2]").val().trim() =="" ){
+// 		alert("상세주소를 입력하세요");
+// 		$("[name=member_address2]").focus();
+// 		$("[name=member_address2]").val("")
+// 		return;
+// 	}
 	
 	$('form').submit()
 })
@@ -262,7 +270,7 @@ $('#btn-post').on('click', function(){
         	var address = data.userSelectedType == "R" ? data.roadAddress : data.jibunAddress;
         	if( data.buildingName !="" ) address += " ("+data.buildingName+")";
         	
-        	$('[name=address]:eq(0)').val( address );
+        	$('[name=member_address1]:eq(0)').val( address );
         	
             // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
             // 예제를 참고하여 다양한 활용법을 확인해 보세요.

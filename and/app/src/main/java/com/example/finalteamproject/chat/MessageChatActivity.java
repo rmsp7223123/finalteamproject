@@ -31,6 +31,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.finalteamproject.ChangeStatusBar;
 import com.example.finalteamproject.FirebaseMessageReceiver;
+import com.example.finalteamproject.Login.ProgressDialog;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
@@ -99,6 +100,7 @@ public class MessageChatActivity extends AppCompatActivity {
         binding.imgvSend.setOnClickListener(v -> {
             String messageText = binding.edtMessage.getText().toString();
             if (!messageText.isEmpty()) {
+                currentTime = dateFormat.format(new Date());
                 FriendVO vo = new FriendVO(friendVO.getMember_id(), friendVO.getFriend_id(), friendVO.getMember_nickname(), friendVO.getMember_profileimg(), currentTime, binding.edtMessage.getText().toString(), true);
                 vo.setMember_nickname(friendVO.getMember_nickname());
                 sendMsg(friendVO.getMember_id(), friendVO.getFriend_id(), vo, true);
@@ -317,6 +319,7 @@ public class MessageChatActivity extends AppCompatActivity {
                             upload.add(riversRef.putFile(imageUri));
                             upload.get(tempIdx).addOnCompleteListener(command -> {
                                 upload.get(tempIdx).getResult().getStorage().getDownloadUrl().addOnCompleteListener(command1 -> {
+                                    currentTime = dateFormat.format(new Date());
                                     FriendVO vo = new FriendVO(friendVO.getMember_id(), friendVO.getFriend_id(), friendVO.getMember_nickname(), friendVO.getMember_profileimg(), currentTime, command1.getResult() + "", true);
                                     vo.setMember_nickname(friendVO.getMember_nickname());
                                     sendMsg(friendVO.getMember_id(), friendVO.getFriend_id(), vo, true);
@@ -355,11 +358,12 @@ public class MessageChatActivity extends AppCompatActivity {
     }
 
     public void sendNotification(FriendVO vo) {
-        CommonConn conn = new CommonConn(this, "main/addAlarm");
-        conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
-        conn.addParamMap("alarm_content", CommonVar.logininfo.getMember_nickname() + "님이 메시지를 보냈습니다.");
-        conn.addParamMap("alarm_time", currentTime);
-        conn.addParamMap("receive_id", vo.getMember_id());
+            CommonConn conn = new CommonConn(this, "main/addAlarm");
+            conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+            conn.addParamMap("alarm_content", CommonVar.logininfo.getMember_nickname() + "님이 메시지를 보냈습니다.");
+            currentTime = dateFormat.format(new Date());
+            conn.addParamMap("alarm_time", currentTime);
+            conn.addParamMap("receive_id", vo.getFriend_id());
 
         conn.onExcute((isResult1, data1) -> {
             if (isResult1) {
