@@ -19,8 +19,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp">
 
-            <LinearLayout
-                android:layout_width="40dp"
+            <FrameLayout
+                android:layout_width="30dp"
                 android:layout_height="40dp">
 
                 <ImageView
@@ -30,7 +30,7 @@
                     android:layout_height="20dp"
                     android:src="@drawable/back"/>
 
-            </LinearLayout>
+            </FrameLayout>
 
             <ImageButton
                 android:id="@+id/addScheduleBtn"
@@ -41,7 +41,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:scaleType="fitCenter"
-                android:src="@drawable/baseline_add_24"
+                android:src="@drawable/add"
                 android:backgroundTint="#00ff0000" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -55,7 +55,7 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:mcv_selectionColor="#5a7fbf"
+        app:mcv_selectionColor="#FDE9AB"
         app:mcv_headerTextAppearance="@style/CalendarWidgetHeader"
         app:mcv_weekDayTextAppearance="@style/CalendarWidgetWeek"
         app:mcv_dateTextAppearance="@style/CalendarWidgetDay"
@@ -87,7 +87,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/view"
         android:layout_width="wrap_content"
-        android:layout_height="60dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:ignore="MissingConstraints" />
 
