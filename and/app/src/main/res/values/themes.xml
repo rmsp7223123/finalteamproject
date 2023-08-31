@@ -24,4 +24,19 @@
         <item name="appWidgetPadding">16dp</item>
     </style>
 
+    <style name="CalendarWidgetHeader">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/sc_dream5</item>
+    </style>
+    <style name="CalendarWidgetWeek">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/sc_dream4</item>
+    </style>
+    <style name="CalendarWidgetDay">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/sc_dream4</item>
+    </style>
+
 </resources>

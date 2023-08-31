@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
     <color name="light_blue_50">#FFE1F5FE</color>
     <color name="light_blue_200">#FF81D4FA</color>
     <color name="light_blue_600">#FF039BE5</color>
@@ -9,4 +7,13 @@
 
     <color name="main_color">#F7DE6D</color>
     <color name="sub_color">#FFFFFF</color>
+
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="light_gray">#DCDCDC</color>
+    <color name="red">#F08080</color>
+    <color name="blue">#6495ED</color>
+    <color name="yellow">#FFD700</color>
+    <color name="classicBlue">#34568B</color>
+    <color name="darkBlue">#0E406B</color>
 </resources>
