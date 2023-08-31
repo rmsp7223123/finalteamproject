@@ -363,7 +363,7 @@ public class MessageChatActivity extends AppCompatActivity {
             conn.addParamMap("alarm_content", CommonVar.logininfo.getMember_nickname() + "님이 메시지를 보냈습니다.");
             currentTime = dateFormat.format(new Date());
             conn.addParamMap("alarm_time", currentTime);
-            conn.addParamMap("receive_id", vo.getFriend_id());
+            conn.addParamMap("receive_id", vo.getMember_id());
 
         conn.onExcute((isResult1, data1) -> {
             if (isResult1) {

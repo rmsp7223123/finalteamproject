@@ -23,7 +23,11 @@
           android:textSize="27sp" />
 
    </RelativeLayout>
-
+   <LinearLayout
+       android:layout_marginHorizontal="10dp"
+       android:background="@drawable/border_black_fill_yellow"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
    <LinearLayout
        android:id="@+id/container_linear_change_profile"
        android:layout_marginVertical="10dp"
@@ -77,6 +81,7 @@
          android:src="@drawable/forward"
          android:layout_gravity="center"/>
 
+   </LinearLayout>
    </LinearLayout>
 
 
