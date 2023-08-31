@@ -28,8 +28,8 @@ import java.util.ArrayList;
 public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.ViewHolder> {
     ItemFriendListBinding binding;
     ArrayList<FriendVO> list;
-
     Context context;
+
 
     public FriendListAdapter(ArrayList<FriendVO> list, Context context) {
         this.list = list;
