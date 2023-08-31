@@ -71,6 +71,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".main.CalendarActivity"
+            android:exported="false" />
+        <activity
             android:name=".TeActivity"
             android:exported="false" />
         <activity
@@ -91,6 +94,7 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_godok_alarm" />
         </receiver>
+
         <activity
             android:name=".Login.SearchAddress"
             android:exported="false" />

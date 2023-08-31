@@ -95,6 +95,8 @@
                 android:orientation="vertical"
                 >
                 <androidx.cardview.widget.CardView
+                    android:layout_marginLeft="15dp"
+                    android:id="@+id/cv_add"
                     android:layout_gravity="left"
                     app:cardUseCompatPadding="true"
                     app:cardPreventCornerOverlap="false"
@@ -120,6 +122,8 @@
                 <TextView
 
                     android:textStyle="bold"
+                    android:layout_marginLeft="20px"
+                    android:layout_marginTop="10px"
                     android:textSize="15dp"
                     android:textColor="#4E300C"
                     android:text="친구 추가"
@@ -137,6 +141,7 @@
 
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_message"
                     app:cardUseCompatPadding="true"
                     app:cardPreventCornerOverlap="false"
                     app:cardElevation="0dp"
@@ -161,6 +166,7 @@
                     android:textStyle="bold"
                     android:textSize="15dp"
                     android:textColor="#4E300C"
+                    android:layout_marginTop="10px"
                     android:text="메세지 전송"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>

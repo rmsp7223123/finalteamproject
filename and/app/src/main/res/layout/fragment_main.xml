@@ -21,8 +21,8 @@
 
         android:layout_marginTop="10dp"
         android:id="@+id/imgv_menu"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:src="@drawable/menu"
         android:layout_marginLeft="20dp"
         app:tint="#FFFFFF" />
@@ -33,9 +33,19 @@
         android:layout_marginTop="10dp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="20dp"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:src="@drawable/da_ic_bell"
+        app:tint="#FFFFFF" />
+
+    <ImageView
+        android:id="@+id/imgv_calendar"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="80dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/baseline_calendar_month_24_white"
         app:tint="#FFFFFF" />
 
     <LinearLayout

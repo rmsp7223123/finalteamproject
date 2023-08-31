@@ -93,10 +93,10 @@ public class SwipeStackAdapter extends RecyclerView.Adapter<SwipeStackAdapter.Vi
             }
 
 
-            h.binding.imgvAdd.setOnClickListener(v->{
+            h.binding.cvAdd.setOnClickListener(v->{
                 fragment.dialog_friend(position);
             });
-            h.binding.imgvMessage.setOnClickListener(v->{
+            h.binding.cvMessage.setOnClickListener(v->{
                 fragment.dialog_message(position);
             });
 

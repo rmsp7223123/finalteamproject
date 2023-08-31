@@ -101,6 +101,10 @@ public class MainFragment extends Fragment{
             Intent intent = new Intent(getContext(), MainAlarmHistoryActivity.class);
             startActivity(intent);
         });
+        binding.imgvCalendar.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), CalendarActivity.class);
+            startActivity(intent);
+        });
         selectMainSlider();
         selectAlarmCount();
 
