@@ -9,6 +9,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ public class SettingFragment extends Fragment {
     FragmentSettingBinding binding;
 
     boolean isEnabled = FirebaseMessageReceiver.isIsEnabled();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -45,34 +47,6 @@ public class SettingFragment extends Fragment {
         binding.containerLinearChangeProfile.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), ChangeProfileActivity.class);
             startActivity(intent);
-        });
-        binding.containerLinearChangeGodok.setOnClickListener(v -> {
-            CommonConn conn1 = new CommonConn(getContext(), "setting/updateGodokAlarm");
-            conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
-            conn1.onExcute((isResult1, data1) ->  {
-                if(binding.tvGodok.getText().toString().equals("켜짐") ) {
-                    binding.tvGodok.setText("꺼짐");
-                    Toast.makeText(getContext(), "고독사 문자가 꺼졌습니다.", Toast.LENGTH_SHORT).show();
-                } else {
-                    binding.tvGodok.setText("켜짐");
-                    Toast.makeText(getContext(), "고독사 문자가 켜졌습니다.", Toast.LENGTH_SHORT).show();
-                }
-            });
-        });
-        binding.containerLinearChangeAlarm.setOnClickListener(v -> {
-            CommonConn conn1 = new CommonConn(getContext(), "setting/updateAlarm");
-            conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
-            conn1.onExcute((isResult, data) -> {
-                if (binding.tvAlarm.getText().toString().equals("꺼짐")) {
-                    binding.tvAlarm.setText("켜짐");
-                    setAlarmState();
-                    Toast.makeText(getContext(), "알람이 켜졌습니다.", Toast.LENGTH_SHORT).show();
-                } else {
-                    binding.tvAlarm.setText("꺼짐");
-                    setAlarmState();
-                    Toast.makeText(getContext(), "알람이 꺼졌습니다.", Toast.LENGTH_SHORT).show();
-                }
-            });
         });
         binding.containerLinearChangePw.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), ChangePasswordActivity.class);
@@ -129,7 +103,6 @@ public class SettingFragment extends Fragment {
         conn.onExcute((isResult, data) -> {
             binding.tvNickname.setText(CommonVar.logininfo.getMember_nickname());
         });
-        setAlarmState();
     }
 
     public void setAlarmState() {
@@ -138,20 +111,42 @@ public class SettingFragment extends Fragment {
         conn.onExcute((isResult, data) -> {
             ArrayList<OptionVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<OptionVO>>() {
             }.getType());
+//            binding.switchButtonGodok.setChecked(true);
+//            binding.switchButtonGodok.toggle(true);
             if (list.get(0).getOption_godok_alarm().equals("N")) {
-                binding.tvGodok.setText("꺼짐");
+                binding.switchButtonGodok.setChecked(false);
             } else {
-                binding.tvGodok.setText("켜짐");
+                binding.switchButtonGodok.setChecked(true);
             }
+            binding.switchButtonGodok.setOnCheckedChangeListener((view, isChecked) -> {
+                if (isChecked == list.get(0).getOption_godok_alarm().equals("N") ? false : true) {
+                    return;
+                }
+                CommonConn conn1 = new CommonConn(getContext(), "setting/updateGodokAlarm");
+                conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                conn1.onExcute((isResult1, data1) -> {
+                });
+            });
+            binding.switchButtonAlarm.setOnCheckedChangeListener((view, isChecked) -> {
+                if (isChecked == list.get(0).getOption_godok_alarm().equals("N") ? false : true) {
+                    return;
+                }
+                CommonConn conn1 = new CommonConn(getContext(), "setting/updateAlarm");
+                conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                conn1.onExcute((isResult1, data1) -> {
+
+                });
+            });
+
             SharedPreferences sharedPreferences = getActivity().getSharedPreferences("NotificationPrefs", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             if (list.get(0).getOption_alarm().equals("N")) {
-                binding.tvAlarm.setText("꺼짐");
+                binding.switchButtonAlarm.setChecked(false);
                 FirebaseMessageReceiver.setIsEnabled(getContext(), true);
                 editor.putBoolean("notificationEnabled", isEnabled);
                 editor.apply();
             } else {
-                binding.tvAlarm.setText("켜짐");
+                binding.switchButtonAlarm.setChecked(true);
                 FirebaseMessageReceiver.setIsEnabled(getContext(), true);
                 editor.putBoolean("notificationEnabled", isEnabled);
                 editor.apply();

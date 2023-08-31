@@ -68,7 +68,7 @@ public class SwipeStackAdapter extends RecyclerView.Adapter<SwipeStackAdapter.Vi
         }else{
            Glide.with(context).load(list.get(position).getMember_profileimg()).into(h.binding.imgvProfile);
         }
-        h.binding.tvName.setText(list.get(position).getMember_name() + " ( " + list.get(position).getMember_nickname() + ")" + "\n" +
+        h.binding.tvName.setText(list.get(position).getMember_nickname() + " (" + list.get(position).getMember_name() + ")" + "\n" +
                 list.get(position).getMember_gender() );
 //        + " , " + list.get(position).getMember_manner_score()
 

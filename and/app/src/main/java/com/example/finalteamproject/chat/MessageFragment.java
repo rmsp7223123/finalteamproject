@@ -21,6 +21,7 @@ import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.databinding.FragmentMessageBinding;
+import com.example.finalteamproject.main.AlarmVO;
 import com.example.finalteamproject.main.FriendVO;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -30,6 +31,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MessageFragment extends Fragment {
@@ -75,27 +77,11 @@ public class MessageFragment extends Fragment {
 
             }
         });
-
-//        CommonConn conn = new CommonConn(getContext(), "main/viewFriendList");
-//        conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
-//        conn.onExcute((isResult, data) -> {
-//            list = new Gson().fromJson(data, new TypeToken<ArrayList<FriendVO>>() {
-//            }.getType());
-//
-//            binding.recvMessage.setLayoutManager(new LinearLayoutManager(getContext()));
-//            binding.recvMessage.setAdapter(adapter);
-//            adapter.notifyDataSetChanged();
-//        });
         return binding.getRoot();
     }
 
     public ArrayList<FriendVO> getList() {
         ArrayList<FriendVO> list = new ArrayList<>();
-//        list.add(new MessageDTO(R.drawable.haerin2,"해린","내용1","12:34","",false));
-//        list.add(new MessageDTO(R.drawable.hanni9,"하니","내용2","11:34","",false));
-//        list.add(new MessageDTO(R.drawable.minji10,"민지","내용3","10:34","",false));
-//        list.add(new MessageDTO(R.drawable.hyein11,"혜인","내용4","14:34","",false));
-//        list.add(new MessageDTO(R.drawable.danielle11,"다니엘","내용5","15:34","",false));
         return list;
     }
 
@@ -106,14 +92,42 @@ public class MessageFragment extends Fragment {
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 FriendVO vo = snapshot.getValue(FriendVO.class);
                 if(vo.getContent().contains("https://firebasestorage.googleapis.com/")) {
-                    list.add(new FriendVO(CommonVar.logininfo.getMember_id(), vo.getFriend_id(),vo.getMember_nickname(),vo.getMember_profileimg(), vo.getTime(), "이미지", true));
+                    boolean isFirst = true;
+                    for (int i = 0; i < adapter.list.size(); i++) {
+                        if(adapter.list.get(i).getMember_nickname().equals(vo.getMember_nickname())){
+                            adapter.list.set(i , vo) ;
+                            isFirst = false;
+                            adapter.notifyDataSetChanged();
+                            break;
+                        }
+                    }
+                    if(isFirst) {
+                        list.add(new FriendVO(CommonVar.logininfo.getMember_id(), vo.getFriend_id(),vo.getMember_nickname(),vo.getMember_profileimg(), vo.getTime(), "이미지", true));
+                    }
                 } else {
-                    list.add(new FriendVO(CommonVar.logininfo.getMember_id(), vo.getFriend_id(),vo.getMember_nickname(),vo.getMember_profileimg(), vo.getTime(), vo.getContent(), true));
+                    boolean isFirst = true;
+                    for (int i = 0; i < adapter.list.size(); i++) {
+                        if(adapter.list.get(i).getMember_nickname().equals(vo.getMember_nickname())){
+                            adapter.list.set(i , vo) ;
+                            isFirst = false;
+                            adapter.notifyDataSetChanged();
+                            break;
+                        }
+                    }
+                    if(isFirst) {
+                        list.add(new FriendVO(CommonVar.logininfo.getMember_id(), vo.getFriend_id(),vo.getMember_nickname(),vo.getMember_profileimg(), vo.getTime(), vo.getContent(), true));
+                    }
                 }
 
 
 
                 adapter.notifyDataSetChanged();
+
+                if(list.size() != 0 ) {
+                    binding.containerLinearChatList.setVisibility(View.GONE);
+                } else {
+                    binding.containerLinearChatList.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override

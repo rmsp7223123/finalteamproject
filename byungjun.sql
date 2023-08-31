@@ -529,3 +529,28 @@ select * from member;
 select * from godok_alarm;
 
 commit;
+
+SELECT M.* 
+		FROM ( SELECT
+		MEMBER_ID
+		FROM FAVOR
+		WHERE MEMBER_ID != 'test1'
+		AND
+		FAVOR IN ( SELECT
+		FAVOR
+		FROM FAVOR
+		WHERE MEMBER_ID='test1'
+		)
+		GROUP BY
+		MEMBER_ID ) F
+		INNER JOIN MEMBER M ON F.MEMBER_ID = M.MEMBER_ID
+		WHERE M.MEMBER_ID NOT IN (SELECT FRIEND_ID FROM FRIEND_LIST WHERE MEMBER_ID = 'test1')
+		AND M.MEMBER_ADMIN != 1;
+        
+        select * from member;
+        
+select * from alarm;
+
+select * from option_table;
+
+commit;

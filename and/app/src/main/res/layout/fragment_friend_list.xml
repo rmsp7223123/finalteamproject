@@ -30,6 +30,43 @@
         android:layout_height="match_parent"
         android:id="@+id/recv_friend_list"/>
 
+    <LinearLayout
+        android:layout_marginTop="80dp"
+        android:id="@+id/container_linear_friend_list"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:layout_marginBottom="30dp"
+            android:layout_gravity="center"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:backgroundTint="#FFC81E"
+            app:cardCornerRadius="100dp"
+            app:cardElevation="0dp">
+
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/friend_list"
+                android:layout_gravity="center"/>
+
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/tv_alarm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="친구목록이 없습니다."
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="35dp"/>
+
+    </LinearLayout>
 
 
 

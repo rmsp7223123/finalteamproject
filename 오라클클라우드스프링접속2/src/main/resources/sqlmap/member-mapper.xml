@@ -51,7 +51,8 @@ select count(*) from member <include refid="searchWhere"/>
 <!-- 회원 정보 수정 -->
 <update id="update">
 	update member set member_name = #{member_name}, member_nickname = #{member_nickname},
-	member_birth = #{member_birth}, member_gender = #{member_gender}, member_phone = #{member_phone}
+	member_birth = #{member_birth}, member_gender = #{member_gender}, member_phone = #{member_phone}, 
+	member_address = #{member_address1}||' '||#{member_address2}
 	where member_id = #{member_id}
 </update>
 

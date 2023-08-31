@@ -238,4 +238,13 @@ public class MainController {
 		List<MemberVO> list = sql.selectList("main.detail", member_id);
 		return new Gson().toJson(list);
 	}
+	
+	//친구 삭제
+	@RequestMapping(value = "/deleteFriend", produces = "text/html;charset=utf-8")
+	public String deleteFriend(FriendVO vo) {
+		String result = sql.delete("main.deleteFriend", vo) == 2 ? "성공" : "실패";
+		return result;
+	}
+	
+	
 }

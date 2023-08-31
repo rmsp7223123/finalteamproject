@@ -31,6 +31,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.finalteamproject.ChangeStatusBar;
 import com.example.finalteamproject.FirebaseMessageReceiver;
+import com.example.finalteamproject.Login.ProgressDialog;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
@@ -99,23 +100,16 @@ public class MessageChatActivity extends AppCompatActivity {
         binding.imgvSend.setOnClickListener(v -> {
             String messageText = binding.edtMessage.getText().toString();
             if (!messageText.isEmpty()) {
+                currentTime = dateFormat.format(new Date());
                 FriendVO vo = new FriendVO(friendVO.getMember_id(), friendVO.getFriend_id(), friendVO.getMember_nickname(), friendVO.getMember_profileimg(), currentTime, binding.edtMessage.getText().toString(), true);
-
-                    vo.setMember_nickname(friendVO.getMember_nickname());
-                    sendMsg(friendVO.getMember_id(), friendVO.getFriend_id() ,vo, true);
-
-                    vo.setMember_id(friendVO.getFriend_id());
-                    vo.setFriend_id(friendVO.getMember_id());
-                    vo.setMember_profileimg(CommonVar.logininfo.getMember_profileimg());
-                     vo.setMember_nickname(CommonVar.logininfo.getMember_nickname());
-                    sendMsg(friendVO.getFriend_id(), friendVO.getMember_id() ,vo, false);
-                //vo.setMember_nickname(CommonVar.logininfo.getMember_nickname());
-                //friendVO.getMember_nickname()
-                // isChatCheck가 true일때 상대방 닉네임이 들어가야함
-
-
-                    sendNotification(vo);
-
+                vo.setMember_nickname(friendVO.getMember_nickname());
+                sendMsg(friendVO.getMember_id(), friendVO.getFriend_id(), vo, true);
+                vo.setMember_id(friendVO.getFriend_id());
+                vo.setFriend_id(friendVO.getMember_id());
+                vo.setMember_profileimg(CommonVar.logininfo.getMember_profileimg());
+                vo.setMember_nickname(CommonVar.logininfo.getMember_nickname());
+                sendMsg(friendVO.getFriend_id(), friendVO.getMember_id(), vo, false);
+                sendNotification(vo);
                 binding.edtMessage.setText("");
             }
         });
@@ -125,7 +119,8 @@ public class MessageChatActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 FriendVO friendVO = dataSnapshot.getValue(FriendVO.class);
-                adapter.addData(friendVO);
+                    adapter.addData(friendVO);
+
                 int position = adapter.getItemCount() - 1;
                 if (position >= 0) {
                     binding.recvMessageChat.scrollToPosition(position);
@@ -160,11 +155,8 @@ public class MessageChatActivity extends AppCompatActivity {
 
         binding.containerLinearSendFile.setVisibility(View.GONE);
         binding.imgvSendFile.setOnClickListener(view -> {
-            // 키보드가 올라온 상태에서 + 버튼을 눌렀을때 키보드가 내려가게
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(binding.imgvSendFile.getWindowToken(), 0);
-
-
             if (sendCnt % 2 == 1) {
                 binding.containerLinearSendFile.setVisibility(View.VISIBLE);
             } else {
@@ -215,9 +207,9 @@ public class MessageChatActivity extends AppCompatActivity {
 
 
     //param1 =friendVO.getFriend_id()
-    public void sendMsg(String mainId , String subId , FriendVO vo, boolean isChatCheck) {
+    public void sendMsg(String mainId, String subId, FriendVO vo, boolean isChatCheck) {
         DatabaseReference def = databaseReference.child("chat").child(mainId).child(subId);
-        messageId =def.push().getKey();
+        messageId = def.push().getKey();
         vo.setCheck(isChatCheck);
         def.child(messageId).setValue(vo);
         binding.recvMessageChat.scrollToPosition(adapter.getItemCount() - 1);
@@ -251,8 +243,13 @@ public class MessageChatActivity extends AppCompatActivity {
                 String imageUrl = uri.toString();
                 String currentTime = dateFormat.format(new Date());
                 FriendVO vo = new FriendVO(friendVO.getMember_id(), friendVO.getFriend_id(), friendVO.getMember_nickname(), friendVO.getMember_profileimg(), currentTime, imageUrl, true);
-                sendMsg(friendVO.getMember_id(), friendVO.getFriend_id() ,vo, true);
-                sendMsg(friendVO.getFriend_id(), friendVO.getMember_id() ,vo, false);
+                vo.setMember_nickname(friendVO.getMember_nickname());
+                sendMsg(friendVO.getMember_id(), friendVO.getFriend_id(), vo, true);
+                vo.setMember_id(friendVO.getFriend_id());
+                vo.setFriend_id(friendVO.getMember_id());
+                vo.setMember_profileimg(CommonVar.logininfo.getMember_profileimg());
+                vo.setMember_nickname(CommonVar.logininfo.getMember_nickname());
+                sendMsg(friendVO.getFriend_id(), friendVO.getMember_id(), vo, false);
                 sendNotification(vo);
                 adapter.notifyDataSetChanged();
             });
@@ -322,9 +319,15 @@ public class MessageChatActivity extends AppCompatActivity {
                             upload.add(riversRef.putFile(imageUri));
                             upload.get(tempIdx).addOnCompleteListener(command -> {
                                 upload.get(tempIdx).getResult().getStorage().getDownloadUrl().addOnCompleteListener(command1 -> {
+                                    currentTime = dateFormat.format(new Date());
                                     FriendVO vo = new FriendVO(friendVO.getMember_id(), friendVO.getFriend_id(), friendVO.getMember_nickname(), friendVO.getMember_profileimg(), currentTime, command1.getResult() + "", true);
-                                    sendMsg(friendVO.getMember_id(), friendVO.getFriend_id() ,vo, true);
-                                    sendMsg(friendVO.getFriend_id(), friendVO.getMember_id() ,vo, false);
+                                    vo.setMember_nickname(friendVO.getMember_nickname());
+                                    sendMsg(friendVO.getMember_id(), friendVO.getFriend_id(), vo, true);
+                                    vo.setMember_id(friendVO.getFriend_id());
+                                    vo.setFriend_id(friendVO.getMember_id());
+                                    vo.setMember_profileimg(CommonVar.logininfo.getMember_profileimg());
+                                    vo.setMember_nickname(CommonVar.logininfo.getMember_nickname());
+                                    sendMsg(friendVO.getFriend_id(), friendVO.getMember_id(), vo, false);
                                     sendNotification(vo);
                                 });
 
@@ -358,14 +361,15 @@ public class MessageChatActivity extends AppCompatActivity {
             CommonConn conn = new CommonConn(this, "main/addAlarm");
             conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
             conn.addParamMap("alarm_content", CommonVar.logininfo.getMember_nickname() + "님이 메시지를 보냈습니다.");
+            currentTime = dateFormat.format(new Date());
             conn.addParamMap("alarm_time", currentTime);
-            conn.addParamMap("receive_id", vo.getFriend_id());
+            conn.addParamMap("receive_id", vo.getMember_id());
 
-            conn.onExcute((isResult1, data1) -> {
-                if (isResult1) {
-                    Log.d("TAG", "onClick: " + "확인용");
-                }
-            });
+        conn.onExcute((isResult1, data1) -> {
+            if (isResult1) {
+                Log.d("TAG", "onClick: " + "확인용");
+            }
+        });
     }
 
 }

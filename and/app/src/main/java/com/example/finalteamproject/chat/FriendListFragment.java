@@ -85,7 +85,12 @@ public class FriendListFragment extends Fragment {
         conn.onExcute((isResult, data) -> {
             list = new Gson().fromJson(data, new TypeToken<ArrayList<FriendVO>>() {
             }.getType());
-            adapter = new FriendListAdapter(list, getContext());
+            if(list.size() != 0) {
+                binding.containerLinearFriendList.setVisibility(View.GONE);
+            } else {
+                binding.containerLinearFriendList.setVisibility(View.VISIBLE);
+            }
+            adapter = new FriendListAdapter(list, getContext(), this);
             binding.recvFriendList.setAdapter(adapter);
             binding.recvFriendList.setLayoutManager(new LinearLayoutManager(getContext()));
             adapter.notifyDataSetChanged();

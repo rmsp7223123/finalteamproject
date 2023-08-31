@@ -46,6 +46,9 @@ android {
 }
 
 dependencies {
+    // xml 스위치
+    implementation 'com.github.zcweng:switch-button:0.0.3@aar'
+
     //파이어베이스 실시간 알람
     // Firebase Cloud Messaging (Java)
     implementation("com.google.firebase:firebase-messaging")

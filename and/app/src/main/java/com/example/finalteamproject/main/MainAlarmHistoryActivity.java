@@ -49,8 +49,8 @@ public class MainAlarmHistoryActivity extends AppCompatActivity {
                     // 알람 지웠을 때 알람기록 다 지우기 추가
                     CommonConn conn1 = new CommonConn(this, "main/deleteAlarm");
                     Log.d("id", "onCreate: "+CommonVar.logininfo.getMember_id());
-                    conn.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
-                    conn.onExcute((isResult1, data1) -> {
+                    conn1.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
+                    conn1.onExcute((isResult1, data1) -> {
                         alarmVisibility(View.VISIBLE);
                         adapter.list = new ArrayList<>();
                         adapter.notifyDataSetChanged();

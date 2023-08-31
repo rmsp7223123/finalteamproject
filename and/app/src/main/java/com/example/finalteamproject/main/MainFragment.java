@@ -229,6 +229,7 @@ public class MainFragment extends Fragment{
         conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
 
         builder.setTitle("메시지 보내기");
+        builder.setMessage(list.get(position).getMember_nickname() + "님에게 메시지 보내기");
         builder.setPositiveButton("취소", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

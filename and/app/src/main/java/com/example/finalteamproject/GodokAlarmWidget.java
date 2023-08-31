@@ -62,13 +62,20 @@ public class GodokAlarmWidget extends AppWidgetProvider {
 
     @Override
     public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
+        Log.d("위젯", "onAppWidgetOptionsChanged: ");
         super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
+        Log.d("위젯", "onAppWidgetOptionsChanged: "+"asdasdsad");
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d("위젯", "onReceive: ");
         super.onReceive(context, intent);
+//        String action = intent.getAction();
+//        if(action.equals(ACTION_WIDGET_CLICKED)) {
+//            Log.d("위젯", "onReceive: " + " 확인용1");
+//        }
+        Log.d("위젯", "onReceive: " + " 확인용2");
 //        String member_id = intent.getStringExtra("member_id");
 //        Toast.makeText(context, "확인용ㅇㅇㅇㅇㅇ", Toast.LENGTH_SHORT).show();
 //        if (intent.getAction() != null && intent.getAction().equals(ACTION_WIDGET_CLICKED) && member_id != null) {

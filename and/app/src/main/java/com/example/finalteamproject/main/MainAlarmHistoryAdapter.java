@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,6 +91,7 @@ public class MainAlarmHistoryAdapter extends RecyclerView.Adapter<MainAlarmHisto
                 CommonConn conn2 = new CommonConn(context, "main/deleteAlarm");
                 conn2.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
                 conn2.addParamMap("nickname", list.get(idx).getAlarm_content().substring(0, list.get(idx).getAlarm_content().indexOf("님")));
+                Log.d("TAG", "onBindViewHolder: "+list.get(idx).getAlarm_content().substring(0, list.get(idx).getAlarm_content().indexOf("님")));
                 conn2.addParamMap("alarm_content2", "메시지를");
                 conn2.onExcute((isResult, data) -> {
                     CommonConn conn1 = new CommonConn(context, "main/detail");
