@@ -66,6 +66,15 @@ public class ViController {
 	    return new Gson().toJson(result);
 	}
 	
+	@ResponseBody
+	@RequestMapping("/count")
+	public String count() {
+		List<SeniorVO> result = sql.selectList("vi.count");
+	    return new Gson().toJson(result);
+	}
+	
+	
+	
 //	@RequestMapping("/geo")
 //	public String geo(HttpSession session) {
 //		session.setAttribute("category", "vi");
@@ -75,13 +84,6 @@ public class ViController {
 	@RequestMapping("/geo")
 	public String geo() {
 		return "vi/geo";
-	}
-	
-	@ResponseBody
-	@RequestMapping("/count")
-	public String count() {
-		List<SeniorVO> result = sql.selectList("vi.count");
-	    return new Gson().toJson(result);
 	}
 
 }

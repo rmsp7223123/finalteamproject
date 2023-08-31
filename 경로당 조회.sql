@@ -52,8 +52,12 @@ where b.key=s.key and s.key=l.key and b.member_id='test'
 ;
 
 
+<<<<<<< Updated upstream
 
 select * from senior where key = 6978;
+=======
+select * from senior_bmark;
+>>>>>>> Stashed changes
 --mapper
 --좋아요 버튼기능
 select * from senior_like
@@ -106,7 +110,7 @@ WHEN NOT MATCHED THEN
 --좋아요 누름
 --자주가는 경로당(즐겨찾기) 추가
 insert into SENIOR_BMARK (KEY, MEMBER_ID)
-values(2, 'conan1');
+values(12, 'test');
 
 --좋아요 테이블에 컬럼 생성
 insert into SENIOR_LIKE (MEMBER_ID, KEY, SENIOR_LIKE_NUM)
