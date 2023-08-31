@@ -86,5 +86,11 @@
 	<select id="viewAlarmCnt" resultType="Integer">
 		select count(alarm_content) as content_cnt from alarm where receive_id = #{receive_id}
 	</select>
+	
+	<!-- 친구 삭제 -->
+	<delete id="deleteFriend">
+		delete friend_list where (member_id = #{member_id} and friend_id = #{friend_id})
+								or (member_id = #{friend_id} and friend_id = #{member_id})
+	</delete>
 
 </mapper>

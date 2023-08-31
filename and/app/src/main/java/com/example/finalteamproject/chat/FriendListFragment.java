@@ -90,7 +90,7 @@ public class FriendListFragment extends Fragment {
             } else {
                 binding.containerLinearFriendList.setVisibility(View.VISIBLE);
             }
-            adapter = new FriendListAdapter(list, getContext());
+            adapter = new FriendListAdapter(list, getContext(), this);
             binding.recvFriendList.setAdapter(adapter);
             binding.recvFriendList.setLayoutManager(new LinearLayoutManager(getContext()));
             adapter.notifyDataSetChanged();
