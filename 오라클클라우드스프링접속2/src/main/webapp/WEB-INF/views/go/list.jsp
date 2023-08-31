@@ -61,9 +61,7 @@
 			<c:forEach items="${page.list }" var="vo">
 				<tr>
 					<td>${vo.no }</td>
-					<td class="text-start"><a class="text-link"
-						href="info?id=${vo.member_id}&curPage=${page.curPage}&search=${page.search}&keyword=${page.keyword}">
-							${vo.member_id } </a></td>
+					<td class="text-start">${vo.member_id }</td>
 					<td>${vo.alarm_time }</td>
 					<td>${vo.member_name }</td>
 					<td>${vo.ephone_name }</td>
@@ -82,7 +80,6 @@
 				console.log("teststet");
 			})
 		})
-		
 	</script>
 </body>
 </html>

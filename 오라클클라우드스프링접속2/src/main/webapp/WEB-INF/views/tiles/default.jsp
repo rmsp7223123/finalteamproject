@@ -11,7 +11,7 @@
 	type="image/x-icon">
 </head>
 <body>
-<div class="container" style = "width:100%;">
+<div class="container" style = "width:100%; margin:0; padding:0;">
 		<tiles:insertAttribute name ="container"/>
 	</div>
 </body>

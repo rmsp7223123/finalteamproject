@@ -66,11 +66,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             Log.d("TAG", "onBindViewHolder: " + binding.tvNickname.getText().toString());
             conn2.addParamMap("alarm_content2", "메시지를");
             conn2.onExcute((isResult, data) -> {
-                CommonConn conn1 = new CommonConn(context, "main/detail");
-                conn1.addParamMap("member_id", list.get(position).getMember_id());
-                conn1.onExcute((isResult1, data1) -> {
                     context.startActivity(intent);
-                });
             });
         });
     }

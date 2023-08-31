@@ -6,12 +6,14 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.example.finalteamproject.R;
+import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.databinding.FragmentFriendDetailBinding;
 import com.example.finalteamproject.main.FriendVO;
@@ -39,7 +41,13 @@ public class FriendDetailFragment extends Fragment {
             Intent intent = new Intent(getContext(), MessageChatActivity.class);
             friendVO.setMember_id(CommonVar.logininfo.getMember_id());
             intent.putExtra("vo",friendVO);
-            startActivity(intent);
+            CommonConn conn2 = new CommonConn(getContext(), "main/deleteAlarm");
+            conn2.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
+            conn2.addParamMap("nickname", binding.tvDetailNickname.getText().toString());
+            conn2.addParamMap("alarm_content2", "메시지를");
+            conn2.onExcute((isResult, data) -> {
+                startActivity(intent);
+            });
         });
 
         return binding.getRoot();
