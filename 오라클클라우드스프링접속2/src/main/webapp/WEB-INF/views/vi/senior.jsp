@@ -114,12 +114,11 @@
 		            dataType: 'json',
 		            success: function(data) {
 		                // 데이터 처리 후 색상 설정
-		                var regionColors = {}; // 지역명과 색상을 저장할 객체 초기화
+		                var regionColors = {}; // 지역명과 색상
 		                
-		                // 데이터 처리 예시 (data가 배열로 가정)
 		                for (var i = 0; i < data.length; i++) {
-		                    var region = data[i].region; // 지역명 가져오기
-		                    var count = data[i].count;   // 조회 값 가져오기
+		                    var region = data[i].region;
+		                    var count = data[i].count;
 		                    
 		                    // 조건에 따라 지역별로 다른 색상 적용
 		                    if (count < 500) {
