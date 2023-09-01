@@ -29,9 +29,6 @@
 	<div class="canvas">
 		<canvas id="Chart" width="900" height="500" style="margin-left : 100px"></canvas>
 		</div>
-
-		<div class="tab-pane fade" id="region"></div>
-		<div class="tab-pane fade" id="pop"></div>
 	</div>
 
 
@@ -43,7 +40,7 @@
 		initCanvas();
 		console.log($(this).index())
 		if($(this).index()==0)
-		//region();
+		region();
 		else
 		pop();
 	})
@@ -60,7 +57,7 @@
 	
 	
 	<!-- 지역별 통계 -->
-		/* function region() {
+		function region() {
 			let region = [];
 			let count = [];
 			
@@ -119,7 +116,7 @@
 					alert("some error");
 				}
 			}); //ajax
-		} //그래프 */
+		} //그래프
 
 
 
