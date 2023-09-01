@@ -122,15 +122,15 @@
 		                    
 		                    // 조건에 따라 지역별로 다른 색상 적용
 		                    if (count < 500) {
-		                        regionColors[region] = '#775995';
+		                        regionColors[region] = '#fce5dc';
 		                    } else if (count < 1000) {
-		                    	regionColors[region] = '#29797f';
+		                    	regionColors[region] = '#ffb699';
 							}else if (count < 1500) {
-								regionColors[region] = '#29d1bb';
+								regionColors[region] = '#fc936a';
 							}else if (count < 3000) {
-		                        regionColors[region] = '#f8cf63';
+		                        regionColors[region] = '#fc5d1e';
 		                    }else {
-		                        regionColors[region] = '#fc7b1d';
+		                        regionColors[region] = '#ff4800';
 		                    }
 		                }
 		                
