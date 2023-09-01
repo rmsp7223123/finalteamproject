@@ -26,23 +26,17 @@
     </style>
 
     <style name="ChipCategoryStyle" parent="Widget.MaterialComponents.Chip.Choice">
- <item name="android:layout_width">wrap_content</item>
-<item name="android:layout_height">wrap_content</item>
-<item name="android:textSize">15dp</item>
-<item name="chipMinHeight">30dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">15dp</item>
+        <item name="chipMinHeight">30dp</item>
         <item name="android:textStyle">bold</item>
-<item name="chipStartPadding">10dp</item>
-<item name="chipEndPadding">10dp</item>
-<item name="chipBackgroundColor">@color/main_color</item>
-<item name="chipIconTint">#fffFff</item>
+        <item name="chipStartPadding">10dp</item>
+        <item name="chipEndPadding">10dp</item>
+        <item name="chipBackgroundColor">@color/main_color</item>
+        <item name="chipIconTint">#fffFff</item>
         <item name="android:textColor">#FFFFFF</item>
-<item name="chipIconEnabled">true</item>
-
-
-
-
-
-
+        <item name="chipIconEnabled">true</item>
 
 
     </style>
