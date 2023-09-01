@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-<style type="text/css">
+<!-- <style type="text/css">
 #container {
 	width: 700px;
 	min-height: 700px;
@@ -40,7 +40,7 @@
 	font-size: 12px;
 	fill: #fff;
 }
-</style>
+</style> -->
 
 <meta charset="UTF-8">
 <title>Insert title here</title>
