@@ -147,7 +147,7 @@ public class CalendarActivity extends AppCompatActivity {
 
             if (calendarList2.size() != 0) {
                 for (int i = 0; i < calendarList2.size(); i++) {
-                    String[] tempDate = calendarList2.get(i).calendar_date.split("-");
+                    String[] tempDate = calendarList2.get(i).getCalendar_date().split("-");
                     CalendarDay day = CalendarDay.from(Integer.parseInt(tempDate[0]), Integer.parseInt(tempDate[1]) - 1, Integer.parseInt(tempDate[2]));
                     set.add(day);
 

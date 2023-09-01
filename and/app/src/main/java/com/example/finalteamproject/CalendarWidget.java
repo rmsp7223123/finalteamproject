@@ -64,9 +64,9 @@ public class CalendarWidget extends AppWidgetProvider {
                         if(list.get(i).getCalendar_importance().equals("1")){
                             views.setImageViewResource(arr.get(i).imgv, R.drawable.importance1);
                         }else if(list.get(i).getCalendar_importance().equals("2")){
-                            views.setImageViewResource(arr.get(i).imgv, R.drawable.importance2);
-                        }else {
                             views.setImageViewResource(arr.get(i).imgv, R.drawable.importance3);
+                        }else {
+                            views.setImageViewResource(arr.get(i).imgv, R.drawable.importance2);
                         }
                         if(list.get(i).getCalendar_content().length()>5){
                             views.setTextViewText(arr.get(i).tv_content, list.get(i).getCalendar_content().substring(0, 5)+"...");
@@ -131,4 +131,5 @@ public class CalendarWidget extends AppWidgetProvider {
     public void onDisabled(Context context) {
         // Enter relevant functionality for when the last widget is disabled
     }
+
 }

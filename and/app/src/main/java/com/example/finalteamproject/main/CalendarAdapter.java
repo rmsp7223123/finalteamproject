@@ -51,15 +51,15 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
     // 그 달력 내용 변경하는건데 스케쥴 이게 좀 이상해요
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.binding.tvContent.setText(calendarList.get(position).calendar_content);
+        holder.binding.tvContent.setText(calendarList.get(position).getCalendar_content());
         holder.binding.tvContent.setOnClickListener(v -> {
                 Dialog dialog = new Dialog(context);
                 ItemCalendarBinding dialogBinding = ItemCalendarBinding.inflate(LayoutInflater.from(context));
                 dialog.setContentView(dialogBinding.getRoot());
-                dialogBinding.dateText.setText(calendarList.get(position).calendar_date);
-                dialogBinding.content.setText(calendarList.get(position).calendar_content);
+                dialogBinding.dateText.setText(calendarList.get(position).getCalendar_date());
+                dialogBinding.content.setText(calendarList.get(position).getCalendar_content());
                 try{
-                    RadioButton btn = (RadioButton) dialogBinding.radioGroup.getChildAt(3-Integer.parseInt(calendarList.get(position).calendar_importance));
+                    RadioButton btn = (RadioButton) dialogBinding.radioGroup.getChildAt(3-Integer.parseInt(calendarList.get(position).getCalendar_importance()));
                     btn.setChecked(true);
                 }catch (Exception e){
                     Log.d("TAG", "onBindViewHolder: 중요도 없음.");
@@ -75,7 +75,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
                     CommonConn conn1 = new CommonConn(context, "main/updateSchedule");
                     conn1.addParamMap("calendar_content", dialogBinding.content.getText().toString());
                     conn1.addParamMap("calendar_importance", importance);
-                    conn1.addParamMap("calendar_id", calendarList.get(position).calendar_id);
+                    conn1.addParamMap("calendar_id", calendarList.get(position).getCalendar_id());
                     conn1.onExcute((isResult1, data1) -> {
                         CalendarVO vo = new Gson().fromJson(data1,CalendarVO.class);
                         if(vo !=null){
@@ -88,7 +88,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
                 dialogBinding.cancelDialogBtn.setOnClickListener(view -> {
                     CommonConn conn1 = new CommonConn(context, "main/deleteScheduleOne");
                     conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
-                    conn1.addParamMap("calendar_id", calendarList.get(position).calendar_id);
+                    conn1.addParamMap("calendar_id", calendarList.get(position).getCalendar_id());
                     conn1.onExcute((isResult1, data1) -> {
                         calendarList.remove(position);
                         notifyDataSetChanged();
