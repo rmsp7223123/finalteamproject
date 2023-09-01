@@ -93,17 +93,6 @@ function drawMap(target) {
     var states = svg
         .append('g')
         .attr('id', 'states')
-//        .call(zoom);
-    
-    // 선택한 지역에 따라 색상을 다르게 설정하기 위한 색상 매핑 정보
-        var regionColors = {
-            '서울특별시': '#FF5733',
-            '부산광역시': '#FFC300',
-            '인천광역시': '#36A2EB',
-            '대구광역시': '#4CAF50',
-            '광주광역시': '#9C27B0'
-        };
-    
     
         $.ajax({
             url: 'region',
@@ -197,12 +186,6 @@ function drawMap(target) {
                     : initialScale / height + 10;
         }
         return 'translate(' + arr + ')';
-    }
-
-    function zoom() {
-        projection.translate(d3.event.translate).scale(d3.event.scale);
-        states.selectAll('path').attr('d', path);
-        labels.attr('transform', translateTolabel);
     }
 			
 }

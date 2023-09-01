@@ -43,7 +43,7 @@
 		initCanvas();
 		console.log($(this).index())
 		if($(this).index()==0)
-		region();
+		//region();
 		else
 		pop();
 	})
@@ -56,8 +56,11 @@
 	
 	
 	
+	
+	
+	
 	<!-- 지역별 통계 -->
-		function region() {
+		/* function region() {
 			let region = [];
 			let count = [];
 			
@@ -116,7 +119,7 @@
 					alert("some error");
 				}
 			}); //ajax
-		} //그래프
+		} //그래프 */
 
 
 
