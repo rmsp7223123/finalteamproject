@@ -50,6 +50,7 @@
 		else{
 			initdiv();
 			pop();
+			$('#legend').remove();
 		}
 			
 	});
@@ -337,7 +338,6 @@
 		}
 		function initdiv() {
 			$('div#container').remove();
-			$('div#legend').remove();
 			$('#tab-content').append(
 					`<canvas id="Chart" width="900" height="500" style="margin-left : 100px"></canvas>`);
 		}
