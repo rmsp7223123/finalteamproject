@@ -252,6 +252,11 @@ public class MainController {
 		param.put("calendar_date", vo.getCalendar_date());
 		param.put("calendar_importance", vo.getCalendar_importance());
 		sql.insert("main.addSchedule", param);
+	//친구 삭제
+	@RequestMapping(value = "/schedule", produces = "text/html;charset=utf-8")
+	public String schedule(String member_id) {
+		String result = sql.delete("main.deleteFriend", vo) == 2 ? "성공" : "실패";
+		return result;
 	}
 	
 	

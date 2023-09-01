@@ -7,16 +7,19 @@
         <item name="appWidgetRadius">@android:dimen/system_app_widget_background_radius</item>
         <item name="appWidgetInnerRadius">@android:dimen/system_app_widget_inner_radius</item>
     </style>
+
     <style name="CalendarWidgetHeader">
         <item name="android:textSize">15sp</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:fontFamily">@font/sc_dream5</item>
     </style>
+
     <style name="CalendarWidgetWeek">
         <item name="android:textSize">15sp</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:fontFamily">@font/sc_dream4</item>
     </style>
+
     <style name="CalendarWidgetDay">
         <item name="android:textColor">@color/black</item>
         <item name="android:fontFamily">@font/sc_dream4</item>
