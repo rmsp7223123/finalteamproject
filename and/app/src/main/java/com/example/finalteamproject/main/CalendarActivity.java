@@ -2,12 +2,15 @@ package com.example.finalteamproject.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.icu.util.Calendar;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 
 import com.example.finalteamproject.ChangeStatusBar;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.databinding.ActivityCalendarBinding;
+import com.example.finalteamproject.databinding.DialogAddScheduleBinding;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 public class CalendarActivity extends AppCompatActivity {
@@ -34,5 +37,22 @@ public class CalendarActivity extends AppCompatActivity {
         binding.imgvBack.setOnClickListener(v -> {
             finish();
         });
+        binding.addScheduleBtn.setOnClickListener(v -> {
+            showScheduleDialog();
+        });
+
+    }
+
+    private void showScheduleDialog() {
+        Dialog dialog = new Dialog(this);
+        DialogAddScheduleBinding dialogBinding = DialogAddScheduleBinding.inflate(LayoutInflater.from(this));
+        dialog.setContentView(dialogBinding.getRoot());
+        dialogBinding.saveScheduleBtn.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+        dialogBinding.cancelDialogBtn.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+        dialog.show();
     }
 }

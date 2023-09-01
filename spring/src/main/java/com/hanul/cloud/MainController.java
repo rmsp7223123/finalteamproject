@@ -246,5 +246,10 @@ public class MainController {
 		return result;
 	}
 	
+	@RequestMapping("/viewCalendarList")
+	public String viewCalendarList(String member_id) {
+		return "";
+	}
+	
 	
 }
