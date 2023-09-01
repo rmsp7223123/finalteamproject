@@ -27,8 +27,11 @@
  -->
 
 	<div id="tab-content" class="container d-flex align-items-center">
-	<div class="canvas">
 		<div id="container"></div>
+		<div style="width:500px; height:100px; border:1px dotted; padding:10px;">
+		범례
+		</div>
+	<div class="canvas">
 		<canvas id="Chart" width="900" height="500" style="margin-left : 100px"></canvas>
 		</div>
 	</div>
@@ -129,7 +132,7 @@
 		        .attr('class', 'background')
 		        .attr('width', width + 'px')
 		        .attr('height', height + 'px')
-		    	.attr('fill', '#ffffff'); //배경색(흰색)
+		    	.attr('fill', '#a6a6a6'); //배경색(흰색)
 				
 		    //geoJson데이터를 파싱하여 지도그리기
 		    d3.json('/cloudWeb/json/korea.json', function(json) {
