@@ -231,13 +231,6 @@ public class MainController {
 		return new Gson().toJson(list);
 	}
 	
-	//친구 삭제
-	@RequestMapping(value = "/deleteFriend", produces = "text/html;charset=utf-8")
-	public String deleteFriend(FriendVO vo) {
-		String result = sql.delete("main.deleteFriend", vo) == 2 ? "성공" : "실패";
-		return result;
-	}
-	
 	@RequestMapping(value = "/viewCalendarList" , produces = "text/html;charset=utf-8")
 	public String viewCalendarList(String member_id) {
 		List<CalendarVO> list =  sql.selectList("main.viewCalendarList", member_id);
@@ -253,12 +246,21 @@ public class MainController {
 		param.put("calendar_importance", vo.getCalendar_importance());
 		sql.insert("main.addSchedule", param);
 	}
+	
 	//친구 삭제
-	@RequestMapping(value = "/schedule", produces = "text/html;charset=utf-8")
-	public String schedule(String member_id) {
+	@RequestMapping(value = "/deleteFriend", produces = "text/html;charset=utf-8")
+	public String deleteFriend(FriendVO vo) {
 		String result = sql.delete("main.deleteFriend", vo) == 2 ? "성공" : "실패";
 		return result;
 	}
+	
+	//위젯 일정 가져오기
+	@RequestMapping(value = "/widgetSchedule", produces = "text/html;charset=utf-8")
+	public String widgetSchedule(String member_id) {
+		List<CalendarVO> list = sql.selectList("main.widgetSchedule", member_id);
+		return new Gson().toJson(list);
+	}
+	
 	
 	
 }

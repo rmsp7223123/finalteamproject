@@ -101,7 +101,7 @@ public class CalendarActivity extends AppCompatActivity{
             ArrayList<CalendarVO> calendarList = new Gson().fromJson(data, new TypeToken<ArrayList<CalendarVO>>(){}.getType());
             if(calendarList.size() != 0) {
                 for (int i = 0; i < calendarList.size(); i++) {
-                    String[] tempDate = calendarList.get(i).calendar_date.split("-");
+                    String[] tempDate = calendarList.get(i).getCalendar_date().split("-");
 
                     CalendarDay day =CalendarDay.from(Integer.parseInt(tempDate[0]),Integer.parseInt(tempDate[1])-1,Integer.parseInt(tempDate[2]));
 
