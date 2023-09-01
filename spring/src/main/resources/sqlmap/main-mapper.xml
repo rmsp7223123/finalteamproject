@@ -116,9 +116,24 @@
 		calendar_date, calendar_importance) values (#{member_id},
 		#{calendar_content}, #{calendar_date}, #{calendar_importance})
 	</insert>
-	
-	<select id="viewScheduleOne" resultType="cloud.member.CalendarVO">
-		select calendar_content from calendar where member_id = #{member_id} and calendar_date = #{calendar_date}
-	</select>
 
+	<select id="viewScheduleOne"
+		resultType="cloud.member.CalendarVO">
+		select * from calendar where member_id = #{member_id} and
+		calendar_date = #{calendar_date}
+	</select>
+	<delete id="deleteScheduleOne">
+		delete calendar where member_id = #{member_id} and
+		calendar_id = #{calendar_id}
+	</delete>
+
+	<update id="updateSchedule">
+		update calendar set calendar_content =
+		#{calendar_content}, calendar_importance = #{calendar_importance}
+		where calendar_id = #{calendar_id}
+	</update>
+	<select id="selectScheduleOne" resultType="cloud.member.CalendarVO">
+		select * from calendar
+		where calendar_id = #{calendar_id}
+	</select>
 </mapper>

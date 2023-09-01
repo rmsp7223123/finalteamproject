@@ -45,7 +45,7 @@ public class CalendarActivity extends AppCompatActivity {
     ArrayList<CalendarVO> calendarList = new ArrayList<>();
 
     Dialog dialog;
-
+// 다ㅓ된건가요? 한번만 봐볼게요
     DialogAddScheduleBinding dialogBinding;
 
     @Override
@@ -57,12 +57,11 @@ public class CalendarActivity extends AppCompatActivity {
         viewCalendar();
         new ChangeStatusBar().changeStatusBarColor(this);
         binding.calendarView.setSelectedDate(CalendarDay.today());
+        selectItem(CalendarDay.today());
         int year = binding.calendarView.getSelectedDate().getYear();
         int month = binding.calendarView.getSelectedDate().getMonth() + 1;
         int day = binding.calendarView.getSelectedDate().getDay();
         selectedDate = year + "-" + month + "-" + day;
-
-
         binding.imgvBack.setOnClickListener(v -> {
             finish();
         });
@@ -73,36 +72,7 @@ public class CalendarActivity extends AppCompatActivity {
         binding.calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-                // 디비에 날짜 보내서 다시 셀렉트.
-                // 달력에 점찍기 할때는 디비에서 groupby로 날짜별로 하나만 가져와야함.
-//                adapter.calendarList.removeAll();
-                Calendar selectedCalendar = date.getCalendar();
-                int year = selectedCalendar.get(Calendar.YEAR);
-                int month = selectedCalendar.get(Calendar.MONTH  )+1;
-                int day = selectedCalendar.get(Calendar.DAY_OF_MONTH);
-                String modifiedDate = year + "-" + month + "-" + day;
-                selectedDate = modifiedDate;
-                adapter.calendarList.clear();
-                for (int i = 0; i < calendarList.size(); i++) {
-                    Log.d("확인", "onDateSelected: " + date.getDate());
-                    if (calendarList.get(i).calendar_date.equals(modifiedDate)) {
-                        CalendarVO vo = new CalendarVO();
-                        vo.calendar_content = calendarList.get(i).calendar_content;
-                        adapter.calendarList.add(vo);//
-                    }
-                }
-                CommonConn conn = new CommonConn(getApplicationContext(), "main/viewScheduleOne");
-                conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
-                conn.addParamMap("calendar_date", modifiedDate);
-                conn.onExcute((isResult, data) -> {
-                    ArrayList<CalendarVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<CalendarVO>>(){}.getType());
-                    if(list.size() == 0) {
-                        binding.emptyText.setVisibility(View.VISIBLE);
-                    } else {
-                        binding.emptyText.setVisibility(View.GONE);
-                    }
-                });
-                adapter.notifyDataSetChanged();
+                selectItem(date);
             }
 
         });
@@ -122,8 +92,14 @@ public class CalendarActivity extends AppCompatActivity {
             } else {
                 for (int i = 0; i < dialogBinding.radioGroup.getChildCount(); i++) {
                     RadioButton btn = (RadioButton) dialogBinding.radioGroup.getChildAt(i);
-                    if (btn.isChecked() == true) {
-                        importance = btn.getText().toString();
+                    if (btn.isChecked() == true && btn.getText().toString().equals("적음")) {
+                        importance = "1";
+                        break;
+                    } else if(btn.isChecked() == true && btn.getText().toString().equals("중간")) {
+                        importance = "2";
+                        break;
+                    } else {
+                        importance = "3";
                         break;
                     }
                 }
@@ -133,6 +109,7 @@ public class CalendarActivity extends AppCompatActivity {
                 conn.addParamMap("calendar_date", dialogBinding.dateText.getText().toString());
                 conn.addParamMap("calendar_importance", importance);
                 conn.onExcute((isResult, data) -> {
+                    adapter.notifyDataSetChanged();
                     viewCalendar();
                     dialog.dismiss();
                 });
@@ -169,6 +146,39 @@ public class CalendarActivity extends AppCompatActivity {
 
             binding.calendarView.addDecorator(new DateDecorator(Color.RED, set));
         });
+    }
+
+    public void selectItem(CalendarDay date) {
+        Calendar selectedCalendar = date.getCalendar();
+        int year = selectedCalendar.get(Calendar.YEAR);
+        int month = selectedCalendar.get(Calendar.MONTH  )+1;
+        int day = selectedCalendar.get(Calendar.DAY_OF_MONTH);
+        String modifiedDate = year + "-" + month + "-" + day;
+        selectedDate = modifiedDate;
+        adapter.calendarList.clear();
+//        for (int i = 0; i < calendarList.size(); i++) {
+//            Log.d("확인", "onDateSelected: " + date.getDate());
+//            if (calendarList.get(i).calendar_date.equals(modifiedDate)) {
+//                CalendarVO vo = new CalendarVO();
+//                vo.calendar_date = modifiedDate;
+//                vo.calendar_content = calendarList.get(i).calendar_content;
+//                adapter.calendarList.add(vo);//
+//            }
+//        }
+        CommonConn conn = new CommonConn(getApplicationContext(), "main/viewScheduleOne");
+        conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+        conn.addParamMap("calendar_date", modifiedDate);
+        conn.onExcute((isResult, data) -> {
+            ArrayList<CalendarVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<CalendarVO>>(){}.getType());
+            adapter.calendarList = list;
+            if(list.size() == 0) {
+                binding.emptyText.setVisibility(View.VISIBLE);
+            } else {
+                binding.emptyText.setVisibility(View.GONE);
+            }
+            adapter.notifyDataSetChanged();
+        });
+
     }
 
 

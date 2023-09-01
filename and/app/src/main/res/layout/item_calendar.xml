@@ -126,7 +126,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:background="#00ff0000"
             android:textColor="@color/white"
-            android:text="수정"
+            android:text="SAVE"
             android:fontFamily="@font/sc_dream7"
             tools:ignore="MissingConstraints" />
 
@@ -138,7 +138,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:background="#00ff0000"
             android:textColor="@color/white"
-            android:text="@string/cancel"
+            android:text="DELETE"
             android:fontFamily="@font/sc_dream7"
             tools:ignore="MissingConstraints" />
     </androidx.constraintlayout.widget.ConstraintLayout>

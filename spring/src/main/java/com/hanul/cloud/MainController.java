@@ -264,5 +264,24 @@ public class MainController {
 		return new Gson().toJson(list);
 	}
 	
+	@RequestMapping(value = "/deleteScheduleOne" , produces = "text/html;charset=utf-8")
+	public void deleteScheduleOne(CalendarVO vo) {
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("member_id", vo.getMember_id());
+		params.put("calendar_id", vo.getCalendar_id());
+		sql.delete("main.deleteScheduleOne", params);
+	}
+	
+	@RequestMapping(value = "/updateSchedule" , produces = "text/html;charset=utf-8")
+	public String updateSchedule(CalendarVO vo) {
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("calendar_content", vo.getCalendar_content());
+		params.put("calendar_importance", vo.getCalendar_importance());
+		params.put("calendar_id", vo.getCalendar_id());
+		sql.update("main.updateSchedule", params);
+		//ㅇㅎㅇ
+		CalendarVO tempVo = sql.selectOne("main.selectScheduleOne",vo);
+		return new Gson().toJson(tempVo);
+	}
 	
 }
