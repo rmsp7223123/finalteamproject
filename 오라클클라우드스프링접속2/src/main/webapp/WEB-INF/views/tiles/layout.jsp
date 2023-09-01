@@ -43,6 +43,7 @@
 <link rel="stylesheet" href="<c:url value = '/theme/css/style.css'/>">
 <link href="<c:url value='/css/common.css?${now }'/>" rel="stylesheet" />
 <link href="<c:url value='/css/table.css?${now }'/>" rel="stylesheet" />
+<link href="<c:url value='/css/korea.css?${now }'/>" rel="stylesheet" />
 
 
 <!--Favicon-->

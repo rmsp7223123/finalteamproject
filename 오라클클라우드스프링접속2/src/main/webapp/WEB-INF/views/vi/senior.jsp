@@ -29,9 +29,6 @@
 	<div class="canvas">
 		<canvas id="Chart" width="900" height="500" style="margin-left : 100px"></canvas>
 		</div>
-
-		<div class="tab-pane fade" id="region"></div>
-		<div class="tab-pane fade" id="pop"></div>
 	</div>
 
 
@@ -53,6 +50,9 @@
 		$(function() {
 			$('.nav-tabs .nav-item').eq(0).trigger('click');
 		})
+	
+	
+	
 	
 	
 	
