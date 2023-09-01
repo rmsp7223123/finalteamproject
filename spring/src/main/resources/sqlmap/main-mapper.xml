@@ -116,5 +116,27 @@
 		calendar_date, calendar_importance) values (#{member_id},
 		#{calendar_content}, #{calendar_date}, #{calendar_importance})
 	</insert>
+	
+	<!-- 위젯 일정 불러오기 -->
+	<select id="widgetSchedule" resultType="cloud.member.CalendarVO">
+		SELECT member_id, calendar_id, calendar_importance, calendar_content,
+		       case when (TO_DATE(CALENDAR_DATE, 'YYYY-MM-DD') - (SYSDATE - 1)) between 0 and 1 then '오늘'
+		            when (TO_DATE(CALENDAR_DATE, 'YYYY-MM-DD') - (SYSDATE - 1)) between 1 and 2 then '1일 뒤'
+		            when (TO_DATE(CALENDAR_DATE, 'YYYY-MM-DD') - (SYSDATE - 1)) between 2 and 3 then '2일 뒤'
+		            when (TO_DATE(CALENDAR_DATE, 'YYYY-MM-DD') - (SYSDATE - 1)) between 3 and 4 then '3일 뒤'
+		            when (TO_DATE(CALENDAR_DATE, 'YYYY-MM-DD') - (SYSDATE - 1)) between 4 and 5 then '4일 뒤'
+		            when (TO_DATE(CALENDAR_DATE, 'YYYY-MM-DD') - (SYSDATE - 1)) between 5 and 6 then '5일 뒤'
+		            when (TO_DATE(CALENDAR_DATE, 'YYYY-MM-DD') - (SYSDATE - 1)) between 6 and 7 then '6일 뒤'
+		            else '일주일 뒤'
+		            end as calendar_date
+		FROM (
+		    SELECT *
+		    FROM CALENDAR
+		    WHERE member_id = #{member_id}
+		    AND (TO_DATE(CALENDAR_DATE, 'YYYY-MM-DD') BETWEEN SYSDATE - 1 AND SYSDATE + 5)
+		    ORDER BY calendar_date, calendar_importance
+		)
+		WHERE ROWNUM BETWEEN 1 AND 3
+	</select>
 
 </mapper>
