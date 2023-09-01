@@ -19,6 +19,7 @@
 
 	<resources location="/resources/fullcalendar/"
 		mapping="/fullcalendar/**" />
+	<resources location="/resources/json/" mapping="/json/**" />
 	<resources location="/resources/css/" mapping="/css/**" />
 	<resources location="/resources/theme/css/" mapping="/theme/css/**" />
 	<resources location="/resources/theme/js/" mapping="/theme/js/**" />
