@@ -28,9 +28,6 @@
 
 	<div id="tab-content" class="container d-flex align-items-center">
 		<div id="container"></div>
-		<div style="width:500px; height:100px; border:1px dotted; padding:10px;">
-		범례
-		</div>
 	<div class="canvas">
 		<canvas id="Chart" width="900" height="500" style="margin-left : 100px"></canvas>
 		</div>
@@ -46,6 +43,7 @@
 		if($(this).index()==0){
 			initCanvas();
 			drawMap('#container');
+			legend();
 			//region();
 		}
 			
@@ -63,6 +61,16 @@
 		})
 	
 	
+	//범례
+	function legend() {
+    var legendDiv = $('<div>').attr('id', 'legend').css({
+        width: '500px',
+        height: '100px',
+        border: '1px dotted',
+        padding: '10px'
+  		}).text('범례');
+  		$('#tab-content').append(legendDiv);
+		}
 	
 	
 	
@@ -329,6 +337,7 @@
 		}
 		function initdiv() {
 			$('div#container').remove();
+			$('div#legend').remove();
 			$('#tab-content').append(
 					`<canvas id="Chart" width="900" height="500" style="margin-left : 100px"></canvas>`);
 		}
