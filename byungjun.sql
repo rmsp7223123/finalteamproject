@@ -181,7 +181,10 @@ create table calendar(
 );
 select * from member;
 select * from calendar;
+insert into calendar(member_id, calendar_importance, calendar_content, calendar_date)
+values('tata1', '매우', '내용1', '2023-09-01');
 commit;
+delete calendar;
 
 commit;
 

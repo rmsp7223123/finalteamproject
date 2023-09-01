@@ -116,5 +116,9 @@
 		calendar_date, calendar_importance) values (#{member_id},
 		#{calendar_content}, #{calendar_date}, #{calendar_importance})
 	</insert>
+	
+	<select id="viewScheduleOne" resultType="cloud.member.CalendarVO">
+		select calendar_content from calendar where member_id = #{member_id} and calendar_date = #{calendar_date}
+	</select>
 
 </mapper>

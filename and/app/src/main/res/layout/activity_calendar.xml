@@ -63,7 +63,7 @@
         tools:ignore="MissingConstraints" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/schedule_Listview"
+        android:id="@+id/recv_schedule"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="@id/calendarView"

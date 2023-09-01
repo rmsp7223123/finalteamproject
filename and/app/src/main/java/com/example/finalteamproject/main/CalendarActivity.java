@@ -1,11 +1,15 @@
 package com.example.finalteamproject.main;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Dialog;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
@@ -18,24 +22,38 @@ import com.example.finalteamproject.databinding.DialogAddScheduleBinding;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
+import org.intellij.lang.annotations.JdkConstants;
+
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashSet;
 
-public class CalendarActivity extends AppCompatActivity{
+public class CalendarActivity extends AppCompatActivity {
     ActivityCalendarBinding binding;
     private String selectedDate = "";
 
     String importance = "";
+
+    CalendarAdapter adapter;
+
+    ArrayList<CalendarVO> calendarList = new ArrayList<>();
+
+    Dialog dialog;
+
+    DialogAddScheduleBinding dialogBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityCalendarBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        adapter = new CalendarAdapter(calendarList, this);
         viewCalendar();
         new ChangeStatusBar().changeStatusBarColor(this);
         binding.calendarView.setSelectedDate(CalendarDay.today());
@@ -45,10 +63,6 @@ public class CalendarActivity extends AppCompatActivity{
         selectedDate = year + "-" + month + "-" + day;
 
 
-
-
-
-
         binding.imgvBack.setOnClickListener(v -> {
             finish();
         });
@@ -56,22 +70,59 @@ public class CalendarActivity extends AppCompatActivity{
             showScheduleDialog();
         });
 
+        binding.calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
+            @Override
+            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
+                // 디비에 날짜 보내서 다시 셀렉트.
+                // 달력에 점찍기 할때는 디비에서 groupby로 날짜별로 하나만 가져와야함.
+//                adapter.calendarList.removeAll();
+                Calendar selectedCalendar = date.getCalendar();
+                int year = selectedCalendar.get(Calendar.YEAR);
+                int month = selectedCalendar.get(Calendar.MONTH  )+1;
+                int day = selectedCalendar.get(Calendar.DAY_OF_MONTH);
+                String modifiedDate = year + "-" + month + "-" + day;
+                selectedDate = modifiedDate;
+                adapter.calendarList.clear();
+                for (int i = 0; i < calendarList.size(); i++) {
+                    Log.d("확인", "onDateSelected: " + date.getDate());
+                    if (calendarList.get(i).calendar_date.equals(modifiedDate)) {
+                        CalendarVO vo = new CalendarVO();
+                        vo.calendar_content = calendarList.get(i).calendar_content;
+                        adapter.calendarList.add(vo);//
+                    }
+                }
+                CommonConn conn = new CommonConn(getApplicationContext(), "main/viewScheduleOne");
+                conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                conn.addParamMap("calendar_date", modifiedDate);
+                conn.onExcute((isResult, data) -> {
+                    ArrayList<CalendarVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<CalendarVO>>(){}.getType());
+                    if(list.size() == 0) {
+                        binding.emptyText.setVisibility(View.VISIBLE);
+                    } else {
+                        binding.emptyText.setVisibility(View.GONE);
+                    }
+                });
+                adapter.notifyDataSetChanged();
+            }
+
+        });
+
     }
 
     private void showScheduleDialog() {
-        Dialog dialog = new Dialog(this);
-        DialogAddScheduleBinding dialogBinding = DialogAddScheduleBinding.inflate(LayoutInflater.from(this));
+        dialog = new Dialog(this);
+        dialogBinding = DialogAddScheduleBinding.inflate(LayoutInflater.from(this));
         dialog.setContentView(dialogBinding.getRoot());
         dialogBinding.dateText.setText(selectedDate);
         dialogBinding.saveScheduleBtn.setOnClickListener(v -> {
-            if(dialogBinding.content.getText().toString().isEmpty()) {
+            if (dialogBinding.content.getText().toString().isEmpty()) {
                 Toast.makeText(this, "내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
-            } else if(dialogBinding.radioGroup.getCheckedRadioButtonId() == -1) {
+            } else if (dialogBinding.radioGroup.getCheckedRadioButtonId() == -1) {
                 Toast.makeText(this, "중요도를 체크해주세요.", Toast.LENGTH_SHORT).show();
             } else {
-                for(int i= 0 ; i< dialogBinding.radioGroup.getChildCount(); i ++){
+                for (int i = 0; i < dialogBinding.radioGroup.getChildCount(); i++) {
                     RadioButton btn = (RadioButton) dialogBinding.radioGroup.getChildAt(i);
-                    if(btn.isChecked() == true){
+                    if (btn.isChecked() == true) {
                         importance = btn.getText().toString();
                         break;
                     }
@@ -98,19 +149,28 @@ public class CalendarActivity extends AppCompatActivity{
         CommonConn conn = new CommonConn(this, "main/viewCalendarList");
         conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
         conn.onExcute((isResult, data) -> {
-            ArrayList<CalendarVO> calendarList = new Gson().fromJson(data, new TypeToken<ArrayList<CalendarVO>>(){}.getType());
-            if(calendarList.size() != 0) {
-                for (int i = 0; i < calendarList.size(); i++) {
-                    String[] tempDate = calendarList.get(i).calendar_date.split("-");
+            ArrayList<CalendarVO> calendarList2 = new Gson().fromJson(data, new TypeToken<ArrayList<CalendarVO>>() {
+            }.getType());
+            calendarList = calendarList2;
+            binding.recvSchedule.setAdapter(adapter);
+            binding.recvSchedule.setLayoutManager(new LinearLayoutManager(this));
 
-                    CalendarDay day =CalendarDay.from(Integer.parseInt(tempDate[0]),Integer.parseInt(tempDate[1])-1,Integer.parseInt(tempDate[2]));
+            if (calendarList2.size() != 0) {
+                for (int i = 0; i < calendarList2.size(); i++) {
+                    String[] tempDate = calendarList2.get(i).calendar_date.split("-");
+
+                    CalendarDay day = CalendarDay.from(Integer.parseInt(tempDate[0]), Integer.parseInt(tempDate[1]) - 1, Integer.parseInt(tempDate[2]));
 
                     set.add(day);
 
                 }
+            } else {
             }
 
             binding.calendarView.addDecorator(new DateDecorator(Color.RED, set));
         });
     }
+
+
+
 }

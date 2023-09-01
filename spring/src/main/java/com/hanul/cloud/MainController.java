@@ -245,18 +245,23 @@ public class MainController {
 	}
 	
 	@RequestMapping(value = "/addSchedule" , produces = "text/html;charset=utf-8")
-	public void addSchedule(CalendarVO vo) {
+	public String addSchedule(CalendarVO vo) {
 		HashMap<String, Object> param = new HashMap<String, Object>();
 		param.put("member_id", vo.getMember_id());
 		param.put("calendar_content", vo.getCalendar_content());
 		param.put("calendar_date", vo.getCalendar_date());
 		param.put("calendar_importance", vo.getCalendar_importance());
 		sql.insert("main.addSchedule", param);
-	//친구 삭제
-	@RequestMapping(value = "/schedule", produces = "text/html;charset=utf-8")
-	public String schedule(String member_id) {
-		String result = sql.delete("main.deleteFriend", vo) == 2 ? "성공" : "실패";
-		return result;
+		return "";
+	}
+	
+	@RequestMapping(value = "/viewScheduleOne" , produces = "text/html;charset=utf-8")
+	public String viewScheduleOne(CalendarVO vo) {
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("member_id", vo.getMember_id());
+		params.put("calendar_date", vo.getCalendar_date());
+		List<CalendarVO> list = sql.selectList("main.viewScheduleOne", params);
+		return new Gson().toJson(list);
 	}
 	
 	
