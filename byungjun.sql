@@ -5,6 +5,10 @@ select * from member;
 
 commit;
 
+select * from calendar;
+
+select * from friend_list;
+
 insert into option_table (member_id, option_font_size, option_font_color) values('admin', 20, '#000');
 
 select * from option_table;
@@ -166,7 +170,29 @@ create table alarm(
     receive_id nvarchar2(30),
     constraint alarm_member_fk foreign key(member_id) references member(member_id) on delete cascade
 );
+
+create table calendar(
+    member_id nvarchar2(30),
+    calendar_id number constraint calendar_pk primary key,
+    calendar_importance nvarchar2(30),
+    calendar_content nvarchar2(1000),
+    calendar_date nvarchar2(100),
+    constraint calendar_member_fk foreign key(member_id) references member(member_id) on delete cascade
+);
+select * from member;
+select * from calendar;
+commit;
+
+commit;
+
 create sequence seq_alarm
+minvalue 1 
+maxvalue 999999
+increment by 1
+start with 1
+nocache;
+
+create sequence seq_calendar
 minvalue 1 
 maxvalue 999999
 increment by 1
@@ -178,6 +204,14 @@ BEFORE INSERT ON alarm
 FOR EACH ROW
 BEGIN
     :NEW.alarm_id := seq_alarm.NEXTVAL;
+END;
+/
+
+CREATE OR REPLACE TRIGGER trg_calendar_id
+BEFORE INSERT ON calendar
+FOR EACH ROW
+BEGIN
+    :NEW.calendar_id := seq_calendar.NEXTVAL;
 END;
 /
 
@@ -552,5 +586,9 @@ SELECT M.*
 select * from alarm;
 
 select * from option_table;
+
+select * from member;
+
+select * from friend_list;
 
 commit;

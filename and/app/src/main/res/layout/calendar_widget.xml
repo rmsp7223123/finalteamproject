@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="150dp"
+    android:layout_height="150dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_today"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="YYYY-MM-DD"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:background="#F7DE6D"
+        android:paddingVertical="5dp"
+        android:paddingStart="5dp"/>
+
+    <LinearLayout
+        android:background="@color/white"
+        android:id="@+id/ln_1"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="5dp">
+
+        <ImageView
+            android:id="@+id/imgv_1"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/importance1"/>
+
+        <TextView
+            android:id="@+id/tv_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="일정1"
+            android:textColor="@color/black"
+            android:layout_marginStart="10dp"/>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_marginHorizontal="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#80000000"/>
+
+    <LinearLayout
+        android:background="@color/white"
+        android:id="@+id/ln_2"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="5dp">
+
+        <ImageView
+            android:id="@+id/imgv_2"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/importance2"/>
+
+        <TextView
+            android:id="@+id/tv_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="일정2"
+            android:textColor="@color/black"
+            android:layout_marginStart="10dp"/>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_marginHorizontal="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#80000000"/>
+
+    <LinearLayout
+        android:background="@color/white"
+        android:id="@+id/ln_3"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="5dp">
+
+        <ImageView
+            android:id="@+id/imgv_3"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/importance3"/>
+
+        <TextView
+            android:id="@+id/tv_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="일정3"
+            android:textColor="@color/black"
+            android:layout_marginStart="10dp"/>
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
+

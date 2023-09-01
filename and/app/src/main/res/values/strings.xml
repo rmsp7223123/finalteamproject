@@ -28,6 +28,7 @@
     <string name="app_widget_description">This is an app widget description</string>
 
     <string name="widget_description">안부 문자를 보내는 위젯 입니다.</string>
+    <string name="widget_calendar">예정된 일정을 표시하는 위젯 입니다.</string>
 
     <string name="skip">건너뛰기</string>
 
