@@ -1,11 +1,7 @@
 package com.hanul.cloud;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.List;
 
@@ -14,25 +10,21 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
-import com.google.auth.oauth2.AccessToken;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
 import com.google.gson.Gson;
-import com.google.rpc.context.AttributeContext.Response;
 
-import cloud.gps.GpsVO;
 import cloud.member.AlarmVO;
+import cloud.member.CalendarVO;
 import cloud.member.FavorVO;
 import cloud.member.FriendVO;
 import cloud.member.MemberVO;
@@ -246,9 +238,20 @@ public class MainController {
 		return result;
 	}
 	
-	@RequestMapping("/viewCalendarList")
+	@RequestMapping(value = "/viewCalendarList" , produces = "text/html;charset=utf-8")
 	public String viewCalendarList(String member_id) {
-		return "";
+		List<CalendarVO> list =  sql.selectList("main.viewCalendarList", member_id);
+		return new Gson().toJson(list);
+	}
+	
+	@RequestMapping(value = "/addSchedule" , produces = "text/html;charset=utf-8")
+	public void addSchedule(CalendarVO vo) {
+		HashMap<String, Object> param = new HashMap<String, Object>();
+		param.put("member_id", vo.getMember_id());
+		param.put("calendar_content", vo.getCalendar_content());
+		param.put("calendar_date", vo.getCalendar_date());
+		param.put("calendar_importance", vo.getCalendar_importance());
+		sql.insert("main.addSchedule", param);
 	}
 	
 	

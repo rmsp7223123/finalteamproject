@@ -24,10 +24,16 @@ import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.databinding.FragmentFriendDetailBinding;
 import com.example.finalteamproject.main.FriendVO;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.ArrayList;
 
 public class FriendDetailFragment extends Fragment {
 
     FragmentFriendDetailBinding binding;
+
+    ArrayList<FriendVO> list;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,7 +82,7 @@ public class FriendDetailFragment extends Fragment {
                         if(data.equals("성공")){
                             Toast.makeText(getContext(), "친구 삭제 성공", Toast.LENGTH_SHORT).show();
                             FragmentTransaction ft = getFragmentManager().beginTransaction();
-                            ft.replace(R.id.container_frame, new FriendListFragment());
+                            ft.replace(R.id.container_frame, new FriendListFragment(friendList()));
                             ft.commit();
                         }else {
                             Toast.makeText(getContext(), "친구 삭제 실패", Toast.LENGTH_SHORT).show();
@@ -90,5 +96,15 @@ public class FriendDetailFragment extends Fragment {
         });
 
         return binding.getRoot();
+    }
+
+    public ArrayList<FriendVO> friendList() {
+        CommonConn conn = new CommonConn(getContext(), "main/viewFriendList");
+        conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+        conn.onExcute((isResult, data) -> {
+            list = new Gson().fromJson(data, new TypeToken<ArrayList<FriendVO>>() {
+            }.getType());
+        });
+        return list;
     }
 }

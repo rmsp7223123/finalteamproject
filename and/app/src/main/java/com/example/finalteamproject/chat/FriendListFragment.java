@@ -32,6 +32,9 @@ public class FriendListFragment extends Fragment {
 
     ArrayList<FriendVO> list;
 
+    public FriendListFragment(ArrayList<FriendVO> list) {
+        this.list = list;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

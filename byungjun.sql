@@ -5,6 +5,10 @@ select * from member;
 
 commit;
 
+select * from calendar;
+
+select * from friend_list;
+
 insert into option_table (member_id, option_font_size, option_font_color) values('admin', 20, '#000');
 
 select * from option_table;
@@ -170,11 +174,11 @@ create table alarm(
 create table calendar(
     member_id nvarchar2(30),
     calendar_id number constraint calendar_pk primary key,
+    calendar_importance nvarchar2(30),
     calendar_content nvarchar2(1000),
     calendar_date nvarchar2(100),
     constraint calendar_member_fk foreign key(member_id) references member(member_id) on delete cascade
 );
-insert into calendar(member_id, calendar_content, calendar_date)values ('test2', '내용확인1', '날짜확인1');
 select * from member;
 select * from calendar;
 commit;

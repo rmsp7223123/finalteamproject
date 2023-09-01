@@ -15,22 +15,29 @@
 		member_id = #{member_id}
 	</select>
 	<select id="viewpager" resultType="cloud.member.MemberVO">
-		SELECT M.* 
+		SELECT M.*
 		FROM ( SELECT
 		MEMBER_ID
 		FROM FAVOR
 		WHERE MEMBER_ID != #{member_id}
 		AND
-		FAVOR IN ( SELECT
+		FAVOR IN
+		( SELECT
 		FAVOR
 		FROM FAVOR
 		WHERE MEMBER_ID=#{member_id}
 		)
 		GROUP BY
-		MEMBER_ID ) F
-		INNER JOIN MEMBER M ON F.MEMBER_ID = M.MEMBER_ID
-		WHERE M.MEMBER_ID NOT IN (SELECT FRIEND_ID FROM FRIEND_LIST WHERE MEMBER_ID = #{MEBMER_ID})
-		AND M.MEMBER_ADMIN != 1
+		MEMBER_ID
+		) F
+		INNER
+		JOIN MEMBER M ON F.MEMBER_ID = M.MEMBER_ID
+		WHERE M.MEMBER_ID
+		NOT IN
+		(SELECT FRIEND_ID FROM FRIEND_LIST WHERE MEMBER_ID =
+		#{MEBMER_ID})
+		AND
+		M.MEMBER_ADMIN != 1
 	</select>
 
 	<select id="favor" resultType="cloud.member.FavorVO">
@@ -50,7 +57,9 @@
 	</select>
 
 	<delete id="deleteAlarm">
-		delete alarm where receive_id = #{receive_id} AND alarm_content LIKE '%'||#{nickname}||'%' AND alarm_content LIKE '%'||#{alarm_content2}||'%'
+		delete alarm where receive_id = #{receive_id} AND
+		alarm_content LIKE '%'||#{nickname}||'%' AND alarm_content LIKE
+		'%'||#{alarm_content2}||'%'
 	</delete>
 
 	<delete id="deleteOneAlarm">
@@ -78,19 +87,34 @@
 		ON fl.friend_id = m.MEMBER_ID
 		WHERE fl.member_id = #{member_id}
 	</select>
-	
+
 	<update id="updateToken">
-		update member set member_phone_id = #{member_phone_id} where member_id = #{member_id} 
+		update member set member_phone_id =
+		#{member_phone_id} where member_id = #{member_id}
 	</update>
-	
+
 	<select id="viewAlarmCnt" resultType="Integer">
-		select count(alarm_content) as content_cnt from alarm where receive_id = #{receive_id}
+		select count(alarm_content)
+		as content_cnt from alarm where receive_id = #{receive_id}
 	</select>
-	
+
 	<!-- 친구 삭제 -->
 	<delete id="deleteFriend">
-		delete friend_list where (member_id = #{member_id} and friend_id = #{friend_id})
-								or (member_id = #{friend_id} and friend_id = #{member_id})
+		delete friend_list where (member_id = #{member_id}
+		and friend_id = #{friend_id})
+		or (member_id = #{friend_id} and
+		friend_id = #{member_id})
 	</delete>
+
+	<select id="viewCalendarList"
+		resultType="cloud.member.CalendarVO">
+		select * from calendar where member_id = #{member_id}
+	</select>
+
+	<insert id="addSchedule">
+		insert into calendar(member_id, calendar_content,
+		calendar_date, calendar_importance) values (#{member_id},
+		#{calendar_content}, #{calendar_date}, #{calendar_importance})
+	</insert>
 
 </mapper>
