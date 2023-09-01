@@ -122,10 +122,10 @@
 		select * from calendar where member_id = #{member_id} and
 		calendar_date = #{calendar_date}
 	</select>
-	<delete id="deleteScheduleOne">
+	<select id="deleteScheduleOne" resultType="cloud.member.CalendarVO">
 		delete calendar where member_id = #{member_id} and
 		calendar_id = #{calendar_id}
-	</delete>
+	</select>
 
 	<update id="updateSchedule">
 		update calendar set calendar_content =

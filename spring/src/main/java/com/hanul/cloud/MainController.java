@@ -270,6 +270,7 @@ public class MainController {
 		params.put("member_id", vo.getMember_id());
 		params.put("calendar_id", vo.getCalendar_id());
 		sql.delete("main.deleteScheduleOne", params);
+		sql.selectList("main.viewCalendarList", vo);
 	}
 	
 	@RequestMapping(value = "/updateSchedule" , produces = "text/html;charset=utf-8")
@@ -279,7 +280,7 @@ public class MainController {
 		params.put("calendar_importance", vo.getCalendar_importance());
 		params.put("calendar_id", vo.getCalendar_id());
 		sql.update("main.updateSchedule", params);
-		//ㅇㅎㅇ
+
 		CalendarVO tempVo = sql.selectOne("main.selectScheduleOne",vo);
 		return new Gson().toJson(tempVo);
 	}

@@ -90,6 +90,8 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
                     conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
                     conn1.addParamMap("calendar_id", calendarList.get(position).calendar_id);
                     conn1.onExcute((isResult1, data1) -> {
+                        calendarList.remove(position);
+                        notifyDataSetChanged();
                         dialog.dismiss();
                     });
                 });

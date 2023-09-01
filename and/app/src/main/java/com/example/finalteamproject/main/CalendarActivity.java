@@ -19,6 +19,7 @@ import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.databinding.ActivityCalendarBinding;
 import com.example.finalteamproject.databinding.DialogAddScheduleBinding;
+import com.google.android.gms.common.internal.service.Common;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
@@ -45,7 +46,7 @@ public class CalendarActivity extends AppCompatActivity {
     ArrayList<CalendarVO> calendarList = new ArrayList<>();
 
     Dialog dialog;
-// 다ㅓ된건가요? 한번만 봐볼게요
+
     DialogAddScheduleBinding dialogBinding;
 
     @Override
@@ -109,10 +110,22 @@ public class CalendarActivity extends AppCompatActivity {
                 conn.addParamMap("calendar_date", dialogBinding.dateText.getText().toString());
                 conn.addParamMap("calendar_importance", importance);
                 conn.onExcute((isResult, data) -> {
-                    adapter.notifyDataSetChanged();
-                    viewCalendar();
-                    dialog.dismiss();
+                    CommonConn conn1 = new CommonConn(this, "main/viewScheduleOne");
+                    conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                    conn1.addParamMap("calendar_date", selectedDate);
+                    conn1.onExcute((isResult1, data1) -> {
+                        ArrayList<CalendarVO> list = new Gson().fromJson(data1, new TypeToken<ArrayList<CalendarVO>>(){}.getType());
+                        adapter.calendarList = list;
+                        if(list.size() == 0) {
+                            binding.emptyText.setVisibility(View.VISIBLE);
+                        } else {
+                            binding.emptyText.setVisibility(View.GONE);
+                        }
+                        viewCalendar();
+                        dialog.dismiss();
+                    });
                 });
+                adapter.notifyDataSetChanged();
             }
         });
         dialogBinding.cancelDialogBtn.setOnClickListener(v -> {
@@ -135,9 +148,7 @@ public class CalendarActivity extends AppCompatActivity {
             if (calendarList2.size() != 0) {
                 for (int i = 0; i < calendarList2.size(); i++) {
                     String[] tempDate = calendarList2.get(i).calendar_date.split("-");
-
                     CalendarDay day = CalendarDay.from(Integer.parseInt(tempDate[0]), Integer.parseInt(tempDate[1]) - 1, Integer.parseInt(tempDate[2]));
-
                     set.add(day);
 
                 }
@@ -156,15 +167,6 @@ public class CalendarActivity extends AppCompatActivity {
         String modifiedDate = year + "-" + month + "-" + day;
         selectedDate = modifiedDate;
         adapter.calendarList.clear();
-//        for (int i = 0; i < calendarList.size(); i++) {
-//            Log.d("확인", "onDateSelected: " + date.getDate());
-//            if (calendarList.get(i).calendar_date.equals(modifiedDate)) {
-//                CalendarVO vo = new CalendarVO();
-//                vo.calendar_date = modifiedDate;
-//                vo.calendar_content = calendarList.get(i).calendar_content;
-//                adapter.calendarList.add(vo);//
-//            }
-//        }
         CommonConn conn = new CommonConn(getApplicationContext(), "main/viewScheduleOne");
         conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
         conn.addParamMap("calendar_date", modifiedDate);
