@@ -47,8 +47,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
         return new ViewHolder(binding);
     }
 
-    //이거는 머하는거여????
-    // 그 달력 내용 변경하는건데 스케쥴 이게 좀 이상해요
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.binding.tvContent.setText(calendarList.get(position).getCalendar_content());
@@ -91,6 +89,8 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
                     conn1.addParamMap("calendar_id", calendarList.get(position).getCalendar_id());
                     conn1.onExcute((isResult1, data1) -> {
                         calendarList.remove(position);
+                        CalendarActivity activity = (CalendarActivity) context;
+                        activity.viewCalendar();
                         notifyDataSetChanged();
                         dialog.dismiss();
                     });

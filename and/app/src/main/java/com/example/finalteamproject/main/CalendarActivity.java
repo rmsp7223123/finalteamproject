@@ -134,7 +134,7 @@ public class CalendarActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private void viewCalendar() {
+    public void viewCalendar() {
         HashSet<CalendarDay> set = new HashSet<>();
         CommonConn conn = new CommonConn(this, "main/viewCalendarList");
         conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
