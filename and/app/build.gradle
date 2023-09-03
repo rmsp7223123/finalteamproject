@@ -46,8 +46,11 @@ android {
 }
 
 dependencies {
+    //rx java
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.6'
+
     // 달력
-    // https://mvnrepository.com/artifact/com.github.prolificinteractive/material-calendarview
     implementation 'com.prolificinteractive:material-calendarview:1.4.3'
 
 

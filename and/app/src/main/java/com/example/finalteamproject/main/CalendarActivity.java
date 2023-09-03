@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Dialog;
+import android.database.Observable;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,6 +36,8 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashSet;
 
+import io.reactivex.rxjava3.disposables.Disposable;
+
 public class CalendarActivity extends AppCompatActivity {
     ActivityCalendarBinding binding;
     private String selectedDate = "";
@@ -49,12 +52,14 @@ public class CalendarActivity extends AppCompatActivity {
 
     DialogAddScheduleBinding dialogBinding;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityCalendarBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         adapter = new CalendarAdapter(calendarList, this);
+        adapter.observeDataChanges();
         viewCalendar();
         new ChangeStatusBar().changeStatusBarColor(this);
         binding.calendarView.setSelectedDate(CalendarDay.today());
@@ -96,7 +101,7 @@ public class CalendarActivity extends AppCompatActivity {
                     if (btn.isChecked() == true && btn.getText().toString().equals("적음")) {
                         importance = "1";
                         break;
-                    } else if(btn.isChecked() == true && btn.getText().toString().equals("중간")) {
+                    } else if (btn.isChecked() == true && btn.getText().toString().equals("중간")) {
                         importance = "2";
                         break;
                     } else {
@@ -114,9 +119,10 @@ public class CalendarActivity extends AppCompatActivity {
                     conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
                     conn1.addParamMap("calendar_date", selectedDate);
                     conn1.onExcute((isResult1, data1) -> {
-                        ArrayList<CalendarVO> list = new Gson().fromJson(data1, new TypeToken<ArrayList<CalendarVO>>(){}.getType());
+                        ArrayList<CalendarVO> list = new Gson().fromJson(data1, new TypeToken<ArrayList<CalendarVO>>() {
+                        }.getType());
                         adapter.calendarList = list;
-                        if(list.size() == 0) {
+                        if (list.size() == 0) {
                             binding.emptyText.setVisibility(View.VISIBLE);
                         } else {
                             binding.emptyText.setVisibility(View.GONE);
@@ -155,7 +161,7 @@ public class CalendarActivity extends AppCompatActivity {
             } else {
             }
 
-            if(set.size() > 0 ) {
+            if (set.size() > 0) {
                 binding.calendarView.addDecorator(new DateDecorator(Color.RED, set));
             } else {
                 binding.calendarView.addDecorator(new DateDecorator(Color.TRANSPARENT, set));
@@ -166,7 +172,7 @@ public class CalendarActivity extends AppCompatActivity {
     public void selectItem(CalendarDay date) {
         Calendar selectedCalendar = date.getCalendar();
         int year = selectedCalendar.get(Calendar.YEAR);
-        int month = selectedCalendar.get(Calendar.MONTH  )+1;
+        int month = selectedCalendar.get(Calendar.MONTH) + 1;
         int day = selectedCalendar.get(Calendar.DAY_OF_MONTH);
         String modifiedDate = year + "-" + month + "-" + day;
         selectedDate = modifiedDate;
@@ -175,9 +181,10 @@ public class CalendarActivity extends AppCompatActivity {
         conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
         conn.addParamMap("calendar_date", modifiedDate);
         conn.onExcute((isResult, data) -> {
-            ArrayList<CalendarVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<CalendarVO>>(){}.getType());
+            ArrayList<CalendarVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<CalendarVO>>() {
+            }.getType());
             adapter.calendarList = list;
-            if(list.size() == 0) {
+            if (list.size() == 0) {
                 binding.emptyText.setVisibility(View.VISIBLE);
             } else {
                 binding.emptyText.setVisibility(View.GONE);
@@ -187,16 +194,23 @@ public class CalendarActivity extends AppCompatActivity {
 
     }
 
-    public void calendarTextVisibility(int visible){
+    public void calendarTextVisibility(int visible) {
         binding.emptyText.setVisibility(visible);
     }
 
     public void updateCalendarDecorators(HashSet<CalendarDay> set) {
+        binding.calendarView.removeDecorators();
         if (set.size() > 0) {
             binding.calendarView.addDecorator(new DateDecorator(Color.RED, set));
         } else {
             binding.calendarView.addDecorator(new DateDecorator(Color.TRANSPARENT, set));
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        adapter.dispose();
     }
 
 }

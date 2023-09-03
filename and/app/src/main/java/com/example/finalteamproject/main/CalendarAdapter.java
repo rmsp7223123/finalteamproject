@@ -26,11 +26,18 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHolder> {
 
     ItemCalendarListBinding binding;
 
     ArrayList<CalendarVO> calendarList;
+
+    private Disposable disposable;
 
     Context context;
 
@@ -106,6 +113,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
                             }
                         }
                     });
+
                     activity.updateCalendarDecorators(updatedSet);
                     if (calendarList.size() == 0) {
                         changeVisibility(View.VISIBLE);
@@ -142,9 +150,32 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
         activity.calendarTextVisibility(visible);
     }
 
-//    public void changeDot(DateDecorator dateDecorator, HashSet<CalendarDay> set) {
-//        CalendarActivity activity= (CalendarActivity) context;
-////        activity.changeDot();
-//
-//    }
+    public void updateData(ArrayList<CalendarVO> data) {
+        calendarList.clear();
+        calendarList.addAll(data);
+        notifyDataSetChanged();
+    }
+
+    public void observeDataChanges() {
+        Observable<ArrayList<CalendarVO>> observable = Observable.create(emitter -> {
+            ArrayList<CalendarVO> data = calendarList;
+            emitter.onNext(data);
+            emitter.onComplete();
+        });
+
+        disposable = observable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(data -> {
+                    updateData(data);
+                }, throwable -> {
+                });
+    }
+
+    public void dispose() {
+        if (disposable != null && !disposable.isDisposed()) {
+            disposable.dispose();
+        }
+    }
+
 }
