@@ -28,11 +28,11 @@
 
 	<div id="tab-content" class="container d-flex align-items-center">
 		<div id="container"></div>
-	<div class="canvas">
-		<canvas id="Chart" width="900" height="500" style="margin-left : 100px"></canvas>
+		<div class="canvas">
+			<canvas id="Chart" width="900" height="500"
+				style="margin-left: 100px"></canvas>
 		</div>
 	</div>
-
 
 
 	<script>
@@ -65,13 +65,42 @@
 	//범례
 	function legend() {
     var legendDiv = $('<div>').attr('id', 'legend').css({
-        width: '500px',
-        height: '100px',
         border: '1px dotted',
-        padding: '10px'
-  		}).text('범례');
-  		$('#tab-content').append(legendDiv);
-		}
+        padding: '10px',
+        position: 'fixed',
+        top: '300px',
+        left: '1000px'   
+    }).text('전국 경로당 수');
+    $('#tab-content').append(legendDiv);
+
+    var wrap1 = $('<div>').addClass('wrap');
+    var nemo1 = $('<div>').addClass('nemo').css('background-color', '#fc5d1e');
+    var text1 = $('<p>').text('3000개 이상');
+    wrap1.append(nemo1).append(text1);
+    
+    var wrap2 = $('<div>').addClass('wrap');
+    var nemo2 = $('<div>').addClass('nemo').css('background-color', '#fc936a');
+    var text2 = $('<p>').text('1500개 이상');
+    wrap2.append(nemo2).append(text2);
+    
+    var wrap3 = $('<div>').addClass('wrap');
+    var nemo3 = $('<div>').addClass('nemo').css('background-color', '#ffb699');
+    var text3 = $('<p>').text('1000개 이상');
+    wrap3.append(nemo3).append(text3);
+    
+    var wrap4 = $('<div>').addClass('wrap');
+    var nemo4 = $('<div>').addClass('nemo').css('background-color', '#fce5dc');
+    var text4 = $('<p>').text('1000개 미만');
+    wrap4.append(nemo4).append(text4);
+   
+    legendDiv.append(wrap1);
+    legendDiv.append(wrap2);
+    legendDiv.append(wrap3);
+    legendDiv.append(wrap4);
+    
+    
+
+}
 	
 	
 	
@@ -121,14 +150,14 @@
 		                    var count = data[i].count;
 		                    
 		                    // 조건에 따라 지역별로 다른 색상 적용
-		                    if (count < 500) {
-		                        regionColors[region] = '#fce5dc';
-		                    } else if (count < 1000) {
-		                    	regionColors[region] = '#ffb699';
-							}else if (count < 1500) {
-								regionColors[region] = '#fc936a';
-							}else if (count < 3000) {
+		                    if (count > 3000) {
 		                        regionColors[region] = '#fc5d1e';
+		                    } else if (count > 1500) {
+		                    	regionColors[region] = '#fc936a';
+							}else if (count > 1000) {
+								regionColors[region] = '#ffb699';
+							}else if (count < 500) {
+		                        regionColors[region] = '#fce5dc';
 		                    }else {
 		                        regionColors[region] = '#ff4800';
 		                    }
@@ -341,7 +370,5 @@
 					`<canvas id="Chart" width="900" height="500" style="margin-left : 100px"></canvas>`);
 		}
 	</script>
-
-
 </body>
 </html>
