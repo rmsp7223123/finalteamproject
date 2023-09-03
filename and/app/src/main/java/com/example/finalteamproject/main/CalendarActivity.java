@@ -59,7 +59,6 @@ public class CalendarActivity extends AppCompatActivity {
         binding = ActivityCalendarBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         adapter = new CalendarAdapter(calendarList, this);
-        adapter.observeDataChanges();
         viewCalendar();
         new ChangeStatusBar().changeStatusBarColor(this);
         binding.calendarView.setSelectedDate(CalendarDay.today());
@@ -205,12 +204,6 @@ public class CalendarActivity extends AppCompatActivity {
         } else {
             binding.calendarView.addDecorator(new DateDecorator(Color.TRANSPARENT, set));
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        adapter.dispose();
     }
 
 }

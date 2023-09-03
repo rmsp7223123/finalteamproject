@@ -101,10 +101,10 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
                     HashSet<CalendarDay> updatedSet = new HashSet<>();
                     CommonConn conn = new CommonConn(context, "main/viewCalendarList");
                     conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+
                     conn.onExcute((isResult, data) -> {
                         ArrayList<CalendarVO> calendarList2 = new Gson().fromJson(data, new TypeToken<ArrayList<CalendarVO>>() {
                         }.getType());
-                        calendarList = calendarList2;
                         if (calendarList2.size() != 0) {
                             for (int i = 0; i < calendarList2.size(); i++) {
                                 String[] tempDate = calendarList2.get(i).getCalendar_date().split("-");
@@ -112,14 +112,14 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
                                 updatedSet.add(day);
                             }
                         }
+                        calendarList.remove(position);
+                        if (calendarList.size() == 0) {
+                            changeVisibility(View.VISIBLE);
+                        } else {
+                            changeVisibility(View.GONE);
+                        }
                     });
-
                     activity.updateCalendarDecorators(updatedSet);
-                    if (calendarList.size() == 0) {
-                        changeVisibility(View.VISIBLE);
-                    } else {
-                        changeVisibility(View.GONE);
-                    }
                     notifyDataSetChanged();
                     dialog.dismiss();
                 });
@@ -148,34 +148,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
     public void changeVisibility(int visible) {
         CalendarActivity activity = (CalendarActivity) context;
         activity.calendarTextVisibility(visible);
-    }
-
-    public void updateData(ArrayList<CalendarVO> data) {
-        calendarList.clear();
-        calendarList.addAll(data);
-        notifyDataSetChanged();
-    }
-
-    public void observeDataChanges() {
-        Observable<ArrayList<CalendarVO>> observable = Observable.create(emitter -> {
-            ArrayList<CalendarVO> data = calendarList;
-            emitter.onNext(data);
-            emitter.onComplete();
-        });
-
-        disposable = observable
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(data -> {
-                    updateData(data);
-                }, throwable -> {
-                });
-    }
-
-    public void dispose() {
-        if (disposable != null && !disposable.isDisposed()) {
-            disposable.dispose();
-        }
     }
 
 }
