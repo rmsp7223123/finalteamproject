@@ -183,6 +183,10 @@ public class CalendarActivity extends AppCompatActivity {
 
     }
 
+    public void alarmVisibility(int visible){
+        binding.emptyText.setVisibility(visible);
+    }
+
 
 
 }

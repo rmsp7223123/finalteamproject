@@ -89,8 +89,11 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
                     conn1.addParamMap("calendar_id", calendarList.get(position).getCalendar_id());
                     conn1.onExcute((isResult1, data1) -> {
                         calendarList.remove(position);
-                        CalendarActivity activity = (CalendarActivity) context;
-                        activity.viewCalendar();
+                        if(calendarList.size() == 0) {
+                            changeVisibility(View.VISIBLE);
+                        } else {
+                            changeVisibility(View.GONE);
+                        }
                         notifyDataSetChanged();
                         dialog.dismiss();
                     });
@@ -115,5 +118,10 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
             super(binding.getRoot());
             this.binding = binding;
         }
+    }
+
+    public void changeVisibility(int visible){
+        CalendarActivity activity= (CalendarActivity) context;
+        activity.alarmVisibility(visible);
     }
 }
