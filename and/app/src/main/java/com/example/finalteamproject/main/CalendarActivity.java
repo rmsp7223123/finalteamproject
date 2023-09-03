@@ -155,7 +155,11 @@ public class CalendarActivity extends AppCompatActivity {
             } else {
             }
 
-            binding.calendarView.addDecorator(new DateDecorator(Color.RED, set));
+            if(set.size() > 0 ) {
+                binding.calendarView.addDecorator(new DateDecorator(Color.RED, set));
+            } else {
+                binding.calendarView.addDecorator(new DateDecorator(Color.TRANSPARENT, set));
+            }
         });
     }
 
@@ -183,10 +187,16 @@ public class CalendarActivity extends AppCompatActivity {
 
     }
 
-    public void alarmVisibility(int visible){
+    public void calendarTextVisibility(int visible){
         binding.emptyText.setVisibility(visible);
     }
 
-
+    public void updateCalendarDecorators(HashSet<CalendarDay> set) {
+        if (set.size() > 0) {
+            binding.calendarView.addDecorator(new DateDecorator(Color.RED, set));
+        } else {
+            binding.calendarView.addDecorator(new DateDecorator(Color.TRANSPARENT, set));
+        }
+    }
 
 }
