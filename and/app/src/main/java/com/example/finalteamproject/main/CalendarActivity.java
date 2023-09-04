@@ -15,6 +15,7 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.example.finalteamproject.ChangeStatusBar;
+import com.example.finalteamproject.Login.ProgressDialog;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
@@ -97,10 +98,10 @@ public class CalendarActivity extends AppCompatActivity {
             } else {
                 for (int i = 0; i < dialogBinding.radioGroup.getChildCount(); i++) {
                     RadioButton btn = (RadioButton) dialogBinding.radioGroup.getChildAt(i);
-                    if (btn.isChecked() == true && btn.getText().toString().equals("적음")) {
+                    if (dialogBinding.lessBtn.isChecked()) {
                         importance = "1";
                         break;
-                    } else if (btn.isChecked() == true && btn.getText().toString().equals("중간")) {
+                    } else if (dialogBinding.middleBtn.isChecked()) {
                         importance = "2";
                         break;
                     } else {
@@ -118,6 +119,7 @@ public class CalendarActivity extends AppCompatActivity {
                     conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
                     conn1.addParamMap("calendar_date", selectedDate);
                     conn1.onExcute((isResult1, data1) -> {
+
                         ArrayList<CalendarVO> list = new Gson().fromJson(data1, new TypeToken<ArrayList<CalendarVO>>() {
                         }.getType());
                         adapter.calendarList = list;
@@ -140,6 +142,10 @@ public class CalendarActivity extends AppCompatActivity {
     }
 
     public void viewCalendar() {
+
+        ProgressDialog dialog = new ProgressDialog(this);
+        dialog.show();
+
         HashSet<CalendarDay> set = new HashSet<>();
         CommonConn conn = new CommonConn(this, "main/viewCalendarList");
         conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
@@ -165,6 +171,8 @@ public class CalendarActivity extends AppCompatActivity {
             } else {
                 binding.calendarView.addDecorator(new DateDecorator(Color.TRANSPARENT, set));
             }
+
+            dialog.dismiss();
         });
     }
 

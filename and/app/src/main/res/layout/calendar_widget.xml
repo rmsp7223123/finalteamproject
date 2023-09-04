@@ -1,29 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:id="@+id/ln_main"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="150dp"
     android:layout_height="150dp"
     android:orientation="vertical">
 
     <LinearLayout
+        android:gravity="center_vertical"
+        android:padding="5dp"
         android:background="#F7DE6D"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/tv_today"
-        android:layout_width="120dp"
-        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:text="YYYY-MM-DD"
         android:textColor="@color/black"
         android:textStyle="bold"
         />
 
-        <ImageView
-            android:id="@+id/imgv_refresh"
-            android:layout_width="30dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/refresh"/>
+<!--        <ImageView-->
+<!--            android:id="@+id/imgv_refresh"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:src="@drawable/refresh"/>-->
 
     </LinearLayout>
 

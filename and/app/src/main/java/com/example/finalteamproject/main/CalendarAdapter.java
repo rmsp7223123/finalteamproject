@@ -2,6 +2,7 @@ package com.example.finalteamproject.main;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.databinding.DialogAddScheduleBinding;
@@ -26,18 +28,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
-
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHolder> {
 
     ItemCalendarListBinding binding;
 
     ArrayList<CalendarVO> calendarList;
-
-    private Disposable disposable;
 
     Context context;
 
@@ -57,6 +52,13 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        if(calendarList.get(position).getCalendar_importance().equals("3")){
+            holder.binding.imgvImportance.setImageResource(R.drawable.importance1);
+        }else if(calendarList.get(position).getCalendar_importance().equals("2")){
+            holder.binding.imgvImportance.setImageResource(R.drawable.importance2);
+        }else {
+            holder.binding.imgvImportance.setImageResource(R.drawable.importance3);
+        }
         holder.binding.tvContent.setText(calendarList.get(position).getCalendar_content());
         holder.binding.tvContent.setOnClickListener(v -> {
             Dialog dialog = new Dialog(context);

@@ -32,6 +32,7 @@ import com.bumptech.glide.Glide;
 import com.example.finalteamproject.HideActionBar;
 import com.example.finalteamproject.Login.LoginInfoActivity;
 import com.example.finalteamproject.Login.LoginProfileActivity;
+import com.example.finalteamproject.Login.ProgressDialog;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.board.BoardCommonVar;
 import com.example.finalteamproject.chat.MessageChatActivity;
@@ -149,6 +150,10 @@ public class MainFragment extends Fragment{
         return list;
     }
     private void selectMainSlider() {
+
+        ProgressDialog dialog = new ProgressDialog(getContext());
+        dialog.show();
+
         CommonConn conn =new CommonConn(getContext() , "main/viewpager");
         conn.addParamMap("member_id",CommonVar.logininfo.getMember_id());
         conn.onExcute((isResult, data) -> {
@@ -211,6 +216,7 @@ public class MainFragment extends Fragment{
 
 
 
+            dialog.dismiss();
 
         });
 

@@ -34,11 +34,11 @@
 
     <string name="alarm">alarm</string>
     <string name="content">내용</string>
-    <string name="importance">importance</string>
+    <string name="importance">중요도</string>
     <string name="very">매우</string>
     <string name="middle">중간</string>
     <string name="little">적음</string>
-    <string name="save">save</string>
+    <string name="save">저장</string>
     <string name="todo">할일</string>
     <string name="todo_list">TODO List</string>
     <string name="delete">삭제</string>
@@ -48,6 +48,6 @@
     <string name="memo">메모</string>
     <string name="empty_event">이벤트 없음</string>
     <string name="search">검색</string>
-    <string name="cancel">cancel</string>
+    <string name="cancel">취소</string>
 
 </resources>
