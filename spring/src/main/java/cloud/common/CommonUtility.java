@@ -51,7 +51,7 @@ public class CommonUtility {
 	// 파일 삭제 메서드
 	public void deleteFile(String filePath) {
 		if (filePath != null) {
-			String newData = filePath.replaceAll("http://121.148.107.94:8080/cloud/imgs/", "");
+			String newData = filePath.replaceAll("http://192.168.0.87:8080/cloud/imgs/", "");
 			File file = new File(rootPath + newData);
 			if (file.exists()) {
 				file.delete();
