@@ -43,8 +43,8 @@ public class CalendarWidget extends AppWidgetProvider {
         for (int appWidgetId : appWidgetIds) {
             updateWidget(context, appWidgetManager, appWidgetId);
         }
-        Log.d("update", "onEnabled: test");
-        scheduleUpdateTask(context);
+//        Log.d("update", "onEnabled: test");
+//        scheduleUpdateTask(context);
     }
 
     private void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
@@ -117,42 +117,42 @@ public class CalendarWidget extends AppWidgetProvider {
 
     @Override
     public void onEnabled(Context context) {
-        Log.d("update", "onEnabled: test");
-        scheduleUpdateTask(context);
+//        Log.d("update", "onEnabled: test");
+//        scheduleUpdateTask(context);
     }
 
     @Override
     public void onDisabled(Context context) {
         // Remove the update task when the last widget is disabled
-        cancelUpdateTask();
+//        cancelUpdateTask();
     }
 
-    private void scheduleUpdateTask(Context context) {
-        if (updateTask == null) {
-            updateTask = new Runnable() {
-                @Override
-                public void run() {
-                    // Update the widget
-                    AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-//                    int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, CalendarWidget.class));
-                    for (int appWidgetId : appWidgetIds) {
-                        updateWidget(context, appWidgetManager, appWidgetId);
-                    }
+//    private void scheduleUpdateTask(Context context) {
+//        if (updateTask == null) {
+//            updateTask = new Runnable() {
+//                @Override
+//                public void run() {
+//                    // Update the widget
+//                    AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+////                    int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, CalendarWidget.class));
+//                    for (int appWidgetId : appWidgetIds) {
+//                        updateWidget(context, appWidgetManager, appWidgetId);
+//                    }
+//
+//
+//                    // Reschedule the task
+//                    handler.postDelayed(this, UPDATE_INTERVAL);
+//                }
+//            };
+//        }
+//
+//        handler.post(updateTask);
+//    }
 
-
-                    // Reschedule the task
-                    handler.postDelayed(this, UPDATE_INTERVAL);
-                }
-            };
-        }
-
-        handler.post(updateTask);
-    }
-
-    private void cancelUpdateTask() {
-        if (updateTask != null) {
-            handler.removeCallbacks(updateTask);
-            updateTask = null;
-        }
-    }
+//    private void cancelUpdateTask() {
+//        if (updateTask != null) {
+//            handler.removeCallbacks(updateTask);
+//            updateTask = null;
+//        }
+//    }
 }

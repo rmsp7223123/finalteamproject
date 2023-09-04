@@ -12,7 +12,7 @@
 <body>
 	<h3>경로당 현황</h3>
 
-	<ul class="nav nav-tabs active">
+	<ul class="nav nav-tabs active mt-3">
 		<li class="nav-item active"><a class="nav-link" data-toggle="tab"
 			href="#region">전국 경로당</a></li>
 		<li class="nav-item"><a class="nav-link" data-toggle="tab"
@@ -168,7 +168,7 @@
 		        .attr('class', 'background')
 		        .attr('width', width + 'px')
 		        .attr('height', height + 'px')
-		    	.attr('fill', '#a6a6a6'); //배경색(흰색)
+		    	.attr('fill', '#fff'); //배경색(흰색)
 				
 		    //geoJson데이터를 파싱하여 지도그리기
 		    d3.json('/cloudWeb/json/korea.json', function(json) {
