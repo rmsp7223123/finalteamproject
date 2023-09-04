@@ -1,8 +1,15 @@
 package com.example.finalteamproject.gps;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PointF;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -46,7 +53,11 @@ import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.NaverMapOptions;
 import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.UiSettings;
+import com.naver.maps.map.overlay.LocationOverlay;
 import com.naver.maps.map.overlay.Marker;
+import com.naver.maps.map.overlay.Overlay;
+import com.naver.maps.map.overlay.OverlayImage;
+import com.naver.maps.map.overlay.PathOverlay;
 import com.naver.maps.map.util.FusedLocationSource;
 import com.naver.maps.map.util.MarkerIcons;
 
@@ -56,7 +67,7 @@ import java.util.ArrayList;
 public class GpsFragment extends Fragment implements OnMapReadyCallback {
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
-
+    MapFragment mapFragment;
     private FusedLocationSource locationSource;
     private NaverMap naverMap;
     private double lat, lon;
@@ -72,26 +83,7 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
         binding = FragmentGpsBinding.inflate(inflater, container, false);
 
 
-        Window window = getActivity().getWindow();
-        //  window.clearFlags();
-   //    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-
-            window.setStatusBarColor(Color.TRANSPARENT);
-            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-
-
-
-        int status_height = getActivity().getResources().getIdentifier("status_bar_height", "dimen", "android");
-
-        binding.container.setPadding(
-                20,
-                getActivity().getResources().getDimensionPixelSize(status_height)+10,
-                20,
-                0
-
-        );
+        setTransStatus();
 
 
         searchDialog = new BottomSheetDialog(getContext(), R.style.DialogCustomTheme);
@@ -132,14 +124,14 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
 
         //지도 객체 생성
         FragmentManager fm = getChildFragmentManager();
-        MapFragment mapFragment = (MapFragment) fm.findFragmentById(R.id.map);
         if (mapFragment == null) {
-            mapFragment = MapFragment.newInstance();
-            fm.beginTransaction().add(R.id.map, mapFragment).commit();
+            mapFragment = MapFragment.newInstance(new NaverMapOptions().locationButtonEnabled(true));
+            fm.beginTransaction().add(binding.map.getId(), mapFragment).commit();
         }
         mapFragment.getMapAsync(this);
 
         //현재 위치 생성, naverMap에 지정
+
         locationSource =
                 new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
 
@@ -164,10 +156,18 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(@NonNull NaverMap naverMap) {
         this.naverMap = naverMap;
-        naverMap.setLocationSource(locationSource); //내 위치
-        naverMap.setLocationTrackingMode(LocationTrackingMode.Follow); //위치 추적 모드
+        this.naverMap.setLocationSource(locationSource); //내 위치
+        this.naverMap.setLocationTrackingMode(LocationTrackingMode.Follow);
 
-        //내 위치 위도, 경도 이동
+        this.naverMap.getLocationOverlay().setVisible(true);
+        this.naverMap.getLocationOverlay().setIcon(OverlayImage.fromResource(R.drawable.logo));
+        this.naverMap.getLocationOverlay().setIconWidth(100);
+        this.naverMap.getLocationOverlay().setIconHeight(100);
+        //animateCircle(naverMap.getLocationOverlay());
+        this.naverMap.getUiSettings().setScaleBarEnabled(true);
+
+
+
         naverMap.addOnLocationChangeListener(new NaverMap.OnLocationChangeListener() {
             @Override
             public void onLocationChange(@NonNull Location location) {
@@ -175,8 +175,6 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                 if(lat != location.getLatitude() && lon!=location.getLongitude()) {
                     lat = location.getLatitude();
                     lon = location.getLongitude();
-
-
                 }
             }
 
@@ -185,7 +183,6 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
 
         //지도 줌 레벨
         naverMap.addOnCameraIdleListener(() -> {
-
             if(lat == 0 || lon == 0) return;
             float ZoomLevel = (float) naverMap.getCameraPosition().zoom;
             if(CURR_ZOOM_LEVEL ==ZoomLevel ) return; //줌레벨이 클수록 결과값은 적게 나와야 함
@@ -229,14 +226,14 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                     double markerLon = Double.parseDouble(gpsVO.getSenior_longitude());
 
                     // 현재 (내)위치에 마커 생성
-                    Marker Imarker = new Marker();
-                    Imarker.setPosition(new LatLng(lat, lon));
-                    Imarker.setMap(naverMap);
+//                    Marker Imarker = new Marker();
+//                    Imarker.setPosition(new LatLng(lat, lon));
+//                    Imarker.setMap(naverMap);
                     //마커 디자인
-                    Imarker.setIcon(MarkerIcons.BLACK); //색상
-                    Imarker.setIconTintColor(Color.parseColor("#FE69B7"));
-                    Imarker.setWidth(70); //마커사이즈
-                    Imarker.setHeight(100);
+//                    Imarker.setIcon(MarkerIcons.BLACK); //색상
+//                    Imarker.setIconTintColor(Color.parseColor("#FE69B7"));
+//                    Imarker.setWidth(70); //마커사이즈
+//                    Imarker.setHeight(100);
 
                     Log.d("위치", "위도, 경도: " + lat + ", " + lon);
 
@@ -297,7 +294,7 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
         });
     }
 
-public void moveCamera(String lat , String log){
+    public void moveCamera(String lat , String log){
         double latitude = Double.parseDouble(lat);
         double longitude = Double.parseDouble(log);
 
@@ -336,49 +333,17 @@ public void moveCamera(String lat , String log){
         detailInfoBinding.seniorName.setText("좋아요 "+vo.getSenior_like_num()+"");
 
         //좋아요 버튼 활성/비활성화
-        CommonConn connlike = new CommonConn(getContext(), "gps/likeyet");
-        connlike.addParamMap("member_id", CommonVar.logininfo.getMember_id());
-        connlike.addParamMap("key", vo.getKey());
-        connlike.onExcute((isResult, data) -> {
-            if (data.equals(vo.getKey()+"")){
-                detailInfoBinding.like.setVisibility(View.VISIBLE);
-                detailInfoBinding.unlike.setVisibility(View.GONE);
-            }else {
-                detailInfoBinding.like.setVisibility(View.GONE);
-                detailInfoBinding.unlike.setVisibility(View.VISIBLE);
-            }
-        });
+        setLikeYet(vo);
 
         //좋아요 : 회색버튼 누르면 빨간색으로 변함
         detailInfoBinding.unlike.setOnClickListener(v1 -> {
-            CommonConn connl = new CommonConn(v1.getContext(), "gps/likebtn");
-            connl.addParamMap("key", vo.getKey());
-            connl.addParamMap("member_id", CommonVar.logininfo.getMember_id());
-            connl.onExcute((isResult, data) -> {
-                detailInfoBinding.unlike.setVisibility(View.GONE);
-                detailInfoBinding.like.setVisibility(View.VISIBLE);
-                Toast.makeText(getContext(), "자주가는 경로당이 추가되었습니다.", Toast.LENGTH_SHORT).show();
-
-                likelist();
-                selectDetail(vo);
-            });
+            setLike("likebtn" ,vo);
         });
 
         //좋아요 취소 : 빨간 버튼 누르면 회색으로 변함
         detailInfoBinding.like.setOnClickListener(v1 -> {
-            CommonConn connul = new CommonConn(v1.getContext(), "gps/unlikebtn");
-            connul.addParamMap("key", vo.getKey());
-            connul.addParamMap("member_id", CommonVar.logininfo.getMember_id());
-            connul.onExcute((isResult, data) -> {
-                detailInfoBinding.like.setVisibility(View.GONE);
-                detailInfoBinding.unlike.setVisibility(View.VISIBLE);
-                Toast.makeText(getContext(), "자주가는 경로당이 삭제되었습니다.", Toast.LENGTH_SHORT).show();
-
-                likelist();
-                selectDetail(vo);
-            });
+            setLike("unlikebtn" ,vo);
         });
-
         //카메라 이동
         moveCamera(vo.getSenior_latitude() , vo.getSenior_longitude());
         detailDialog.show();
@@ -395,13 +360,145 @@ public void moveCamera(String lat , String log){
         }
     }
 
+    public void setTransStatus(){
+        Window window = getActivity().getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+
+        window.setStatusBarColor(Color.TRANSPARENT);
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
+
+
+        int status_height = getActivity().getResources().getIdentifier("status_bar_height", "dimen", "android");
+
+        binding.container.setPadding(
+                20,
+                getActivity().getResources().getDimensionPixelSize(status_height)+10,
+                20,
+                0
+
+        );
+
+    }
+    public void setLikeYet(GpsVO vo){
+        CommonConn connlike = new CommonConn(getContext(), "gps/likeyet");
+        connlike.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+        connlike.addParamMap("key", vo.getKey());
+        connlike.onExcute((isResult, data) -> {
+            if (data.equals(vo.getKey()+"")){
+                detailInfoBinding.like.setVisibility(View.VISIBLE);
+                detailInfoBinding.unlike.setVisibility(View.GONE);
+            }else {
+                detailInfoBinding.like.setVisibility(View.GONE);
+                detailInfoBinding.unlike.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+    public void setLike(String path ,GpsVO vo){
+
+        CommonConn connl = new CommonConn(getContext(), "gps/" + path);
+        connl.addParamMap("key", vo.getKey());
+        connl.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+        connl.onExcute((isResult, data) -> {
+            if (data.equals(vo.getKey()+"")){
+                detailInfoBinding.like.setVisibility(View.VISIBLE);
+                detailInfoBinding.unlike.setVisibility(View.GONE);
+                Toast.makeText(getContext(), "자주가는 경로당이 추가되었습니다.", Toast.LENGTH_SHORT).show();
+            }else {
+                detailInfoBinding.like.setVisibility(View.GONE);
+                detailInfoBinding.unlike.setVisibility(View.VISIBLE);
+                Toast.makeText(getContext(), "자주가는 경로당이 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+            }
+
+
+            likelist();
+            selectDetail(vo);
+        });
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-
     }
+
+    private Animator animator;
+    private void animateCircle(@NonNull LocationOverlay locationOverlay) {
+        if (animator != null) {
+            animator.cancel();
+        }
+        AnimatorSet animatorSet = new AnimatorSet();
+        locationOverlay.setZIndex(300000);
+        locationOverlay.setVisible(true);
+        locationOverlay.setIcon(OverlayImage.fromResource(R.drawable.logo));
+        locationOverlay.setIconWidth(100);
+        locationOverlay.setIconHeight(100);
+        ObjectAnimator radiusAnimator = ObjectAnimator.ofInt(locationOverlay, "circleRadius",
+                0, getResources().getDimensionPixelSize(R.dimen.location_overlay_circle_raduis));
+        radiusAnimator.setRepeatCount(ValueAnimator.INFINITE);
+
+        ObjectAnimator colorAnimator = ObjectAnimator.ofInt(locationOverlay, "circleColor",
+                Color.argb(127, 148, 186, 250), Color.argb(0, 148, 186, 250));
+        colorAnimator.setEvaluator(new ArgbEvaluator());
+        colorAnimator.setRepeatCount(ValueAnimator.INFINITE);
+
+        animatorSet.setDuration(2000);
+        animatorSet.playTogether(radiusAnimator, colorAnimator);
+        animatorSet.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                locationOverlay.setCircleRadius(100);
+            }
+        });
+        animatorSet.start();
+
+        animator = animatorSet;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mapFragment.onPause();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mapFragment.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mapFragment.onResume();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mapFragment.onDestroy();
+    }
+    //
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        mapView.onStart();
+//    }
+//
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        mapView.onResume();
+//    }
+//
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        mapView.onPause();
+//    }
+
 }
 
