@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginHorizontal="10dp"
-    android:layout_marginTop="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".gps.GpsFragment">
+
+    <FrameLayout
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,6 +28,7 @@
             android:layout_height="wrap_content">
 
             <EditText
+
                 android:id="@+id/gps_search"
                 android:layout_width="300dp"
                 android:layout_height="45dp"
@@ -42,7 +52,58 @@
 
         </RelativeLayout>
 
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_grp"
+            android:padding="5dp"
+            app:singleSelection="true"
+            app:selectionRequired="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.chip.Chip
+                app:chipMinHeight="40dp"
+                android:checked="true"
+                app:iconStartPadding="10dp"
+                app:iconEndPadding="10dp"
+                app:textStartPadding="10dp"
+                app:textEndPadding="10dp"
+                app:chipBackgroundColor="@drawable/chip_gps_background"
+                android:textColor="#000"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:text="주변 경로당"
+                app:chipIcon="@drawable/navermap_default_marker_icon_green"
+                app:chipIconEnabled="true"
+                app:chipIconTint="@drawable/chip_gps_background"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.chip.Chip
+                app:chipMinHeight="40dp"
+                android:checked="true"
+                app:iconStartPadding="10dp"
+                app:iconEndPadding="10dp"
+                app:textStartPadding="10dp"
+                app:textEndPadding="10dp"
+                app:chipBackgroundColor="@drawable/chip_gps_background"
+                android:textColor="#000"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:text="자주가는 경로당"
+                app:chipIcon="@drawable/ic_like"
+                app:chipIconEnabled="true"
+                app:chipIconTint="@drawable/chip_gps_background"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
+        </com.google.android.material.chip.ChipGroup>
+        </HorizontalScrollView>
+
         <TextView
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -52,6 +113,7 @@
             android:textStyle="bold" />
 
         <RelativeLayout
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_marginBottom="10dp">
@@ -85,227 +147,11 @@
             </LinearLayout>
         </RelativeLayout>
 
-        <FrameLayout
-            android:id="@+id/map"
-            android:layout_width="match_parent"
-            android:layout_height="220dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="내 주변 경로당"
-            android:textSize="20sp"
-            android:textStyle="bold" />
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recv_gps"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp" />
-            </LinearLayout>
-
-        </ScrollView>
-    </LinearLayout>
-    <!-- 검색결과 -->
-    <LinearLayout
-        android:visibility="gone"
-        android:id="@+id/ln_result"
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/box_search_result"
-        android:orientation="vertical">
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp">
-
-            <TextView
-                android:id="@+id/tv_search_result"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="검색결과"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/btn_close"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/baseline_close_24" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recv_search_result"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="2dp"
-                android:background="@color/white" />
-
-        </RelativeLayout>
 
     </LinearLayout>
 
-    <!-- 상세정보 -->
-    <LinearLayout
-        android:visibility="gone"
-        android:id="@+id/ln_detail"
-        android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/box_search_result"
-        android:orientation="vertical">
+</FrameLayout>
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="20dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="상세정보"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/btn_close2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/baseline_close_24" />
-        </RelativeLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginHorizontal="2dp"
-            android:orientation="vertical"
-            android:background="@color/white">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="10dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="7"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/senior_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="금호APT경로당"
-                        android:textSize="15sp" />
-
-                    <TextView
-                        android:id="@+id/senior_like"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/resize_heart"
-                        android:drawablePadding="3dp"
-                        android:text="좋아요 300" />
-                </LinearLayout>
-
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-
-                    <ImageView
-                        android:id="@+id/unlike"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:src="@drawable/ic_unlike" />
-
-                    <ImageView
-                        android:id="@+id/like"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:src="@drawable/ic_like" />
-
-                </RelativeLayout>
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="위치" />
-
-            <TextView
-                android:id="@+id/senior_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="광주광역시 북구 각화대로 33 (각화동 금호타운)" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="전화번호" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="30dp">
-
-                <TextView
-                    android:id="@+id/phone_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#2196F3"
-                    android:text="062-262-7342" />
-
-            </LinearLayout>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="잘못된 내용이 있나요?"/>
-            <TextView
-                android:id="@+id/tv_toadmin"
-                android:layout_gravity="right"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#2196F3"
-                android:text="관리자에게 알려주기"/>
-
-            </LinearLayout>
-        </LinearLayout>
-
-    </LinearLayout>
-
-</RelativeLayout>
+</FrameLayout>

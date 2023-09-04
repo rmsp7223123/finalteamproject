@@ -6,9 +6,11 @@ import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.WindowCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -18,13 +20,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.cs.NewCSBoardActivity;
+import com.example.finalteamproject.databinding.BottomsheetDetailInfoBinding;
+import com.example.finalteamproject.databinding.BottomsheetSearchResultBinding;
 import com.example.finalteamproject.databinding.FragmentGpsBinding;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.naver.maps.geometry.LatLng;
@@ -54,19 +62,52 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
     private double lat, lon;
     private Marker selectedMarker;
     FragmentGpsBinding binding;
-
+    BottomSheetDialog searchDialog;
+    BottomSheetDialog detailDialog;
+    BottomsheetSearchResultBinding searchBinding;
+    BottomsheetDetailInfoBinding detailInfoBinding;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentGpsBinding.inflate(inflater, container, false);
-        binding.lnResult.setVisibility(View.GONE);
-        binding.lnDetail.setVisibility(View.GONE);
+
+
+        Window window = getActivity().getWindow();
+        //  window.clearFlags();
+   //    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+
+            window.setStatusBarColor(Color.TRANSPARENT);
+            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
+
+
+        int status_height = getActivity().getResources().getIdentifier("status_bar_height", "dimen", "android");
+
+        binding.container.setPadding(
+                20,
+                getActivity().getResources().getDimensionPixelSize(status_height)+10,
+                20,
+                0
+
+        );
+
+
+        searchDialog = new BottomSheetDialog(getContext(), R.style.DialogCustomTheme);
+        detailDialog = new BottomSheetDialog(getContext(),R.style.DialogCustomTheme);
+
+        searchBinding = BottomsheetSearchResultBinding.inflate(getLayoutInflater(), null, false);
+        detailInfoBinding = BottomsheetDetailInfoBinding.inflate(getLayoutInflater(), null, false);
+
+
+
+        searchDialog.setContentView(searchBinding.getRoot());
+        detailDialog.setContentView(detailInfoBinding.getRoot());
+
 
         //검색 결과
         binding.btnSearch.setOnClickListener(v -> {
-            binding.lnResult.setVisibility(View.VISIBLE);
-            binding.tvSearchResult.setText("검색결과");
-            binding.lnDetail.setVisibility(View.INVISIBLE);
 
             //검색 결과 데이터
             CommonConn connresult = new CommonConn(getContext(), "gps/search");
@@ -74,24 +115,19 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
             connresult.onExcute((isResult, data) -> {
                 ArrayList<GpsVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<GpsVO>>(){}.getType());
                 GpsAdapter adapter = new GpsAdapter(list, this);
-                binding.recvSearchResult.setAdapter(adapter);
-                binding.recvSearchResult.setLayoutManager(new LinearLayoutManager(getContext()));
+
+                searchBinding.recvSearchResult.setAdapter(adapter);
+                searchBinding.recvSearchResult.setLayoutManager(new LinearLayoutManager(getContext()));
+                searchDialog.show();
             });
         });
 
         //검색결과 닫기
-                binding.btnClose.setOnClickListener(v -> {
-                binding.lnResult.setVisibility(View.GONE);
+        searchBinding.btnClose.setOnClickListener(v -> {
+            searchDialog.dismiss();
         });
-
-        //자주 가는 경로당(메인화면 상단부)
-        likelist();
-
-        //(자주가는 경로당)더보기 메뉴
         binding.tvMore.setOnClickListener(v -> {
-            binding.lnResult.setVisibility(View.VISIBLE);
-            binding.tvSearchResult.setText("자주 가는 경로당");
-
+            likelist();
         });
 
         //지도 객체 생성
@@ -213,29 +249,24 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                     marker.setWidth(70);
                     marker.setHeight(100);
                     marker.setOnClickListener(overlay -> {
-                        selectDetail(gpsVO);
+                        //selectDetail(gpsVO);2023
                         return true;
                     });
                 }
 
 
-                //경로당 리스트(리사이클러뷰)
-                GpsAdapter adapter = new GpsAdapter(list, this);
-                binding.recvGps.setAdapter(adapter);
-                binding.recvGps.setLayoutManager(new LinearLayoutManager(getContext()));
-
-                binding.btnClose2.setOnClickListener(v -> {
-                    binding.lnDetail.setVisibility(View.GONE);
-                });
-//                binding.phoneNumber.setOnClickListener(v -> {
-//                        Intent intent = new Intent(Intent.ACTION_DIAL,
-//                                Uri.parse("tel:/"+binding.phoneNumber.getText().toString()));
-//                        startActivity(intent);
+                //경로당 리스트(리사이클러뷰) 잠깐주석
+//                GpsAdapter adapter = new GpsAdapter(list, this);
+//                binding.recvGps.setAdapter(adapter);
+//                binding.recvGps.setLayoutManager(new LinearLayoutManager(getContext()));
+//
+//                detailInfoBinding.btnClose2.setOnClickListener(v -> {
+//                    detailDialog.dismiss();
 //                });
-                binding.tvToadmin.setOnClickListener(v -> {
-                    Intent intent = new Intent(getContext(), NewCSBoardActivity.class);
-                    startActivity(intent);
-                });
+//                detailInfoBinding.tvToadmin.setOnClickListener(v -> {
+//                    Intent intent = new Intent(getContext(), NewCSBoardActivity.class);
+//                    startActivity(intent);
+//                });
 
             });
 
@@ -259,8 +290,10 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
             binding.recvBmark.setLayoutManager(new LinearLayoutManager(getContext()));
 
             GpsLikeAdapter likeadapter = new GpsLikeAdapter(list,this);
-            binding.recvSearchResult.setAdapter(likeadapter);
-            binding.recvSearchResult.setLayoutManager(new LinearLayoutManager(getContext()));
+            searchBinding.recvSearchResult.setAdapter(likeadapter);
+            searchBinding.recvSearchResult.setLayoutManager(new LinearLayoutManager(getContext()));
+            searchBinding.tvSearchResult.setText("자주가는 경로당" + list.size() + " 건 ");
+            searchDialog.show();
         });
     }
 
@@ -289,30 +322,18 @@ public void moveCamera(String lat , String log){
 
 
     public void selectDetail(GpsVO vo) {
-        binding.lnDetail.setVisibility(View.VISIBLE);
-        CommonConn conn = new CommonConn(getContext(), "gps/detail");
-        conn.addParamMap("key", vo.getKey());
-        binding.seniorName.setText(vo.getSenior_name()+"");
-        if (vo.getSenior_roadaddress() == null){
-            binding.seniorAddress.setText("주소 정보 없음");
-        }else {
-            binding.seniorAddress.setText(vo.getSenior_roadaddress()+"");
-        }
-        if(vo.getSenior_call() == null){
-            binding.phoneNumber.setText("전화번호 정보 없음");
-            binding.phoneNumber.setOnClickListener(v -> {
-                Toast.makeText(getContext(), "전화번호가 없습니다.", Toast.LENGTH_SHORT).show();
-            });
-        }else {
-            binding.phoneNumber.setText(vo.getSenior_call()+"");
-            binding.phoneNumber.setOnClickListener(v -> {
+
+        detailInfoBinding.seniorName.setText(vo.getSenior_name()+"");
+       // binding.seniorName.setText(vo.getSenior_name()+"");
+        setTextView(detailInfoBinding.seniorName , vo.getSenior_roadaddress() , "주소 정보 없음");
+        if(setTextView(detailInfoBinding.phoneNumber , vo.getSenior_call() , "전화번호 정보 없음")){
+            detailInfoBinding.phoneNumber.setOnClickListener(v -> {
                 Intent intent = new Intent(Intent.ACTION_DIAL,
-                        Uri.parse("tel:/"+binding.phoneNumber.getText().toString()));
+                        Uri.parse("tel:/"+ detailInfoBinding.seniorName.getText().toString()));
                 startActivity(intent);
             });
         }
-        binding.seniorLike.setText("좋아요 "+vo.getSenior_like_num()+"");
-        //     if(vo.getSenior_call() == null){ => select nvl(adress , '주소 정보 없음')
+        detailInfoBinding.seniorName.setText("좋아요 "+vo.getSenior_like_num()+"");
 
         //좋아요 버튼 활성/비활성화
         CommonConn connlike = new CommonConn(getContext(), "gps/likeyet");
@@ -320,22 +341,22 @@ public void moveCamera(String lat , String log){
         connlike.addParamMap("key", vo.getKey());
         connlike.onExcute((isResult, data) -> {
             if (data.equals(vo.getKey()+"")){
-                binding.like.setVisibility(View.VISIBLE);
-                binding.unlike.setVisibility(View.GONE);
+                detailInfoBinding.like.setVisibility(View.VISIBLE);
+                detailInfoBinding.unlike.setVisibility(View.GONE);
             }else {
-                binding.like.setVisibility(View.GONE);
-                binding.unlike.setVisibility(View.VISIBLE);
+                detailInfoBinding.like.setVisibility(View.GONE);
+                detailInfoBinding.unlike.setVisibility(View.VISIBLE);
             }
         });
 
         //좋아요 : 회색버튼 누르면 빨간색으로 변함
-        binding.unlike.setOnClickListener(v1 -> {
+        detailInfoBinding.unlike.setOnClickListener(v1 -> {
             CommonConn connl = new CommonConn(v1.getContext(), "gps/likebtn");
             connl.addParamMap("key", vo.getKey());
             connl.addParamMap("member_id", CommonVar.logininfo.getMember_id());
             connl.onExcute((isResult, data) -> {
-                binding.unlike.setVisibility(View.GONE);
-                binding.like.setVisibility(View.VISIBLE);
+                detailInfoBinding.unlike.setVisibility(View.GONE);
+                detailInfoBinding.like.setVisibility(View.VISIBLE);
                 Toast.makeText(getContext(), "자주가는 경로당이 추가되었습니다.", Toast.LENGTH_SHORT).show();
 
                 likelist();
@@ -344,13 +365,13 @@ public void moveCamera(String lat , String log){
         });
 
         //좋아요 취소 : 빨간 버튼 누르면 회색으로 변함
-        binding.like.setOnClickListener(v1 -> {
+        detailInfoBinding.like.setOnClickListener(v1 -> {
             CommonConn connul = new CommonConn(v1.getContext(), "gps/unlikebtn");
             connul.addParamMap("key", vo.getKey());
             connul.addParamMap("member_id", CommonVar.logininfo.getMember_id());
             connul.onExcute((isResult, data) -> {
-                binding.like.setVisibility(View.GONE);
-                binding.unlike.setVisibility(View.VISIBLE);
+                detailInfoBinding.like.setVisibility(View.GONE);
+                detailInfoBinding.unlike.setVisibility(View.VISIBLE);
                 Toast.makeText(getContext(), "자주가는 경로당이 삭제되었습니다.", Toast.LENGTH_SHORT).show();
 
                 likelist();
@@ -360,7 +381,27 @@ public void moveCamera(String lat , String log){
 
         //카메라 이동
         moveCamera(vo.getSenior_latitude() , vo.getSenior_longitude());
+        detailDialog.show();
     }
 
+
+    public boolean setTextView(TextView tv , String data , String msg){
+        if(data == null){
+            tv.setText(msg);
+            return false;
+        }else{
+            tv.setText(data);
+            return true;
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        getActivity().getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
+    }
 }
 
