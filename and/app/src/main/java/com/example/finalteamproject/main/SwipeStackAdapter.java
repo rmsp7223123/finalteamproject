@@ -1,5 +1,6 @@
 package com.example.finalteamproject.main;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.finalteamproject.R;
+import com.example.finalteamproject.board.BoardFragment;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.common.MemberVO;
@@ -40,6 +42,8 @@ public class SwipeStackAdapter extends RecyclerView.Adapter<SwipeStackAdapter.Vi
 
     private MainFragment fragment;
 
+    private MainActivity activity;
+
     public MainFragment getFragment() {
         return fragment;
     }
@@ -48,10 +52,11 @@ public class SwipeStackAdapter extends RecyclerView.Adapter<SwipeStackAdapter.Vi
         this.fragment = fragment;
     }
 
-    public SwipeStackAdapter(LayoutInflater inflater, List<MemberVO> list, Context context) {
+    public SwipeStackAdapter(LayoutInflater inflater, List<MemberVO> list, Context context, Activity activity) {
         this.inflater = inflater;
         this.list = list;
         this.context = context;
+        this.activity = (MainActivity)activity;
     }
 
     @NonNull
@@ -87,6 +92,12 @@ public class SwipeStackAdapter extends RecyclerView.Adapter<SwipeStackAdapter.Vi
                         chip.setChipIconEnabled(true);
                         chip.setChipIcon(context.getResources().getDrawable(getMainDTO(list1.get(i).favor).getImgv_icon()));
                         h.binding.chipgroup.addView(chip);
+
+                        int i1 = i;
+                        chip.setOnClickListener(v -> {
+                            Log.d("click", "onBindViewHolder: chip");
+                            activity.changeFragment(fragment, activity, list1.get(i1).getFavor());
+                        });
 
                     }
                 });

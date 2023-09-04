@@ -1,14 +1,13 @@
 package com.example.finalteamproject.main;
 
 import android.app.Dialog;
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,16 +15,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
-import com.example.finalteamproject.databinding.DialogAddScheduleBinding;
 import com.example.finalteamproject.databinding.ItemCalendarBinding;
 import com.example.finalteamproject.databinding.ItemCalendarListBinding;
-import com.example.finalteamproject.databinding.ItemMessageBinding;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashSet;
 
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHolder> {
@@ -37,6 +33,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
     Context context;
 
     String importance = "";
+
 
     public CalendarAdapter(ArrayList<CalendarVO> calendarList, Context context) {
         this.calendarList = calendarList;

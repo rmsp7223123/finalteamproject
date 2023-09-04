@@ -1,7 +1,6 @@
 package com.example.finalteamproject.main;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -11,14 +10,10 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -26,7 +21,6 @@ import android.widget.Toast;
 
 import com.example.finalteamproject.ChangeStatusBar;
 import com.example.finalteamproject.Constants;
-import com.example.finalteamproject.HideActionBar;
 import com.example.finalteamproject.LocationService;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.board.BoardCommonVar;
@@ -131,11 +125,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //게시판 메뉴 이동
-    public void changeFragment(Fragment fragment, Activity activity){
+    public void changeFragment(Fragment fragment, Activity activity, int favor){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.remove(fragment);
-        manager.beginTransaction().replace(R.id.container_frame, new BoardFragment(activity)).commit();
+        manager.beginTransaction().replace(R.id.container_frame, new BoardFragment(activity, favor)).commit();
     }
 
     //일반 프래그먼트 이동
@@ -147,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //어댑터 -> 액티비티 이동
-    public void changeActivity(Context context, Activity activity){
+    public void changeActivity(Context context, Activity activity, int favor){
         Intent intent = new Intent(context, activity.getClass());
         startActivity(intent);
     }

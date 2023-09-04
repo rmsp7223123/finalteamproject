@@ -27,14 +27,19 @@ import java.util.List;
 
 public class CalendarWidget extends AppWidgetProvider {
 
-    private static final String ACTION_WIDGET_CLICKED = "com.example.finalteamproject.WIDGET_CLICKED";
-    private static final long UPDATE_INTERVAL = 5000; // 1 second
+     public static final String ACTION_WIDGET_CLICKED = "com.example.finalteamproject.WIDGET_CLICKED";
+    private static final long UPDATE_INTERVAL = 5000; // 5 second
 
     private final Handler handler = new Handler();
     private Runnable updateTask = null;
 
+//    private ComponentName componentName = null;
+
+    int[] appWidgetIds = null;
+
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
+        this.appWidgetIds = appWidgetIds;
         for (int appWidgetId : appWidgetIds) {
             updateWidget(context, appWidgetManager, appWidgetId);
         }
@@ -123,17 +128,17 @@ public class CalendarWidget extends AppWidgetProvider {
     }
 
     private void scheduleUpdateTask(Context context) {
-        Log.d("update", "scheduleUpdateTask: "+updateTask);
         if (updateTask == null) {
             updateTask = new Runnable() {
                 @Override
                 public void run() {
                     // Update the widget
                     AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-                    int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, CalendarWidget.class));
+//                    int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, CalendarWidget.class));
                     for (int appWidgetId : appWidgetIds) {
                         updateWidget(context, appWidgetManager, appWidgetId);
                     }
+
 
                     // Reschedule the task
                     handler.postDelayed(this, UPDATE_INTERVAL);
