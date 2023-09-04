@@ -26,18 +26,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
-
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHolder> {
 
     ItemCalendarListBinding binding;
 
     ArrayList<CalendarVO> calendarList;
-
-    private Disposable disposable;
 
     Context context;
 
