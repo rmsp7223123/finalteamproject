@@ -53,55 +53,60 @@ public class CalendarWidget extends AppWidgetProvider {
             conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
             conn.onExcute((isResult, data) -> {
                 List<CalendarVO> list = new Gson().fromJson(data, new TypeToken<List<CalendarVO>>(){}.getType());
-                if(list.size()==0){
-                    views.setViewVisibility(R.id.rl, View.VISIBLE);
-                    views.setViewVisibility(R.id.ln, View.GONE);
-                }else {
-                    views.setViewVisibility(R.id.rl, View.GONE);
-                    views.setViewVisibility(R.id.ln, View.VISIBLE);
+                try {
+                    if(list.size()==0){
+                        views.setViewVisibility(R.id.rl, View.VISIBLE);
+                        views.setViewVisibility(R.id.ln, View.GONE);
+                    }else {
+                        views.setViewVisibility(R.id.rl, View.GONE);
+                        views.setViewVisibility(R.id.ln, View.VISIBLE);
 
-                    for (int i = 0; i < list.size(); i++) {
-                        if(list.get(i).getCalendar_importance().equals("1")){
-                            views.setImageViewResource(arr.get(i).imgv, R.drawable.importance1);
-                        }else if(list.get(i).getCalendar_importance().equals("2")){
-                            views.setImageViewResource(arr.get(i).imgv, R.drawable.importance3);
-                        }else {
-                            views.setImageViewResource(arr.get(i).imgv, R.drawable.importance2);
+                        for (int i = 0; i < list.size(); i++) {
+                            if(list.get(i).getCalendar_importance().equals("1")){
+                                views.setImageViewResource(arr.get(i).imgv, R.drawable.importance1);
+                            }else if(list.get(i).getCalendar_importance().equals("2")){
+                                views.setImageViewResource(arr.get(i).imgv, R.drawable.importance3);
+                            }else {
+                                views.setImageViewResource(arr.get(i).imgv, R.drawable.importance2);
+                            }
+                            if(list.get(i).getCalendar_content().length()>5){
+                                views.setTextViewText(arr.get(i).tv_content, list.get(i).getCalendar_content().substring(0, 5)+"...");
+                            }else {
+                                views.setTextViewText(arr.get(i).tv_content, list.get(i).getCalendar_content());
+                            }
+                            views.setTextViewText(arr.get(i).tv_day, list.get(i).getCalendar_date());
+
+                            if(list.size()==2){
+                                views.setViewVisibility(R.id.fl2, View.GONE);
+                                views.setViewVisibility(R.id.ln_3, View.GONE);
+                            }else if(list.size()==1){
+                                views.setViewVisibility(R.id.fl1, View.GONE);
+                                views.setViewVisibility(R.id.ln_2, View.GONE);
+                                views.setViewVisibility(R.id.fl2, View.GONE);
+                                views.setViewVisibility(R.id.ln_3, View.GONE);
+                            }
+
+                            Intent intent = new Intent(context, CalendarActivity.class);
+                            intent.setAction(ACTION_WIDGET_CLICKED);
+                            intent.putExtra("member_id", CommonVar.logininfo.getMember_id());
+                            intent.putExtra("calendar_id", list.get(i).getCalendar_id());
+                            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_MUTABLE);
+
+                            views.setOnClickPendingIntent(arr.get(i).ln, pendingIntent);
+
                         }
-                        if(list.get(i).getCalendar_content().length()>5){
-                            views.setTextViewText(arr.get(i).tv_content, list.get(i).getCalendar_content().substring(0, 5)+"...");
-                        }else {
-                            views.setTextViewText(arr.get(i).tv_content, list.get(i).getCalendar_content());
-                        }
-                        views.setTextViewText(arr.get(i).tv_day, list.get(i).getCalendar_date());
 
-                        if(list.size()==2){
-                            views.setViewVisibility(R.id.fl2, View.GONE);
-                            views.setViewVisibility(R.id.ln_3, View.GONE);
-                        }else if(list.size()==1){
-                            views.setViewVisibility(R.id.fl1, View.GONE);
-                            views.setViewVisibility(R.id.ln_2, View.GONE);
-                            views.setViewVisibility(R.id.fl2, View.GONE);
-                            views.setViewVisibility(R.id.ln_3, View.GONE);
-                        }
 
-                        Intent intent = new Intent(context, CalendarActivity.class);
-                        intent.setAction(ACTION_WIDGET_CLICKED);
-                        intent.putExtra("member_id", CommonVar.logininfo.getMember_id());
-                        intent.putExtra("calendar_id", list.get(i).getCalendar_id());
-                        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_MUTABLE);
 
-                        views.setOnClickPendingIntent(arr.get(i).ln, pendingIntent);
 
                     }
 
 
-
+                    appWidgetManager.updateAppWidget(appWidgetId, views);
+                }catch (Exception e){
 
                 }
 
-
-                appWidgetManager.updateAppWidget(appWidgetId, views);
 
             });
 

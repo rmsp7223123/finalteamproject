@@ -97,10 +97,10 @@ public class CalendarActivity extends AppCompatActivity {
             } else {
                 for (int i = 0; i < dialogBinding.radioGroup.getChildCount(); i++) {
                     RadioButton btn = (RadioButton) dialogBinding.radioGroup.getChildAt(i);
-                    if (btn.isChecked() == true && btn.getText().toString().equals("적음")) {
+                    if (dialogBinding.lessBtn.isChecked()) {
                         importance = "1";
                         break;
-                    } else if (btn.isChecked() == true && btn.getText().toString().equals("중간")) {
+                    } else if (dialogBinding.middleBtn.isChecked()) {
                         importance = "2";
                         break;
                     } else {

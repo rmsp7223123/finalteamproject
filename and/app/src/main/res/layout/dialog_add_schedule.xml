@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#4A87D3">
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/dateText"
@@ -16,7 +16,7 @@
         app:layout_constraintEnd_toEndOf="@id/timePicker"
         app:layout_constraintTop_toTopOf="parent"
         android:gravity="left"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="20dp"
         android:text="2020-02-02"
         android:fontFamily="@font/sc_dream5"
@@ -56,8 +56,8 @@
         app:layout_constraintTop_toBottomOf="@id/timePicker"
         android:hint="@string/content"
         android:textSize="14sp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/light_gray"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -70,7 +70,7 @@
         app:layout_constraintEnd_toEndOf="@id/dateText"
         android:text="@string/importance"
         android:textSize="12sp"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         tools:ignore="MissingConstraints" />
 
     <RadioGroup
@@ -96,16 +96,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/middle"
-            android:buttonTint="@color/blue"
-            android:textColor="@color/blue"/>
+            android:buttonTint="@color/yellow"
+            android:textColor="@color/yellow"/>
 
         <RadioButton
             android:id="@+id/lessBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/little"
-            android:buttonTint="@color/yellow"
-            android:textColor="@color/yellow"/>
+            android:buttonTint="@color/blue"
+            android:textColor="@color/blue"/>
     </RadioGroup>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -125,7 +125,7 @@
             android:layout_margin="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             android:background="#00ff0000"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:text="@string/save"
             android:fontFamily="@font/sc_dream7"
             tools:ignore="MissingConstraints" />
@@ -137,7 +137,7 @@
             android:layout_margin="5dp"
             app:layout_constraintStart_toStartOf="parent"
             android:background="#00ff0000"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:text="@string/cancel"
             android:fontFamily="@font/sc_dream7"
             tools:ignore="MissingConstraints" />
