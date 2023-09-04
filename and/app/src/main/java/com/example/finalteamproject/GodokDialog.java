@@ -1,23 +1,27 @@
 package com.example.finalteamproject;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.finalteamproject.common.CommonConn;
-import com.example.finalteamproject.databinding.ActivityTeBinding;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.ContextThemeWrapper;
 
-public class TeActivity extends AppCompatActivity {
-    ActivityTeBinding binding;
+import com.example.finalteamproject.common.CommonConn;
+
+public class GodokDialog extends Activity{
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityTeBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        setTheme(  android.R.style.Widget_Material_Light_ButtonBar_AlertDialog );
         String member_id = getIntent().getStringExtra("member_id");
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,android.R.style.Widget_Material_Light_ButtonBar_AlertDialog );
         builder.setTitle("안부문자 보내기")
                 .setMessage("안부문자를 보내시겠습니까?")
                 .setPositiveButton("확인", new DialogInterface.OnClickListener() {
@@ -33,11 +37,12 @@ public class TeActivity extends AppCompatActivity {
                 .setNegativeButton("취소", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        finish();
                         dialog.dismiss();
+                        finish();
                     }
                 });
         AlertDialog dialog = builder.create();
         dialog.show();
+
     }
 }
