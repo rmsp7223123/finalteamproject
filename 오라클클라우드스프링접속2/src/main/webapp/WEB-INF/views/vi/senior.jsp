@@ -19,6 +19,8 @@
 			href="#pop">인기 경로당 TOP10</a></li>
 	</ul>
 
+
+
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<!-- <script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
@@ -68,8 +70,8 @@
         border: '1px dotted',
         padding: '10px',
         position: 'fixed',
-        top: '300px',
-        left: '1000px'   
+        top: '400px',
+        left: '1200px'   
     }).text('전국 경로당 수');
     $('#tab-content').append(legendDiv);
 
@@ -97,9 +99,6 @@
     legendDiv.append(wrap2);
     legendDiv.append(wrap3);
     legendDiv.append(wrap4);
-    
-    
-
 }
 	
 	
@@ -150,13 +149,13 @@
 		                    var count = data[i].count;
 		                    
 		                    // 조건에 따라 지역별로 다른 색상 적용
-		                    if (count > 3000) {
+		                    if (count >= 3000) {
 		                        regionColors[region] = '#fc5d1e';
-		                    } else if (count > 1500) {
+		                    } else if (count >= 1500 && count < 3000) {
 		                    	regionColors[region] = '#fc936a';
-							}else if (count > 1000) {
+							}else if (count >= 1000 && count < 1500) {
 								regionColors[region] = '#ffb699';
-							}else if (count < 500) {
+							}else if (count < 1000) {
 		                        regionColors[region] = '#fce5dc';
 		                    }else {
 		                        regionColors[region] = '#ff4800';
