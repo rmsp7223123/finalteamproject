@@ -49,11 +49,12 @@ public class CalendarWidget extends AppWidgetProvider {
             arr.add(new CalendarWidgetList(R.id.ln_2, R.id.imgv_2, R.id.tv_2, R.id.tv_day2));
             arr.add(new CalendarWidgetList(R.id.ln_3, R.id.imgv_3, R.id.tv_3, R.id.tv_day3));
 
+            try {
             CommonConn conn = new CommonConn(context, "main/widgetSchedule");
             conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
             conn.onExcute((isResult, data) -> {
                 List<CalendarVO> list = new Gson().fromJson(data, new TypeToken<List<CalendarVO>>(){}.getType());
-                try {
+
                     if(list.size()==0){
                         views.setViewVisibility(R.id.rl, View.VISIBLE);
                         views.setViewVisibility(R.id.ln, View.GONE);
@@ -104,13 +105,13 @@ public class CalendarWidget extends AppWidgetProvider {
 
 
                     appWidgetManager.updateAppWidget(appWidgetId, views);
-                }catch (Exception e){
 
-                }
 
 
             });
+        }catch (Exception e){
 
+        }
 
 
 
