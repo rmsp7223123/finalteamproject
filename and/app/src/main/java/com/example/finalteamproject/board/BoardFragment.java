@@ -39,8 +39,11 @@ public class BoardFragment extends Fragment {
     String[] list = {"TV", "음악", "영화", "패션", "동물", "뉴스", "자동차", "운동", "게임"};
     String[] list2 = {"최신순", "조회순", "추천순", "댓글순", "오래된순"};
 
-    public BoardFragment(Activity activity) {
+    int favor;
+
+    public BoardFragment(Activity activity, int favor) {
         this.activity = (MainActivity) activity;
+        this.favor = favor;
     }
 
 
@@ -50,17 +53,13 @@ public class BoardFragment extends Fragment {
         binding = FragmentBoardBinding.inflate(inflater, container, false);
 
         //게시판 카테고리 변경 스피너
+//        binding.tvBoardTitle.setText(BoardCommonVar.board_name);
+
+        BoardCommonVar.board_name = list[favor];
         binding.tvBoardTitle.setText(BoardCommonVar.board_name);
-        binding.spnBoard.getSelectedItem();
         Spinner favorSpinner = binding.spnBoard;
         ArrayAdapter favorAdapter = new ArrayAdapter(this.getContext(), android.R.layout.simple_spinner_item, list);
         favorSpinner.setAdapter(favorAdapter);
-
-        for (int i = 0; i < list.length; i++) {
-            if(list[i].equals(BoardCommonVar.board_name)){
-                binding.spnBoard.setSelection(i);
-            }
-        }
         binding.spnBoard.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int i, long id) {
@@ -75,7 +74,7 @@ public class BoardFragment extends Fragment {
 
             }
         });
-
+        binding.spnBoard.setSelection(favor);
         binding.tvBoardTitle.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -184,7 +183,7 @@ public class BoardFragment extends Fragment {
         });
 
         binding.imgRefresh.setOnClickListener(v -> {
-            activity.changeFragment(this, activity);
+            activity.changeFragment(this, activity, binding.spnBoard.getSelectedItemPosition()+1);
         });
 
         return binding.getRoot();

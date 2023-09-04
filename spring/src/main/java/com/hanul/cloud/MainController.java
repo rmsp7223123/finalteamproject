@@ -25,6 +25,7 @@ import com.google.gson.Gson;
 
 import cloud.member.AlarmVO;
 import cloud.member.CalendarVO;
+import cloud.member.ChatVO;
 import cloud.member.FavorVO;
 import cloud.member.FriendVO;
 import cloud.member.MemberVO;
@@ -147,6 +148,11 @@ public class MainController {
 		List<AlarmVO> list = sql.selectList("main.viewAlarm", receive_id);
 		return new Gson().toJson(list);
 		// ./return new Gson().toJson(sql.delete("main.deleteAlarm", paramMap));
+	}
+	
+	@RequestMapping(value = "/deleteAlarmOne", produces = "text/html;charset=utf-8")
+	public void deleteAlarmOne(String receive_id) {
+		sql.delete("main.deleteAlarmOne",receive_id);
 	}
 
 	@RequestMapping(value = "/addAlarm")
@@ -291,6 +297,20 @@ public class MainController {
 	public String widgetSchedule(String member_id) {
 		List<CalendarVO> list = sql.selectList("main.widgetSchedule", member_id);
 		return new Gson().toJson(list);
+	}
+	
+	@RequestMapping(value = "/changeChatFriendId")
+	public void changeChatStatus(String member_id, String chat_friend_id) {
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("member_id", member_id);
+		params.put("chat_friend_id", chat_friend_id);
+		sql.update("main.changeChatFriendId", params);
+	}
+	
+	@RequestMapping("/viewChat")
+	public String viewChat(String member_id) {
+		ChatVO vo =sql.selectOne("main.viewChat", member_id);
+		return new Gson().toJson(vo);
 	}
 	
 	

@@ -1,30 +1,37 @@
 package com.example.finalteamproject.main;
 
 import android.app.Dialog;
+import android.app.PendingIntent;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
-import android.widget.Toast;
+import android.widget.RemoteViews;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.finalteamproject.CalendarWidget;
+import com.example.finalteamproject.CalendarWidgetList;
+import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
-import com.example.finalteamproject.databinding.DialogAddScheduleBinding;
 import com.example.finalteamproject.databinding.ItemCalendarBinding;
 import com.example.finalteamproject.databinding.ItemCalendarListBinding;
-import com.example.finalteamproject.databinding.ItemMessageBinding;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHolder> {
 
@@ -33,12 +40,15 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
     ArrayList<CalendarVO> calendarList;
 
     Context context;
+    CalendarActivity activity;
 
     String importance = "";
 
-    public CalendarAdapter(ArrayList<CalendarVO> calendarList, Context context) {
+
+    public CalendarAdapter(ArrayList<CalendarVO> calendarList, Context context, CalendarActivity activity) {
         this.calendarList = calendarList;
         this.context = context;
+        this.activity = activity;
     }
 
     @NonNull
@@ -50,6 +60,13 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        if(calendarList.get(position).getCalendar_importance().equals("3")){
+            holder.binding.imgvImportance.setImageResource(R.drawable.importance3);
+        }else if(calendarList.get(position).getCalendar_importance().equals("2")){
+            holder.binding.imgvImportance.setImageResource(R.drawable.importance2);
+        }else {
+            holder.binding.imgvImportance.setImageResource(R.drawable.importance1);
+        }
         holder.binding.tvContent.setText(calendarList.get(position).getCalendar_content());
         holder.binding.tvContent.setOnClickListener(v -> {
             Dialog dialog = new Dialog(context);
@@ -115,10 +132,16 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
                     activity.updateCalendarDecorators(updatedSet);
                     notifyDataSetChanged();
                     dialog.dismiss();
+
+
+
                 });
             });
             dialog.show();
         });
+
+
+
     }
 
 
@@ -142,5 +165,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
         CalendarActivity activity = (CalendarActivity) context;
         activity.calendarTextVisibility(visible);
     }
+
+
 
 }

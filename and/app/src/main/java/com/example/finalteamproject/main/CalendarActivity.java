@@ -5,16 +5,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Dialog;
+import android.app.PendingIntent;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
 import android.database.Observable;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RadioButton;
+import android.widget.RemoteViews;
 import android.widget.Toast;
 
+import com.example.finalteamproject.CalendarWidget;
+import com.example.finalteamproject.CalendarWidgetList;
 import com.example.finalteamproject.ChangeStatusBar;
+import com.example.finalteamproject.Login.ProgressDialog;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
@@ -34,7 +44,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 
 import io.reactivex.rxjava3.disposables.Disposable;
 
@@ -51,14 +63,14 @@ public class CalendarActivity extends AppCompatActivity {
     Dialog dialog;
 
     DialogAddScheduleBinding dialogBinding;
-
+    ArrayList<CalendarVO> calendarList2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityCalendarBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        adapter = new CalendarAdapter(calendarList, this);
+        adapter = new CalendarAdapter(calendarList, this, this);
         viewCalendar();
         new ChangeStatusBar().changeStatusBarColor(this);
         binding.calendarView.setSelectedDate(CalendarDay.today());
@@ -82,6 +94,7 @@ public class CalendarActivity extends AppCompatActivity {
 
         });
 
+
     }
 
     private void showScheduleDialog() {
@@ -97,10 +110,10 @@ public class CalendarActivity extends AppCompatActivity {
             } else {
                 for (int i = 0; i < dialogBinding.radioGroup.getChildCount(); i++) {
                     RadioButton btn = (RadioButton) dialogBinding.radioGroup.getChildAt(i);
-                    if (btn.isChecked() == true && btn.getText().toString().equals("적음")) {
+                    if (dialogBinding.lessBtn.isChecked()) {
                         importance = "1";
                         break;
-                    } else if (btn.isChecked() == true && btn.getText().toString().equals("중간")) {
+                    } else if (dialogBinding.middleBtn.isChecked()) {
                         importance = "2";
                         break;
                     } else {
@@ -118,9 +131,17 @@ public class CalendarActivity extends AppCompatActivity {
                     conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
                     conn1.addParamMap("calendar_date", selectedDate);
                     conn1.onExcute((isResult1, data1) -> {
+
                         ArrayList<CalendarVO> list = new Gson().fromJson(data1, new TypeToken<ArrayList<CalendarVO>>() {
                         }.getType());
                         adapter.calendarList = list;
+
+                        RemoteViews views = setRemoteView();
+                        views.setTextViewText(R.id.tv_today, "abcd");
+                        ComponentName componentname = new ComponentName(this, CalendarWidget.class);
+                        AppWidgetManager appwidgetmanager = AppWidgetManager.getInstance(this);
+                        appwidgetmanager.updateAppWidget(componentname, views);
+
                         if (list.size() == 0) {
                             binding.emptyText.setVisibility(View.VISIBLE);
                         } else {
@@ -130,6 +151,30 @@ public class CalendarActivity extends AppCompatActivity {
                         dialog.dismiss();
                     });
                 });
+
+//                AppWidgetManager appWidgetManager =
+//                        getSystemService(AppWidgetManager.class);
+//                ComponentName myProvider =
+//                        new ComponentName(this, CalendarWidget.class);
+//
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                    if (appWidgetManager.isRequestPinAppWidgetSupported()) {
+//                        // Create the PendingIntent object only if your app needs to be notified
+//                        // that the user allowed the widget to be pinned. Note that, if the pinning
+//                        // operation fails, your app isn't notified.
+//                        Intent pinnedWidgetCallbackIntent = new Intent(this, CalendarWidget.class );
+//
+//                        // Configure the intent so that your app's broadcast receiver gets
+//                        // the callback successfully. This callback receives the ID of the
+//                        // newly-pinned widget (EXTRA_APPWIDGET_ID).
+//                        PendingIntent successCallback = PendingIntent.getBroadcast(this, 0,
+//                                pinnedWidgetCallbackIntent, PendingIntent.FLAG_MUTABLE);
+//
+//                        appWidgetManager.requestPinAppWidget(myProvider, null, successCallback);
+//                    }
+//                }
+
+
                 adapter.notifyDataSetChanged();
             }
         });
@@ -139,12 +184,88 @@ public class CalendarActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    public RemoteViews setRemoteView() {
+
+        RemoteViews views = new RemoteViews(getPackageName(), R.layout.calendar_widget);
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String getTime = sdf.format(date);
+        views.setTextViewText(R.id.tv_today, getTime);
+
+        ArrayList<CalendarWidgetList> arr = new ArrayList<>();
+        arr.add(new CalendarWidgetList(R.id.ln_1, R.id.imgv_1, R.id.tv_1, R.id.tv_day1));
+        arr.add(new CalendarWidgetList(R.id.ln_2, R.id.imgv_2, R.id.tv_2, R.id.tv_day2));
+        arr.add(new CalendarWidgetList(R.id.ln_3, R.id.imgv_3, R.id.tv_3, R.id.tv_day3));
+
+        try {
+
+            CommonConn conn = new CommonConn(this, "main/widgetSchedule");
+            conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+            conn.onExcute((isResult, data) -> {
+                List<CalendarVO> list = new Gson().fromJson(data, new TypeToken<List<CalendarVO>>() {}.getType());
+
+                if (list.size() == 0) {
+                    views.setViewVisibility(R.id.rl, View.VISIBLE);
+                    views.setViewVisibility(R.id.ln, View.GONE);
+                } else {
+                    views.setViewVisibility(R.id.rl, View.GONE);
+                    views.setViewVisibility(R.id.ln, View.VISIBLE);
+                    views.setViewVisibility(R.id.ln_1, View.VISIBLE);
+                    views.setViewVisibility(R.id.ln_2, View.VISIBLE);
+                    views.setViewVisibility(R.id.ln_3, View.VISIBLE);
+                    for (int i = 0; i < list.size(); i++) {
+                        if(list.get(i).getCalendar_importance().equals("3")){
+                            views.setImageViewResource(arr.get(i).getImgv(), R.drawable.importance1);
+                        }else if(list.get(i).getCalendar_importance().equals("2")){
+                            views.setImageViewResource(arr.get(i).getImgv(), R.drawable.importance2);
+                        }else {
+                            views.setImageViewResource(arr.get(i).getImgv(), R.drawable.importance3);
+                        }
+                        if(list.get(i).getCalendar_content().length()>6){
+                            views.setTextViewText(arr.get(i).getTv_content(), list.get(i).getCalendar_content().substring(0, 6)+"...");
+                        }else {
+                            views.setTextViewText(arr.get(i).getTv_content(), list.get(i).getCalendar_content());
+                        }
+                        views.setTextViewText(arr.get(i).getTv_day(), list.get(i).getCalendar_date());
+
+                        if(list.size()==2){
+                            views.setViewVisibility(R.id.fl2, View.GONE);
+                            views.setViewVisibility(R.id.ln_3, View.GONE);
+                        }else if(list.size()==1){
+                            views.setViewVisibility(R.id.fl1, View.GONE);
+                            views.setViewVisibility(R.id.ln_2, View.GONE);
+                            views.setViewVisibility(R.id.fl2, View.GONE);
+                            views.setViewVisibility(R.id.ln_3, View.GONE);
+                        }
+
+                        Intent intent = new Intent(this, CalendarActivity.class);
+                        intent.putExtra("member_id", CommonVar.logininfo.getMember_id());
+                        intent.putExtra("calendar_id", list.get(i).getCalendar_id());
+                        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_MUTABLE);
+
+                        views.setOnClickPendingIntent(arr.get(i).getLn(), pendingIntent);
+                    }
+                }
+
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return views;
+    }
+
     public void viewCalendar() {
+
+        ProgressDialog dialog = new ProgressDialog(this);
+        dialog.show();
+
         HashSet<CalendarDay> set = new HashSet<>();
         CommonConn conn = new CommonConn(this, "main/viewCalendarList");
         conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
         conn.onExcute((isResult, data) -> {
-            ArrayList<CalendarVO> calendarList2 = new Gson().fromJson(data, new TypeToken<ArrayList<CalendarVO>>() {
+             calendarList2 = new Gson().fromJson(data, new TypeToken<ArrayList<CalendarVO>>() {
             }.getType());
             calendarList = calendarList2;
             binding.recvSchedule.setAdapter(adapter);
@@ -165,6 +286,8 @@ public class CalendarActivity extends AppCompatActivity {
             } else {
                 binding.calendarView.addDecorator(new DateDecorator(Color.TRANSPARENT, set));
             }
+
+            dialog.dismiss();
         });
     }
 
@@ -205,5 +328,11 @@ public class CalendarActivity extends AppCompatActivity {
             binding.calendarView.addDecorator(new DateDecorator(Color.TRANSPARENT, set));
         }
     }
+
+    private void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.calendar_widget);
+
+    }
+
 
 }

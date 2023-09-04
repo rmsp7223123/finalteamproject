@@ -23,6 +23,7 @@ public class BoardMainAdapter extends RecyclerView.Adapter<BoardMainAdapter.View
     MainActivity activity;
     Fragment fragment;
 
+
     public BoardMainAdapter(Fragment fragment, ArrayList<BoardMainDTO> list, Activity activity) {
         this.fragment = fragment;
         this.list = list;
@@ -44,7 +45,7 @@ public class BoardMainAdapter extends RecyclerView.Adapter<BoardMainAdapter.View
         h.binding.lnBoardSelect.setOnClickListener(v -> {
             BoardCommonVar.board_name = list.get(i).getTv_board_name();
             BoardCommonVar.board_align = "최신순";
-            activity.changeFragment(fragment,  activity);
+            activity.changeFragment(fragment, activity, i);
         });
     }
 

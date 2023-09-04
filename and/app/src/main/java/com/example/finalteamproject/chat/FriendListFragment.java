@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
 
+import com.example.finalteamproject.Login.ProgressDialog;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
@@ -83,6 +84,10 @@ public class FriendListFragment extends Fragment {
 
 
     public void friendList() {
+
+        ProgressDialog dialog = new ProgressDialog(getContext());
+        dialog.show();
+
         CommonConn conn = new CommonConn(getContext(), "main/viewFriendList");
         conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
         conn.onExcute((isResult, data) -> {
@@ -97,7 +102,9 @@ public class FriendListFragment extends Fragment {
             binding.recvFriendList.setAdapter(adapter);
             binding.recvFriendList.setLayoutManager(new LinearLayoutManager(getContext()));
             adapter.notifyDataSetChanged();
+            dialog.dismiss();
         });
+
     }
 
 }

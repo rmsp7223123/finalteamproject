@@ -25,6 +25,7 @@ public class BoardListAdapter extends RecyclerView.Adapter<BoardListAdapter.View
     MainActivity activity;
     Fragment fragment;
 
+
     public BoardListAdapter(Activity activity, Fragment fragment,  List<FavorBoardVO> list) {
         this.activity = (MainActivity) activity;
         this.fragment = fragment;

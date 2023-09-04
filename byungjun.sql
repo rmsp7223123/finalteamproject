@@ -162,6 +162,38 @@ CREATE TABLE FRIEND_LIST(
     constraint friend_friend_fk foreign key(friend_id) references member(member_id) on delete cascade
 );
 
+create table chat(
+    member_id nvarchar2(30) constraint chat_pk primary key,
+    chat_friend_id nvarchar2(30),
+    constraint chat_member_fk foreign key(member_id) references member(member_id) on delete cascade
+);
+
+select * from chat;
+
+commit;
+
+insert into chat (member_id) values ('bb1bb');
+
+commit;
+
+drop trigger trg_chat_member_id;
+CREATE OR REPLACE TRIGGER trg_chat_member_id
+BEFORE INSERT ON member
+FOR EACH ROW
+BEGIN
+    INSERT INTO chat (member_id)
+    VALUES (:NEW.member_id);
+END;
+/
+
+commit;
+
+select * from member;
+
+select * from chat;
+
+insert into chat(member_id, chat_status) values ('bb1bb', 'N');
+
 create table alarm(
     member_id nvarchar2(30),
     alarm_id number constraint alarm_pk primary key,
@@ -592,6 +624,20 @@ select * from option_table;
 
 select * from member;
 
+select * from ephone;
+
 select * from friend_list;
 
 commit;
+
+UPDATE chat
+		SET chat_status =
+		CASE
+		WHEN chat_status = 'N' THEN 'Y'
+		ELSE 'N'
+		END
+		WHERE member_id = 'aa1aa';
+        
+        select * from chat;
+        
+        commit;

@@ -101,12 +101,20 @@
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="SHOW_DIALOG_ACTION" />
             </intent-filter>
 
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_godok_alarm" />
         </receiver>
+
+        <activity
+            android:name=".GodokDialog"
+            android:noHistory="true"
+            android:excludeFromRecents="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            />
 
         <activity
             android:name=".Login.SearchAddress"
