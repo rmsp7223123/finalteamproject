@@ -45,7 +45,7 @@ public class BoardMainAdapter extends RecyclerView.Adapter<BoardMainAdapter.View
         h.binding.lnBoardSelect.setOnClickListener(v -> {
             BoardCommonVar.board_name = list.get(i).getTv_board_name();
             BoardCommonVar.board_align = "최신순";
-            activity.changeFragment(fragment, activity, 1);
+            activity.changeFragment(fragment, activity, i);
         });
     }
 
