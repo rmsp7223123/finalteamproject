@@ -2,7 +2,7 @@ package com.example.finalteamproject.main;
 
 
 public class ChatVO {
-	String member_id, chat_status;
+	String member_id, chat_friend_id;
 
 	public String getMember_id() {
 		return member_id;
@@ -12,11 +12,11 @@ public class ChatVO {
 		this.member_id = member_id;
 	}
 
-	public String getChat_status() {
-		return chat_status;
+	public String getChat_friend_id() {
+		return chat_friend_id;
 	}
 
-	public void setChat_status(String chat_status) {
-		this.chat_status = chat_status;
+	public void setChat_friend_id(String chat_friend_id) {
+		this.chat_friend_id = chat_friend_id;
 	}
 }

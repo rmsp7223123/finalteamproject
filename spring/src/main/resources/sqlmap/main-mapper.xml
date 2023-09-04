@@ -185,14 +185,10 @@
 		select * from calendar
 		where calendar_id = #{calendar_id}
 	</select>
-	<update id="changeChatStatus">
+	<update id="changeChatFriendId">
 		UPDATE chat
-		SET chat_status =
-		CASE
-		WHEN chat_status = 'N' THEN 'Y'
-		ELSE 'N'
-		END
-		WHERE member_id = #{memberId}
+		SET chat_friend_id = #{chat_friend_id}
+		WHERE member_id = #{member_id}
 	</update>
 	<select id="viewChat" resultType="cloud.member.ChatVO">
 		select * from chat where

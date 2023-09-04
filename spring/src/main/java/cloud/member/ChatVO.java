@@ -6,5 +6,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ChatVO {
-	String member_id, chat_status;
+	String member_id, chat_friend_id;
 }

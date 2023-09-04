@@ -164,16 +164,25 @@ CREATE TABLE FRIEND_LIST(
 
 create table chat(
     member_id nvarchar2(30) constraint chat_pk primary key,
-    chat_status nvarchar2(30) default 'N',
+    chat_friend_id nvarchar2(30),
     constraint chat_member_fk foreign key(member_id) references member(member_id) on delete cascade
 );
 
-CREATE OR REPLACE TRIGGER trg_chat_status
+select * from chat;
+
+commit;
+
+insert into chat (member_id) values ('bb1bb');
+
+commit;
+
+drop trigger trg_chat_member_id;
+CREATE OR REPLACE TRIGGER trg_chat_member_id
 BEFORE INSERT ON member
 FOR EACH ROW
 BEGIN
-    INSERT INTO chat (member_id, chat_status)
-    VALUES (:NEW.member_id, 'N');
+    INSERT INTO chat (member_id)
+    VALUES (:NEW.member_id);
 END;
 /
 

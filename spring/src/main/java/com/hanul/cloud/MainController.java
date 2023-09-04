@@ -299,9 +299,12 @@ public class MainController {
 		return new Gson().toJson(list);
 	}
 	
-	@RequestMapping(value = "/changeChatStatus")
-	public void changeChatStatus(String member_id) {
-		sql.update("main.changeChatStatus", member_id);
+	@RequestMapping(value = "/changeChatFriendId")
+	public void changeChatStatus(String member_id, String chat_friend_id) {
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("member_id", member_id);
+		params.put("chat_friend_id", chat_friend_id);
+		sql.update("main.changeChatFriendId", params);
 	}
 	
 	@RequestMapping("/viewChat")
