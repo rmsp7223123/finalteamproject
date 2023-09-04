@@ -4,5 +4,5 @@
         android:width="1dp"
         android:color="#000000" /> <!-- 검은색 테두리 -->
     <solid android:color="#F7DE6D" /> <!-- 테두리 안쪽 배경 (투명) -->
-    <corners android:radius="20dp" />
+    <corners android:radius="7dp" />
 </shape>

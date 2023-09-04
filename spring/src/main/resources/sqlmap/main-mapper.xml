@@ -152,13 +152,11 @@
 		end as
 		calendar_date
 		FROM (
-		SELECT *
-		FROM CALENDAR
-		WHERE member_id = #{member_id}
-		AND (TO_DATE(CALENDAR_DATE, 'YYYY-MM-DD') BETWEEN SYSDATE - 1 AND
-		SYSDATE
-		+ 5)
-		ORDER BY calendar_date, calendar_importance
+		    SELECT *
+		    FROM CALENDAR
+		    WHERE member_id = #{member_id}
+		    AND (TO_DATE(CALENDAR_DATE, 'YYYY-MM-DD') BETWEEN SYSDATE - 1 AND SYSDATE + 5)
+		    ORDER BY calendar_date, calendar_importance desc
 		)
 		WHERE ROWNUM
 		BETWEEN 1 AND 3
