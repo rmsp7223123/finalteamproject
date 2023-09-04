@@ -60,7 +60,7 @@ public class BoardContextFragment extends Fragment {
         binding = FragmentBoardContextBinding.inflate(inflater, container, false);
 
         binding.imgvBack.setOnClickListener(v -> {
-                activity.changeFragment(this, activity);
+                activity.changeFragment(this, activity, vo.favor);
         });
 
 
@@ -323,7 +323,7 @@ public class BoardContextFragment extends Fragment {
                 conn.onExcute((isResult, data) -> {
                     if(data.equals("성공")){
                         Toast.makeText(activity, "게시물이 삭제되었습니다", Toast.LENGTH_SHORT).show();
-                        activity.changeFragment(BoardContextFragment.this, activity);
+                        activity.changeFragment(BoardContextFragment.this, activity, vo.favor);
                     }else {
                         Toast.makeText(activity, "게시물 삭제 실패 /n다시 시도해주세요", Toast.LENGTH_SHORT).show();
                     }

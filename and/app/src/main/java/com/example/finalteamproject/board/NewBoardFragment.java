@@ -53,7 +53,6 @@ import retrofit2.Response;
 
 public class NewBoardFragment extends Fragment {
 
-
     ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
         @Override
         public void onActivityResult(ActivityResult result) {
@@ -130,7 +129,7 @@ public class NewBoardFragment extends Fragment {
 
 
         binding.imgvBack.setOnClickListener(v -> {
-            activity.changeFragment(this, activity);
+            activity.changeFragment(this, activity, binding.spnBoard.getSelectedItemPosition()+1);
         });
 
         binding.lnImage.setOnClickListener(v -> {
@@ -168,7 +167,7 @@ public class NewBoardFragment extends Fragment {
                                 public void onResponse(Call<String> call, Response<String> response) {
                                     if(response.body().equals("성공")){
                                         Toast.makeText(NewBoardFragment.this.getContext(), "게시글 등록 성공", Toast.LENGTH_SHORT).show();
-                                        activity.replaceFragment(NewBoardFragment.this, new BoardFragment(activity));
+                                        activity.replaceFragment(NewBoardFragment.this, new BoardFragment(activity, binding.spnBoard.getSelectedItemPosition()+1));
                                     }else {
                                         Toast.makeText(NewBoardFragment.this.getContext(), "게시글 등록 실패", Toast.LENGTH_SHORT).show();
                                     }
@@ -193,7 +192,7 @@ public class NewBoardFragment extends Fragment {
                                 public void onResponse(Call<String> call, Response<String> response) {
                                     if(response.body().equals("성공")){
                                         Toast.makeText(NewBoardFragment.this.getContext(), "게시글 등록 성공", Toast.LENGTH_SHORT).show();
-                                        activity.replaceFragment(NewBoardFragment.this, new BoardFragment(activity));
+                                        activity.replaceFragment(NewBoardFragment.this, new BoardFragment(activity, binding.spnBoard.getSelectedItemPosition()+1));
                                     }else {
                                         Toast.makeText(NewBoardFragment.this.getContext(), "게시글 등록 실패", Toast.LENGTH_SHORT).show();
                                     }
@@ -212,7 +211,7 @@ public class NewBoardFragment extends Fragment {
                             conn1.onExcute((isResult1, data1) -> {
                                 if (data1.equals("성공")) {
                                     Toast.makeText(activity, "게시글 등록 성공", Toast.LENGTH_SHORT).show();
-                                    activity.changeFragment(this, activity);
+                                    activity.changeFragment(this, activity, binding.spnBoard.getSelectedItemPosition()+1);
                                 } else {
                                     Toast.makeText(activity, "게시글 등록 실패", Toast.LENGTH_SHORT).show();
                                 }

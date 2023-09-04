@@ -159,7 +159,7 @@ public class MainFragment extends Fragment{
         conn.onExcute((isResult, data) -> {
             list = new Gson().fromJson(data, new TypeToken<ArrayList<MemberVO>>() {
             }.getType());
-                    SwipeStackAdapter adapter = new SwipeStackAdapter(getLayoutInflater(),list,getContext());
+                    SwipeStackAdapter adapter = new SwipeStackAdapter(getLayoutInflater(),list,getContext(), getActivity());
                     adapter.setFragment(this);
 
 
