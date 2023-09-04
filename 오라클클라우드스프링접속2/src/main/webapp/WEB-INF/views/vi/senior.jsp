@@ -77,22 +77,22 @@
 
     var wrap1 = $('<div>').addClass('wrap');
     var nemo1 = $('<div>').addClass('nemo').css('background-color', '#fc5d1e');
-    var text1 = $('<p>').text('3000개 이상');
+    var text1 = $('<p>').text('3,000개 이상');
     wrap1.append(nemo1).append(text1);
     
     var wrap2 = $('<div>').addClass('wrap');
     var nemo2 = $('<div>').addClass('nemo').css('background-color', '#fc936a');
-    var text2 = $('<p>').text('1500개 이상');
+    var text2 = $('<p>').text('1,500개 이상');
     wrap2.append(nemo2).append(text2);
     
     var wrap3 = $('<div>').addClass('wrap');
     var nemo3 = $('<div>').addClass('nemo').css('background-color', '#ffb699');
-    var text3 = $('<p>').text('1000개 이상');
+    var text3 = $('<p>').text('1,000개 이상');
     wrap3.append(nemo3).append(text3);
     
     var wrap4 = $('<div>').addClass('wrap');
     var nemo4 = $('<div>').addClass('nemo').css('background-color', '#fce5dc');
-    var text4 = $('<p>').text('1000개 미만');
+    var text4 = $('<p>').text('1,000개 미만');
     wrap4.append(nemo4).append(text4);
    
     legendDiv.append(wrap1);
