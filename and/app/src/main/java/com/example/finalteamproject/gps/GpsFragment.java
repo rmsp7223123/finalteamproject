@@ -290,6 +290,9 @@ public void moveCamera(String lat , String log){
 
     public void selectDetail(GpsVO vo) {
         binding.lnDetail.setVisibility(View.VISIBLE);
+        binding.lnDetail.setOnClickListener(v -> {
+
+        });
         CommonConn conn = new CommonConn(getContext(), "gps/detail");
         conn.addParamMap("key", vo.getKey());
         binding.seniorName.setText(vo.getSenior_name()+"");
