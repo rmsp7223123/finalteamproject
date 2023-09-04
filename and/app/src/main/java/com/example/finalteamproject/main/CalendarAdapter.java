@@ -24,12 +24,20 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 
-public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHolder>{
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
+public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHolder> {
 
     ItemCalendarListBinding binding;
 
     ArrayList<CalendarVO> calendarList;
+
+    private Disposable disposable;
 
     Context context;
 
@@ -43,7 +51,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        binding = ItemCalendarListBinding.inflate(LayoutInflater.from(parent.getContext()),parent,false);
+        binding = ItemCalendarListBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new ViewHolder(binding);
     }
 
@@ -51,59 +59,79 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.binding.tvContent.setText(calendarList.get(position).getCalendar_content());
         holder.binding.tvContent.setOnClickListener(v -> {
-                Dialog dialog = new Dialog(context);
-                ItemCalendarBinding dialogBinding = ItemCalendarBinding.inflate(LayoutInflater.from(context));
-                dialog.setContentView(dialogBinding.getRoot());
-                dialogBinding.dateText.setText(calendarList.get(position).getCalendar_date());
-                dialogBinding.content.setText(calendarList.get(position).getCalendar_content());
-                try{
-                    RadioButton btn = (RadioButton) dialogBinding.radioGroup.getChildAt(3-Integer.parseInt(calendarList.get(position).getCalendar_importance()));
-                    btn.setChecked(true);
-                }catch (Exception e){
-                    Log.d("TAG", "onBindViewHolder: 중요도 없음.");
-                }
-                dialogBinding.saveScheduleBtn.setOnClickListener(view -> {
-                    for (int i = 0; i < dialogBinding.radioGroup.getChildCount(); i++) {
-                        RadioButton btn = (RadioButton) dialogBinding.radioGroup.getChildAt(i);
-                        if(btn.isChecked()) {
-                            importance = 3 - (i) + "";
-                            break;
-                        }
+            Dialog dialog = new Dialog(context);
+            ItemCalendarBinding dialogBinding = ItemCalendarBinding.inflate(LayoutInflater.from(context));
+            dialog.setContentView(dialogBinding.getRoot());
+            dialogBinding.dateText.setText(calendarList.get(position).getCalendar_date());
+            dialogBinding.content.setText(calendarList.get(position).getCalendar_content());
+            try {
+                RadioButton btn = (RadioButton) dialogBinding.radioGroup.getChildAt(3 - Integer.parseInt(calendarList.get(position).getCalendar_importance()));
+                btn.setChecked(true);
+            } catch (Exception e) {
+                Log.d("TAG", "onBindViewHolder: 중요도 없음.");
+            }
+            dialogBinding.saveScheduleBtn.setOnClickListener(view -> {
+                for (int i = 0; i < dialogBinding.radioGroup.getChildCount(); i++) {
+                    RadioButton btn = (RadioButton) dialogBinding.radioGroup.getChildAt(i);
+                    if (btn.isChecked()) {
+                        importance = 3 - (i) + "";
+                        break;
                     }
-                    CommonConn conn1 = new CommonConn(context, "main/updateSchedule");
-                    conn1.addParamMap("calendar_content", dialogBinding.content.getText().toString());
-                    conn1.addParamMap("calendar_importance", importance);
-                    conn1.addParamMap("calendar_id", calendarList.get(position).getCalendar_id());
-                    conn1.onExcute((isResult1, data1) -> {
-                        CalendarVO vo = new Gson().fromJson(data1,CalendarVO.class);
-                        if(vo !=null){
-                            calendarList.set(position,vo);
-                            notifyDataSetChanged();
-                        }
-                        dialog.dismiss();
-                    });
-                });
-                dialogBinding.cancelDialogBtn.setOnClickListener(view -> {
-                    CommonConn conn1 = new CommonConn(context, "main/deleteScheduleOne");
-                    conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
-                    conn1.addParamMap("calendar_id", calendarList.get(position).getCalendar_id());
-                    conn1.onExcute((isResult1, data1) -> {
-                        calendarList.remove(position);
-                        CalendarActivity activity = (CalendarActivity) context;
-                        activity.viewCalendar();
+                }
+                CommonConn conn1 = new CommonConn(context, "main/updateSchedule");
+                conn1.addParamMap("calendar_content", dialogBinding.content.getText().toString());
+                conn1.addParamMap("calendar_importance", importance);
+                conn1.addParamMap("calendar_id", calendarList.get(position).getCalendar_id());
+                conn1.onExcute((isResult1, data1) -> {
+                    CalendarVO vo = new Gson().fromJson(data1, CalendarVO.class);
+                    if (vo != null) {
+                        calendarList.set(position, vo);
                         notifyDataSetChanged();
-                        dialog.dismiss();
-                    });
+                    }
+                    dialog.dismiss();
                 });
-                dialog.show();
+            });
+            dialogBinding.cancelDialogBtn.setOnClickListener(view -> {
+                CommonConn conn1 = new CommonConn(context, "main/deleteScheduleOne");
+                conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                conn1.addParamMap("calendar_id", calendarList.get(position).getCalendar_id());
+                conn1.onExcute((isResult1, data1) -> {
+                    CalendarActivity activity = (CalendarActivity) context;
+                    activity.viewCalendar();
+                    HashSet<CalendarDay> updatedSet = new HashSet<>();
+                    CommonConn conn = new CommonConn(context, "main/viewCalendarList");
+                    conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+
+                    conn.onExcute((isResult, data) -> {
+                        ArrayList<CalendarVO> calendarList2 = new Gson().fromJson(data, new TypeToken<ArrayList<CalendarVO>>() {
+                        }.getType());
+                        if (calendarList2.size() != 0) {
+                            for (int i = 0; i < calendarList2.size(); i++) {
+                                String[] tempDate = calendarList2.get(i).getCalendar_date().split("-");
+                                CalendarDay day = CalendarDay.from(Integer.parseInt(tempDate[0]), Integer.parseInt(tempDate[1]) - 1, Integer.parseInt(tempDate[2]));
+                                updatedSet.add(day);
+                            }
+                        }
+                        calendarList.remove(position);
+                        if (calendarList.size() == 0) {
+                            changeVisibility(View.VISIBLE);
+                        } else {
+                            changeVisibility(View.GONE);
+                        }
+                    });
+                    activity.updateCalendarDecorators(updatedSet);
+                    notifyDataSetChanged();
+                    dialog.dismiss();
+                });
+            });
+            dialog.show();
         });
     }
 
 
-
     @Override
     public int getItemCount() {
-        if(calendarList == null) return 0;
+        if (calendarList == null) return 0;
         return calendarList.size();
     }
 
@@ -116,4 +144,10 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
             this.binding = binding;
         }
     }
+
+    public void changeVisibility(int visible) {
+        CalendarActivity activity = (CalendarActivity) context;
+        activity.calendarTextVisibility(visible);
+    }
+
 }

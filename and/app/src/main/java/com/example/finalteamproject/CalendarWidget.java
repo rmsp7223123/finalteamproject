@@ -111,17 +111,6 @@ public class CalendarWidget extends AppWidgetProvider {
         }
     }
 
-//    private List<CalendarVO> getList(Context context){
-//        List<CalendarVO> list = null;
-//        CommonConn conn = new CommonConn(context, "main/widgetSchedule");
-//        conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
-//        conn.onExcute((isResult, data) -> {
-//            list = new Gson().fromJson(data, new TypeToken<List<CalendarVO>>(){}.getType());
-//        });
-//        return list;
-//    }
-
-
     @Override
     public void onEnabled(Context context) {
 
@@ -132,4 +121,8 @@ public class CalendarWidget extends AppWidgetProvider {
         // Enter relevant functionality for when the last widget is disabled
     }
 
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        super.onReceive(context, intent);
+    }
 }
