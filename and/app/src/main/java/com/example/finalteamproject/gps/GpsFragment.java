@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.finalteamproject.Login.ProgressDialog;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
@@ -127,6 +128,10 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
     int CURR_ZOOM_LEVEL = 0;
     @Override
     public void onMapReady(@NonNull NaverMap naverMap) {
+
+        ProgressDialog dialog = new ProgressDialog(getContext());
+        dialog.show();
+
         this.naverMap = naverMap;
         naverMap.setLocationSource(locationSource); //내 위치
         naverMap.setLocationTrackingMode(LocationTrackingMode.Follow); //위치 추적 모드
@@ -240,6 +245,7 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
             });
 
 
+            dialog.dismiss();
 
 
         });
