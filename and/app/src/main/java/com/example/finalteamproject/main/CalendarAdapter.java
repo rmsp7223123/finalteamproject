@@ -1,17 +1,23 @@
 package com.example.finalteamproject.main;
 
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
+import android.widget.RemoteViews;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.finalteamproject.CalendarWidget;
+import com.example.finalteamproject.CalendarWidgetList;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
@@ -21,8 +27,11 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHolder> {
 
@@ -31,13 +40,15 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
     ArrayList<CalendarVO> calendarList;
 
     Context context;
+    CalendarActivity activity;
 
     String importance = "";
 
 
-    public CalendarAdapter(ArrayList<CalendarVO> calendarList, Context context) {
+    public CalendarAdapter(ArrayList<CalendarVO> calendarList, Context context, CalendarActivity activity) {
         this.calendarList = calendarList;
         this.context = context;
+        this.activity = activity;
     }
 
     @NonNull
@@ -121,10 +132,16 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
                     activity.updateCalendarDecorators(updatedSet);
                     notifyDataSetChanged();
                     dialog.dismiss();
+
+
+
                 });
             });
             dialog.show();
         });
+
+
+
     }
 
 
@@ -148,5 +165,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
         CalendarActivity activity = (CalendarActivity) context;
         activity.calendarTextVisibility(visible);
     }
+
+
 
 }

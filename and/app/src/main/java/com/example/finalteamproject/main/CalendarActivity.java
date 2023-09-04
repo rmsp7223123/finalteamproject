@@ -70,7 +70,7 @@ public class CalendarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityCalendarBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        adapter = new CalendarAdapter(calendarList, this);
+        adapter = new CalendarAdapter(calendarList, this, this);
         viewCalendar();
         new ChangeStatusBar().changeStatusBarColor(this);
         binding.calendarView.setSelectedDate(CalendarDay.today());
@@ -136,7 +136,7 @@ public class CalendarActivity extends AppCompatActivity {
                         }.getType());
                         adapter.calendarList = list;
 
-                        RemoteViews views = setRemoteView(adapter.calendarList);
+                        RemoteViews views = setRemoteView();
                         views.setTextViewText(R.id.tv_today, "abcd");
                         ComponentName componentname = new ComponentName(this, CalendarWidget.class);
                         AppWidgetManager appwidgetmanager = AppWidgetManager.getInstance(this);
@@ -184,7 +184,7 @@ public class CalendarActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private RemoteViews setRemoteView( ArrayList<CalendarVO> list) {
+    public RemoteViews setRemoteView() {
 
         RemoteViews views = new RemoteViews(getPackageName(), R.layout.calendar_widget);
         long now = System.currentTimeMillis();
@@ -200,13 +200,17 @@ public class CalendarActivity extends AppCompatActivity {
 
         try {
 
+            CommonConn conn = new CommonConn(this, "main/widgetSchedule");
+            conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+            conn.onExcute((isResult, data) -> {
+                List<CalendarVO> list = new Gson().fromJson(data, new TypeToken<List<CalendarVO>>() {}.getType());
 
                 if (list.size() == 0) {
                     views.setViewVisibility(R.id.rl, View.VISIBLE);
                     views.setViewVisibility(R.id.ln, View.GONE);
                 } else {
-//                    views.setViewVisibility(R.id.rl, View.GONE);
-//                    views.setViewVisibility(R.id.ln, View.VISIBLE);
+                    views.setViewVisibility(R.id.rl, View.GONE);
+                    views.setViewVisibility(R.id.ln, View.VISIBLE);
                     views.setViewVisibility(R.id.ln_1, View.VISIBLE);
                     views.setViewVisibility(R.id.ln_2, View.VISIBLE);
                     views.setViewVisibility(R.id.ln_3, View.VISIBLE);
@@ -218,8 +222,8 @@ public class CalendarActivity extends AppCompatActivity {
                         }else {
                             views.setImageViewResource(arr.get(i).getImgv(), R.drawable.importance3);
                         }
-                        if(list.get(i).getCalendar_content().length()>5){
-                            views.setTextViewText(arr.get(i).getTv_content(), list.get(i).getCalendar_content().substring(0, 5)+"...");
+                        if(list.get(i).getCalendar_content().length()>6){
+                            views.setTextViewText(arr.get(i).getTv_content(), list.get(i).getCalendar_content().substring(0, 6)+"...");
                         }else {
                             views.setTextViewText(arr.get(i).getTv_content(), list.get(i).getCalendar_content());
                         }
@@ -243,6 +247,8 @@ public class CalendarActivity extends AppCompatActivity {
                         views.setOnClickPendingIntent(arr.get(i).getLn(), pendingIntent);
                     }
                 }
+
+            });
 
         } catch (Exception e) {
             e.printStackTrace();
