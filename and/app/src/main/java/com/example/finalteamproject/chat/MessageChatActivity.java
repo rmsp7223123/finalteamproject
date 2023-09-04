@@ -358,18 +358,21 @@ public class MessageChatActivity extends AppCompatActivity {
     }
 
     public void sendNotification(FriendVO vo) {
-            CommonConn conn = new CommonConn(this, "main/addAlarm");
-            conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
-            conn.addParamMap("alarm_content", CommonVar.logininfo.getMember_nickname() + "님이 메시지를 보냈습니다.");
-            currentTime = dateFormat.format(new Date());
-            conn.addParamMap("alarm_time", currentTime);
-            conn.addParamMap("receive_id", vo.getMember_id());
+            if(FirebaseMessageReceiver.friend_id.equals(vo.getMember_id())) {
 
-        conn.onExcute((isResult1, data1) -> {
-            if (isResult1) {
-                Log.d("TAG", "onClick: " + "확인용");
+            } else {
+                CommonConn conn = new CommonConn(this, "main/addAlarm");
+                conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                conn.addParamMap("alarm_content", CommonVar.logininfo.getMember_nickname() + "님이 메시지를 보냈습니다.");
+                currentTime = dateFormat.format(new Date());
+                conn.addParamMap("alarm_time", currentTime);
+                conn.addParamMap("receive_id", vo.getMember_id());
+                conn.onExcute((isResult1, data1) -> {
+
+                });
             }
-        });
+
+
     }
 
 }

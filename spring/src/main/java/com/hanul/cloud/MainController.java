@@ -148,6 +148,11 @@ public class MainController {
 		return new Gson().toJson(list);
 		// ./return new Gson().toJson(sql.delete("main.deleteAlarm", paramMap));
 	}
+	
+	@RequestMapping(value = "/deleteAlarmOne", produces = "text/html;charset=utf-8")
+	public void deleteAlarmOne(String receive_id) {
+		sql.delete("main.deleteAlarmOne",receive_id);
+	}
 
 	@RequestMapping(value = "/addAlarm")
 	public String send2(MemberVO vo1, AlarmVO vo2) {
