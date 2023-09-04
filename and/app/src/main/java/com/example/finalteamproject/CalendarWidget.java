@@ -14,6 +14,7 @@ import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.main.CalendarActivity;
 import com.example.finalteamproject.main.CalendarVO;
+import com.example.finalteamproject.main.OptionVO;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -52,65 +53,72 @@ public class CalendarWidget extends AppWidgetProvider {
             CommonConn conn = new CommonConn(context, "main/widgetSchedule");
             conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
             conn.onExcute((isResult, data) -> {
-                List<CalendarVO> list = new Gson().fromJson(data, new TypeToken<List<CalendarVO>>(){}.getType());
+                List<CalendarVO> list = new Gson().fromJson(data, new TypeToken<List<CalendarVO>>() {
+                }.getType());
                 try {
-                    if(list.size()==0){
+                    if (list.size() == 0) {
                         views.setViewVisibility(R.id.rl, View.VISIBLE);
                         views.setViewVisibility(R.id.ln, View.GONE);
-                    }else {
+                    } else {
                         views.setViewVisibility(R.id.rl, View.GONE);
                         views.setViewVisibility(R.id.ln, View.VISIBLE);
 
                         for (int i = 0; i < list.size(); i++) {
-                            if(list.get(i).getCalendar_importance().equals("1")){
+                            if (list.get(i).getCalendar_importance().equals("1")) {
                                 views.setImageViewResource(arr.get(i).imgv, R.drawable.importance1);
-                            }else if(list.get(i).getCalendar_importance().equals("2")){
+                            } else if (list.get(i).getCalendar_importance().equals("2")) {
                                 views.setImageViewResource(arr.get(i).imgv, R.drawable.importance3);
-                            }else {
+                            } else {
                                 views.setImageViewResource(arr.get(i).imgv, R.drawable.importance2);
                             }
-                            if(list.get(i).getCalendar_content().length()>5){
-                                views.setTextViewText(arr.get(i).tv_content, list.get(i).getCalendar_content().substring(0, 5)+"...");
-                            }else {
+                            if (list.get(i).getCalendar_content().length() > 5) {
+                                views.setTextViewText(arr.get(i).tv_content, list.get(i).getCalendar_content().substring(0, 5) + "...");
+                            } else {
                                 views.setTextViewText(arr.get(i).tv_content, list.get(i).getCalendar_content());
                             }
                             views.setTextViewText(arr.get(i).tv_day, list.get(i).getCalendar_date());
 
-                            if(list.size()==2){
+                            if (list.size() == 2) {
                                 views.setViewVisibility(R.id.fl2, View.GONE);
                                 views.setViewVisibility(R.id.ln_3, View.GONE);
-                            }else if(list.size()==1){
+                            } else if (list.size() == 1) {
                                 views.setViewVisibility(R.id.fl1, View.GONE);
                                 views.setViewVisibility(R.id.ln_2, View.GONE);
                                 views.setViewVisibility(R.id.fl2, View.GONE);
                                 views.setViewVisibility(R.id.ln_3, View.GONE);
                             }
 
+                            CommonConn conn1 = new CommonConn(context, "setting/viewOption");
+                            conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                            conn1.onExcute((isResult1, data1) -> {
+                                ArrayList<OptionVO> optionList = new Gson().fromJson(data1, new TypeToken<ArrayList<OptionVO>>(){}.getType());
+                                if(optionList.get(0).getOption_lock_pw() != null || optionList.get(0).getOption_lock_pattern_pw() != null) {
+
+                                } else {
+
+                                }
+                            });
+
                             Intent intent = new Intent(context, CalendarActivity.class);
                             intent.setAction(ACTION_WIDGET_CLICKED);
                             intent.putExtra("member_id", CommonVar.logininfo.getMember_id());
                             intent.putExtra("calendar_id", list.get(i).getCalendar_id());
-                            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_MUTABLE);
-
+                            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
                             views.setOnClickPendingIntent(arr.get(i).ln, pendingIntent);
 
                         }
-
-
 
 
                     }
 
 
                     appWidgetManager.updateAppWidget(appWidgetId, views);
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
 
 
             });
-
-
 
 
         }
