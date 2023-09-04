@@ -168,7 +168,7 @@
 		        .attr('class', 'background')
 		        .attr('width', width + 'px')
 		        .attr('height', height + 'px')
-		    	.attr('fill', '#a6a6a6'); //배경색(흰색)
+		    	.attr('fill', '#fff'); //배경색(흰색)
 				
 		    //geoJson데이터를 파싱하여 지도그리기
 		    d3.json('/cloudWeb/json/korea.json', function(json) {
