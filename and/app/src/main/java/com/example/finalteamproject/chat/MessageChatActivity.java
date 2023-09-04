@@ -36,6 +36,8 @@ import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.databinding.ActivityMessageChatBinding;
+import com.example.finalteamproject.main.ChatStatus;
+import com.example.finalteamproject.main.ChatVO;
 import com.example.finalteamproject.main.FriendVO;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -45,6 +47,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -78,8 +82,6 @@ public class MessageChatActivity extends AppCompatActivity {
     private FirebaseStorage storage;
     FriendVO friendVO;
 
-    boolean isOpponentInActivity;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +91,7 @@ public class MessageChatActivity extends AppCompatActivity {
         binding.imgvBack.setOnClickListener(v -> {
             finish();
         });
+        ChatStatus.changeStatus(this);
         new ChangeStatusBar().changeStatusBarColor(this);
         friendVO = (FriendVO) getIntent().getSerializableExtra("vo");
 
@@ -119,7 +122,7 @@ public class MessageChatActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 FriendVO friendVO = dataSnapshot.getValue(FriendVO.class);
-                    adapter.addData(friendVO);
+                adapter.addData(friendVO);
 
                 int position = adapter.getItemCount() - 1;
                 if (position >= 0) {
@@ -195,6 +198,7 @@ public class MessageChatActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         FirebaseMessageReceiver.friend_id = "";
+        ChatStatus.changeStatus(this);
         super.onDestroy();
     }
 
@@ -358,7 +362,12 @@ public class MessageChatActivity extends AppCompatActivity {
     }
 
     public void sendNotification(FriendVO vo) {
-            if(FirebaseMessageReceiver.friend_id.equals(vo.getMember_id())) {
+        CommonConn conn1 = new CommonConn(this, "main/viewChat");
+        conn1.addParamMap("member_id", vo.getMember_id());
+        conn1.onExcute((isResult, data) -> {
+//            ArrayList<ChatVO> chat_list = new Gson().fromJson(data, new TypeToken<ArrayList<ChatVO>>(){}.getType());
+            ChatVO chatVO = new Gson().fromJson(data, new TypeToken<ChatVO>(){}.getType());
+            if(chatVO.getChat_status().equals("Y")) {
 
             } else {
                 CommonConn conn = new CommonConn(this, "main/addAlarm");
@@ -371,8 +380,7 @@ public class MessageChatActivity extends AppCompatActivity {
 
                 });
             }
-
-
+        });
     }
 
 }

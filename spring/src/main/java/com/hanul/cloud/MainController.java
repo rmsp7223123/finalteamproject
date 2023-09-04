@@ -25,6 +25,7 @@ import com.google.gson.Gson;
 
 import cloud.member.AlarmVO;
 import cloud.member.CalendarVO;
+import cloud.member.ChatVO;
 import cloud.member.FavorVO;
 import cloud.member.FriendVO;
 import cloud.member.MemberVO;
@@ -296,6 +297,17 @@ public class MainController {
 	public String widgetSchedule(String member_id) {
 		List<CalendarVO> list = sql.selectList("main.widgetSchedule", member_id);
 		return new Gson().toJson(list);
+	}
+	
+	@RequestMapping(value = "/changeChatStatus")
+	public void changeChatStatus(String member_id) {
+		sql.update("main.changeChatStatus", member_id);
+	}
+	
+	@RequestMapping("/viewChat")
+	public String viewChat(String member_id) {
+		ChatVO vo =sql.selectOne("main.viewChat", member_id);
+		return new Gson().toJson(vo);
 	}
 	
 	
