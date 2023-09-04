@@ -112,6 +112,7 @@ public class CalendarWidget extends AppWidgetProvider {
                     }
 
 
+
                     appWidgetManager.updateAppWidget(appWidgetId, views);
                 } catch (Exception e) {
 
