@@ -10,6 +10,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PointF;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -29,6 +31,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +42,8 @@ import com.example.finalteamproject.cs.NewCSBoardActivity;
 import com.example.finalteamproject.databinding.BottomsheetDetailInfoBinding;
 import com.example.finalteamproject.databinding.BottomsheetSearchResultBinding;
 import com.example.finalteamproject.databinding.FragmentGpsBinding;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -53,6 +58,7 @@ import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.NaverMapOptions;
 import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.UiSettings;
+import com.naver.maps.map.overlay.InfoWindow;
 import com.naver.maps.map.overlay.LocationOverlay;
 import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.overlay.Overlay;
@@ -61,7 +67,9 @@ import com.naver.maps.map.overlay.PathOverlay;
 import com.naver.maps.map.util.FusedLocationSource;
 import com.naver.maps.map.util.MarkerIcons;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 //지도 나오는 첫 페이지
 public class GpsFragment extends Fragment implements OnMapReadyCallback {
@@ -73,10 +81,13 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
     private double lat, lon;
     private Marker selectedMarker;
     FragmentGpsBinding binding;
-    BottomSheetDialog searchDialog;
-    BottomSheetDialog detailDialog;
-    BottomsheetSearchResultBinding searchBinding;
-    BottomsheetDetailInfoBinding detailInfoBinding;
+    BottomSheetBehavior listhavior;
+    BottomSheetBehavior resultbehavior;
+     BottomSheetDialog searchDialog;
+ //   BottomSheetDialog detailDialog;
+       BottomsheetSearchResultBinding searchBinding;
+       ArrayList<Marker> markers = new ArrayList<>();
+    //BottomsheetDetailInfoBinding detailInfoBinding;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -87,16 +98,26 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
 
 
         searchDialog = new BottomSheetDialog(getContext(), R.style.DialogCustomTheme);
-        detailDialog = new BottomSheetDialog(getContext(),R.style.DialogCustomTheme);
+      //  detailDialog = new BottomSheetDialog(getContext(),R.style.DialogCustomTheme);
 
         searchBinding = BottomsheetSearchResultBinding.inflate(getLayoutInflater(), null, false);
-        detailInfoBinding = BottomsheetDetailInfoBinding.inflate(getLayoutInflater(), null, false);
+      //  detailInfoBinding = BottomsheetDetailInfoBinding.inflate(getLayoutInflater(), null, false);
 
+
+        binding.cardvLikelist.setOnClickListener(v->{
+            likelist();
+        });
 
 
         searchDialog.setContentView(searchBinding.getRoot());
-        detailDialog.setContentView(detailInfoBinding.getRoot());
+       // detailDialog.setContentView(detailInfoBinding.getRoot());
 
+
+        listhavior = BottomSheetBehavior.from(binding.lnResult );
+        resultbehavior = BottomSheetBehavior.from(binding.lnDetail );
+        binding.btnClose.setOnClickListener(v->{
+            listhavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        });
 
         //검색 결과
         binding.btnSearch.setOnClickListener(v -> {
@@ -107,16 +128,26 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
             connresult.onExcute((isResult, data) -> {
                 ArrayList<GpsVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<GpsVO>>(){}.getType());
                 GpsAdapter adapter = new GpsAdapter(list, this);
+                binding.recvSearchResult.setAdapter(adapter);
+                binding.recvSearchResult.setLayoutManager(new LinearLayoutManager(getContext()));
+                binding.tvSearchResult.setText("검색 결과 ( " + list.size() + ")");
+                InputMethodManager manager = (InputMethodManager)getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
+                manager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
-                searchBinding.recvSearchResult.setAdapter(adapter);
-                searchBinding.recvSearchResult.setLayoutManager(new LinearLayoutManager(getContext()));
-                searchDialog.show();
+                if(list.size() != 0){
+                    listhavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                }else{
+                    listhavior.setPeekHeight(0);
+                }
+
+               // searchDialog.show();
             });
         });
 
         //검색결과 닫기
         searchBinding.btnClose.setOnClickListener(v -> {
             searchDialog.dismiss();
+            listhavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         });
         binding.tvMore.setOnClickListener(v -> {
             likelist();
@@ -129,7 +160,6 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
             fm.beginTransaction().add(binding.map.getId(), mapFragment).commit();
         }
         mapFragment.getMapAsync(this);
-
         //현재 위치 생성, naverMap에 지정
 
         locationSource =
@@ -163,11 +193,19 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
         this.naverMap.getLocationOverlay().setIcon(OverlayImage.fromResource(R.drawable.logo));
         this.naverMap.getLocationOverlay().setIconWidth(100);
         this.naverMap.getLocationOverlay().setIconHeight(100);
-        //animateCircle(naverMap.getLocationOverlay());
+        animateCircle(naverMap.getLocationOverlay());
         this.naverMap.getUiSettings().setScaleBarEnabled(true);
 
+        naverMap.setOnMapClickListener((pointF, latLng) -> {
+            resultbehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+            listhavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+            binding.gpsSearch.setHint(getAddress(latLng.latitude,latLng.longitude));
+        });
 
-
+        naverMap.addOnCameraChangeListener((i, b) -> {
+            resultbehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+            listhavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        });
         naverMap.addOnLocationChangeListener(new NaverMap.OnLocationChangeListener() {
             @Override
             public void onLocationChange(@NonNull Location location) {
@@ -175,6 +213,9 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                 if(lat != location.getLatitude() && lon!=location.getLongitude()) {
                     lat = location.getLatitude();
                     lon = location.getLongitude();
+                    binding.gpsSearch.setHint(getAddress(lat,lon));
+                    resultbehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+                    listhavior.setState(BottomSheetBehavior.STATE_HIDDEN);
                 }
             }
 
@@ -186,6 +227,11 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
             if(lat == 0 || lon == 0) return;
             float ZoomLevel = (float) naverMap.getCameraPosition().zoom;
             if(CURR_ZOOM_LEVEL ==ZoomLevel ) return; //줌레벨이 클수록 결과값은 적게 나와야 함
+
+            for (int i = 0; i < markers.size(); i++) {
+                markers.get(i).setMap(null);
+            }
+            markers = new ArrayList<>();
             CommonConn conn = new CommonConn(getContext(), "gps/senior");
             conn.addParamMap("senior_latitude", lat);
             conn.addParamMap("senior_longitude", lon);
@@ -221,9 +267,9 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                     Log.e("줌 레벨", "error: " + finalSendZoomLevel);
                     return;
                 }
-                for (GpsVO gpsVO : list) {
-                    double markerLat = Double.parseDouble(gpsVO.getSenior_latitude());
-                    double markerLon = Double.parseDouble(gpsVO.getSenior_longitude());
+                for (int i = 0 ; i < list.size() ; i ++) {
+                    double markerLat = Double.parseDouble(list.get(i).getSenior_latitude());
+                    double markerLon = Double.parseDouble(list.get(i).getSenior_longitude());
 
                     // 현재 (내)위치에 마커 생성
 //                    Marker Imarker = new Marker();
@@ -238,15 +284,30 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                     Log.d("위치", "위도, 경도: " + lat + ", " + lon);
 
                     // 각 경로당 마커 위치 정보를 설정하고 지도에 추가
-                    Marker marker = new Marker();
-                    marker.setPosition(new LatLng(markerLat, markerLon));
-                    marker.setMap(naverMap);
-                    marker.setIcon(MarkerIcons.BLACK);
-                    marker.setIconTintColor(Color.parseColor("#4B6EFD")); // 다중 마커 색상
-                    marker.setWidth(70);
-                    marker.setHeight(100);
-                    marker.setOnClickListener(overlay -> {
-                        //selectDetail(gpsVO);2023
+                    markers.add( new Marker() );
+                    markers.get(i).setPosition(new LatLng(markerLat, markerLon));
+                    markers.get(i).setMap(naverMap);
+                    markers.get(i).setIcon(MarkerIcons.BLACK);
+                    markers.get(i).setIconTintColor(Color.parseColor("#4B6EFD")); // 다중 마커 색상
+                    markers.get(i).setWidth(70);
+                    markers.get(i).setHeight(100);
+                    final int idx = i ;
+                    InfoWindow infoWindow = new InfoWindow(new InfoWindow.DefaultTextAdapter(getContext()) {
+                        @NonNull
+                        @Override
+                        public CharSequence getText(@NonNull InfoWindow infoWindow) {
+                            return list.get(idx).getSenior_name();
+                        }
+                    });
+                    infoWindow.setOnClickListener(overlay -> {
+                        selectDetail(list.get(idx));
+                        return true;
+                    });
+                    infoWindow.setZIndex(10);
+                    infoWindow.setAlpha(0.9f);
+                    infoWindow.open( markers.get(i));
+                    markers.get(i).setOnClickListener(overlay -> {
+                        selectDetail(list.get(idx));
                         return true;
                     });
                 }
@@ -320,33 +381,36 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
 
     public void selectDetail(GpsVO vo) {
 
-        detailInfoBinding.seniorName.setText(vo.getSenior_name()+"");
+        resultbehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+
+        binding.seniorName.setText(vo.getSenior_name()+"");
        // binding.seniorName.setText(vo.getSenior_name()+"");
-        setTextView(detailInfoBinding.seniorName , vo.getSenior_roadaddress() , "주소 정보 없음");
-        if(setTextView(detailInfoBinding.phoneNumber , vo.getSenior_call() , "전화번호 정보 없음")){
-            detailInfoBinding.phoneNumber.setOnClickListener(v -> {
+        setTextView(binding.seniorAddress , vo.getSenior_roadaddress() , "주소 정보 없음");
+        if(setTextView(binding.phoneNumber , vo.getSenior_call() , "전화번호 정보 없음")){
+            binding.phoneNumber.setOnClickListener(v -> {
                 Intent intent = new Intent(Intent.ACTION_DIAL,
-                        Uri.parse("tel:/"+ detailInfoBinding.seniorName.getText().toString()));
+                        Uri.parse("tel:/"+ binding.phoneNumber.getText().toString()));
                 startActivity(intent);
             });
         }
-        detailInfoBinding.seniorName.setText("좋아요 "+vo.getSenior_like_num()+"");
+        binding.seniorLike.setText("좋아요 "+vo.getSenior_like_num()+"");
 
         //좋아요 버튼 활성/비활성화
         setLikeYet(vo);
 
         //좋아요 : 회색버튼 누르면 빨간색으로 변함
-        detailInfoBinding.unlike.setOnClickListener(v1 -> {
+        binding.unlike.setOnClickListener(v1 -> {
             setLike("likebtn" ,vo);
         });
 
         //좋아요 취소 : 빨간 버튼 누르면 회색으로 변함
-        detailInfoBinding.like.setOnClickListener(v1 -> {
+        binding.like.setOnClickListener(v1 -> {
             setLike("unlikebtn" ,vo);
         });
         //카메라 이동
         moveCamera(vo.getSenior_latitude() , vo.getSenior_longitude());
-        detailDialog.show();
+       // listhavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        resultbehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
     }
 
 
@@ -366,7 +430,8 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
         window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
 
         window.setStatusBarColor(Color.TRANSPARENT);
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN|WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
 
 
@@ -387,11 +452,11 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
         connlike.addParamMap("key", vo.getKey());
         connlike.onExcute((isResult, data) -> {
             if (data.equals(vo.getKey()+"")){
-                detailInfoBinding.like.setVisibility(View.VISIBLE);
-                detailInfoBinding.unlike.setVisibility(View.GONE);
+                binding.like.setVisibility(View.VISIBLE);
+                binding.unlike.setVisibility(View.GONE);
             }else {
-                detailInfoBinding.like.setVisibility(View.GONE);
-                detailInfoBinding.unlike.setVisibility(View.VISIBLE);
+                binding.like.setVisibility(View.GONE);
+                binding.unlike.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -401,16 +466,18 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
         connl.addParamMap("key", vo.getKey());
         connl.addParamMap("member_id", CommonVar.logininfo.getMember_id());
         connl.onExcute((isResult, data) -> {
-            if (data.equals(vo.getKey()+"")){
-                detailInfoBinding.like.setVisibility(View.VISIBLE);
-                detailInfoBinding.unlike.setVisibility(View.GONE);
+            if (path.equals("likebtn")){
+                binding.like.setVisibility(View.VISIBLE);
+                binding.unlike.setVisibility(View.GONE);
                 Toast.makeText(getContext(), "자주가는 경로당이 추가되었습니다.", Toast.LENGTH_SHORT).show();
+                binding.seniorLike.setText(data);
             }else {
-                detailInfoBinding.like.setVisibility(View.GONE);
-                detailInfoBinding.unlike.setVisibility(View.VISIBLE);
+                binding.like.setVisibility(View.GONE);
+                binding.unlike.setVisibility(View.VISIBLE);
                 Toast.makeText(getContext(), "자주가는 경로당이 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                binding.seniorLike.setText(data);
             }
-
+            vo.setSenior_like_num(Integer.parseInt(data));
 
             likelist();
             selectDetail(vo);
@@ -481,6 +548,30 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
         super.onDestroy();
         mapFragment.onDestroy();
     }
+
+
+    private String getAddress(double lat , double lng) {
+        Geocoder geoCoder = new Geocoder(requireContext(), Locale.KOREA);
+        ArrayList<Address> address = new ArrayList<>();
+        String addressResult = "";
+
+            //세번째 파라미터는 좌표에 대해 주소를 리턴 받는 갯수로
+            //한좌표에 대해 두개이상의 이름이 존재할수있기에 주소배열을 리턴받기 위해 최대갯수 설정
+            try {
+                address = (ArrayList<Address>) geoCoder.getFromLocation(lat , lng , 1);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            if (address.size() > 0) {
+                // 주소 받아오기
+                addressResult  = address.get(0).getAddressLine(0).toString();
+
+            }
+
+        return addressResult;
+    }
+
+
     //
 //    @Override
 //    protected void onStart() {
