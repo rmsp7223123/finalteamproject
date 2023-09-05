@@ -197,7 +197,7 @@
              android:textColor="@color/black"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:text="비밀번호 설정" />
+             android:text="잠금화면 설정" />
 
       </LinearLayout>
 
