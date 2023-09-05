@@ -641,3 +641,8 @@ UPDATE chat
         select * from chat;
         
         commit;
+        
+    select * from calendar where member_id = 'bb1bb' order by calendar_importance desc;
+    
+    select * from member;
+    

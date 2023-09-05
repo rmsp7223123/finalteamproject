@@ -183,7 +183,7 @@ public class BoardFragment extends Fragment {
         });
 
         binding.imgRefresh.setOnClickListener(v -> {
-            activity.changeFragment(this, activity, binding.spnBoard.getSelectedItemPosition()+1);
+            activity.changeFragment(this, activity, binding.spnBoard.getSelectedItemPosition());
         });
 
         return binding.getRoot();

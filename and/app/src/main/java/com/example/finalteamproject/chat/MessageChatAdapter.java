@@ -97,7 +97,7 @@ public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.
         LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         LinearLayout.LayoutParams params3 = new LinearLayout.LayoutParams(500, 500);
         ImageView imageView2 = new ImageView(context);
-        LinearLayout.LayoutParams paramsImg2 = new LinearLayout.LayoutParams(100, 100);
+        LinearLayout.LayoutParams paramsImg2 = new LinearLayout.LayoutParams(70, 70);
         imageView2.setLayoutParams(paramsImg2);
         imageView2.setImageResource(R.drawable.baseline_volume_up_24);
         imageView2.setOnClickListener(view -> {
