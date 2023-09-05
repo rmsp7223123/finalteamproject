@@ -136,11 +136,8 @@ public class CalendarActivity extends AppCompatActivity {
                         }.getType());
                         adapter.calendarList = list;
 
-                        RemoteViews views = setRemoteView();
-                        views.setTextViewText(R.id.tv_today, "abcd");
-                        ComponentName componentname = new ComponentName(this, CalendarWidget.class);
-                        AppWidgetManager appwidgetmanager = AppWidgetManager.getInstance(this);
-                        appwidgetmanager.updateAppWidget(componentname, views);
+                        setRemoteView();
+//                        views.setTextViewText(R.id.tv_today, "abcd");
 
                         if (list.size() == 0) {
                             binding.emptyText.setVisibility(View.VISIBLE);
@@ -184,8 +181,8 @@ public class CalendarActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    public RemoteViews setRemoteView() {
-
+    public void setRemoteView() {
+        Log.d("package", "setRemoteView: "+getPackageName());
         RemoteViews views = new RemoteViews(getPackageName(), R.layout.calendar_widget);
         long now = System.currentTimeMillis();
         Date date = new Date(now);
@@ -247,13 +244,15 @@ public class CalendarActivity extends AppCompatActivity {
                         views.setOnClickPendingIntent(arr.get(i).getLn(), pendingIntent);
                     }
                 }
+                ComponentName componentname = new ComponentName(this, CalendarWidget.class);
+                AppWidgetManager appwidgetmanager = AppWidgetManager.getInstance(this);
+                appwidgetmanager.updateAppWidget(componentname, views);
 
             });
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return views;
     }
 
     public void viewCalendar() {
@@ -267,6 +266,7 @@ public class CalendarActivity extends AppCompatActivity {
         conn.onExcute((isResult, data) -> {
              calendarList2 = new Gson().fromJson(data, new TypeToken<ArrayList<CalendarVO>>() {
             }.getType());
+
             calendarList = calendarList2;
             binding.recvSchedule.setAdapter(adapter);
             binding.recvSchedule.setLayoutManager(new LinearLayoutManager(this));
@@ -276,7 +276,6 @@ public class CalendarActivity extends AppCompatActivity {
                     String[] tempDate = calendarList2.get(i).getCalendar_date().split("-");
                     CalendarDay day = CalendarDay.from(Integer.parseInt(tempDate[0]), Integer.parseInt(tempDate[1]) - 1, Integer.parseInt(tempDate[2]));
                     set.add(day);
-
                 }
             } else {
             }

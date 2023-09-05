@@ -114,14 +114,10 @@ public class MainFragment extends Fragment{
     }
 
     private void boardEvent(){
-        BoardMainAdapter adapter2 = new BoardMainAdapter(this, getList(), getActivity());
+        BoardMainAdapter adapter2 = new BoardMainAdapter(this, getList(), getActivity(), getContext());
         binding.recvBoard.setAdapter(adapter2);
         binding.recvBoard.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
-        //
-        binding.imgvMenu.setOnClickListener(v -> {
-
-        });
 
         binding.imgvClose.setOnClickListener(v -> {
             BoardCommonVar.board = false;
