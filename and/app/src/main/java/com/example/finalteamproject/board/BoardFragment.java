@@ -54,8 +54,8 @@ public class BoardFragment extends Fragment {
 
         //게시판 카테고리 변경 스피너
 //        binding.tvBoardTitle.setText(BoardCommonVar.board_name);
-        binding.spnBoard.setSelection(favor-1);
-        BoardCommonVar.board_name = list[favor-1];
+
+        BoardCommonVar.board_name = list[favor];
         binding.tvBoardTitle.setText(BoardCommonVar.board_name);
         Spinner favorSpinner = binding.spnBoard;
         ArrayAdapter favorAdapter = new ArrayAdapter(this.getContext(), android.R.layout.simple_spinner_item, list);
@@ -74,7 +74,7 @@ public class BoardFragment extends Fragment {
 
             }
         });
-
+        binding.spnBoard.setSelection(favor);
         binding.tvBoardTitle.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

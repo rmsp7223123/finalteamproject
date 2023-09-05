@@ -96,7 +96,7 @@ public class SwipeStackAdapter extends RecyclerView.Adapter<SwipeStackAdapter.Vi
                         int i1 = i;
                         chip.setOnClickListener(v -> {
                             Log.d("click", "onBindViewHolder: chip");
-                            activity.changeFragment(fragment, activity, list1.get(i1).getFavor());
+                            activity.changeFragment(fragment, activity, list1.get(i1).getFavor()-1);
                         });
 
                     }

@@ -62,6 +62,10 @@
 		'%'||#{alarm_content2}||'%'
 	</delete>
 
+	<delete id="deleteAlarmOne">
+		delete alarm where receive_id = #{receive_id}
+	</delete>
+
 	<delete id="deleteOneAlarm">
 		delete alarm where alarm_id = #{alarm_id}
 	</delete>
@@ -116,19 +120,37 @@
 		calendar_date, calendar_importance) values (#{member_id},
 		#{calendar_content}, #{calendar_date}, #{calendar_importance})
 	</insert>
-	
+
 	<!-- 위젯 일정 불러오기 -->
 	<select id="widgetSchedule" resultType="cloud.member.CalendarVO">
-		SELECT member_id, calendar_id, calendar_importance, calendar_content,
-		       case when (TO_DATE(CALENDAR_DATE, 'YYYY-MM-DD') - (SYSDATE - 1)) between 0 and 1 then '오늘'
-		            when (TO_DATE(CALENDAR_DATE, 'YYYY-MM-DD') - (SYSDATE - 1)) between 1 and 2 then '1일 뒤'
-		            when (TO_DATE(CALENDAR_DATE, 'YYYY-MM-DD') - (SYSDATE - 1)) between 2 and 3 then '2일 뒤'
-		            when (TO_DATE(CALENDAR_DATE, 'YYYY-MM-DD') - (SYSDATE - 1)) between 3 and 4 then '3일 뒤'
-		            when (TO_DATE(CALENDAR_DATE, 'YYYY-MM-DD') - (SYSDATE - 1)) between 4 and 5 then '4일 뒤'
-		            when (TO_DATE(CALENDAR_DATE, 'YYYY-MM-DD') - (SYSDATE - 1)) between 5 and 6 then '5일 뒤'
-		            when (TO_DATE(CALENDAR_DATE, 'YYYY-MM-DD') - (SYSDATE - 1)) between 6 and 7 then '6일 뒤'
-		            else '일주일 뒤'
-		            end as calendar_date
+		SELECT member_id,
+		calendar_id, calendar_importance, calendar_content,
+		case when
+		(TO_DATE(CALENDAR_DATE, 'YYYY-MM-DD') - (SYSDATE - 1)) between 0
+		and 1
+		then '오늘'
+		when (TO_DATE(CALENDAR_DATE, 'YYYY-MM-DD') - (SYSDATE - 1))
+		between 1 and
+		2 then '1일 뒤'
+		when (TO_DATE(CALENDAR_DATE, 'YYYY-MM-DD') -
+		(SYSDATE - 1)) between 2 and
+		3 then '2일 뒤'
+		when (TO_DATE(CALENDAR_DATE,
+		'YYYY-MM-DD') - (SYSDATE - 1)) between 3 and
+		4 then '3일 뒤'
+		when
+		(TO_DATE(CALENDAR_DATE, 'YYYY-MM-DD') - (SYSDATE - 1)) between 4 and
+		5
+		then '4일 뒤'
+		when (TO_DATE(CALENDAR_DATE, 'YYYY-MM-DD') - (SYSDATE - 1))
+		between 5 and
+		6 then '5일 뒤'
+		when (TO_DATE(CALENDAR_DATE, 'YYYY-MM-DD') -
+		(SYSDATE - 1)) between 6 and
+		7 then '6일 뒤'
+		else '일주일 뒤'
+		end as
+		calendar_date
 		FROM (
 		    SELECT *
 		    FROM CALENDAR
@@ -136,7 +158,8 @@
 		    AND (TO_DATE(CALENDAR_DATE, 'YYYY-MM-DD') BETWEEN SYSDATE - 1 AND SYSDATE + 5)
 		    ORDER BY calendar_date, calendar_importance desc
 		)
-		WHERE ROWNUM BETWEEN 1 AND 3
+		WHERE ROWNUM
+		BETWEEN 1 AND 3
 	</select>
 
 	<select id="viewScheduleOne"
@@ -144,7 +167,8 @@
 		select * from calendar where member_id = #{member_id} and
 		calendar_date = #{calendar_date}
 	</select>
-	<select id="deleteScheduleOne" resultType="cloud.member.CalendarVO">
+	<select id="deleteScheduleOne"
+		resultType="cloud.member.CalendarVO">
 		delete calendar where member_id = #{member_id} and
 		calendar_id = #{calendar_id}
 	</select>
@@ -154,8 +178,18 @@
 		#{calendar_content}, calendar_importance = #{calendar_importance}
 		where calendar_id = #{calendar_id}
 	</update>
-	<select id="selectScheduleOne" resultType="cloud.member.CalendarVO">
+	<select id="selectScheduleOne"
+		resultType="cloud.member.CalendarVO">
 		select * from calendar
 		where calendar_id = #{calendar_id}
+	</select>
+	<update id="changeChatFriendId">
+		UPDATE chat
+		SET chat_friend_id = #{chat_friend_id}
+		WHERE member_id = #{member_id}
+	</update>
+	<select id="viewChat" resultType="cloud.member.ChatVO">
+		select * from chat where
+		member_id = #{member_id}
 	</select>
 </mapper>

@@ -47,7 +47,7 @@ public class MainAlarmHistoryActivity extends AppCompatActivity {
                     Toast.makeText(this, "삭제할 알람이 없습니다", Toast.LENGTH_SHORT).show();
                 }else {
                     // 알람 지웠을 때 알람기록 다 지우기 추가
-                    CommonConn conn1 = new CommonConn(this, "main/deleteAlarm");
+                    CommonConn conn1 = new CommonConn(this, "main/deleteAlarmOne");
                     Log.d("id", "onCreate: "+CommonVar.logininfo.getMember_id());
                     conn1.addParamMap("receive_id", CommonVar.logininfo.getMember_id());
                     conn1.onExcute((isResult1, data1) -> {

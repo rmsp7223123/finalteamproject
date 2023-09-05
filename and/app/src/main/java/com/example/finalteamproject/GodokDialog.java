@@ -19,9 +19,8 @@ public class GodokDialog extends Activity{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(  android.R.style.Widget_Material_Light_ButtonBar_AlertDialog );
         String member_id = getIntent().getStringExtra("member_id");
-        AlertDialog.Builder builder = new AlertDialog.Builder(this,android.R.style.Widget_Material_Light_ButtonBar_AlertDialog );
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,android.R.style.Theme_Material_Light_Dialog_NoActionBar_MinWidth);
         builder.setTitle("안부문자 보내기")
                 .setMessage("안부문자를 보내시겠습니까?")
                 .setPositiveButton("확인", new DialogInterface.OnClickListener() {
