@@ -25,7 +25,6 @@
    </RelativeLayout>
    <LinearLayout
        android:layout_marginHorizontal="10dp"
-       android:background="@drawable/border_black_fill_yellow"
        android:layout_width="match_parent"
        android:layout_height="wrap_content">
    <LinearLayout
@@ -90,15 +89,15 @@
        android:layout_marginVertical="10dp"
        android:layout_marginLeft="20dp"
        android:layout_width="match_parent"
-       android:layout_height="70dp">
+       android:layout_height="60dp">
 
 
          <ImageView
              android:layout_gravity="center"
              android:id="@+id/imgv_change_godok"
-             android:layout_width="60dp"
-             android:layout_height="60dp"
-             android:src="@drawable/baseline_mail_outline_24"/>
+             android:layout_width="50dp"
+             android:layout_height="50dp"
+             android:src="@drawable/setting_sms"/>
 
 
       <LinearLayout
@@ -131,16 +130,16 @@
        android:layout_marginVertical="10dp"
        android:layout_marginLeft="20dp"
        android:layout_width="match_parent"
-       android:layout_height="70dp">
+       android:layout_height="60dp">
 
 
 
          <ImageView
              android:layout_gravity="center"
              android:id="@+id/imgv_change_alarm"
-             android:layout_width="60dp"
-             android:layout_height="60dp"
-             android:src="@drawable/change_alarm"/>
+             android:layout_width="50dp"
+             android:layout_height="50dp"
+             android:src="@drawable/setting_alarm"/>
 
 
       <LinearLayout
@@ -175,14 +174,14 @@
        android:layout_marginVertical="10dp"
        android:layout_marginHorizontal="20dp"
        android:layout_width="match_parent"
-       android:layout_height="70dp">
+       android:layout_height="60dp">
 
          <ImageView
              android:layout_gravity="center"
              android:id="@+id/imgv_change_pw"
-             android:layout_width="60dp"
-             android:layout_height="60dp"
-             android:src="@drawable/change_pw"/>
+             android:layout_width="50dp"
+             android:layout_height="50dp"
+             android:src="@drawable/setting_lock"/>
 
       <LinearLayout
           android:layout_marginLeft="20dp"
@@ -201,11 +200,6 @@
 
       </LinearLayout>
 
-      <ImageView
-          android:layout_width="30dp"
-          android:layout_height="30dp"
-          android:src="@drawable/forward"
-          android:layout_gravity="center"/>
 
    </LinearLayout>
 
@@ -215,14 +209,14 @@
        android:layout_marginVertical="10dp"
        android:layout_marginHorizontal="20dp"
        android:layout_width="match_parent"
-       android:layout_height="70dp">
+       android:layout_height="60dp">
 
          <ImageView
              android:id="@+id/imgv_logout"
-             android:layout_width="60dp"
-             android:layout_height="60dp"
+             android:layout_width="50dp"
+             android:layout_height="50dp"
              android:layout_gravity="center"
-             android:src="@drawable/logout"/>
+             android:src="@drawable/setting_exit"/>
 
       <LinearLayout
           android:layout_marginLeft="20dp"
@@ -241,12 +235,6 @@
 
       </LinearLayout>
 
-      <ImageView
-          android:layout_width="30dp"
-          android:layout_height="30dp"
-          android:src="@drawable/forward"
-          android:layout_gravity="center"/>
-
    </LinearLayout>
 
 
@@ -255,14 +243,14 @@
        android:layout_marginVertical="10dp"
        android:layout_marginHorizontal="20dp"
        android:layout_width="match_parent"
-       android:layout_height="70dp">
+       android:layout_height="60dp">
 
 
          <ImageView
              android:layout_gravity="center"
              android:id="@+id/imgv_delete_account"
-             android:layout_width="60dp"
-             android:layout_height="60dp"
+             android:layout_width="40dp"
+             android:layout_height="40dp"
              android:src="@drawable/account"/>
       <LinearLayout
           android:layout_marginLeft="20dp"
@@ -281,17 +269,11 @@
 
       </LinearLayout>
 
-      <ImageView
-          android:layout_width="30dp"
-          android:layout_height="30dp"
-          android:src="@drawable/forward"
-          android:layout_gravity="center"/>
-
    </LinearLayout>
    <TextView
        android:id="@+id/tv_cs"
        android:textAlignment="center"
-       android:layout_marginTop="10dp"
+       android:layout_marginTop="30dp"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:text="@string/setting_underline2"

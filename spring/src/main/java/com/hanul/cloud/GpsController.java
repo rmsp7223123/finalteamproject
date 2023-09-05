@@ -47,15 +47,17 @@ public class GpsController {
 	}
 
 	@RequestMapping("/likebtn")
-	public void likebtn(int key, String member_id) {
+	public String likebtn(int key, String member_id) {
 		dao.bmark(key, member_id);
 		dao.likebtn(key);
+		return sql.selectOne("gps.like_count",key);
 	}
 
 	@RequestMapping("/unlikebtn")
-	public void unlikebtn(int key, String member_id) {
+	public String unlikebtn(int key, String member_id) {
 		dao.delbmark(key, member_id);
 		dao.unlikecnt(key);
+		return sql.selectOne("gps.like_count",key);
 	}
 
 	@RequestMapping("/likeyet")

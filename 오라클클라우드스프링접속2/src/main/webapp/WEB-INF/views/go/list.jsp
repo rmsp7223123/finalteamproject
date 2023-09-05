@@ -22,7 +22,7 @@
 				<div class="input-group">
 					<input type="text" name="keyword" value="${page.keyword }"
 						class="form-control" style="width: 300px;">
-					<button class="btn btn-warning px-3">
+					<button class = "btn px-3" style="background : #FFE38B;">
 						<i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
 					</button>
 				</div>
