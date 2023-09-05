@@ -33,17 +33,22 @@ public class GodokAlarmWidget extends AppWidgetProvider {
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         Log.d("위젯", "onEnabled: ");
         for (int appWidgetId : appWidgetIds) {
-            RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
-            views.setImageViewResource(R.id.widgetImageView, R.drawable.logo);
-//            Log.d("00", "onUpdate: "+CommonVar.logininfo.getMember_id());
+            try {
+                RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
+                views.setImageViewResource(R.id.widgetImageView, R.drawable.logo);
+                Log.d("00", "onUpdate: "+CommonVar.logininfo.getMember_id());
 
 
-            Intent clickIntent = new Intent(context, GodokDialog.class);
-            clickIntent.setAction("SHOW_DIALOG_ACTION");
-            clickIntent.putExtra("member_id", CommonVar.logininfo.getMember_id());
-            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, clickIntent, PendingIntent.FLAG_IMMUTABLE);
-            views.setOnClickPendingIntent(R.id.widget_layout, pendingIntent);
-            appWidgetManager.updateAppWidget(appWidgetId, views);
+                Intent clickIntent = new Intent(context, GodokDialog.class);
+                clickIntent.setAction("SHOW_DIALOG_ACTION");
+                clickIntent.putExtra("member_id", CommonVar.logininfo.getMember_id());
+                PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, clickIntent, PendingIntent.FLAG_IMMUTABLE);
+                views.setOnClickPendingIntent(R.id.widget_layout, pendingIntent);
+                appWidgetManager.updateAppWidget(appWidgetId, views);
+            }catch (Exception e){
+
+            }
+
         }
     }
 
