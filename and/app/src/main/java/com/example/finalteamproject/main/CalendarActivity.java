@@ -266,6 +266,7 @@ public class CalendarActivity extends AppCompatActivity {
         conn.onExcute((isResult, data) -> {
              calendarList2 = new Gson().fromJson(data, new TypeToken<ArrayList<CalendarVO>>() {
             }.getType());
+
             calendarList = calendarList2;
             binding.recvSchedule.setAdapter(adapter);
             binding.recvSchedule.setLayoutManager(new LinearLayoutManager(this));
@@ -275,7 +276,6 @@ public class CalendarActivity extends AppCompatActivity {
                     String[] tempDate = calendarList2.get(i).getCalendar_date().split("-");
                     CalendarDay day = CalendarDay.from(Integer.parseInt(tempDate[0]), Integer.parseInt(tempDate[1]) - 1, Integer.parseInt(tempDate[2]));
                     set.add(day);
-
                 }
             } else {
             }

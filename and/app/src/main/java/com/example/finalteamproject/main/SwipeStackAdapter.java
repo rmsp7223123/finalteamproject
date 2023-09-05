@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.finalteamproject.Login.ProgressDialog;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.board.BoardFragment;
 import com.example.finalteamproject.common.CommonConn;
@@ -73,8 +74,7 @@ public class SwipeStackAdapter extends RecyclerView.Adapter<SwipeStackAdapter.Vi
         }else{
            Glide.with(context).load(list.get(position).getMember_profileimg()).into(h.binding.imgvProfile);
         }
-        h.binding.tvName.setText(list.get(position).getMember_nickname() + " (" + list.get(position).getMember_name() + ")" + "\n" +
-                list.get(position).getMember_gender() );
+        h.binding.tvName.setText(list.get(position).getMember_nickname() + " (" + list.get(position).getMember_gender() + ")");
 //        + " , " + list.get(position).getMember_manner_score()
 
             CommonConn conn = new CommonConn(inflater.getContext(), "main/favor");
@@ -95,7 +95,6 @@ public class SwipeStackAdapter extends RecyclerView.Adapter<SwipeStackAdapter.Vi
 
                         int i1 = i;
                         chip.setOnClickListener(v -> {
-                            Log.d("click", "onBindViewHolder: chip");
                             activity.changeFragment(fragment, activity, list1.get(i1).getFavor()-1);
                         });
 

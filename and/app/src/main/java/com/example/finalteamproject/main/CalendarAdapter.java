@@ -44,6 +44,15 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
 
     String importance = "";
 
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
 
     public CalendarAdapter(ArrayList<CalendarVO> calendarList, Context context, CalendarActivity activity) {
         this.calendarList = calendarList;

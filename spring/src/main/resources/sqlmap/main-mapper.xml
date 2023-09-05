@@ -112,7 +112,7 @@
 
 	<select id="viewCalendarList"
 		resultType="cloud.member.CalendarVO">
-		select * from calendar where member_id = #{member_id}
+		select * from calendar where member_id = #{member_id} order by calendar_importance desc
 	</select>
 
 	<insert id="addSchedule">
@@ -165,7 +165,7 @@
 	<select id="viewScheduleOne"
 		resultType="cloud.member.CalendarVO">
 		select * from calendar where member_id = #{member_id} and
-		calendar_date = #{calendar_date}
+		calendar_date = #{calendar_date} order by calendar_importance desc
 	</select>
 	<select id="deleteScheduleOne"
 		resultType="cloud.member.CalendarVO">
