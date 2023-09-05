@@ -16,7 +16,7 @@
         <ImageView
             android:id="@+id/imgv_main"
             android:layout_width="140dp"
-            android:layout_height="200dp"
+            android:layout_height="140dp"
             android:scaleType="centerCrop"
             android:src="@drawable/hanni9" />
     </androidx.cardview.widget.CardView>

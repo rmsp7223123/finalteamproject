@@ -102,8 +102,10 @@ public class SettingController {
 		return option;
 	}
 	@RequestMapping("/updateAlarm")
-	public String updateAlarm (String member_id) {
-		return new Gson().toJson(sql.update("setting.updateAlarm", member_id));
+	public List<OptionVO> updateAlarm (String member_id) {
+		sql.update("setting.updateAlarm", member_id);
+		List<OptionVO> option = sql.selectList("setting.viewOption", member_id);
+		return option;
 	}
 	@RequestMapping("/updateFont")
 	public String updateFont(OptionVO vo) {
@@ -113,8 +115,10 @@ public class SettingController {
 		return new Gson().toJson(sql.update("setting.updateFont", paramMap));
 	}
 	@RequestMapping("/updateGodokAlarm")
-	public String updateGodokAlarm(String member_id) {
-		return new Gson().toJson(sql.update("setting.updateGodokAlarm", member_id));
+	public List<OptionVO>  updateGodokAlarm(String member_id) {
+		sql.update("setting.updateGodokAlarm", member_id);
+		List<OptionVO> option = sql.selectList("setting.viewOption", member_id);
+		return option;
 	}
 	
 	//아이디로 관심사 정보 가져오기

@@ -18,7 +18,7 @@ public class ChatPhotoGalleryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityChatPhotoGalleryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        ArrayList<String> imgList = (ArrayList<String>) getIntent().getSerializableExtra("img");//getIntent().getSerializableExtra("img")
+        ArrayList<String> imgList = (ArrayList<String>) getIntent().getSerializableExtra("img");
         adapter = new PhotoGridvAdapter(getLayoutInflater(),this,imgList );
         binding.gridvPhoto.setAdapter(adapter);
         binding.imgvBack.setOnClickListener(v -> {

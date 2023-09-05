@@ -33,6 +33,7 @@ public class SettingFragment extends Fragment {
     FragmentSettingBinding binding;
 
     boolean isEnabled = FirebaseMessageReceiver.isIsEnabled();
+    ArrayList<OptionVO> list;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -109,31 +110,35 @@ public class SettingFragment extends Fragment {
         CommonConn conn = new CommonConn(getContext(), "setting/viewOption");
         conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
         conn.onExcute((isResult, data) -> {
-            ArrayList<OptionVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<OptionVO>>() {
+            list = new Gson().fromJson(data, new TypeToken<ArrayList<OptionVO>>() {
             }.getType());
             if (list.get(0).getOption_godok_alarm().equals("N")) {
                 binding.switchButtonGodok.setChecked(false);
+                binding.switchButtonGodok.setOnCheckedChangeListener(null);
             } else {
                 binding.switchButtonGodok.setChecked(true);
+                binding.switchButtonGodok.setOnCheckedChangeListener(null);
             }
             binding.switchButtonGodok.setOnCheckedChangeListener((view, isChecked) -> {
+                CommonConn conn1 = new CommonConn(getContext(), "setting/updateGodokAlarm");
+                conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
                 if (isChecked == list.get(0).getOption_godok_alarm().equals("N") ? false : true) {
                     return;
                 }
-                CommonConn conn1 = new CommonConn(getContext(), "setting/updateGodokAlarm");
-                conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
                 conn1.onExcute((isResult1, data1) -> {
-                    Log.d("설정", "setAlarmState: " + list.get(0).getOption_godok_alarm());
+                    list = new Gson().fromJson(data1, new TypeToken<ArrayList<OptionVO>>() {
+                    }.getType());
                 });
             });
             binding.switchButtonAlarm.setOnCheckedChangeListener((view, isChecked) -> {
-                if (isChecked == list.get(0).getOption_godok_alarm().equals("N") ? false : true) {
-                    return;
-                }
                 CommonConn conn1 = new CommonConn(getContext(), "setting/updateAlarm");
                 conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
+                if (isChecked == list.get(0).getOption_alarm().equals("N") ? false : true) {// true , true  , false , tru
+                    return;
+                }
                 conn1.onExcute((isResult1, data1) -> {
-
+                   list = new Gson().fromJson(data1, new TypeToken<ArrayList<OptionVO>>() {
+                    }.getType());
                 });
             });
 
