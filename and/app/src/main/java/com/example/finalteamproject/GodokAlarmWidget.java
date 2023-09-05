@@ -35,7 +35,7 @@ public class GodokAlarmWidget extends AppWidgetProvider {
         for (int appWidgetId : appWidgetIds) {
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_layout);
             views.setImageViewResource(R.id.widgetImageView, R.drawable.logo);
-            Log.d("00", "onUpdate: "+CommonVar.logininfo.getMember_id());
+//            Log.d("00", "onUpdate: "+CommonVar.logininfo.getMember_id());
 
 
             Intent clickIntent = new Intent(context, GodokDialog.class);
