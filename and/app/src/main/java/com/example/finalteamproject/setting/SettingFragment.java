@@ -111,8 +111,6 @@ public class SettingFragment extends Fragment {
         conn.onExcute((isResult, data) -> {
             ArrayList<OptionVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<OptionVO>>() {
             }.getType());
-//            binding.switchButtonGodok.setChecked(true);
-//            binding.switchButtonGodok.toggle(true);
             if (list.get(0).getOption_godok_alarm().equals("N")) {
                 binding.switchButtonGodok.setChecked(false);
             } else {
@@ -125,6 +123,7 @@ public class SettingFragment extends Fragment {
                 CommonConn conn1 = new CommonConn(getContext(), "setting/updateGodokAlarm");
                 conn1.addParamMap("member_id", CommonVar.logininfo.getMember_id());
                 conn1.onExcute((isResult1, data1) -> {
+                    Log.d("설정", "setAlarmState: " + list.get(0).getOption_godok_alarm());
                 });
             });
             binding.switchButtonAlarm.setOnCheckedChangeListener((view, isChecked) -> {

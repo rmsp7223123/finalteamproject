@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.example.finalteamproject.ChangeStatusBar;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
@@ -24,6 +25,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         binding.imgvBack.setOnClickListener(v -> {
             finish();
         });
+        new ChangeStatusBar().changeStatusBarColor(this);
         binding.btnPassword.setOnClickListener(view -> {
             CommonConn conn = new CommonConn(this, "setting/inquirePattern");
             conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
