@@ -9,30 +9,22 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Base64;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.databinding.ActivityIdcardBinding;
-import com.example.finalteamproject.main.MainActivity;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -53,20 +45,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class IDCardActivity extends AppCompatActivity {
 
@@ -168,9 +149,9 @@ public class IDCardActivity extends AppCompatActivity {
     private static class LableDetectionTask extends AsyncTask<Object, Void, String> {
         private final WeakReference<IDCardActivity> mActivityWeakReference;
         private Vision.Images.Annotate mRequest;
-        private ProgressDialog dialog;
+        private CustomProgressDialog dialog;
 
-        LableDetectionTask(IDCardActivity activity, Vision.Images.Annotate annotate , ProgressDialog dialog) {
+        LableDetectionTask(IDCardActivity activity, Vision.Images.Annotate annotate , CustomProgressDialog dialog) {
             mActivityWeakReference = new WeakReference<>(activity);
             mRequest = annotate;
             this.dialog = dialog;
@@ -369,8 +350,8 @@ public class IDCardActivity extends AppCompatActivity {
         startActivityForResult(intent, REQ_GALLERY);
     }
 
-    public ProgressDialog getDialog(){
-        ProgressDialog dialog = new ProgressDialog(this);
+    public CustomProgressDialog getDialog(){
+        CustomProgressDialog dialog = new CustomProgressDialog(this);
         dialog.show();
         return dialog;
     }

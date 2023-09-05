@@ -8,10 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
 
-import com.example.finalteamproject.Login.ProgressDialog;
-import com.example.finalteamproject.R;
+import com.example.finalteamproject.Login.CustomProgressDialog;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.databinding.FragmentFriendListBinding;
@@ -85,7 +83,7 @@ public class FriendListFragment extends Fragment {
 
     public void friendList() {
 
-        ProgressDialog dialog = new ProgressDialog(getContext());
+        CustomProgressDialog dialog = new CustomProgressDialog(getContext());
         dialog.show();
 
         CommonConn conn = new CommonConn(getContext(), "main/viewFriendList");

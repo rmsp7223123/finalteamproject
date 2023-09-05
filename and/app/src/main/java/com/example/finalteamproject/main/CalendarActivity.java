@@ -10,9 +10,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Observable;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,31 +22,24 @@ import android.widget.Toast;
 import com.example.finalteamproject.CalendarWidget;
 import com.example.finalteamproject.CalendarWidgetList;
 import com.example.finalteamproject.ChangeStatusBar;
-import com.example.finalteamproject.Login.ProgressDialog;
+import com.example.finalteamproject.Login.CustomProgressDialog;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.databinding.ActivityCalendarBinding;
 import com.example.finalteamproject.databinding.DialogAddScheduleBinding;
-import com.google.android.gms.common.internal.service.Common;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
-import org.intellij.lang.annotations.JdkConstants;
-
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
-
-import io.reactivex.rxjava3.disposables.Disposable;
 
 public class CalendarActivity extends AppCompatActivity {
     ActivityCalendarBinding binding;
@@ -257,7 +248,7 @@ public class CalendarActivity extends AppCompatActivity {
 
     public void viewCalendar() {
 
-        ProgressDialog dialog = new ProgressDialog(this);
+        CustomProgressDialog dialog = new CustomProgressDialog(this);
         dialog.show();
 
         HashSet<CalendarDay> set = new HashSet<>();
