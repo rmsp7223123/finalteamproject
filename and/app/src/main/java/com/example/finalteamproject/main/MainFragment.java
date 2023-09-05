@@ -12,27 +12,17 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.viewpager2.widget.ViewPager2;
 
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.BaseAdapter;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.example.finalteamproject.HideActionBar;
-import com.example.finalteamproject.Login.LoginInfoActivity;
-import com.example.finalteamproject.Login.LoginProfileActivity;
-import com.example.finalteamproject.Login.ProgressDialog;
+import com.example.finalteamproject.Login.CustomProgressDialog;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.board.BoardCommonVar;
 import com.example.finalteamproject.chat.MessageChatActivity;
@@ -40,19 +30,12 @@ import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
 import com.example.finalteamproject.common.MemberVO;
 import com.example.finalteamproject.databinding.FragmentMainBinding;
-import com.example.finalteamproject.databinding.ItemMainFriendBinding;
-import com.example.finalteamproject.setting.ChangeProfileActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.badge.BadgeUtils;
-import com.google.android.material.chip.Chip;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 import com.yuyakaido.android.cardstackview.CardStackListener;
-import com.yuyakaido.android.cardstackview.CardStackView;
 import com.yuyakaido.android.cardstackview.Direction;
 import com.yuyakaido.android.cardstackview.Duration;
 import com.yuyakaido.android.cardstackview.RewindAnimationSetting;
@@ -61,12 +44,7 @@ import com.yuyakaido.android.cardstackview.StackFrom;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import javax.crypto.Cipher;
 
 public class MainFragment extends Fragment{
 
@@ -147,7 +125,7 @@ public class MainFragment extends Fragment{
     }
     private void selectMainSlider() {
 
-        ProgressDialog dialog = new ProgressDialog(getContext());
+        CustomProgressDialog dialog = new CustomProgressDialog(getContext());
         dialog.show();
 
         CommonConn conn =new CommonConn(getContext() , "main/viewpager");

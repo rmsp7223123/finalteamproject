@@ -1,9 +1,10 @@
 package com.example.finalteamproject.common;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.example.finalteamproject.Login.CustomProgressDialog;
 
 import java.util.HashMap;
 
@@ -22,7 +23,7 @@ public class CommonConn {
     private Context context; //화면위에 토스트, ProgressDialog를 보여주기위한 용도
     private String mapping; //list.cu, login, member 등의 맵핑을 받아오기 위한 것.
 
-    private ProgressDialog dialog; //모양이 다양하게 커스텀이 가능하니 나중에 바꾸면 된다.
+    private CustomProgressDialog dialog; //모양이 다양하게 커스텀이 가능하니 나중에 바꾸면 된다.
 
     private CallBack callBack;
 
@@ -30,6 +31,7 @@ public class CommonConn {
         this.context = context;
         this.mapping = mapping;
         this.paramMap = new HashMap<>();
+        this.dialog = new CustomProgressDialog(context);
     }
 
     public void addParamMap(String key, Object value){
@@ -40,20 +42,15 @@ public class CommonConn {
         }
     }
     //enque (전송 실행전 해야할 코드를 넣어줄 메소드 구현, (ProgressDialog 보이게 처리))
-//    private void onPreExcute(){
-//        if(context!=null&&dialog==null){
-//            dialog = new ProgressDialog(context);
-//            dialog.setProgress(ProgressDialog.STYLE_SPINNER);
-//            dialog.setTitle("Common");
-//            dialog.setMessage("로딩중입니다.");
-//            dialog.setCancelable(false);
-//            dialog.show();
-//        }
-//    }
+    private void onPreExcute(){
+        if(context!=null&&dialog==null){
+            dialog.show();
+        }
+    }
 
     //enque가 실제로 되어야 하는 부분. (파라메터등을 이용해서 실제로 Spring에 전송한다. )↑
     public void onExcute(CallBack callBack){
-//        onPreExcute();
+        onPreExcute();
         //2. 옵저버 2
         this.callBack = callBack;
         RetrofitInterface api = new RetrofitClient().retrofitLogin().create(RetrofitInterface.class);

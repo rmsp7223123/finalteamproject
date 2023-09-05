@@ -2,18 +2,14 @@ package com.example.finalteamproject.main;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.finalteamproject.Login.ProgressDialog;
+import com.example.finalteamproject.Login.CustomProgressDialog;
 import com.example.finalteamproject.board.BoardCommonVar;
 import com.example.finalteamproject.databinding.ItemBoardMainRecvBinding;
 
@@ -48,7 +44,7 @@ public class BoardMainAdapter extends RecyclerView.Adapter<BoardMainAdapter.View
         h.binding.tvBoardName.setText(list.get(i).getTv_board_name());
         h.binding.imgvMove.setImageResource(list.get(i).getImgv_move());
         h.binding.lnBoardSelect.setOnClickListener(v -> {
-            ProgressDialog dialog = new ProgressDialog(context);
+            CustomProgressDialog dialog = new CustomProgressDialog(context);
             dialog.show();
             BoardCommonVar.board_name = list.get(i).getTv_board_name();
             BoardCommonVar.board_align = "최신순";
