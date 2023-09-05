@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +40,7 @@ import com.example.finalteamproject.cs.NewCSBoardActivity;
 import com.example.finalteamproject.databinding.BottomsheetDetailInfoBinding;
 import com.example.finalteamproject.databinding.BottomsheetSearchResultBinding;
 import com.example.finalteamproject.databinding.FragmentGpsBinding;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -97,6 +99,7 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
         searchDialog.setContentView(searchBinding.getRoot());
         detailDialog.setContentView(detailInfoBinding.getRoot());
 
+        BottomSheetBehavior behavior = BottomSheetBehavior.from(binding.lnResult );
 
         //검색 결과
         binding.btnSearch.setOnClickListener(v -> {
@@ -107,10 +110,19 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
             connresult.onExcute((isResult, data) -> {
                 ArrayList<GpsVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<GpsVO>>(){}.getType());
                 GpsAdapter adapter = new GpsAdapter(list, this);
+                binding.recvSearchResult.setAdapter(adapter);
+                binding.recvSearchResult.setLayoutManager(new LinearLayoutManager(getContext()));
+                binding.tvSearchResult.setText("검색 결과 ( " + list.size() + ")");
+                InputMethodManager manager = (InputMethodManager)getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
+                manager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
-                searchBinding.recvSearchResult.setAdapter(adapter);
-                searchBinding.recvSearchResult.setLayoutManager(new LinearLayoutManager(getContext()));
-                searchDialog.show();
+                if(list.size() != 0){
+                    behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                }else{
+                    behavior.setPeekHeight(0);
+                }
+
+               // searchDialog.show();
             });
         });
 
@@ -246,7 +258,7 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                     marker.setWidth(70);
                     marker.setHeight(100);
                     marker.setOnClickListener(overlay -> {
-                        //selectDetail(gpsVO);2023
+                        selectDetail(gpsVO);
                         return true;
                     });
                 }
@@ -366,7 +378,8 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
         window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
 
         window.setStatusBarColor(Color.TRANSPARENT);
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN|WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
 
 

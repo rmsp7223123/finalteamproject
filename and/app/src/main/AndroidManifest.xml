@@ -259,6 +259,7 @@
             android:name=".main.MainAlarmHistoryActivity"
             android:exported="false" />
         <activity
+            android:windowSoftInputMode="adjustPan"
             android:name=".main.MainActivity"
             android:exported="false" />
         <activity
