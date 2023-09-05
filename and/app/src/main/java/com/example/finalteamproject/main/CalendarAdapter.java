@@ -44,6 +44,15 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
 
     String importance = "";
 
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
 
     public CalendarAdapter(ArrayList<CalendarVO> calendarList, Context context, CalendarActivity activity) {
         this.calendarList = calendarList;
@@ -61,11 +70,11 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if(calendarList.get(position).getCalendar_importance().equals("3")){
-            holder.binding.imgvImportance.setImageResource(R.drawable.importance3);
+            holder.binding.imgvImportance.setImageResource(R.drawable.importance1);
         }else if(calendarList.get(position).getCalendar_importance().equals("2")){
             holder.binding.imgvImportance.setImageResource(R.drawable.importance2);
         }else {
-            holder.binding.imgvImportance.setImageResource(R.drawable.importance1);
+            holder.binding.imgvImportance.setImageResource(R.drawable.importance3);
         }
         holder.binding.tvContent.setText(calendarList.get(position).getCalendar_content());
         holder.binding.tvContent.setOnClickListener(v -> {

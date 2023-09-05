@@ -1,6 +1,7 @@
 package com.example.finalteamproject.main;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.finalteamproject.Login.ProgressDialog;
 import com.example.finalteamproject.board.BoardCommonVar;
 import com.example.finalteamproject.databinding.ItemBoardMainRecvBinding;
 
@@ -23,11 +25,14 @@ public class BoardMainAdapter extends RecyclerView.Adapter<BoardMainAdapter.View
     MainActivity activity;
     Fragment fragment;
 
+    Context context;
 
-    public BoardMainAdapter(Fragment fragment, ArrayList<BoardMainDTO> list, Activity activity) {
+
+    public BoardMainAdapter(Fragment fragment, ArrayList<BoardMainDTO> list, Activity activity, Context context) {
         this.fragment = fragment;
         this.list = list;
         this.activity = (MainActivity) activity;
+        this.context = context;
     }
     @NonNull
     @Override
@@ -43,9 +48,12 @@ public class BoardMainAdapter extends RecyclerView.Adapter<BoardMainAdapter.View
         h.binding.tvBoardName.setText(list.get(i).getTv_board_name());
         h.binding.imgvMove.setImageResource(list.get(i).getImgv_move());
         h.binding.lnBoardSelect.setOnClickListener(v -> {
+            ProgressDialog dialog = new ProgressDialog(context);
+            dialog.show();
             BoardCommonVar.board_name = list.get(i).getTv_board_name();
             BoardCommonVar.board_align = "최신순";
             activity.changeFragment(fragment, activity, i);
+            dialog.dismiss();
         });
     }
 
