@@ -27,7 +27,7 @@ table { table-layout: fixed; }
 				<option value="s5" ${page.search eq 's5' ? 'selected' : ''}>제목+내용</option>
 			</select>
 			<input type="text" name="keyword" class="form-control" value="${page.keyword}">
-			<button class="btn btn-warning px-3">
+			<button class="btn px-3" style="background : #FFE38B;">
 				<i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i>
 			</button>
 		</div>

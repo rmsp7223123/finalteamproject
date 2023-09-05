@@ -1,3 +1,8 @@
+.fc-col-header-cell {
+	background : #eee !important;
+	text-align: center;
+}
+
 .mb-0 {
   margin-bottom: 0 !important;
 }
@@ -204,6 +209,10 @@ table {
 
 table * {
 	position: relative;
+}
+
+table th {
+	background: #000;
 }
 
 table td, table th {
