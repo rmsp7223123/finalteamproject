@@ -22,7 +22,7 @@
 				<option value="member_nickname" ${page.search eq 'member_nickname' ? 'selected' : '' }>닉네임</option>
 			</select>
 			<input type="text" name="keyword" value="${page.keyword }" class="form-control">
-			<button class="btn btn-warning px-3"><i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i></button>
+			<button class="btn px-3" style="background : #FFE38B;"><i class="fa-solid fa-magnifying-glass" style="color: #ffffff;"></i></button>
 		</div>
 		</div>
 	</div>
