@@ -86,7 +86,8 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
      BottomSheetDialog searchDialog;
  //   BottomSheetDialog detailDialog;
        BottomsheetSearchResultBinding searchBinding;
-       ArrayList<Marker> markers = new ArrayList<>();
+    GpsAdapter adapter;
+    ArrayList<Marker> markers = new ArrayList<>();
     //BottomsheetDetailInfoBinding detailInfoBinding;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -107,7 +108,11 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
         binding.cardvLikelist.setOnClickListener(v->{
             likelist();
         });
-
+        binding.rlDetail.setOnClickListener(v->{
+            if(listhavior.getState() == BottomSheetBehavior.STATE_COLLAPSED){
+                listhavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            }
+        });
 
         searchDialog.setContentView(searchBinding.getRoot());
        // detailDialog.setContentView(detailInfoBinding.getRoot());
@@ -116,7 +121,7 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
         listhavior = BottomSheetBehavior.from(binding.lnResult );
         resultbehavior = BottomSheetBehavior.from(binding.lnDetail );
         binding.btnClose.setOnClickListener(v->{
-            listhavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+            behaviorSetHide();
         });
 
         //검색 결과
@@ -127,7 +132,7 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
             connresult.addParamMap("keyword", binding.gpsSearch.getText());
             connresult.onExcute((isResult, data) -> {
                 ArrayList<GpsVO> list = new Gson().fromJson(data, new TypeToken<ArrayList<GpsVO>>(){}.getType());
-                GpsAdapter adapter = new GpsAdapter(list, this);
+                adapter= new GpsAdapter(list, this);
                 binding.recvSearchResult.setAdapter(adapter);
                 binding.recvSearchResult.setLayoutManager(new LinearLayoutManager(getContext()));
                 binding.tvSearchResult.setText("검색 결과 ( " + list.size() + ")");
@@ -137,7 +142,7 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                 if(list.size() != 0){
                     listhavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                 }else{
-                    listhavior.setPeekHeight(0);
+                    behaviorSetHide(listhavior , false);
                 }
 
                // searchDialog.show();
@@ -147,7 +152,7 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
         //검색결과 닫기
         searchBinding.btnClose.setOnClickListener(v -> {
             searchDialog.dismiss();
-            listhavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+            behaviorSetHide(listhavior , false);
         });
         binding.tvMore.setOnClickListener(v -> {
             likelist();
@@ -197,14 +202,14 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
         this.naverMap.getUiSettings().setScaleBarEnabled(true);
 
         naverMap.setOnMapClickListener((pointF, latLng) -> {
-            resultbehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-            listhavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+            behaviorSetHide();
             binding.gpsSearch.setHint(getAddress(latLng.latitude,latLng.longitude));
         });
 
         naverMap.addOnCameraChangeListener((i, b) -> {
-            resultbehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-            listhavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+            if(i == CameraUpdate.REASON_GESTURE && b) {
+                behaviorSetHide();
+            }
         });
         naverMap.addOnLocationChangeListener(new NaverMap.OnLocationChangeListener() {
             @Override
@@ -214,8 +219,6 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                     lat = location.getLatitude();
                     lon = location.getLongitude();
                     binding.gpsSearch.setHint(getAddress(lat,lon));
-                    resultbehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-                    listhavior.setState(BottomSheetBehavior.STATE_HIDDEN);
                 }
             }
 
@@ -321,10 +324,10 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
 //                detailInfoBinding.btnClose2.setOnClickListener(v -> {
 //                    detailDialog.dismiss();
 //                });
-//                detailInfoBinding.tvToadmin.setOnClickListener(v -> {
-//                    Intent intent = new Intent(getContext(), NewCSBoardActivity.class);
-//                    startActivity(intent);
-//                });
+                binding.tvToadmin.setOnClickListener(v -> {
+                    Intent intent = new Intent(getContext(), NewCSBoardActivity.class);
+                    startActivity(intent);
+                });
 
             });
 
@@ -381,7 +384,6 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
 
     public void selectDetail(GpsVO vo) {
 
-        resultbehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
 
         binding.seniorName.setText(vo.getSenior_name()+"");
        // binding.seniorName.setText(vo.getSenior_name()+"");
@@ -409,8 +411,13 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
         });
         //카메라 이동
         moveCamera(vo.getSenior_latitude() , vo.getSenior_longitude());
-       // listhavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-        resultbehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        if(adapter != null && adapter.list != null && adapter.list.size() > 0){
+            listhavior.setPeekHeight( (int) (getResources().getDimension(R.dimen.peek_height)));
+
+
+          listhavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        }
+        behaviorSetHide(resultbehavior , true);
     }
 
 
@@ -572,6 +579,24 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
     }
 
 
+
+    public void behaviorSetHide(){
+        listhavior.setPeekHeight(0);
+        listhavior.setHideable(true);
+        listhavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        resultbehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+    }
+
+    public void behaviorSetHide(BottomSheetBehavior behavior , boolean isShow){
+        if(isShow){
+
+            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        }else{
+            behavior.setHideable(true);
+            behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        }
+
+    }
     //
 //    @Override
 //    protected void onStart() {

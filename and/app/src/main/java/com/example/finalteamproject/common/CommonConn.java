@@ -31,6 +31,7 @@ public class CommonConn {
         this.context = context;
         this.mapping = mapping;
         this.paramMap = new HashMap<>();
+        this.dialog = new CustomProgressDialog(context);
     }
 
     public void addParamMap(String key, Object value){
@@ -43,9 +44,6 @@ public class CommonConn {
     //enque (전송 실행전 해야할 코드를 넣어줄 메소드 구현, (ProgressDialog 보이게 처리))
     private void onPreExcute(){
         if(context!=null&&dialog==null){
-            dialog = new CustomProgressDialog(context);
-            dialog.setTitle("Common");
-            dialog.setCancelable(false);
             dialog.show();
         }
     }
