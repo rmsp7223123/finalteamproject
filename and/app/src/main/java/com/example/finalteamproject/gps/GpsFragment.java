@@ -163,7 +163,7 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
         this.naverMap.getLocationOverlay().setIcon(OverlayImage.fromResource(R.drawable.logo));
         this.naverMap.getLocationOverlay().setIconWidth(100);
         this.naverMap.getLocationOverlay().setIconHeight(100);
-        //animateCircle(naverMap.getLocationOverlay());
+        animateCircle(naverMap.getLocationOverlay());
         this.naverMap.getUiSettings().setScaleBarEnabled(true);
 
 
