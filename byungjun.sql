@@ -175,18 +175,22 @@ commit;
 insert into chat (member_id) values ('bb1bb');
 
 commit;
-
+select * from chat;
 drop trigger trg_chat_member_id;
 CREATE OR REPLACE TRIGGER trg_chat_member_id
-BEFORE INSERT ON member
+AFTER INSERT ON member
 FOR EACH ROW
 BEGIN
-    INSERT INTO chat (member_id)
-    VALUES (:NEW.member_id);
+    INSERT INTO chat (member_id, chat_friend_id)
+    VALUES (:NEW.member_id, null);
 END;
 /
 
+select * from ephone;
+
 commit;
+
+select * from option_table where member_id = 'bb1bb';
 
 select * from member;
 
