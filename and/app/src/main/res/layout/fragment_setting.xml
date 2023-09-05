@@ -197,7 +197,7 @@
              android:textColor="@color/black"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
-             android:text="비밀번호 설정" />
+             android:text="잠금화면 설정" />
 
       </LinearLayout>
 
@@ -250,9 +250,9 @@
          <ImageView
              android:layout_gravity="center"
              android:id="@+id/imgv_delete_account"
-             android:layout_width="40dp"
-             android:layout_height="40dp"
-             android:src="@drawable/account"/>
+             android:layout_width="50dp"
+             android:layout_height="50dp"
+             android:src="@drawable/no_user"/>
       <LinearLayout
           android:layout_marginLeft="20dp"
           android:gravity="center|left"
