@@ -248,12 +248,11 @@
 
 
          <ImageView
-             android:padding="5dp"
              android:layout_gravity="center"
              android:id="@+id/imgv_delete_account"
              android:layout_width="50dp"
              android:layout_height="50dp"
-             android:src="@drawable/account"/>
+             android:src="@drawable/no_user"/>
       <LinearLayout
           android:layout_marginLeft="20dp"
           android:gravity="center|left"
