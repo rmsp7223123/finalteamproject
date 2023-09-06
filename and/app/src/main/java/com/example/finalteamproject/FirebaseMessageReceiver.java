@@ -89,7 +89,7 @@ public class FirebaseMessageReceiver extends FirebaseMessagingService {
             if (isEnabled) {
 
                 if (checkValue != null) {
-                    CommonConn conn = new CommonConn(this,"setting/viewOption");
+                    CommonConn conn = new CommonConn(null,"setting/viewOption");
                     conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
                     conn.onExcute((isResult, data) -> {
                         ArrayList<OptionVO> option_list = new Gson().fromJson(data, new TypeToken<ArrayList<OptionVO>>(){}.getType());
