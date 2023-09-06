@@ -439,7 +439,16 @@ select * from chat;
 
 select * from friend_list;
 
-delete friend_list where member_id = 'bb1bb' and friend_id = 'aa1aa';
+select * from member;
+
+delete from member where member_id = 'test1';
+
+commit;
+rollback;
+
+delete from member where member_id = 'aa1aa';
+delete from friend_list where (member_id = 'bb1bb' and friend_id = 'aa1aa') or  (friend_id = 'bb1bb' and  member_id= 'aa1aa');
+--delete friend_list where member_id = 'bb1bb' and friend_id = 'aa1aa';
 
 create or replace TRIGGER "ATEAM"."TRG_FRIEND_LIST_DELETE" 
 before delete

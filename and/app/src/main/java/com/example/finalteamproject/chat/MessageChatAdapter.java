@@ -161,11 +161,6 @@ public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.
 
         }
 
-        holder.binding.containerLinearMessageChat.setOnClickListener(v -> {
-            Intent intent = new Intent(context, MessageChatActivity.class);
-            context.startActivity(intent);
-        });
-
         imageView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ChatPhotoDetailActivity.class);
             intent.putExtra("image", list.get(position).getContent());

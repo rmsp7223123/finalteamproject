@@ -98,7 +98,6 @@ public class GodokController {
 		Message sms = new Message(APIKEY, APISECRET);
 		if (location_list != null) {
 			for (int i = 0; i < location_list.size(); i++) {
-				System.out.println(i + "번");
 				LocationVO location = location_list.get(i);
 				if(location.getOption_godok_alarm().equals("Y")) {
 					HashMap<String, String> params = new HashMap();

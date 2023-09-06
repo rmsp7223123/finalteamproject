@@ -117,7 +117,6 @@ public class MessageChatActivity extends AppCompatActivity {
         databaseReference.child("chat").child(friendVO.getMember_id()).child(friendVO.getFriend_id()).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Toast.makeText(MessageChatActivity.this, "시작", Toast.LENGTH_SHORT).show();
                 FriendVO friendVO = dataSnapshot.getValue(FriendVO.class);
                 adapter.addData(friendVO);
 
@@ -153,6 +152,7 @@ public class MessageChatActivity extends AppCompatActivity {
             }
 
         });
+
         binding.containerLinearSendFile.setVisibility(View.GONE);
         binding.imgvSendFile.setOnClickListener(view -> {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -298,9 +298,7 @@ public class MessageChatActivity extends AppCompatActivity {
                 if (data.getClipData() == null) {     // 이미지를 하나만 선택한 경우
                     Uri imageUri = data.getData();
 
-                } else {      // 이미지를 여러장 선택한 경우
-
-                    Log.d("", "onActivityResult:  " +  TimeUnit.SECONDS.convert(System.nanoTime(), TimeUnit.NANOSECONDS));
+                } else {      // 이미지를 여러장 선택한 경
                     ClipData clipData = data.getClipData();
 
                     if (clipData.getItemCount() > 10) {   // 선택한 이미지가 11장 이상인 경우
@@ -368,12 +366,11 @@ public class MessageChatActivity extends AppCompatActivity {
 
     // 4<- 4건 , list
     public void sendNotification(FriendVO vo) {
-        if(true) return;
         CommonConn conn1 = new CommonConn(this, "main/viewChat");
         conn1.addParamMap("member_id", vo.getMember_id());
         conn1.onExcute((isResult, data) -> {
             ChatVO chatVO = new Gson().fromJson(data, new TypeToken<ChatVO>(){}.getType());
-            if(chatVO.getChat_friend_id()==null || !chatVO.getChat_friend_id().equals(CommonVar.logininfo.getMember_id())) {
+            if(chatVO.getChat_friend_id()==null || !chatVO.getMember_id().equals(CommonVar.logininfo.getMember_id())) {
                 CommonConn conn = new CommonConn(this, "main/addAlarm");
                 conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
                 conn.addParamMap("alarm_content", CommonVar.logininfo.getMember_nickname() + "님이 메시지를 보냈습니다.");

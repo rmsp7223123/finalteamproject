@@ -41,7 +41,6 @@ public class GodokAlarmWidget extends AppWidgetProvider {
 
                 Intent clickIntent = new Intent(context, GodokDialog.class);
                 clickIntent.setAction("SHOW_DIALOG_ACTION");
-                clickIntent.putExtra("member_id", CommonVar.logininfo.getMember_id());
                 PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, clickIntent, PendingIntent.FLAG_IMMUTABLE);
                 views.setOnClickPendingIntent(R.id.widget_layout, pendingIntent);
                 appWidgetManager.updateAppWidget(appWidgetId, views);

@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.finalteamproject.Login.CustomProgressDialog;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
@@ -40,6 +41,8 @@ public class MessageFragment extends Fragment {
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
     MessageAdapter adapter;
 
+    CustomProgressDialog dialog;
+
     ArrayList<FriendVO> list =  new ArrayList<>();
 
     DatabaseReference def = databaseReference.child("chat").child(CommonVar.logininfo.getMember_id());
@@ -50,11 +53,15 @@ public class MessageFragment extends Fragment {
         adapter = new MessageAdapter(list, getContext());
         binding.recvMessage.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.recvMessage.setAdapter(adapter);
+        dialog = new CustomProgressDialog(getContext());
+        dialog.show();
         def.addChildEventListener(new ChildEventListener() {
+
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Log.d("TAG", "onChildAdded: " + snapshot.getKey());
                 lastChatSelect(snapshot.getKey());
+                dialog.dismiss();
             }
 
             @Override
@@ -87,6 +94,7 @@ public class MessageFragment extends Fragment {
 
     public void lastChatSelect(String key) {
         DatabaseReference childDef = def.child(key);
+
         childDef.limitToLast(1).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -120,7 +128,6 @@ public class MessageFragment extends Fragment {
                 }
 
 
-
                 adapter.notifyDataSetChanged();
 
                 if(list.size() != 0 ) {
@@ -128,6 +135,7 @@ public class MessageFragment extends Fragment {
                 } else {
                     binding.containerLinearChatList.setVisibility(View.VISIBLE);
                 }
+
             }
 
             @Override
