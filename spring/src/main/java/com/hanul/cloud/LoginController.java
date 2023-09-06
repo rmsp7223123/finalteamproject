@@ -64,15 +64,15 @@ public class LoginController {
 		params.put("to", phoneNumber);
 		params.put("from", "01096024788");
 		params.put("type", "SMS"); //SMS, LMS, MMS ...
-		params.put("text", "할만다 인증번호\n["+resultNum+"]");
+		params.put("text", "우동탑 인증번호\n["+resultNum+"]");
 		params.put("app_version", "JAVA SDK v1.2");
 		
 		try {
-//			JSONObject obj = sms.send(params);
-//			System.out.println(obj.toString());
-//			String result = obj.toString().contains("\"success_count\":1")==true ? resultNum : "실패";
-//			return result;
-			return resultNum;
+			JSONObject obj = sms.send(params);
+			System.out.println(obj.toString());
+			String result = obj.toString().contains("\"success_count\":1")==true ? resultNum : "실패";
+			return result;
+//			return resultNum;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "실패";
@@ -87,7 +87,7 @@ public class LoginController {
 		params.put("to", phoneNumber);
 		params.put("from", "01096024788");
 		params.put("type", "SMS"); //SMS, LMS, MMS ...
-		params.put("text", "할만다 아이디\n["+id+"]");
+		params.put("text", "우동탑 아이디\n["+id+"]");
 		params.put("app_version", "JAVA SDK v1.2");
 		
 		try {
@@ -109,7 +109,7 @@ public class LoginController {
 		params.put("to", phoneNumber);
 		params.put("from", "01096024788");
 		params.put("type", "SMS"); //SMS, LMS, MMS ...
-		params.put("text", "할만다 비밀번호\n["+pw+"]");
+		params.put("text", "우동탑 비밀번호\n["+pw+"]");
 		params.put("app_version", "JAVA SDK v1.2");
 		
 		try {

@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 import cloud.member.EphoneVO;
 import cloud.member.GodokVO;
 import cloud.member.LocationVO;
+import cloud.member.MemberVO;
 import cloud.setting.OptionVO;
 import net.nurigo.java_sdk.api.Message;
 
@@ -75,10 +76,11 @@ public class GodokController {
 			params.put("to", location.getEphone_phone());
 			params.put("from", "01096024788");
 			params.put("type", "SMS"); // SMS, LMS, MMS ...
-			params.put("text", "문자 내용 담을곳");
+			MemberVO vo = sql.selectOne("login.checkId", member_id);
+			params.put("text", "우동탑 안부알림\n["+vo.getMember_phone()+"의 안부를 확인하세요]");
 			params.put("app_version", "JAVA SDK v1.2");
 			try {
-//        			JSONObject obj = sms.send(params);
+        			JSONObject obj = sms.send(params);
 //        			System.out.println(obj.toString());
 				HashMap<String, Object> params2 = new HashMap<String, Object>();
 				params2.put("member_id", location.getMember_id());
