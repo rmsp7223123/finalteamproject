@@ -44,8 +44,8 @@ public class MainController {
 
 	@RequestMapping("/ttt")
 	public String ttt() {
-		String orgData = "http://192.168.0.87:8080/cloud/imgs/profileImage/ansqudwns12.jpg";
-		String newData = orgData.replaceAll("http://192.168.0.87:8080/cloud/imgs/", "");
+		String orgData = "http://211.223.59.99:3302/cloud/imgs/profileImage/ansqudwns12.jpg";
+		String newData = orgData.replaceAll("http://211.223.59.99:3302/cloud/imgs/", "");
 		System.out.println(common.rootPath + newData);
 		File f = new File(common.rootPath + newData);
 		if (f.exists()) {
