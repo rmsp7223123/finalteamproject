@@ -163,13 +163,19 @@ public class BoardController {
 		
 		MultipartRequest mReq = (MultipartRequest) req; //file정보가 없는 req => 있는 mReq
 		MultipartFile file = mReq.getFile("file");
-		String newImagePath = common.uploadAndDeletePreviousImage("boardImage", file, req, 
-				sql.selectOne("board.selectImage", req.getParameter("fav_board_id")));
 		HashMap<String, Object>paramMap = new HashMap<String, Object>();
+		if(file != null) {
+			String newImagePath = common.uploadAndDeletePreviousImage("boardImage", file, req, 
+			sql.selectOne("board.selectImage", req.getParameter("fav_board_id")));
+			paramMap.put("fav_board_img", newImagePath);
+		}else {
+			paramMap.put("fav_board_img", req.getParameter("fav_board_img"));
+		}
+	
 		paramMap.put("fav_board_id", Integer.parseInt(req.getParameter("fav_board_id")));
 		paramMap.put("fav_board_title", req.getParameter("fav_board_title"));
 		paramMap.put("fav_board_content", req.getParameter("fav_board_content"));
-		paramMap.put("fav_board_img", newImagePath);
+	
 		String result = sql.update("board.modifyFile",paramMap) ==1 ? "성공" : "실패";
 		return result;
 	}
@@ -177,7 +183,9 @@ public class BoardController {
 	//게시물 수정 및 파일 삭제
 	@RequestMapping(value="/modify", produces = "text/html;charset=utf-8")
 	public String modify(FavorBoardVO vo) { 
-		common.deleteFile(sql.selectOne("board.selectImage", vo.getFav_board_id()));
+		// 안드로이드 화면에서 x로 이미지 비우면 vo.fav_board_img <= null로 바꿈 
+		// 그다음 Spring에서 vo.fav_board_img null들어올때만 이미지 삭제
+		//common.deleteFile(sql.selectOne("board.selectImage", vo.getFav_board_id()));
 		return sql.update("board.modify", vo)==1 ? "성공" : "실패";
 	}
 	

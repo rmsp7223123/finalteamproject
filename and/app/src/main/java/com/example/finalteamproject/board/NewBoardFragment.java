@@ -77,9 +77,9 @@ public class NewBoardFragment extends Fragment {
 //            //액티비티(카메라 액티비티)가 종료되면 콜백으로 데이터를 받는 부분. (기존에는 onActivityResult메소드가 실행되었고 현재는 해당 메소드)
 //        }
 //    });
-    static int num;
-    static String img_path = null;
-    static Uri camera_uri = null;
+    int num;
+    String img_path = null;
+    Uri camera_uri = null;
     File file = null;
     String[] list = {"TV", "음악", "영화", "패션", "동물", "뉴스", "자동차", "운동", "게임"};
 
@@ -110,6 +110,7 @@ public class NewBoardFragment extends Fragment {
         for (int i = 0; i < list.length; i++) {
             if(list[i].equals(board_name)){
                 binding.spnBoard.setSelection(i);
+                break;
             }
         }
         binding.spnBoard.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -151,7 +152,7 @@ public class NewBoardFragment extends Fragment {
                 CommonConn conn = new CommonConn(this.getContext(), "board/favor");
                 conn.addParamMap("favor", board_name);
                 conn.onExcute((isResult, data) -> {
-                    if(Integer.parseInt(data)>0){
+                    if(Integer.parseInt(data)>-1){
                         if(num==1){
                             //갤러리
                             RequestBody fileBody = RequestBody.create(MediaType.parse("image/jpeg"), new File(img_path));

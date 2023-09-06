@@ -166,13 +166,6 @@ public class MainController {
 		paramMap.put("alarm_time", vo2.getAlarm_time());
 		paramMap.put("receive_id", vo2.getReceive_id());
 		try {
-//			ClassPathResource resource = new ClassPathResource("Service.json");
-//			BufferedReader br = new BufferedReader(new InputStreamReader(resource.getInputStream()));
-//			String s = "";
-//			while((s == br.readLine())) {
-//				System.out.println(s);
-//			}
-			// File test = File.createTempFile(String.valueOf(""), ".json");
 			FileInputStream refreshToken = new FileInputStream("D:\\Service.json");
 			FirebaseOptions options = FirebaseOptions.builder()
 					.setCredentials(GoogleCredentials.fromStream(refreshToken)).build();

@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.speech.RecognizerIntent;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -27,9 +28,11 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.finalteamproject.ChangeStatusBar;
 import com.example.finalteamproject.FirebaseMessageReceiver;
+import com.example.finalteamproject.Login.CustomProgressDialog;
 import com.example.finalteamproject.R;
 import com.example.finalteamproject.common.CommonConn;
 import com.example.finalteamproject.common.CommonVar;
+import com.example.finalteamproject.common.ProgressDialog;
 import com.example.finalteamproject.databinding.ActivityMessageChatBinding;
 import com.example.finalteamproject.main.ChatVO;
 import com.example.finalteamproject.main.FriendVO;
@@ -49,6 +52,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class MessageChatActivity extends AppCompatActivity {
     ActivityMessageChatBinding binding;
@@ -85,7 +89,6 @@ public class MessageChatActivity extends AppCompatActivity {
         binding.imgvBack.setOnClickListener(v -> {
             finish();
         });
-
         new ChangeStatusBar().changeStatusBarColor(this);
         friendVO = (FriendVO) getIntent().getSerializableExtra("vo");
         setFriendId(friendVO.getFriend_id());
@@ -111,7 +114,6 @@ public class MessageChatActivity extends AppCompatActivity {
             }
         });
         FirebaseMessageReceiver.friend_id = friendVO.getMember_id();
-
         databaseReference.child("chat").child(friendVO.getMember_id()).child(friendVO.getFriend_id()).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -148,6 +150,7 @@ public class MessageChatActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
 
             }
+
         });
 
         binding.containerLinearSendFile.setVisibility(View.GONE);
@@ -295,7 +298,7 @@ public class MessageChatActivity extends AppCompatActivity {
                 if (data.getClipData() == null) {     // 이미지를 하나만 선택한 경우
                     Uri imageUri = data.getData();
 
-                } else {      // 이미지를 여러장 선택한 경우
+                } else {      // 이미지를 여러장 선택한 경
                     ClipData clipData = data.getClipData();
 
                     if (clipData.getItemCount() > 10) {   // 선택한 이미지가 11장 이상인 경우
@@ -305,6 +308,8 @@ public class MessageChatActivity extends AppCompatActivity {
                         ArrayList<UploadTask> upload = new ArrayList<>();
                         storage = FirebaseStorage.getInstance();
                         StorageReference storageRef = storage.getReference();
+                        final CustomProgressDialog dialog = new CustomProgressDialog(this);
+                        dialog.show();
                         for (int i = 0; i < clipData.getItemCount(); i++) {
                             String itemName = friendVO.getMember_nickname();
                             String uuid = UUID.randomUUID().toString();
@@ -326,7 +331,11 @@ public class MessageChatActivity extends AppCompatActivity {
                                     vo.setMember_profileimg(CommonVar.logininfo.getMember_profileimg());
                                     vo.setMember_nickname(CommonVar.logininfo.getMember_nickname());
                                     sendMsg(friendVO.getFriend_id(), friendVO.getMember_id(), vo, false);
-                                    sendNotification(vo);
+
+                                     if(tempIdx ==clipData.getItemCount()-1 ){
+                                         sendNotification(vo);
+                                        dialog.dismiss();
+                                    }
                                 });
 
                             });
@@ -355,12 +364,13 @@ public class MessageChatActivity extends AppCompatActivity {
         startActivityForResult(intent, SPEECH_REQUEST_CODE);
     }
 
+    // 4<- 4건 , list
     public void sendNotification(FriendVO vo) {
         CommonConn conn1 = new CommonConn(this, "main/viewChat");
         conn1.addParamMap("member_id", vo.getMember_id());
         conn1.onExcute((isResult, data) -> {
             ChatVO chatVO = new Gson().fromJson(data, new TypeToken<ChatVO>(){}.getType());
-            if(chatVO.getChat_friend_id()==null || !chatVO.getChat_friend_id().equals(CommonVar.logininfo.getMember_id())) {
+            if(chatVO.getChat_friend_id()==null || !chatVO.getMember_id().equals(CommonVar.logininfo.getMember_id())) {
                 CommonConn conn = new CommonConn(this, "main/addAlarm");
                 conn.addParamMap("member_id", CommonVar.logininfo.getMember_id());
                 conn.addParamMap("alarm_content", CommonVar.logininfo.getMember_nickname() + "님이 메시지를 보냈습니다.");

@@ -435,6 +435,36 @@ BEGIN
 END;
 /
 
+select * from chat;
+
+select * from friend_list;
+
+select * from member;
+
+delete from member where member_id = 'test1';
+
+commit;
+rollback;
+
+delete from member where member_id = 'aa1aa';
+delete from friend_list where (member_id = 'bb1bb' and friend_id = 'aa1aa') or  (friend_id = 'bb1bb' and  member_id= 'aa1aa');
+--delete friend_list where member_id = 'bb1bb' and friend_id = 'aa1aa';
+
+create or replace TRIGGER "ATEAM"."TRG_FRIEND_LIST_DELETE" 
+before delete
+on friend_list
+for each row
+begin
+    DELETE FROM friend_list
+    WHERE (member_id = :OLD.member_id AND friend_id = :OLD.friend_id) OR
+          (member_id = :OLD.friend_id AND friend_id = :OLD.member_id);
+end;
+/
+
+commit;
+
+select * from friend_list;
+select * from fav_board;
 
 CREATE OR REPLACE TRIGGER trigger_delete_godok_alarm
 AFTER DELETE ON member

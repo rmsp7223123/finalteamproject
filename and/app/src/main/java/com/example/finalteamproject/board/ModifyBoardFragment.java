@@ -71,9 +71,12 @@ public class ModifyBoardFragment extends Fragment {
     static Uri camera_uri = null;
     File file = null;
 
+    int favor = 0 ;
+
     public ModifyBoardFragment(MainActivity activity, FavorBoardVO vo) {
         this.activity = activity;
         this.vo = vo;
+        this.favor = vo.favor;
     }
 
     @Override
@@ -172,6 +175,7 @@ public class ModifyBoardFragment extends Fragment {
                     conn1.addParamMap("fav_board_title", binding.edtTitle.getText().toString());
                     conn1.addParamMap("fav_board_content", binding.edtContent.getText().toString());
                     conn1.addParamMap("fav_board_id", vo.fav_board_id);
+                    conn1.addParamMap("fav_board_img" , vo.fav_board_img);
                     conn1.onExcute((isResult1, data1) -> {
                         if (data1.equals("성공")) {
                             Toast.makeText(ModifyBoardFragment.this.getContext(), "게시글 수정 성공", Toast.LENGTH_SHORT).show();
@@ -179,6 +183,7 @@ public class ModifyBoardFragment extends Fragment {
                             conn.addParamMap("fav_board_id", vo.fav_board_id);
                             conn.onExcute((isResult, data) -> {
                                 vo = new Gson().fromJson(data, FavorBoardVO.class);
+                                vo.favor = favor;
                                 activity.replaceFragment(ModifyBoardFragment.this, new BoardContextFragment(activity, vo));
                             });
                         } else {
@@ -192,6 +197,7 @@ public class ModifyBoardFragment extends Fragment {
 
         binding.imgvBack.setOnClickListener(v -> {
             activity.replaceFragment(this, new BoardContextFragment(activity, vo));
+          //  activity.changeFragment(this, activity, binding.spnBoard.getSelectedItemPosition());
         });
 
         binding.imgvDelete.setOnClickListener(v -> {

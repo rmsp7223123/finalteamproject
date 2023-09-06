@@ -2,8 +2,8 @@
 <LinearLayout
     android:id="@+id/ln_main"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="150dp"
-    android:layout_height="150dp"
+    android:layout_width="216dp"
+    android:layout_height="144dp"
     android:orientation="vertical">
 
     <LinearLayout
