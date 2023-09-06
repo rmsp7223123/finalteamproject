@@ -10,11 +10,11 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 </head>
-<body>
+<body style="background: #FFED86">
 	<div class="container" style="margin-top : 250px; margin-left : 410px;">
 		<div class="row justify-content-center">
 			<div class="col-lg-6">
-				<div class="p-5">
+				<div class="p-5" style="background: #fff; border-radius: 10px;">
 					<div class="text-center">
 						<h1 class="h4 text-gray-900 mb-4">로그인</h1>
 					</div>
