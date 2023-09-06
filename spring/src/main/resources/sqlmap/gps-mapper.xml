@@ -125,7 +125,7 @@
 	</select>
 
 	<!-- 검색 결과 -->
-	<select id="search" resultType="cloud.gps.GpsVO">
+	<!-- <select id="search" resultType="cloud.gps.GpsVO">
 		SELECT s.KEY, s.SENIOR_NAME,
 		s.SENIOR_ROADADDRESS, s.SENIOR_NUMADDRESS, s.SENIOR_CALL,
 		s.SENIOR_LATITUDE, s.SENIOR_LONGITUDE, s.SIDO, s.SIGUNGU
@@ -137,7 +137,21 @@
 		WHERE s.SENIOR_NAME LIKE '%'||#{keyword}||'%' OR s.SENIOR_ROADADDRESS
 		LIKE '%'||#{keyword}||'%'
 		ORDER BY s.KEY
+	</select> -->
+	
+	<select id="search" resultType="cloud.gps.GpsVO">
+		SELECT s.KEY, s.SENIOR_NAME,
+		s.SENIOR_ROADADDRESS, s.SENIOR_NUMADDRESS, s.SENIOR_CALL,
+		s.SENIOR_LATITUDE, s.SENIOR_LONGITUDE, s.SIDO, s.SIGUNGU
+		,
+		l.SENIOR_LIKE_NUM
+		FROM SENIOR s
+		LEFT JOIN SENIOR_LIKE l
+		ON s.key = l.key
+		WHERE s.SENIOR_NAME LIKE '%'||#{keyword}||'%'
+		ORDER BY s.KEY
 	</select>
+	
 
 	<select id="like_count" resultType="string">
 		select senior_like_num from

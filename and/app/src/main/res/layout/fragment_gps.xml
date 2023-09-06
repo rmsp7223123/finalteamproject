@@ -30,9 +30,45 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <RelativeLayout
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_weight="4">
+                <EditText
+                    android:elevation="10dp"
+                    android:maxLines="1"
+                    android:id="@+id/gps_search"
+                    android:layout_width="300dp"
+                    android:layout_height="45dp"
+                    android:background="@drawable/box_radius"
+                    android:drawableLeft="@drawable/resize_search"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="#A9A9AB"
+                    android:hint="경로당 이름으로 찾기"
+                    android:paddingLeft="10dp"
+                    android:textColorHint="#A9A9AB"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_weight="1"
+                android:gravity="right">
+                <TextView
+                    android:textStyle="bold"
+                    android:textColor="#000"
+                    android:id="@+id/btn_search"
+                    android:layout_width="70dp"
+                    android:layout_height="45dp"
+                    android:background="@drawable/box_fill"
+                    android:gravity="center"
+                    android:text="검색" />
+            </LinearLayout>
+
+            <!--<RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -46,10 +82,11 @@
                     android:drawableLeft="@drawable/resize_search"
                     android:drawablePadding="10dp"
                     android:drawableTint="#A9A9AB"
-                    android:hint="이름 또는 주소로 경로당 찾기"
+                    android:hint="경로당 이름으로 찾기"
                     android:paddingLeft="10dp"
                     android:textColorHint="#A9A9AB"
                     android:textSize="15sp" />
+
 
                 <TextView
                     android:textStyle="bold"
@@ -62,7 +99,7 @@
                     android:gravity="center"
                     android:text="검색" />
 
-            </RelativeLayout>
+            </RelativeLayout>-->
 
 
             <TextView

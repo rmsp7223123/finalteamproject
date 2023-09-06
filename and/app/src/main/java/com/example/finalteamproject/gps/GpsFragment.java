@@ -135,7 +135,7 @@ public class GpsFragment extends Fragment implements OnMapReadyCallback {
                 adapter= new GpsAdapter(list, this);
                 binding.recvSearchResult.setAdapter(adapter);
                 binding.recvSearchResult.setLayoutManager(new LinearLayoutManager(getContext()));
-                binding.tvSearchResult.setText("검색 결과 ( " + list.size() + ")");
+                binding.tvSearchResult.setText("검색 결과 (" + list.size() + ")");
                 InputMethodManager manager = (InputMethodManager)getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
                 manager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
