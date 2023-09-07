@@ -234,6 +234,8 @@ public class MessageChatActivity extends AppCompatActivity {
     private void handleCameraImage(Uri cameraImageUri, FriendVO friendVO) {
         storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
+        final CustomProgressDialog dialog = new CustomProgressDialog(this);
+        dialog.show();
 
         String itemName = friendVO.getMember_nickname();
         String uuid = UUID.randomUUID().toString();
@@ -253,6 +255,7 @@ public class MessageChatActivity extends AppCompatActivity {
                 vo.setMember_nickname(CommonVar.logininfo.getMember_nickname());
                 sendMsg(friendVO.getFriend_id(), friendVO.getMember_id(), vo, false);
                 sendNotification(vo);
+                dialog.dismiss();
                 adapter.notifyDataSetChanged();
             });
         });

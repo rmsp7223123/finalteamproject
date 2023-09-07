@@ -77,7 +77,7 @@ public class GodokController {
 			params.put("from", "01096024788");
 			params.put("type", "SMS"); // SMS, LMS, MMS ...
 			MemberVO vo = sql.selectOne("login.checkId", member_id);
-			params.put("text", "우동탑 안부알림\n["+vo.getMember_phone()+"의 안부를 확인하세요]");
+			params.put("text", "우동탑 안부알림\n["+vo.getMember_name()+"의 안부를 확인하세요]");
 			params.put("app_version", "JAVA SDK v1.2");
 			try {
         			JSONObject obj = sms.send(params);
@@ -104,7 +104,7 @@ public class GodokController {
 					params.put("to", location.getEphone_phone());
 					params.put("from", "01096024788");
 					params.put("type", "SMS"); // SMS, LMS, MMS ...
-					params.put("text", "문자 내용 담을곳");
+					params.put("text", "안부 문자 담을 곳");
 					params.put("app_version", "JAVA SDK v1.2");
 					try {
 //		        			JSONObject obj = sms.send(params);
