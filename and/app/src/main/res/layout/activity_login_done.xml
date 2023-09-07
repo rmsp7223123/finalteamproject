@@ -58,7 +58,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="할만다 이용하기"
+                android:text="우동탑 이용하기"
                 android:textSize="23sp"
                 android:textStyle="bold"
                 android:textColor="@color/black"/>

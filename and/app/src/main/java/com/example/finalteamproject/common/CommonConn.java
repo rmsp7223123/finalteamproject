@@ -31,7 +31,9 @@ public class CommonConn {
         this.context = context;
         this.mapping = mapping;
         this.paramMap = new HashMap<>();
-        this.dialog = new CustomProgressDialog(context);
+        if(context != null) {
+            this.dialog = new CustomProgressDialog(context);
+        }
     }
 
     public void addParamMap(String key, Object value){

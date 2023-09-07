@@ -155,8 +155,8 @@ public class MessageChatAdapter extends RecyclerView.Adapter<MessageChatAdapter.
                 tv_msg.setBackgroundResource(R.drawable.message_chat_background);
                 tv_msg.setPadding(30, 20, 70, 20);
                 tv_msg.setMaxWidth(800);
-                holder.binding.containerFrame.addView(tv_time);
                 holder.binding.containerFrame.addView(imageView2);
+                holder.binding.containerFrame.addView(tv_time);
             }
 
         }
