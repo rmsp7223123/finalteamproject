@@ -45,7 +45,7 @@ public class CommonUtility {
 
 	private String generateFileURL(HttpServletRequest req, String category, String filename) {
 		String baseUrl = req.getContextPath();
-		return  "http://" + req.getLocalAddr() + ":"+ req.getLocalPort()  +  baseUrl + "/imgs/" + category + "/" + filename;
+		return  "http://211.223.59.99:3302" +  baseUrl + "/imgs/" + category + "/" + filename;
 	}
 
 	// 파일 삭제 메서드

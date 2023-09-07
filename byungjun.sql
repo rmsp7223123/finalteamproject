@@ -441,11 +441,30 @@ select * from friend_list;
 
 select * from member;
 
+delete member where member_id = 'test1';
+
 delete from member where member_id = 'test1';
 
 commit;
 rollback;
 
+select * from chat;
+
+select * from member;
+
+delete from member where member_id = 'test1';
+
+commit;
+
+
+
+
+commit;
+
+
+delete member;
+
+commit;
 delete from member where member_id = 'aa1aa';
 delete from friend_list where (member_id = 'bb1bb' and friend_id = 'aa1aa') or  (friend_id = 'bb1bb' and  member_id= 'aa1aa');
 --delete friend_list where member_id = 'bb1bb' and friend_id = 'aa1aa';
