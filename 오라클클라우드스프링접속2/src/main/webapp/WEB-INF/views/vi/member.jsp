@@ -183,13 +183,13 @@
 								data : count,
 								label : "전국 경로당",
 								backgroundColor : count.map(value => {
-									if (value < 500) {
+									if (value < 1) {
 		                                return "#775995";
-		                            } else if (value < 1000) {
+		                            } else if (value < 3) {
 		                                return "#29797f";
-		                            } else if (value < 1500) {
+		                            } else if (value < 5) {
 		                                return "#29d1bb";
-		                            } else if (value < 3000) {
+		                            } else if (value < 7) {
 		                            	return "#f8cf63";
 									}else {
 		                                return "#fc7b1d";
