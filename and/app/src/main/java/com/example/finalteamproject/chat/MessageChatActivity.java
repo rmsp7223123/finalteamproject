@@ -47,6 +47,7 @@ import com.google.firebase.storage.UploadTask;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -296,8 +297,33 @@ public class MessageChatActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "이미지를 선택하지 않았습니다.", Toast.LENGTH_LONG).show();
             } else {   // 이미지를 하나라도 선택한 경우
                 if (data.getClipData() == null) {     // 이미지를 하나만 선택한 경우
-                    Uri imageUri = data.getData();
 
+                    storage = FirebaseStorage.getInstance();
+                    StorageReference storageRef = storage.getReference();
+
+                    final CustomProgressDialog dialog = new CustomProgressDialog(this);
+                    dialog.show();
+
+                        StorageReference riversRef = storageRef.child(CommonVar.logininfo.getMember_id() + "/" + UUID.randomUUID().toString() + ".jpg");
+                     //   String imageUri = getRealPath( data.getData());  // 선택한 이미지들의 uri를 가져온다.
+                        UploadTask upload = riversRef.putFile( data.getData());
+                        upload.addOnCompleteListener(command -> {
+                            upload.getResult().getStorage().getDownloadUrl().addOnCompleteListener(command1 -> {
+                                currentTime = dateFormat.format(new Date());
+                                FriendVO vo = new FriendVO(friendVO.getMember_id(), friendVO.getFriend_id(), friendVO.getMember_nickname(), friendVO.getMember_profileimg(), currentTime, command1.getResult() + "", true);
+                                vo.setMember_nickname(friendVO.getMember_nickname());
+                                sendMsg(friendVO.getMember_id(), friendVO.getFriend_id(), vo, true);
+                                vo.setMember_id(friendVO.getFriend_id());
+                                vo.setFriend_id(friendVO.getMember_id());
+                                vo.setMember_profileimg(CommonVar.logininfo.getMember_profileimg());
+                                vo.setMember_nickname(CommonVar.logininfo.getMember_nickname());
+                                sendMsg(friendVO.getFriend_id(), friendVO.getMember_id(), vo, false);
+
+                                    sendNotification(vo);
+                                    dialog.dismiss();
+                            });
+
+                        });
                 } else {      // 이미지를 여러장 선택한 경
                     ClipData clipData = data.getClipData();
 

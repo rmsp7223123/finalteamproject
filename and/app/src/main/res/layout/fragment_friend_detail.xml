@@ -36,7 +36,7 @@
         android:layout_height="280dp">
 
         <LinearLayout
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
             app:cardElevation="0dp"
             android:layout_gravity="center"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="50dp">
+            android:layout_marginTop="40dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
