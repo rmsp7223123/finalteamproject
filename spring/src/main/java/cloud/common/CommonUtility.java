@@ -45,13 +45,13 @@ public class CommonUtility {
 
 	private String generateFileURL(HttpServletRequest req, String category, String filename) {
 		String baseUrl = req.getContextPath();
-		return  "http://" + req.getLocalAddr() + ":"+ req.getLocalPort()  +  baseUrl + "/imgs/" + category + "/" + filename;
+		return  "http://211.223.59.99:3302/" +  baseUrl + "/imgs/" + category + "/" + filename;
 	}
 
 	// 파일 삭제 메서드
 	public void deleteFile(String filePath) {
 		if (filePath != null) {
-			String newData = filePath.replaceAll("http://192.168.0.87:8080/cloud/imgs/", "");
+			String newData = filePath.replaceAll("http://211.223.59.99:3302/cloud/imgs/", "");
 			File file = new File(rootPath + newData);
 			if (file.exists()) {
 				file.delete();
