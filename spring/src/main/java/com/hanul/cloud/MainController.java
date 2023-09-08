@@ -159,7 +159,6 @@ public class MainController {
 	public String send2(MemberVO vo1, AlarmVO vo2) {
 		vo1 = sql.selectOne("main.detail", vo1.getMember_id());
 		MemberVO vo3 = sql.selectOne("main.detail", vo2.getReceive_id());
-		List<OptionVO> vo4 = sql.selectList("setting.viewOption", vo3.getMember_id());
 		HashMap<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("member_id", vo1.getMember_id());
 		paramMap.put("alarm_content", vo2.getAlarm_content());
@@ -167,6 +166,7 @@ public class MainController {
 		paramMap.put("receive_id", vo2.getReceive_id());
 		try {
 			FileInputStream refreshToken = new FileInputStream("D:\\Service.json");
+			
 			FirebaseOptions options = FirebaseOptions.builder()
 					.setCredentials(GoogleCredentials.fromStream(refreshToken)).build();
 
@@ -193,7 +193,9 @@ public class MainController {
 				FirebaseMessaging.getInstance().send(msg);
 
 			}
+			System.out.println("전송 성공");
 		} catch (Exception e) {
+			System.out.println(" 전송 실패");
 			e.printStackTrace();
 			return "false";
 		}
